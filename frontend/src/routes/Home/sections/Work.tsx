@@ -8,6 +8,7 @@ description: Kabul ettigimiz isler basligi ve veri/otomasyon/web seritlerini sir
 import autoSvg from '@/assets/illustrations/auto.svg'
 import dataSvg from '@/assets/illustrations/data.svg'
 import webSvg from '@/assets/illustrations/web.svg'
+import { disciplineUrls } from '@/content/disciplines'
 import { useReveal } from '@/hooks/useReveal'
 import { useDict } from '@/i18n'
 import { cx } from '@/lib/cx'
@@ -33,7 +34,7 @@ export function Work() {
         index={work.bands.data.index}
         title={work.bands.data.title}
         desc={work.bands.data.desc}
-        href={work.bands.data.href}
+        href={disciplineUrls.data}
         goLabel={work.go}
         list={work.bands.data.list}
         artSrc={dataSvg}
@@ -48,7 +49,7 @@ export function Work() {
         index={work.bands.automation.index}
         title={work.bands.automation.title}
         desc={work.bands.automation.desc}
-        href={work.bands.automation.href}
+        href={disciplineUrls.automation}
         goLabel={work.go}
         list={work.bands.automation.list}
         artSrc={autoSvg}
@@ -63,7 +64,7 @@ export function Work() {
         index={work.bands.web.index}
         title={work.bands.web.title}
         desc={work.bands.web.desc}
-        href={work.bands.web.href}
+        href={disciplineUrls.web}
         goLabel={work.go}
         list={work.bands.web.list}
         artSrc={webSvg}

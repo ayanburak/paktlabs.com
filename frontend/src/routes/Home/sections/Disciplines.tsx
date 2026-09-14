@@ -9,6 +9,7 @@ import inceleyinMobileSvg from '@/assets/illustrations/inceleyin-mobile.svg'
 import inceleyinSvg from '@/assets/illustrations/inceleyin.svg'
 import { DisciplineCard } from '@/components/DisciplineCard'
 import { RevealImg } from '@/components/RevealImg'
+import { disciplineUrls } from '@/content/disciplines'
 import { useDict, useLanguage } from '@/i18n'
 import type { Language } from '@/i18n'
 import { cx } from '@/lib/cx'
@@ -46,7 +47,7 @@ export function Disciplines() {
               title={item.title}
               description={item.desc}
               go={disciplines.go}
-              href=""
+              href={disciplineUrls[item.key]}
             />
           ))}
         </div>

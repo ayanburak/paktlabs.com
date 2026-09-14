@@ -42,7 +42,6 @@
       "data": {
         "index": "01 / 03",
         "title": "Data",
-        "href": "/data",
         "desc": "We collect scattered records, clean them, and freeze their definitions in writing. Output: one trusted report and an orderly data set.",
         "list": [
           "Cleaning and merging",
@@ -56,7 +55,6 @@
       "automation": {
         "index": "02 / 03",
         "title": "Automation",
-        "href": "/automation",
         "desc": "The repetitive work you do by hand every day — reports, syncing, moving files — becomes a workflow that just runs.",
         "list": [
           "Scheduled jobs",
@@ -70,7 +68,6 @@
       "web": {
         "index": "03 / 03",
         "title": "Web",
-        "href": "/web",
         "desc": "From landing pages to full applications, we build the design and the frontend by hand, not a template. Behind it, only as much service as the job needs.",
         "list": [
           "Site design and build",

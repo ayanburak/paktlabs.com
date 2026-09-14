@@ -13,6 +13,7 @@ description: Hero'nun uzerinde duran, marka adi + disiplin baglantilari + dil de
 import { useState } from 'react'
 
 import logoUrl from '@/assets/brand/logo.svg'
+import { disciplineUrls } from '@/content/disciplines'
 import { useDict, useLanguage } from '@/i18n'
 import { cx } from '@/lib/cx'
 
@@ -24,9 +25,9 @@ export function Header() {
   const [open, setOpen] = useState(false)
 
   const navLinks = [
-    { href: '/web', label: nav.web },
-    { href: '/automation', label: nav.automation },
-    { href: '/data', label: nav.data },
+    { href: disciplineUrls.web, label: nav.web },
+    { href: disciplineUrls.automation, label: nav.automation },
+    { href: disciplineUrls.data, label: nav.data },
     { href: '#iletisim', label: nav.contact },
   ]
 

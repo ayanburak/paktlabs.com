@@ -42,7 +42,6 @@
       "data": {
         "index": "01 / 03",
         "title": "Veri",
-        "href": "/data",
         "desc": "Dağınık kayıtları toplar, temizler, tanımları yazılı olarak dondururuz. Çıktı: güvenilen tek rapor ve düzenli bir veri seti.",
         "list": [
           "Temizleme ve birleştirme",
@@ -56,7 +55,6 @@
       "automation": {
         "index": "02 / 03",
         "title": "Otomasyon",
-        "href": "/automation",
         "desc": "Her gün elle yapılan tekrar işleri — rapor, eşitleme, dosya taşıma — güvenilir çalışan bir akışa çeviririz.",
         "list": [
           "Zamanlanmış işler",
@@ -70,7 +68,6 @@
       "web": {
         "index": "03 / 03",
         "title": "Web",
-        "href": "/web",
         "desc": "Landing'den tam uygulamaya; tasarımı ve önyüzü elle kurarız, hazır şablon değil. Arkasında yalnızca ihtiyaç kadar servis.",
         "list": [
           "Site tasarımı ve yapımı",

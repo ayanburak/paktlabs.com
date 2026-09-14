@@ -2,10 +2,9 @@
 file: tokens.css
 importable: bu dosyadaki --degiskenlerin hepsi
 
-Marka paleti, bosluk olcegi ve golge degerleri. Sadece bu sayfaya degil
-tum paktlabs.com yuzeyine ait: /web /automation /data sayfalari ve ileride
-eklenecek her yeni sayfa da ayni tokenlari kullanir, CLAUDE.md'nin "tasarim
-semasi diger alt sayfalar icin de korunmali" kurali burada karsilik buluyor.
+Landing bolumlerinin ortak marka paleti, bosluk olcegi ve golge degerleri.
+Disiplin subdomainleri bu uygulamanin rotalari degildir, bu dosya onlarin
+stil dosyalarini yonetmez.
 
 description: Site genelinde paylasilan renk, bosluk ve golge degiskenlerini tanimlayan tek dosya.
 */

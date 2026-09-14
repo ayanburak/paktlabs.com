@@ -2,9 +2,8 @@
 file: App.tsx
 importable: App
 
-Su an tek gercek rota Home. /web /automation /data CLAUDE.md'de planli ama
-henuz kendi sayfalari kurulmadi, o yuzden burada tanimlanmadilar, disiplin
-kartlarindaki ve nav'daki linkler su an hedefsiz kaliyor, bu bilerek boyle.
+Landing tek Home rotasindan olusur. Disiplin baglantilari kendi subdomain
+adreslerine gider, bu uygulamada onlar icin alt sayfa tanimlanmaz.
 
 description: Dil saglayicisini ve rotayi kuran en ust bilesen.
 */

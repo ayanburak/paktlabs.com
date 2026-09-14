@@ -29,9 +29,15 @@ const dictionaries: Record<Language, Dict> = { tr, en }
 const STORAGE_KEY = 'pl_lang'
 const DEFAULT_LANGUAGE: Language = 'tr'
 
+// Tarayici depolamayi engellese de ilk render devam etmeli.
+// Tercih okunamadiginda mevcut varsayilan dil kullanilir.
 function readStoredLanguage(): Language {
-  const stored = localStorage.getItem(STORAGE_KEY)
-  return stored === 'tr' || stored === 'en' ? stored : DEFAULT_LANGUAGE
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    return stored === 'tr' || stored === 'en' ? stored : DEFAULT_LANGUAGE
+  } catch {
+    return DEFAULT_LANGUAGE
+  }
 }
 
 interface LanguageContextValue {
@@ -44,11 +50,15 @@ const LanguageContext = createContext<LanguageContextValue | null>(null)
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(readStoredLanguage)
 
-  // hem state hem localStorage guncellenir, boylece sonraki ziyarette
-  // manuel secim gecirisi cookie/localStorage'a yazilir kurali karsilanir
+  // Ekrandaki dil, tercihin kalici olarak kaydedilebilmesine bagli degil.
+  // Depolama engellendiginde de kullanici bu oturumda dil degistirebilir.
   function setLanguage(next: Language) {
-    localStorage.setItem(STORAGE_KEY, next)
     setLanguageState(next)
+    try {
+      localStorage.setItem(STORAGE_KEY, next)
+    } catch {
+      // Secim bellekte kalir. Sonraki ziyarette eski kayit veya varsayilan kullanilir.
+    }
   }
 
   // <html lang> ekran okuyucu ve arama motorlari icin dogru dili gormeli
