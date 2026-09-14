@@ -1,0 +1,17 @@
+.work {
+  margin-top: var(--gap);
+}
+
+.head {
+  padding: 0 clamp(20px, 4vw, 56px) clamp(28px, 3.5vw, 44px);
+  border-bottom: 2px solid var(--ink);
+}
+.head :global(.eyebrow) {
+  margin-bottom: 14px;
+}
+.head h2 {
+  font-size: clamp(32px, 3.8vw, 52px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  max-width: 24ch;
+}

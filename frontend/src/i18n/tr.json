@@ -1,0 +1,100 @@
+{
+  "brand": "PaktLabs",
+  "nav": {
+    "web": "Web",
+    "automation": "Otomasyon",
+    "data": "Veri",
+    "contact": "İletişim"
+  },
+  "hero": {
+    "lines": ["Keşfet", "Hızlandır", "Yayınla"],
+    "cta": "İletişim"
+  },
+  "about": {
+    "eyebrow": "Biz Kimiz",
+    "title": "Sizin için en doğru çözümü, size özel yazan bir ekibiz.",
+    "subtitle": "İhtiyacınızı dinler, en hızlı yoldan hayata geçiririz."
+  },
+  "disciplines": {
+    "eyebrow": "Ne Yapıyoruz",
+    "go": "İncele →",
+    "items": {
+      "data": {
+        "title": "Veri",
+        "desc": "Dağınık kayıtları toplar, temizler, tanımları yazılı olarak dondururuz. Çıktı güvenilen tek rapor ve düzenli veri."
+      },
+      "automation": {
+        "title": "Otomasyon",
+        "desc": "Her gün elle yapılan tekrar işleri — rapor, eşitleme, dosya taşıma — güvenilir çalışan bir akışa çeviririz."
+      },
+      "web": {
+        "title": "Web",
+        "desc": "Landing'den tam uygulamaya, tasarımı ve önyüzü elle kurarız — hazır şablon değil. Arkasında yalnızca ihtiyaç kadar servis."
+      }
+    }
+  },
+  "work": {
+    "eyebrow": "01 — Kapsam",
+    "title": "Kabul ettiğimiz işler",
+    "go": "Detaylı İncele →",
+    "bands": {
+      "data": {
+        "index": "01 / 03",
+        "title": "Veri",
+        "href": "/data",
+        "desc": "Dağınık kayıtları toplar, temizler, tanımları yazılı olarak dondururuz. Çıktı: güvenilen tek rapor ve düzenli bir veri seti.",
+        "list": [
+          "Temizleme ve birleştirme",
+          "Veri denetimi",
+          "Metrik tanımı ve sözlük",
+          "Rapor ve analiz",
+          "Anomali tespiti",
+          "Veri seti teslimi"
+        ]
+      },
+      "automation": {
+        "index": "02 / 03",
+        "title": "Otomasyon",
+        "href": "/automation",
+        "desc": "Her gün elle yapılan tekrar işleri — rapor, eşitleme, dosya taşıma — güvenilir çalışan bir akışa çeviririz.",
+        "list": [
+          "Zamanlanmış işler",
+          "Sistem entegrasyonu",
+          "Scraping ve veri toplama",
+          "n8n / workflow kurulumu",
+          "Rapor ve bildirim",
+          "Dosya ve belge işleme"
+        ]
+      },
+      "web": {
+        "index": "03 / 03",
+        "title": "Web",
+        "href": "/web",
+        "desc": "Landing'den tam uygulamaya; tasarımı ve önyüzü elle kurarız, hazır şablon değil. Arkasında yalnızca ihtiyaç kadar servis.",
+        "list": [
+          "Site tasarımı ve yapımı",
+          "Ödeme ve e-ticaret",
+          "İçerik ve form backend'i",
+          "Çok dil ve SEO",
+          "Self-hosted araç kurulumu",
+          "Yayına alma ve bakım"
+        ]
+      }
+    }
+  },
+  "contact": {
+    "eyebrow": "İletişim",
+    "title": "Konuşalım",
+    "lead": "Projeniz hangi aşamada olursa olsun; ister hazır bir çalışma ve iş planıyla, ister yalnızca bir iş fikriyle bizimle iletişime geçin. En kısa sürede size ulaşacağız!",
+    "form": {
+      "name": "Ad",
+      "email": "E-posta",
+      "message": "Mesaj",
+      "send": "Gönder →"
+    },
+    "email": "info@paktlabs.com"
+  },
+  "footer": {
+    "copy": "© 2026 PaktLabs · Bağımsız yazılım stüdyosu"
+  }
+}

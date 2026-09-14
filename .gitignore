@@ -1,0 +1,9 @@
+# backend .venv (ileride eklenecek)
+.venv/
+__pycache__/
+*.pyc
+
+# stray tool artifact, proje icerigi degil
+/undefined/
+
+.DS_Store

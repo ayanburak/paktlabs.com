@@ -1,0 +1,25 @@
+.foot {
+  border-top: 2px solid var(--ink);
+  background: var(--surface);
+}
+
+/* .wrap ile ayni class'i tasidigi icin (bkz. Footer.tsx) tek basina .inner,
+   .wrap'in padding'iyle esit onem derecesinde kalir ve kim sonra yuklenirse o
+   kazanir. .foot .inner iki class'lik bir secici oldugu icin bu belirsizligi
+   ortadan kaldirip her zaman kazaniyor. */
+.foot .inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 26px 0;
+  font-size: 13px;
+  color: var(--faint);
+}
+
+.inner nav {
+  display: flex;
+  gap: 18px;
+}
+.inner a:hover {
+  color: var(--ink);
+}

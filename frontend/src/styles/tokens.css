@@ -1,0 +1,49 @@
+/*
+file: tokens.css
+importable: bu dosyadaki --degiskenlerin hepsi
+
+Marka paleti, bosluk olcegi ve golge degerleri. Sadece bu sayfaya degil
+tum paktlabs.com yuzeyine ait: /web /automation /data sayfalari ve ileride
+eklenecek her yeni sayfa da ayni tokenlari kullanir, CLAUDE.md'nin "tasarim
+semasi diger alt sayfalar icin de korunmali" kurali burada karsilik buluyor.
+
+description: Site genelinde paylasilan renk, bosluk ve golge degiskenlerini tanimlayan tek dosya.
+*/
+
+/* renk degerleri dogrudan landing_mockup.html'deki :root'tan tasindi, hue'lara
+   dokunulmadi. yeni bir disiplin sayfasi acilirsa tone eslesmesi (--web/--auto/--data)
+   burada guncellenir, baska hicbir dosyada renk sabiti tekrar tanimlanmaz. */
+:root {
+  --gold: #e5b32e;
+  --charcoal: #2d3037;
+  --offwhite: #e9e8e0;
+  --gray: #7e909e;
+
+  --paper: #e9e8e0;
+  --surface: #f2f1ea;
+  --panel: #dcdbd0;
+  --ink: #2d3037;
+  --muted: #565a62;
+  --faint: #7e909e;
+  --line: #d3d2c6;
+  --line-strong: #b7b6a8;
+  --on-ink: #e9e8e0;
+
+  --tone-web: #7e909e;
+  --tone-auto: #e5b32e;
+  --tone-data: #2d3037;
+
+  --maxw: 1040px;
+  --measure: 780px;
+
+  --gap: 112px;
+  --gap-lg: 152px;
+  --gap-sm: 96px;
+
+  --raise: 0 1px 2px rgba(45, 48, 55, 0.05), 0 12px 30px -16px rgba(45, 48, 55, 0.14);
+  --raise-hi: 0 4px 12px rgba(45, 48, 55, 0.06), 0 22px 44px -22px rgba(45, 48, 55, 0.18);
+
+  --font-display: 'Space Grotesk', 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}

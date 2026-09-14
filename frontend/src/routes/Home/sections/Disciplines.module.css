@@ -1,0 +1,31 @@
+/* biz kimiz ile bu bant da renkli oldugu icin aradaki standart bosluk
+   iptal, panel dogrudan bandin ust cizgisine yasliyor */
+.disciplines {
+  margin-top: 0;
+  background: var(--gold);
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  padding: clamp(56px, 8vw, 104px) clamp(20px, 4vw, 56px);
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  position: relative;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2.5vw, 28px);
+}
+
+/* figur bandin sol boslugu icine mutlak konumlanir, kart listesini kaydirmaz */
+.art {
+  position: absolute;
+  right: calc(100% + clamp(16px, 2vw, 40px));
+  bottom: calc(-2px - clamp(56px, 8vw, 104px));
+  width: clamp(170px, 14vw, 230px);
+  height: auto;
+  pointer-events: none;
+}

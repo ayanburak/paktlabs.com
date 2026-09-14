@@ -1,0 +1,58 @@
+/* hero'nun uzerinde seffaf duran ust bar, mockup'taki .top ile ayni mantik */
+.top {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 20;
+}
+
+/* global.css'teki .wrap'i kullanmiyoruz cunku header tam genislik istiyor,
+   .wrap'in max-width:1040px kisitini her seferinde ezmek yerine hic almiyoruz */
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 84px;
+  max-width: none;
+  padding: 0 clamp(20px, 4vw, 56px);
+}
+
+.brand {
+  height: 24px;
+  width: auto;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 13.5px;
+}
+
+.links {
+  display: flex;
+  gap: 24px;
+}
+.links a {
+  opacity: 0.7;
+  transition: opacity 0.14s ease;
+}
+.links a:hover {
+  opacity: 1;
+}
+
+.langButton {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.7;
+}
+.langButton:hover {
+  opacity: 1;
+}
+.langActive {
+  font-weight: 700;
+  opacity: 1;
+}

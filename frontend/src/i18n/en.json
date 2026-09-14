@@ -1,0 +1,100 @@
+{
+  "brand": "PaktLabs",
+  "nav": {
+    "web": "Web",
+    "automation": "Automation",
+    "data": "Data",
+    "contact": "Contact"
+  },
+  "hero": {
+    "lines": ["Locate", "Automate", "Migrate"],
+    "cta": "Contact"
+  },
+  "about": {
+    "eyebrow": "Who We Are",
+    "title": "A team that writes the right solution for you, built around your needs.",
+    "subtitle": "We listen to what you need and ship it the fastest way there is."
+  },
+  "disciplines": {
+    "eyebrow": "What We Do",
+    "go": "Explore →",
+    "items": {
+      "data": {
+        "title": "Data",
+        "desc": "We collect scattered records, clean them, and freeze their definitions in writing. Output: one trusted report and orderly data."
+      },
+      "automation": {
+        "title": "Automation",
+        "desc": "The repetitive work you do by hand every day — reports, syncing, moving files — becomes a workflow that just runs."
+      },
+      "web": {
+        "title": "Web",
+        "desc": "From landing pages to full applications, we build the design and the frontend by hand, never a template. Behind it, only as much service as the job needs."
+      }
+    }
+  },
+  "work": {
+    "eyebrow": "01 — Scope",
+    "title": "The work we take on",
+    "go": "Read More →",
+    "bands": {
+      "data": {
+        "index": "01 / 03",
+        "title": "Data",
+        "href": "/data",
+        "desc": "We collect scattered records, clean them, and freeze their definitions in writing. Output: one trusted report and an orderly data set.",
+        "list": [
+          "Cleaning and merging",
+          "Data auditing",
+          "Metric definitions and glossary",
+          "Reporting and analysis",
+          "Anomaly detection",
+          "Data set delivery"
+        ]
+      },
+      "automation": {
+        "index": "02 / 03",
+        "title": "Automation",
+        "href": "/automation",
+        "desc": "The repetitive work you do by hand every day — reports, syncing, moving files — becomes a workflow that just runs.",
+        "list": [
+          "Scheduled jobs",
+          "System integration",
+          "Scraping and data collection",
+          "n8n / workflow setup",
+          "Reporting and notifications",
+          "File and document processing"
+        ]
+      },
+      "web": {
+        "index": "03 / 03",
+        "title": "Web",
+        "href": "/web",
+        "desc": "From landing pages to full applications, we build the design and the frontend by hand, not a template. Behind it, only as much service as the job needs.",
+        "list": [
+          "Site design and build",
+          "Payments and e-commerce",
+          "Content and form backends",
+          "Multi-language and SEO",
+          "Self-hosted tool setup",
+          "Launch and maintenance"
+        ]
+      }
+    }
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Let's talk",
+    "lead": "Wherever your project stands right now — with a finished brief and business plan, or just an idea — get in touch. We'll get back to you shortly!",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send →"
+    },
+    "email": "info@paktlabs.com"
+  },
+  "footer": {
+    "copy": "© 2026 PaktLabs · Independent software studio"
+  }
+}

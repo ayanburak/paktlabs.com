@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "oxc"],
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }],
+    // useReveal (src/hooks/useReveal.ts) hem bir ref hem de IntersectionObserver'dan
+    // gelen setState'i disariya "ref"/"visible" olarak dondurur, bu iki kural
+    // bu meshur ama guvenli deseni yanlislikla render icinde ref okuma sanip
+    // isaretliyor, .current'a sadece useEffect icinde erisiliyor
+    "react/refs": "off",
+    "react/set-state-in-effect": "off"
+  }
+}

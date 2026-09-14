@@ -1,0 +1,121 @@
+/* uc seridin ortak sekli. ton yalnizca aksan: zeminde ancak fark edilen bir
+   yikama, --tone her band'e kendi rengini (props uzerinden inline style ile) verir */
+.band {
+  position: relative;
+  padding: clamp(60px, 7vw, 104px) clamp(20px, 4vw, 56px);
+  background: color-mix(in srgb, var(--tone) 6%, var(--paper));
+}
+.band + .band {
+  border-top: 2px solid var(--ink);
+}
+/* basliktan hemen sonra gelen ilk serit, diger seritlerden daha az ust bosluk alir */
+.tightTop {
+  padding-top: clamp(44px, 5vw, 80px);
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(300px, 1.05fr) 1fr;
+  gap: clamp(48px, 7vw, 130px);
+  align-items: start;
+}
+/* zig-zag: cift siradaki serit sozcuk sutununu saga gecirir */
+.flip .word {
+  order: 2;
+}
+
+/* .eyebrow global.css'te tanimli, scope disina cikmak icin :global gerekiyor */
+.word :global(.eyebrow) {
+  margin-bottom: 18px;
+}
+.word h2 {
+  font-size: clamp(52px, 8.5vw, 116px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--tone);
+}
+.desc {
+  margin: 22px 0 0;
+  font-size: clamp(15px, 1.3vw, 17px);
+  line-height: 1.62;
+  color: var(--muted);
+  max-width: 42ch;
+}
+.go {
+  display: inline-block;
+  margin-top: 32px;
+  padding: 9px 14px;
+  font: 700 12px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+.go:hover {
+  background: var(--ink);
+  color: var(--on-ink);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.list li {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  padding: clamp(16px, 2vw, 26px) 0 clamp(16px, 2vw, 26px) 22px;
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  border-top: 2px solid var(--ink);
+  transition: transform 0.16s ease;
+}
+.list li:last-child {
+  border-bottom: 2px solid var(--ink);
+}
+.list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--tone);
+  transition: width 0.16s ease;
+}
+.list li:hover {
+  transform: translateX(10px);
+}
+.list li:hover::before {
+  width: 6px;
+}
+.ix {
+  flex: none;
+  align-self: center;
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid var(--faint);
+}
+
+/* mockup'taki sabit piksel degeri (props'tan artBottom) birebir kullanilir —
+   bu deger mockup'ta hangi genislikte tasarlandiysa (bkz. Work.tsx) sadece o
+   genislikte tam oturur, kasitli olarak oyle birakildi */
+.art {
+  position: absolute;
+  height: auto;
+  pointer-events: none;
+  z-index: 1;
+}
+.artLeft {
+  left: clamp(20px, 4vw, 56px);
+}
+.artRight {
+  right: clamp(20px, 4vw, 56px);
+}

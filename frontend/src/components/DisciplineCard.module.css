@@ -1,0 +1,55 @@
+.card {
+  position: relative;
+  display: block;
+}
+
+/* iki kutu da her zaman acik duruyor, aralarinda ince bir mentese boslugu var.
+   hover'da ikisi birden yukari kalkiyor, tek parca bir tabela gibi */
+.head,
+.panel {
+  padding: clamp(20px, 2.6vw, 32px) 24px;
+  background: var(--paper);
+  border: 2px solid var(--charcoal);
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
+}
+.card:hover .head,
+.card:hover .panel {
+  transform: translateY(-3px);
+  box-shadow: 0 3px 0 var(--charcoal);
+}
+.card:hover .head h3,
+.card:hover .panel .go {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.head {
+  text-align: center;
+}
+.head h3 {
+  font-size: clamp(26px, 3.2vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.panel {
+  margin-top: 6px;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+.panel p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.go {
+  font: 700 12px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
