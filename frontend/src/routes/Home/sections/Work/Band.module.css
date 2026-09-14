@@ -126,8 +126,10 @@
 /* Web figuru digerlerinden daha uzun. Dar masaustu ve tablette metnin
    yanindaki bosluga sigmadigi icin kendi satirinda yer kaplamali.
    1900px uzerinde aciklama ile figur arasinda en az 24px bosluk kalir.
-   Alt boslugu iptal etmek, mevcut translate ile zemin hizasini korur. */
-@media (768px < width <= 1900px) {
+   Alt boslugu iptal etmek, mevcut translate ile zemin hizasini korur.
+   Range sozdizimi Safari 16.4 oncesinde kuralin tamamini yok saydirdigi icin
+   klasik min/max yaziliyor. min-width 769px, mobil kuralin 768px sinirina bitisik. */
+@media (min-width: 769px) and (max-width: 1900px) {
   .web .art {
     position: relative;
     bottom: auto;
