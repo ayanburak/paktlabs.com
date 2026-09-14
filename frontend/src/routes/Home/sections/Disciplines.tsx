@@ -9,13 +9,22 @@ import inceleyinMobileSvg from '@/assets/illustrations/inceleyin-mobile.svg'
 import inceleyinSvg from '@/assets/illustrations/inceleyin.svg'
 import { DisciplineCard } from '@/components/DisciplineCard'
 import { RevealImg } from '@/components/RevealImg'
-import { useDict } from '@/i18n'
+import { useDict, useLanguage } from '@/i18n'
+import type { Language } from '@/i18n'
 import { cx } from '@/lib/cx'
 
 import styles from './Disciplines.module.css'
 
+// Dile ozel dosyalar hazir olana kadar iki dil de mevcut gorselleri kullanir.
+const illustrations = {
+  tr: { desktop: inceleyinSvg, mobile: inceleyinMobileSvg },
+  en: { desktop: inceleyinSvg, mobile: inceleyinMobileSvg },
+} satisfies Record<Language, { desktop: string; mobile: string }>
+
 export function Disciplines() {
   const { disciplines } = useDict()
+  const { language } = useLanguage()
+  const illustration = illustrations[language]
   const cards = [
     { key: 'data', ...disciplines.items.data },
     { key: 'automation', ...disciplines.items.automation },
@@ -25,19 +34,11 @@ export function Disciplines() {
   return (
     <section id="disiplinler" className={cx('full-bleed', styles.disciplines)}>
       <div className={styles.wrap}>
-        {/* iki gorsel de DOM'da, hangisinin gorunecegine CSS karar veriyor
-            (bkz. Disciplines.module.css) — hero.svg/hero-mobile.svg ile
-            ayni desen */}
-        <RevealImg
-          src={inceleyinSvg}
-          alt="Çalışmalarımızı inceleyin yazılı bir tabela tutan, kartları işaret eden figür"
-          className={styles.art}
-        />
-        <RevealImg
-          src={inceleyinMobileSvg}
-          alt="Çalışmalarımızı inceleyin yazılı bir tabela tutan, kartları işaret eden figür"
-          className={styles.artMobile}
-        />
+        {/* Esik CSS ile ayni kalmali, tarayici yalnizca yerlesime uygun dosyayi indirir. */}
+        <picture className={styles.art}>
+          <source media="(max-width: 1680px)" srcSet={illustration.mobile} />
+          <RevealImg src={illustration.desktop} alt={disciplines.artAlt} />
+        </picture>
         <div className={styles.grid}>
           {cards.map((item) => (
             <DisciplineCard

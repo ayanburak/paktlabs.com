@@ -16,29 +16,22 @@ import styles from './Hero.module.css'
 export function Hero() {
   const { hero } = useDict()
   const art = useReveal<HTMLImageElement>()
-  const artMobile = useReveal<HTMLImageElement>()
 
   return (
     <section className={styles.hero}>
       {/* Çerçeve görselin alanını ve zemin konumunu belirler, içindeki
-          img yalnızca belirme hareketini taşır. Mobil ve masaüstü
-          kompozisyonları arasındaki seçimi CSS yapar. */}
-      <div className={styles.artFrame}>
+          img yalnızca belirme hareketini taşır. source eşiği CSS ile
+          aynı kalmalı, tarayıcı yalnızca seçilen kompozisyonu indirir. */}
+      <picture className={styles.artFrame}>
+        <source media="(max-width: 768px)" srcSet={heroMobileSvg} />
         <img
           ref={art.ref}
           src={heroSvg}
           alt=""
           aria-hidden="true"
-          className={cx('reveal', art.visible && 'in', styles.artDesktop)}
+          className={cx('reveal', art.visible && 'in')}
         />
-        <img
-          ref={artMobile.ref}
-          src={heroMobileSvg}
-          alt=""
-          aria-hidden="true"
-          className={cx('reveal', artMobile.visible && 'in', styles.artMobile)}
-        />
-      </div>
+      </picture>
       <div className={styles.inner}>
         <h1 className={styles.slogan}>
           {hero.lines.map((line) => (

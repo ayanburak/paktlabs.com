@@ -18,6 +18,10 @@ import { cx } from '@/lib/cx'
 
 import styles from './Contact.module.css'
 
+// Iki kompozisyon formun farkli yerlerinde durur. Gizli konumdaki img
+// ag istegi yapmadan gecerli kalir, asil SVG yalnizca source eslesince iner.
+const emptyImage = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="1" height="1"/%3E'
+
 export function Contact() {
   const { contact } = useDict()
   const main = useReveal<HTMLDivElement>()
@@ -47,10 +51,11 @@ export function Contact() {
               <button className={styles.send} type="button">
                 {contact.form.send}
               </button>
-              {/* phone.svg'nin yatay, gonder butonunun yanina sigan varyanti —
-                  sadece mobilde gorunur (bkz. Contact.module.css), masaustunde
-                  zaten formun yanindaki buyuk phone.svg var */}
-              <RevealImg src={phoneMobileSvg} className={styles.sendArt} />
+              {/* source esikleri CSS ile ayni kalmali, iki SVG birlikte indirilmez. */}
+              <picture className={styles.sendArt}>
+                <source media="(max-width: 768px)" srcSet={phoneMobileSvg} />
+                <RevealImg src={emptyImage} />
+              </picture>
             </div>
           </form>
 
@@ -61,7 +66,10 @@ export function Contact() {
           </div>
         </div>
 
-        <RevealImg src={phoneSvg} className={styles.art} />
+        <picture className={styles.art}>
+          <source media="(width > 768px)" srcSet={phoneSvg} />
+          <RevealImg src={emptyImage} />
+        </picture>
       </div>
     </section>
   )

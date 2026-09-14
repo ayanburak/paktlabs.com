@@ -56,7 +56,15 @@ export function Band({
   const artStyle = { '--ground-offset': groundOffset, '--art-width': artWidth } as CSSProperties
 
   return (
-    <div className={cx(styles.band, flip && styles.flip, tightTop && styles.tightTop)} style={rootStyle}>
+    <div
+      className={cx(
+        styles.band,
+        tone === 'web' && styles.web,
+        flip && styles.flip,
+        tightTop && styles.tightTop,
+      )}
+      style={rootStyle}
+    >
       <div className={styles.inner}>
         <div ref={word.ref} className={cx('reveal', word.visible && 'in', styles.word)}>
           <span className="eyebrow">{index}</span>

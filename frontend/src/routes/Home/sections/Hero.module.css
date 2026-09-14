@@ -15,6 +15,7 @@
    Başlık alanı daraldığında görsel oranını bozmadan küçülür, zemin çizgisi
    ise alt kenardaki iki piksellik bölüm çizgisine bağlı kalır. */
 .artFrame {
+  display: block;
   grid-column: 2;
   grid-row: 1;
   align-self: end;
@@ -31,12 +32,6 @@
   display: block;
   width: 100%;
   height: 100%;
-}
-/* mobil gorsel varsayilan olarak gizli, sadece 768px altinda gosteriliyor.
-   .artFrame img'den (element+class) daha ozgul olmasi lazim, yoksa
-   display:block onu her zaman eziyor */
-.artFrame .artMobile {
-  display: none;
 }
 
 .inner {
@@ -133,15 +128,6 @@
     /* hero-mobile.svg'nin kendi viewBox orani — masaustundeki hero.svg'den
        farkli bir kompozisyon, oran da farkli */
     aspect-ratio: 921.20239 / 1536.6208;
-  }
-
-  /* .artFrame img'den (element+class) daha ozgul olmasi lazim, yoksa
-     ikisi de her zaman display:block kalip ust uste render oluyordu */
-  .artFrame .artDesktop {
-    display: none;
-  }
-  .artFrame .artMobile {
-    display: block;
   }
 
   .inner {

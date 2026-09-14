@@ -111,8 +111,8 @@
   text-underline-offset: 3px;
 }
 
-/* +1px ince ayar: ayaklar forma en yakin satirla ayni hizaya otursun diye.
-   RevealImg dogrudan img dondurdugu icin boyut da img'nin kendi uzerinde */
+/* +1px ince ayar ayaklari forma en yakin satira oturtur.
+   Cerceve yerlesimi, icindeki img belirme hareketini tasir. */
 .art {
   display: block;
   align-self: end;
@@ -121,6 +121,18 @@
   top: 1px;
   height: clamp(300px, 32vw, 440px);
   width: auto;
+}
+
+.art img {
+  display: block;
+  height: 100%;
+  width: auto;
+}
+
+.sendArt img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* buyuk phone.svg mobilde hic gosterilmiyor (bilerek), .inner'in ikinci

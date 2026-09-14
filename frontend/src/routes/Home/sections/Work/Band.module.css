@@ -123,6 +123,21 @@
   right: clamp(20px, 4vw, 56px);
 }
 
+/* Web figuru digerlerinden daha uzun. Dar masaustu ve tablette metnin
+   yanindaki bosluga sigmadigi icin kendi satirinda yer kaplamali.
+   1900px uzerinde aciklama ile figur arasinda en az 24px bosluk kalir.
+   Alt boslugu iptal etmek, mevcut translate ile zemin hizasini korur. */
+@media (768px < width <= 1900px) {
+  .web .art {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-top: 8px;
+    margin-left: auto;
+    margin-bottom: calc(-1 * clamp(60px, 7vw, 104px));
+  }
+}
+
 /* Mobilde başlık ve açıklama önce, liste sonra gelir. Görsel listenin
    altında normal akışa katılır. translate yüzdesi burada da görselin
    kendi yüksekliğini kullandığı için aynı zemin hesabı geçerlidir. */
