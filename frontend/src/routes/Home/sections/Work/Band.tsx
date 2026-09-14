@@ -68,7 +68,8 @@ export function Band({
       <div className={styles.inner}>
         <div ref={word.ref} className={cx('reveal', word.visible && 'in', styles.word)}>
           <span className="eyebrow">{index}</span>
-          <h2>{title}</h2>
+          {/* Gorselde bolum basligindan buyuk ama anlamda Kabul ettigimiz isler'in alt basligi */}
+          <h3>{title}</h3>
           <p className={styles.desc}>{desc}</p>
           <a className={styles.go} href={href}>
             {goLabel}

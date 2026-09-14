@@ -28,7 +28,7 @@
 .word :global(.eyebrow) {
   margin-bottom: 18px;
 }
-.word h2 {
+.word h3 {
   font-size: clamp(52px, 8.5vw, 116px);
   line-height: 0.9;
   letter-spacing: -0.04em;

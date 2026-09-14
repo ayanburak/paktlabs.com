@@ -35,6 +35,9 @@ export function Disciplines() {
   return (
     <section id="disiplinler" className={cx('full-bleed', styles.disciplines)}>
       <div className={styles.wrap}>
+        {/* Tasarimda bu bandin gorunen basligi yok. Kartlarin h3'leri bir ust
+            bolumun basligina bagli kalmasin diye baslik sadece ekran okuyucuya var. */}
+        <h2 className="sr">{disciplines.eyebrow}</h2>
         {/* Esik CSS ile ayni kalmali, tarayici yalnizca yerlesime uygun dosyayi indirir. */}
         <picture className={styles.art}>
           <source media="(max-width: 1680px)" srcSet={illustration.mobile} />

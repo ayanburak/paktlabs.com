@@ -3,8 +3,8 @@ file: DisciplineCard.tsx
 importable: DisciplineCard
 
 Disiplinler bandindaki uc kartin uc somut kullanimi ayni sekli paylasiyor,
-bu yuzden tek bilesende toplandi. href su an bos gecilebilir, gercek disiplin
-sayfalari kurulana kadar mockup'taki gibi tanimsiz kalmasi bilinerek boyle birakildi.
+bu yuzden tek bilesende toplandi. href disiplinin kendi subdomain adresi,
+content/disciplines.ts'ten gelir.
 
 description: Ust kisa baslikli, alt paneli detay tasiyan, hover'da birlikte kalkan disiplin karti.
 */
