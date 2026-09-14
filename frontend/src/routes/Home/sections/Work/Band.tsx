@@ -28,8 +28,8 @@ interface BandProps {
   list: readonly string[]
   artSrc: string
   artSide: 'left' | 'right'
-  /** gorselin kendi zemin cizgisinin, gorselin alt kenarindan yukari uzakligi
-      (yuzde), ör. "32.62%" — bkz. Band.module.css .art ve global.css .reveal */
+  /** Görselin alt kenarı ile kendi zemin çizgisi arasındaki yüzde mesafesi.
+      Band.module.css bu değeri kalıcı translate kaydırması için kullanır. */
   groundOffset: string
   artWidth: string
 }

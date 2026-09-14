@@ -104,15 +104,15 @@
   border: 1.5px solid var(--faint);
 }
 
-/* bottom hep 0 — gercek kaydirma islemi global.css'teki .reveal/.reveal.in
-   formulune gomulu --ground-offset (props'tan) ile yapiliyor. yuzde, gorselin
-   KENDI boyutuna gore hesaplandigi icin (translateY(%) boyle calisir) her
-   genislikte orantili kalir, sabit bir referans genislige kilitli degil */
+/* translate zemin çizgisini banda oturtur. Yüzde görselin kendi yüksekliğine
+   bağlıdır. Belirme animasyonu ayrı transform özelliğini kullandığı için
+   animasyon kaldırıldığında veya değiştiğinde zemin konumu korunur. */
 .art {
   position: absolute;
   bottom: 0;
   width: var(--art-width);
   height: auto;
+  translate: 0 var(--ground-offset);
   pointer-events: none;
   z-index: 1;
 }
@@ -123,11 +123,9 @@
   right: clamp(20px, 4vw, 56px);
 }
 
-/* 768px altinda: iki sutunlu grid tek sutuna iner (baslik/aciklama once,
-   liste sonra — flip zigzag'i iptal), illustrasyon artik metnin uzerine
-   binmiyor, listenin altina normal akista geciyor. --ground-offset ayni
-   formulle (global.css) calismaya devam ediyor cunku translateY(%) statik
-   bir elemanda da elemanin kendi boyutuna gore hesaplanir, degismez. */
+/* Mobilde başlık ve açıklama önce, liste sonra gelir. Görsel listenin
+   altında normal akışa katılır. translate yüzdesi burada da görselin
+   kendi yüksekliğini kullandığı için aynı zemin hesabı geçerlidir. */
 @media (max-width: 768px) {
   .inner {
     grid-template-columns: 1fr;
@@ -143,17 +141,11 @@
     position: relative;
     bottom: auto;
     width: 50%;
-    /* dusuk gibi gorunen bir deger: --ground-offset transform'u kutunun
-       UST kenarini da asagi itiyor (transform butun kutuyu kaydirir),
-       bu yuzden listeyle gorsel arasindaki gercek gorsel bosluk bu 8px'in
-       cok ustunde olabilir — banda gore degisir, kasitli */
+    /* translate bütün görseli aşağı kaydırır. Listeyle çizim arasındaki
+       görünür boşluk bu yüzden margin değerinden daha büyük olabilir. */
     margin-top: 8px;
-    /* .band'in kendi alt padding'i (yukaridaki ayni clamp) araya giriyor,
-       --ground-offset'in kucuk yuzdesi (ör. %1.77) bunu kapatmaya yetmez —
-       negatif margin bu boslugu iptal edip illustrasyonu tekrar tam
-       cizgiye (band'in gercek alt kenarina) oturtuyor. genislik degisse
-       de bu iliski bozulmuyor cunku translateY(%) gorselin kendi
-       boyutuna gore hesaplaniyor, sabit bir referansa kilitli degil. */
+    /* Bandın alt padding değerini iptal eder. Görsel kutusu bölüm sınırına
+       gelir, translate ise çizimin kendi zeminini bu sınıra taşır. */
     margin-bottom: calc(-1 * clamp(60px, 7vw, 104px));
   }
   /* relative, static'in aksine left/right'a da uyuyor — masaustundeki
