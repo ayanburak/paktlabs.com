@@ -5,6 +5,7 @@ importable: Disciplines
 description: Gold bant icinde figur ve uc disiplin kartini bir arada gosteren bolum.
 */
 
+import inceleyinMobileSvg from '@/assets/illustrations/inceleyin-mobile.svg'
 import inceleyinSvg from '@/assets/illustrations/inceleyin.svg'
 import { DisciplineCard } from '@/components/DisciplineCard'
 import { RevealImg } from '@/components/RevealImg'
@@ -24,10 +25,18 @@ export function Disciplines() {
   return (
     <section id="disiplinler" className={cx('full-bleed', styles.disciplines)}>
       <div className={styles.wrap}>
+        {/* iki gorsel de DOM'da, hangisinin gorunecegine CSS karar veriyor
+            (bkz. Disciplines.module.css) — hero.svg/hero-mobile.svg ile
+            ayni desen */}
         <RevealImg
           src={inceleyinSvg}
           alt="Çalışmalarımızı inceleyin yazılı bir tabela tutan, kartları işaret eden figür"
           className={styles.art}
+        />
+        <RevealImg
+          src={inceleyinMobileSvg}
+          alt="Çalışmalarımızı inceleyin yazılı bir tabela tutan, kartları işaret eden figür"
+          className={styles.artMobile}
         />
         <div className={styles.grid}>
           {cards.map((item) => (

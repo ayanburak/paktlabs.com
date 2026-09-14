@@ -28,8 +28,9 @@ interface BandProps {
   list: readonly string[]
   artSrc: string
   artSide: 'left' | 'right'
-  /** mockup'taki sabit piksel degeri birebir, ör. "-112px" — bkz. Band.module.css .art */
-  artBottom: string
+  /** gorselin kendi zemin cizgisinin, gorselin alt kenarindan yukari uzakligi
+      (yuzde), ör. "32.62%" — bkz. Band.module.css .art ve global.css .reveal */
+  groundOffset: string
   artWidth: string
 }
 
@@ -45,14 +46,14 @@ export function Band({
   list,
   artSrc,
   artSide,
-  artBottom,
+  groundOffset,
   artWidth,
 }: BandProps) {
   const word = useReveal<HTMLDivElement>()
   const listReveal = useReveal<HTMLOListElement>()
 
   const rootStyle = { '--tone': `var(--tone-${tone})` } as CSSProperties
-  const artStyle = { bottom: artBottom, width: artWidth } as CSSProperties
+  const artStyle = { '--ground-offset': groundOffset, '--art-width': artWidth } as CSSProperties
 
   return (
     <div className={cx(styles.band, flip && styles.flip, tightTop && styles.tightTop)} style={rootStyle}>

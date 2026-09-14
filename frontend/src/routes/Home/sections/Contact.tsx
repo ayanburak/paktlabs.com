@@ -9,6 +9,7 @@ minik FastAPI servisiyle baglanacak, o gelene kadar bu bilerek boyle birakildi.
 description: Iletisim formu ve telefon figurunu yan yana gosteren kapanis bolumu.
 */
 
+import phoneMobileSvg from '@/assets/illustrations/phone-mobile.svg'
 import phoneSvg from '@/assets/illustrations/phone.svg'
 import { RevealImg } from '@/components/RevealImg'
 import { useReveal } from '@/hooks/useReveal'
@@ -42,9 +43,15 @@ export function Contact() {
               <label htmlFor="mesaj">{contact.form.message}</label>
               <textarea id="mesaj" name="mesaj" />
             </div>
-            <button className={styles.send} type="button">
-              {contact.form.send}
-            </button>
+            <div className={styles.sendRow}>
+              <button className={styles.send} type="button">
+                {contact.form.send}
+              </button>
+              {/* phone.svg'nin yatay, gonder butonunun yanina sigan varyanti —
+                  sadece mobilde gorunur (bkz. Contact.module.css), masaustunde
+                  zaten formun yanindaki buyuk phone.svg var */}
+              <RevealImg src={phoneMobileSvg} className={styles.sendArt} />
+            </div>
           </form>
 
           <div className={styles.direct}>

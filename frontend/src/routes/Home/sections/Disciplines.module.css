@@ -29,3 +29,29 @@
   height: auto;
   pointer-events: none;
 }
+
+/* mobil gorsel varsayilan olarak gizli, sadece 768px altinda gosteriliyor */
+.artMobile {
+  display: none;
+}
+
+/* dar ekranda sol bosluk kalmiyor, figur DOM'da zaten grid'den once oldugu
+   icin static olunca dogal olarak kartlarin ustune geliyor */
+@media (max-width: 768px) {
+  /* ust padding masaustu degeriyle (min 56px) figurle ust cizgi arasinda
+     gereksiz bosluk birakiyordu, sadece ustu daraltiyoruz */
+  .disciplines {
+    padding-top: clamp(24px, 6vw, 40px);
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .art {
+    display: none;
+  }
+  .artMobile {
+    display: block;
+    width: 140px;
+    margin: 0 auto 28px;
+  }
+}

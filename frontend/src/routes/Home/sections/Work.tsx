@@ -38,7 +38,7 @@ export function Work() {
         list={work.bands.data.list}
         artSrc={dataSvg}
         artSide="right"
-        artBottom="-112px"
+        groundOffset="32.91%"
         artWidth="clamp(236px, 23.6vw, 378px)"
       />
 
@@ -53,7 +53,7 @@ export function Work() {
         list={work.bands.automation.list}
         artSrc={autoSvg}
         artSide="left"
-        artBottom="-5px"
+        groundOffset="1.77%"
         artWidth="clamp(200px, 20vw, 320px)"
       />
 
@@ -68,7 +68,7 @@ export function Work() {
         list={work.bands.web.list}
         artSrc={webSvg}
         artSide="right"
-        artBottom="-65px"
+        groundOffset="12.31%"
         artWidth="clamp(200px, 20vw, 320px)"
       />
     </section>

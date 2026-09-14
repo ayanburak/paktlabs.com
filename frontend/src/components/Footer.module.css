@@ -23,3 +23,14 @@
 .inner a:hover {
   color: var(--ink);
 }
+
+/* telif metni + uc link tek satirda sigmiyordu, sayfa yatay taşıyordu
+   (scrollWidth > innerWidth) — mobilde alt alta diziliyor */
+@media (max-width: 768px) {
+  .foot .inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+  }
+}

@@ -2,6 +2,15 @@
   margin-top: var(--gap);
 }
 
+/* --gap (112px) sabit, vw'ye bagli degil — masaustunde cevredeki
+   bosluklarla orantili ama mobilde aynen kaliyor, oransiz bir bosluk
+   birakiyordu */
+@media (max-width: 768px) {
+  .work {
+    margin-top: clamp(40px, 10vw, 64px);
+  }
+}
+
 .head {
   padding: 0 clamp(20px, 4vw, 56px) clamp(28px, 3.5vw, 44px);
   border-bottom: 2px solid var(--ink);

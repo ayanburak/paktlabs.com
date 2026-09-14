@@ -68,9 +68,15 @@
   resize: vertical;
 }
 
-.send {
+.sendRow {
   grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
   justify-self: start;
+}
+
+.send {
   margin-top: 4px;
   padding: 12px 22px;
   font: 700 12px/1 var(--font-mono);
@@ -115,4 +121,39 @@
   top: 1px;
   height: clamp(300px, 32vw, 440px);
   width: auto;
+}
+
+/* buyuk phone.svg mobilde hic gosterilmiyor (bilerek), .inner'in ikinci
+   sutunu (onun icin ayrilmis) da bu yuzden kalkiyor, form tek sutuna tam
+   genislikte yayilir. yerine gonder butonunun yanina phone-mobile.svg
+   (yatay, dar alana sigan varyant) geliyor. */
+.sendArt {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+  .art {
+    display: none;
+  }
+  /* Ad/E-posta yan yana iki sutunda kaliyordu, input'un tarayici
+     varsayilan min-genisligi (~205px) iki sutunu sigdiramayip tum
+     sayfayi yatay tasiriyordu (bkz. Footer'daki kirpilma) */
+  .form {
+    grid-template-columns: 1fr;
+  }
+  /* .sendRow'un justify-self:start'i onu icerik kadar dar tutuyordu,
+     stretch ile tam genislige yayilip flex:1 olan gorsele yer aciyor */
+  .sendRow {
+    justify-self: stretch;
+  }
+  .sendArt {
+    display: block;
+    flex: 1;
+    width: 100%;
+    height: auto;
+    min-width: 0;
+  }
 }
