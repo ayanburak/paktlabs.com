@@ -23,7 +23,10 @@ description: Site genelinde paylasilan renk, bosluk ve golge degiskenlerini tani
   --panel: #dcdbd0;
   --ink: #2d3037;
   --muted: #565a62;
-  --faint: #7e909e;
+  /* soluk metin rengi. --gray ile ayni ton ama daha koyu, kucuk etiketler
+     paper, panel ve surface zeminlerin hepsinde en az 4.5 kontrasti gecsin diye.
+     dekoratif cizgiler bu degiskeni degil --gray'i kullanir */
+  --faint: #52626e;
   --line: #d3d2c6;
   --line-strong: #b7b6a8;
   --on-ink: #e9e8e0;

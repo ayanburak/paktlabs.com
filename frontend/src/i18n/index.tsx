@@ -61,9 +61,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  // <html lang> ekran okuyucu ve arama motorlari icin dogru dili gormeli
+  // <html lang>, sekme basligi ve aciklama aktif dile uymali. index.html ilk
+  // yuklemede tr metnini tasiyor, JS calistirmayan botlar yalnizca onu gorur.
+  // Ayri bir /en adresi olmadigi icin en metni indekslenecek diye varsayilmamali.
   useEffect(() => {
+    const { meta } = dictionaries[language]
     document.documentElement.lang = language
+    document.title = meta.title
+    document.querySelector('meta[name="description"]')?.setAttribute('content', meta.description)
   }, [language])
 
   const value = useMemo(() => ({ language, setLanguage }), [language])

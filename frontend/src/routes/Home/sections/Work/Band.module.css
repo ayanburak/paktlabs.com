@@ -101,7 +101,7 @@
   align-self: center;
   width: 12px;
   height: 12px;
-  border: 1.5px solid var(--faint);
+  border: 1.5px solid var(--gray);
 }
 
 /* translate zemin çizgisini banda oturtur. Yüzde görselin kendi yüksekliğine

@@ -1,5 +1,9 @@
 {
   "brand": "PaktLabs",
+  "meta": {
+    "title": "PaktLabs — Web, Otomasyon ve Veri Yazılımları",
+    "description": "PaktLabs bağımsız bir yazılım stüdyosu. Web uygulamaları, iş akışı otomasyonu ve veri işlerini size özel, elle kuruyoruz."
+  },
   "nav": {
     "web": "Web",
     "automation": "Otomasyon",
