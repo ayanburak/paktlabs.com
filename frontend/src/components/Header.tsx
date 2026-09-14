@@ -2,15 +2,15 @@
 file: Header.tsx
 importable: Header
 
-768px altinda .nav gizlenip yerine hamburger + acilir panel geciyor (bkz.
-Header.module.css'teki @media). navLinks dizisi iki yerde (masaustu bar +
-mobil panel) ayni linkleri tekrar yazmamak icin var, gercek ikinci kullanim
-oldugu icin erken soyutlama sayilmiyor.
+768px altinda .nav gizlenip yerine hamburger + acilir panel geciyor, esik
+Header.module.css'teki @media'da. navLinks dizisi ve LanguageSwitch iki yerde
+yani masaustu bar ve mobil panelde ayni seyi tekrar yazmamak icin var, gercek
+ikinci kullanim oldugu icin erken soyutlama sayilmiyor.
 
 description: Hero'nun uzerinde duran, marka adi + disiplin baglantilari + dil degistirici tasiyan ust bar.
 */
 
-import { useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 
 import logoUrl from '@/assets/brand/logo.svg'
 import { disciplineUrls } from '@/content/disciplines'
@@ -20,9 +20,23 @@ import { cx } from '@/lib/cx'
 import styles from './Header.module.css'
 
 export function Header() {
-  const { brand, nav } = useDict()
-  const { language, setLanguage } = useLanguage()
+  const { brand, nav, a11y } = useDict()
   const [open, setOpen] = useState(false)
+  const panelId = useId()
+  const burgerRef = useRef<HTMLButtonElement>(null)
+
+  // Panel dialog degil, odak icerde kilitlenmiyor. Escape sadece paneli kapatip
+  // odagi hamburgere geri veriyor ki klavye kullanicisi sayfada kaybolmasin.
+  useEffect(() => {
+    if (!open) return
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key !== 'Escape') return
+      setOpen(false)
+      burgerRef.current?.focus()
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [open])
 
   const navLinks = [
     { href: disciplineUrls.web, label: nav.web },
@@ -31,13 +45,15 @@ export function Header() {
     { href: '#iletisim', label: nav.contact },
   ]
 
+  // Iki nav ayni anda hic gorunmuyor, biri hep display:none. O yuzden ikisi de
+  // ayni ana menu etiketini tasiyor, mobil ayrimi ekran okuyucuya bir sey anlatmiyor.
   return (
     <header className={styles.top}>
       <div className={styles.inner}>
         <a href="/">
           <img className={styles.brand} src={logoUrl} alt={brand} />
         </a>
-        <nav className={styles.nav} aria-label="Ana menü">
+        <nav className={styles.nav} aria-label={a11y.mainMenu}>
           <span className={styles.links}>
             {navLinks.map((link) => (
               <a key={link.href} href={link.href}>
@@ -45,29 +61,15 @@ export function Header() {
               </a>
             ))}
           </span>
-          <span>
-            <button
-              type="button"
-              className={cx(styles.langButton, language === 'tr' && styles.langActive)}
-              onClick={() => setLanguage('tr')}
-            >
-              TR
-            </button>
-            {' / '}
-            <button
-              type="button"
-              className={cx(styles.langButton, language === 'en' && styles.langActive)}
-              onClick={() => setLanguage('en')}
-            >
-              EN
-            </button>
-          </span>
+          <LanguageSwitch />
         </nav>
         <button
+          ref={burgerRef}
           type="button"
           className={styles.burger}
-          aria-label={open ? 'Menüyü kapat' : 'Menüyü aç'}
+          aria-label={open ? a11y.closeMenu : a11y.openMenu}
           aria-expanded={open}
+          aria-controls={panelId}
           onClick={() => setOpen((v) => !v)}
         >
           <span />
@@ -75,30 +77,48 @@ export function Header() {
           <span />
         </button>
       </div>
-      <nav className={cx(styles.mobileNav, open && styles.mobileNavOpen)} aria-label="Mobil menü">
+      <nav
+        id={panelId}
+        className={cx(styles.mobileNav, open && styles.mobileNavOpen)}
+        aria-label={a11y.mainMenu}
+      >
         {navLinks.map((link) => (
           <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
             {link.label}
           </a>
         ))}
-        <span className={styles.mobileLang}>
-          <button
-            type="button"
-            className={cx(styles.langButton, language === 'tr' && styles.langActive)}
-            onClick={() => setLanguage('tr')}
-          >
-            TR
-          </button>
-          {' / '}
-          <button
-            type="button"
-            className={cx(styles.langButton, language === 'en' && styles.langActive)}
-            onClick={() => setLanguage('en')}
-          >
-            EN
-          </button>
-        </span>
+        <LanguageSwitch className={styles.mobileLang} />
       </nav>
     </header>
+  )
+}
+
+// Secili dil eskiden sadece kalin yaziyla belli oluyordu, aria-pressed bunu
+// ekran okuyucuya da soyluyor. Gorunen TR/EN metni ayrica Turkce/English diye
+// etiketlenmedi cunku okunan ad gorunen metni icermeli, yoksa sesli komutla
+// TR'ye bas diyen kullanici dugmeyi bulamaz. Ayrac da sesli okunmasin diye gizli.
+function LanguageSwitch({ className }: { className?: string }) {
+  const { language, setLanguage } = useLanguage()
+
+  return (
+    <span className={className}>
+      <button
+        type="button"
+        className={cx(styles.langButton, language === 'tr' && styles.langActive)}
+        aria-pressed={language === 'tr'}
+        onClick={() => setLanguage('tr')}
+      >
+        TR
+      </button>
+      <span aria-hidden="true"> / </span>
+      <button
+        type="button"
+        className={cx(styles.langButton, language === 'en' && styles.langActive)}
+        aria-pressed={language === 'en'}
+        onClick={() => setLanguage('en')}
+      >
+        EN
+      </button>
+    </span>
   )
 }

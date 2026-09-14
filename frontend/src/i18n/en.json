@@ -6,6 +6,12 @@
     "data": "Data",
     "contact": "Contact"
   },
+  "a11y": {
+    "mainMenu": "Main menu",
+    "footerMenu": "Footer menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
   "hero": {
     "lines": ["Locate", "Automate", "Migrate"],
     "cta": "Contact"

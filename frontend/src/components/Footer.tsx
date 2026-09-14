@@ -11,13 +11,13 @@ import { useDict } from '@/i18n'
 import styles from './Footer.module.css'
 
 export function Footer() {
-  const { nav, footer } = useDict()
+  const { nav, footer, a11y } = useDict()
 
   return (
     <footer className={styles.foot}>
       <div className={`wrap ${styles.inner}`}>
         <span>{footer.copy}</span>
-        <nav aria-label="Alt menü">
+        <nav aria-label={a11y.footerMenu}>
           <a href={disciplineUrls.web}>{nav.web}</a>
           <a href={disciplineUrls.automation}>{nav.automation}</a>
           <a href={disciplineUrls.data}>{nav.data}</a>

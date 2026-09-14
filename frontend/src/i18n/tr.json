@@ -6,6 +6,12 @@
     "data": "Veri",
     "contact": "İletişim"
   },
+  "a11y": {
+    "mainMenu": "Ana menü",
+    "footerMenu": "Alt menü",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat"
+  },
   "hero": {
     "lines": ["Keşfet", "Hızlandır", "Yayınla"],
     "cta": "İletişim"
