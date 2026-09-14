@@ -2,7 +2,7 @@
 file: Hero.tsx
 importable: Hero
 
-description: Sayfanin tam ekran acilis bolumu, sag alta yaslanan hero.svg ve dort satirlik slogan/cta.
+description: Açılış bölümündeki sloganı, iletişim bağlantısını ve ekrana uygun illüstrasyonu gösterir.
 */
 
 import heroMobileSvg from '@/assets/illustrations/hero-mobile.svg'
@@ -20,11 +20,9 @@ export function Hero() {
 
   return (
     <section className={styles.hero}>
-      {/* top ve bottom ayni anda verildigi icin img'a degil, boyutu cozen
-          bu cerceve div'e ihtiyac var, bkz. Hero.module.css'teki not.
-          iki gorsel de DOM'da duruyor, hangisinin gorunecegine CSS karar
-          veriyor (bkz. .artDesktop/.artMobile) — phone.svg/phone-mobile.svg
-          ile ayni desen. */}
+      {/* Çerçeve görselin alanını ve zemin konumunu belirler, içindeki
+          img yalnızca belirme hareketini taşır. Mobil ve masaüstü
+          kompozisyonları arasındaki seçimi CSS yapar. */}
       <div className={styles.artFrame}>
         <img
           ref={art.ref}

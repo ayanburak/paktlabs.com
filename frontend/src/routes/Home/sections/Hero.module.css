@@ -3,21 +3,26 @@
   min-height: 100svh;
   overflow: hidden;
   background: var(--paper);
-  display: flex;
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: 32px;
+  padding-right: clamp(20px, 4vw, 56px);
   border-bottom: 2px solid var(--ink);
 }
 
-/* hero.svg'nin zemin cizgisi kendi alt kenarina bitisik, bottom:-2px bandaki
-   2px'lik hatla ayni kalinlikta kesissin diye ince ayar. genislik aspect-ratio
-   uzerinden hesaplaniyor.
-   NOT: top ve bottom ayni anda verilince img gibi bir replaced eleman kendi
-   dogal boyutunu kullanir, aradaki bosluga gerilmez, bu yuzden boyutu cozen
-   bu cerceve bir div, icindeki img sadece %100/%100 doldurur. */
+/* Metin ilk sütunda kendi genişliğini ayırır, görsel kalan alana sığar.
+   Ekran yüksekliğinden gelen üst sınır masaüstündeki ölçeği korur.
+   Başlık alanı daraldığında görsel oranını bozmadan küçülür, zemin çizgisi
+   ise alt kenardaki iki piksellik bölüm çizgisine bağlı kalır. */
 .artFrame {
-  position: absolute;
-  top: 84px;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+  justify-self: end;
+  position: relative;
   bottom: -2px;
-  right: clamp(20px, 4vw, 56px);
+  width: 100%;
+  max-width: calc((100svh - 84px + 2px) * 2660.3921 / 2291.2388);
   aspect-ratio: 2660.3921 / 2291.2388;
   z-index: 1;
   pointer-events: none;
@@ -35,14 +40,16 @@
 }
 
 .inner {
+  grid-column: 1;
+  grid-row: 1;
   position: relative;
   z-index: 2;
-  width: 100%;
+  width: max-content;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 128px clamp(20px, 4vw, 56px) clamp(48px, 9vh, 110px);
+  padding: 128px 0 clamp(48px, 9vh, 110px) clamp(20px, 4vw, 56px);
 }
 
 .slogan {
@@ -100,6 +107,7 @@
 @media (max-width: 768px) {
   .hero {
     display: block;
+    padding-right: 0;
     position: relative;
     overflow: visible;
     /* 84px header payi + gorselin kendi orani (1536.6208/921.20239 ~ 1.668)
@@ -111,10 +119,15 @@
 
   .artFrame {
     position: absolute;
+    /* Masaüstündeki alt hizalama mutlak konumda da etkili olur.
+       Mobil kompozisyon üst kenardan başladığı için burada sıfırlanır. */
+    align-self: auto;
+    justify-self: auto;
     top: 84px;
     left: 50%;
     transform: translateX(-50%);
     width: 92%;
+    max-width: none;
     /* .inner'in z-index:2'sinin arkasinda kalsin diye */
     z-index: 0;
     /* hero-mobile.svg'nin kendi viewBox orani — masaustundeki hero.svg'den
@@ -132,6 +145,7 @@
   }
 
   .inner {
+    width: 100%;
     min-height: auto;
     align-items: flex-start;
     padding: 56px clamp(20px, 4vw, 56px) 8px;
