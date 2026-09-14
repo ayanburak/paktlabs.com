@@ -11,7 +11,9 @@ host=${DEPLOY_HOST:-vps}
 
 ssh "$host" bash -s -- "${1:-}" <<'REMOTE'
 set -euo pipefail
-name=$1
+# ssh argumanlari tek komut satirina birlestirir, bos arguman uzak tarafa hic
+# ulasmaz. Listeleme modunda $1 tanimsiz gelir, set -u yuzunden varsayilan gerekli.
+name=${1:-}
 releases=/var/www/paktlabs-releases
 
 if [ -z "$name" ]; then

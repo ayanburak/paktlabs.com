@@ -70,4 +70,26 @@ Dile özel illüstrasyon dosyalarının nasıl ekleneceği `docs/illustrations.m
 
 ## Dağıtım
 
-Üretim derlemesi sunucuda `/var/www/paktlabs` dizinine kopyalanır ve nginx tarafından sunulur. Sunucu kurulumu ve dağıtım adımları ayrı bir altyapı reposunda belgelenir. GitHub'a push yapılması canlı sitenin güncellendiği anlamına gelmez, canlıya alım ayrı ve elle yapılan bir adımdır. Mevcut dağıtım atomik değildir, sıkıştırma ve geri dönüşü olan bir yayın düzeni henüz kurulmamıştır.
+GitHub'a push yapılması canlı sitenin güncellendiği anlamına gelmez. Canlıya alım ayrı ve elle çalıştırılan iki adımdır: paketleme ve yayınlama.
+
+Paket, commit'lenmiş kaynaktan üretilir. Script `git archive` ile yalnızca verilen commit'in `frontend` klasörünü çıkarır, temiz bir ortamda `npm ci` ve `npm run build` çalıştırır. Çalışma ağacındaki commit'lenmemiş bir değişiklik bu yüzden pakete giremez. HTML, JS, CSS ve SVG dosyalarının yanına önceden sıkıştırılmış `.gz` kopyaları eklenir, her dosyanın SHA256 özeti ve kaynak commit pakete yazılır.
+
+```bash
+scripts/build-release.sh            # HEAD'den release/paktlabs-<zaman>-<commit>.tar.gz üretir
+scripts/build-release.sh <commit>   # belirli bir commit'ten üretir
+```
+
+Yayınlama, paketi sunucuda `/var/www/paktlabs-releases/<sürüm>/` altına açar ve özetleri doğrular. Nginx'in kök dizini olan `/var/www/paktlabs` bir symlink'tir. Yeni sürüme geçiş bu symlink'in tek bir rename işlemiyle çevrilmesidir, ziyaretçi hiçbir anda yarım kopyalanmış bir dizin görmez. Önceki sürümler yerinde kalır. Script son olarak canlı `index.html`'in yeni paketteki dosyaları gösterdiğini kontrol eder.
+
+```bash
+scripts/deploy-release.sh release/paktlabs-<zaman>-<commit>.tar.gz
+```
+
+Geri dönüşte symlink eski bir sürüme çevrilir, dosya kopyalanmaz ve hiçbir sürüm silinmez.
+
+```bash
+scripts/rollback-release.sh            # sürümleri ve aktif olanı listeler
+scripts/rollback-release.sh <sürüm>    # o sürüme döner
+```
+
+Nginx `.gz` kopyalarını `gzip_static` ile hazır sunar. Hash'li dosyalar bir yıl ve değişmez olarak önbelleğe alınır, `index.html` her ziyarette yeniden doğrulanır. Böylece yeni bir sürüm, eski önbellekle karışmadan ilk yenilemede görünür. Eski sürümler birikince elle temizlenir, aktif sürüm ve geri dönüş için en az bir önceki sürüm saklanır. Sunucu tarafındaki kurulum ayrı bir altyapı belgesinde tutulur.
