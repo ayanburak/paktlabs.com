@@ -76,4 +76,4 @@ Yerleşimi etkileyen değişikliklerde aynı ekran, dil, font ve tarayıcı koş
 
 Referans olarak kabul edilen ekranlarda açıklanmayan konum, boyut ve satır kırılımı değişikliği olmaması beklenir. Tablet hata kayıtlarında ise çakışmanın giderilmesi ve tasarımın zemin ilişkilerinin korunması aranır. Animasyon kapalıyken de aynı nihai yerleşimin elde edilmesi ikinci aşamanın kontrolüdür.
 
-Bu klasör statik başlangıç kaydıdır. Otomatik görsel karşılaştırma komutu ve CI entegrasyonu henüz kurulmamıştır.
+Bu klasör statik başlangıç kaydıdır ve değiştirilmez. Güncel onaylı görünümün otomatik karşılaştırması `frontend/tests/visual.spec.ts` ile yapılır, referansları `frontend/tests/visual.spec.ts-snapshots/` altında durur ve `npm run test:visual` ile çalıştırılır. Yerleşim ölçümleri `frontend/tests/layout.spec.ts` içindedir. GitHub Actions davranış testlerini çalıştırır, görsel testleri çalıştırmaz. Koşullar `frontend/tests/README.md` içinde anlatılır.
