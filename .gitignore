@@ -3,6 +3,9 @@
 __pycache__/
 *.pyc
 
+# scripts/build-release.sh ciktisi, paketler repoya girmez
+/release/
+
 # stray tool artifact, proje icerigi degil
 /undefined/
 
