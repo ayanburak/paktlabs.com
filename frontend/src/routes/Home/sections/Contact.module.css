@@ -129,20 +129,7 @@
   width: auto;
 }
 
-.sendArt img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-/* buyuk phone.svg mobilde hic gosterilmiyor (bilerek), .inner'in ikinci
-   sutunu (onun icin ayrilmis) da bu yuzden kalkiyor, form tek sutuna tam
-   genislikte yayilir. yerine gonder butonunun yanina phone-mobile.svg
-   (yatay, dar alana sigan varyant) geliyor. */
-.sendArt {
-  display: none;
-}
-
+/* Mobilde telefon gorseli ve ona ayrilan ikinci sutun kalkar. */
 @media (max-width: 768px) {
   .inner {
     grid-template-columns: 1fr;
@@ -155,17 +142,5 @@
      sayfayi yatay tasiriyordu (bkz. Footer'daki kirpilma) */
   .form {
     grid-template-columns: 1fr;
-  }
-  /* .sendRow'un justify-self:start'i onu icerik kadar dar tutuyordu,
-     stretch ile tam genislige yayilip flex:1 olan gorsele yer aciyor */
-  .sendRow {
-    justify-self: stretch;
-  }
-  .sendArt {
-    display: block;
-    flex: 1;
-    width: 100%;
-    height: auto;
-    min-width: 0;
   }
 }

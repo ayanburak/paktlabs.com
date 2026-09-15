@@ -26,8 +26,8 @@ const cases = [
   {
     width: 390,
     height: 844,
-    loads: ['hero-mobile', 'inceleyin-mobile', 'phone-mobile'],
-    skips: ['hero', 'inceleyin', 'phone'],
+    loads: ['hero-mobile', 'inceleyin-mobile'],
+    skips: ['hero', 'inceleyin', 'phone', 'phone-mobile'],
   },
   {
     width: 1024,
@@ -68,5 +68,6 @@ test('crossing the mobile threshold loads the mobile hero', async ({ page }) => 
 
   await page.setViewportSize({ width: 390, height: 844 })
   await expect.poll(() => names.has('hero-mobile')).toBe(true)
-  await expect.poll(() => names.has('phone-mobile')).toBe(true)
+  await expect(page.locator('#iletisim img:visible')).toHaveCount(0)
+  expect(names).not.toContain('phone-mobile')
 })
