@@ -61,7 +61,7 @@ export function Contact() {
         </div>
 
         <picture className={styles.art}>
-          <source media="(width > 768px)" srcSet={phoneSvg} />
+          <source media="(min-width: 769px)" srcSet={phoneSvg} />
           <RevealImg src={emptyImage} />
         </picture>
       </div>
