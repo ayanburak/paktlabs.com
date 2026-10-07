@@ -6,7 +6,21 @@
     },
     "hero": {
       "title": "Veri",
-      "lead": "Dağınık kayıtları toplar, temizler ve güvenilen tek bir tabloya çeviririz. Bu işleri nasıl yaptığımızı tamamlanmış çalışmalar üzerinden anlatıyoruz.",
+      "lead": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "counts": [
+        {
+          "value": "07",
+          "label": "Lorem"
+        },
+        {
+          "value": "03",
+          "label": "Ipsum"
+        },
+        {
+          "value": "2026",
+          "label": "Dolor"
+        }
+      ],
       "cta": "Çalışmalara git ↓"
     },
     "stack": {

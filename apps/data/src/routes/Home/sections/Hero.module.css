@@ -1,11 +1,13 @@
-/* landing'in hero'suyla ayni iskelet: ekrani kaplar, header seffaf olarak
-   ustte durur, alt cizgi bolumu bir sonrakinden ayirir. Metin solda, figur
-   sagda ve zemini bu alt cizgiye oturur */
+/* mockup'taki veri hero'su. Iskelet landing'in hero'suyla ayni: ekrani
+   kaplar, header seffaf olarak ustte durur, alt cizgi bolumu bir sonrakinden
+   ayirir. Figur ise landing'deki gibi zemine oturmaz, karakter havada duracak
+   sekilde cizildi */
 .hero {
   position: relative;
   min-height: 100svh;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
   column-gap: 32px;
   padding: 0 clamp(20px, 4vw, 56px);
   border-bottom: 2px solid var(--ink);
@@ -15,10 +17,7 @@
 .copy {
   position: relative;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 128px 0 clamp(48px, 9vh, 110px);
+  padding: 128px 0 clamp(48px, 9vh, 100px);
 }
 
 .title {
@@ -35,68 +34,60 @@
   color: var(--muted);
 }
 
-.cta {
-  align-self: flex-start;
-  margin-top: 34px;
+/* uc kisa olcu, ustlerinde kalin bir cizgiyle aciklamadan ayrilir */
+.counts {
+  display: flex;
+  gap: 32px;
+  max-width: 460px;
+  margin: 28px 0 0;
+  padding: 18px 0 0;
+  border-top: 2px solid var(--ink);
+}
+.counts div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.counts dt {
+  order: 2;
+  font: 700 11px/1 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.counts dd {
+  margin: 0;
+  font: 700 28px/1 var(--font-display);
+  letter-spacing: -0.03em;
 }
 
-/* SVG'nin alt kenari cizimin zeminidir, tablonun kalin alt kenari dosyanin son
-   satirina kadar iner. Bu yuzden landing'deki gibi ek bir zemin kaydirmasi
-   gerekmez, cerceve 2px asagi inip bolumun alt cizgisiyle birlesir. Oran
-   mockup'taki 922/1333 degil, reading.svg'nin kendi viewBox orani */
-.artFrame {
-  position: relative;
-  bottom: -2px;
-  align-self: end;
-  height: min(72svh, 680px);
-  aspect-ratio: 717.45746 / 1295.591;
-  margin-right: clamp(0px, 4vw, 90px);
-  pointer-events: none;
+.cta {
+  margin-top: 30px;
 }
-.artFrame img {
+
+/* figur dikeyde ortada, biraz saga kaydirilmis ve havada durur. Kutunun orani
+   mockup'taki 922/1333, cizimin kendi oranindan genis. SVG kutunun icinde
+   ortalanir, boylece figur mockup'taki yerine birebir oturur */
+.art {
+  grid-column: 2;
+  align-self: center;
+  height: min(56svh, 580px);
+  aspect-ratio: 922 / 1333;
+  margin: 64px clamp(0px, 4vw, 90px) 0 0;
+  z-index: 1;
+}
+.art img {
   width: 100%;
   height: 100%;
 }
 
-/* basliktan dugmeye kadar metin landing'deki gibi sirayla yukselir */
-.title,
-.lead,
-.cta {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: heroRise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
-}
-.title {
-  animation-delay: 0.12s;
-}
-.lead {
-  animation-delay: 0.26s;
-}
-.cta {
-  animation-delay: 0.4s;
-}
-@keyframes heroRise {
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .title,
-  .lead,
-  .cta {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
-
-/* mobilde header akista durur, metin ustte, figur altta ortalanir ve zemini
-   yine bolumun alt cizgisine oturur */
+/* mobilde header akista durur, metin ustte, figur altta ortalanir ve alt
+   cizgiden bir bosluk birakir */
 @media (max-width: 768px) {
   .hero {
     display: block;
     min-height: 0;
+    padding-bottom: 0;
   }
   .copy {
     padding: 40px 0 36px;
@@ -104,9 +95,9 @@
   .title {
     font-size: clamp(110px, 38vw, 220px);
   }
-  .artFrame {
+  .art {
+    width: min(46%, 240px);
     height: auto;
-    width: min(52%, 260px);
-    margin: 12px auto 0;
+    margin: 0 auto 48px;
   }
 }

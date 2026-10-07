@@ -6,7 +6,21 @@
     },
     "hero": {
       "title": "Data",
-      "lead": "We collect scattered records, clean them and turn them into one table people can trust. Here we show how, through finished work.",
+      "lead": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "counts": [
+        {
+          "value": "07",
+          "label": "Lorem"
+        },
+        {
+          "value": "03",
+          "label": "Ipsum"
+        },
+        {
+          "value": "2026",
+          "label": "Dolor"
+        }
+      ],
       "cta": "Go to the work ↓"
     },
     "stack": {

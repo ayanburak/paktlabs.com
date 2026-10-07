@@ -8,7 +8,7 @@ uygulamadan import edilmez, cunku logolari Vite'in anladigi SVG import'lariyla
 gelir ve testler duz Node ortaminda calisir. Beklenen degerler sayfanin
 kendisinden olculur.
 
-description: Veri sayfasinin hero ve teknoloji seridi testleri.
+description: Veri sayfasinin hero, teknoloji seridi, calisma listesi ve iletisim testleri.
 */
 
 import { expect, test } from '@playwright/test'
@@ -21,6 +21,8 @@ for (const lang of languages) {
 
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(dict[lang].home.hero.title)
     await expect(page.getByRole('link', { name: dict[lang].home.hero.cta })).toHaveAttribute('href', '#calismalar')
+    const counts = page.locator('section').first().locator('dl dd')
+    await expect(counts).toHaveText(dict[lang].home.hero.counts.map((count) => count.value))
   })
 }
 
