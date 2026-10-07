@@ -62,3 +62,10 @@ test('source page of an unknown study shows the not found page', async ({ page }
 
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(dict.tr.notFound.title)
 })
+
+// Yer tutucular listede gorunur ama detay sayfalari yoktur.
+test('placeholder study address shows the not found page', async ({ page }) => {
+  await openPage(page, '/work/lorem-02', 'tr')
+
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(dict.tr.notFound.title)
+})

@@ -19,6 +19,15 @@ export const en: StudyText = {
     { label: 'Input', value: '4 sources, 184,312 records' },
     { label: 'Delivered', value: 'Nightly pipeline and review screen' },
   ],
+  // Kart metni mockup'taki 01 numarali kartin lorem metni, sayfa tasarimi
+  // canlida sinanirken yerinde duruyor.
+  card: {
+    lead: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    body: [
+      'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.',
+      'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',
+    ],
+  },
 }
 
 export const sourceEn: SourceText = {

@@ -1,6 +1,6 @@
 /*
 file: types.ts
-importable: Study, StudyText, SourceText, StudyTag, KunyeRow
+importable: Study, StudyText, StudyCard, SourceText, StudyFeature, StudyTag, KunyeRow
 
 Bir calisma iki katmandan olusur. Study dilden bagimsiz alanlari tasir:
 adresteki slug, listedeki numara, yil ve filtrede kullanilan etiketler.
@@ -12,13 +12,24 @@ Kod ve veri sayfasi her calismada olmayabilir, firmanin paylasilmasina izin
 vermedigi kod yayinlanmaz. Bu yuzden source alani istege baglidir. Varsa iki
 dilde birden vardir, tek bir dilde yazilmis kod sayfasi derleme hatasi verir.
 
-Tip, sayfalar yazildikca genisler. Su an yalnizca kapak ve listeleme icin
-gereken alanlar var, bolum bloklari detay sayfasi yazilirken eklenecek.
+Veri sayfasindaki listede bir calisma ya normal bir kart ya da tam satir
+tutan one cikan kart olarak gorunur. One cikan kartin teknik detaylari ve
+araclari feature alaninda durur, varsa iki dilde birden yazilir.
+
+placeholder isaretli calismalar yalnizca listede gorunen yer tutuculardir.
+Mockup'taki lorem kartlari canliya tasimak icin var, detay ve kod sayfalari
+bulunamadi sayfasina duser. Gercek calismalar geldikce placeholders.ts'ten
+silinirler.
+
+Tip, sayfalar yazildikca genisler. Bolum bloklari detay sayfasi yazilirken
+eklenecek.
 
 description: data sitesindeki calismalarin icerik tiplerini tanimlayan modul.
 */
 
 import type { Language } from '@paktlabs/brand/i18n/language'
+
+import type { TechName } from '../techNames'
 
 // Filtrede ve kartlarda gorunen etiketlerin kimlikleri. Ekranda gorunen adlari
 // sozlukte durur, burada yalnizca dilden bagimsiz anahtarlar var.
@@ -32,10 +43,19 @@ export interface KunyeRow {
   value: string
 }
 
+// Listedeki kartin metni: kalin yazilan bir giris cumlesi ve altinda birkac
+// kisa paragraf. Detay sayfasinin tek cumlelik lede'inden ayri tutulur, cunku
+// kart sayfaya hic girmemis okura isi anlatir.
+export interface StudyCard {
+  lead: string
+  body: string[]
+}
+
 export interface StudyText {
   title: string
   lede: string
   kunye: KunyeRow[]
+  card: StudyCard
 }
 
 // Kod sayfasinin kendi basligi, aciklamasi ve kunyesi var. Su an StudyText ile
@@ -45,6 +65,13 @@ export interface SourceText {
   title: string
   lede: string
   kunye: KunyeRow[]
+}
+
+// One cikan kartin sag kutusu. Teknik detaylar dile bagli oldugu icin iki
+// dilde ayri, araclar ise urun adlari oldugu icin tek bir listede durur.
+export interface StudyFeature {
+  facts: Record<Language, KunyeRow[]>
+  tools: TechName[]
 }
 
 // source dil basina degil calisma basina tanimli. Alan her dilin StudyText'i
@@ -57,4 +84,6 @@ export interface Study {
   tags: StudyTag[]
   text: Record<Language, StudyText>
   source?: Record<Language, SourceText>
+  feature?: StudyFeature
+  placeholder?: true
 }
