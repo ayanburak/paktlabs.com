@@ -10,9 +10,10 @@ import { useDict } from '@/i18n'
 
 import { Hero } from './sections/Hero'
 import { TechRail } from './sections/TechRail'
+import { Works } from './sections/Works/Works'
 
 // Bolumler mockup'taki sirayla eklenir: hero, teknoloji seridi, calisma
-// listesi ve iletisim. Su an hero ve teknoloji seridi var.
+// listesi ve iletisim. Su an hero, teknoloji seridi ve calisma listesi var.
 export function Home() {
   const { home } = useDict()
 
@@ -20,6 +21,7 @@ export function Home() {
     <Page title={home.meta.title} description={home.meta.description}>
       <Hero />
       <TechRail />
+      <Works />
     </Page>
   )
 }

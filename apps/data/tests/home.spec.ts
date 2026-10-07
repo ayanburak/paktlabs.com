@@ -56,3 +56,16 @@ test('tech rail stops and hides the loop copy with reduced motion', async ({ pag
   await expect(section.locator('li[aria-hidden="true"]').first()).toBeHidden()
   await expect(section.locator('ul').locator('..')).toHaveCSS('overflow-x', 'auto')
 })
+
+// Ayni satirdaki kartlarin baslik kutulari ortak bir yukseklik alir, uzun bir
+// baslik iki ya da uc satira kirildiginda bile metin kutulari ayni hizadan
+// baslamali. 1440 genislikte izgara uc sutundur, ilk satir 01, 02 ve 03.
+test('cards in a row start their text boxes at the same height', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await openPage(page, '/', 'tr')
+
+  const cards = page.locator('#calismalar > a')
+  const tops = await Promise.all([1, 2, 3].map(async (i) => (await cards.nth(i).locator(':scope > div').nth(1).boundingBox())!.y))
+  expect(Math.max(...tops) - Math.min(...tops)).toBeLessThanOrEqual(1)
+})

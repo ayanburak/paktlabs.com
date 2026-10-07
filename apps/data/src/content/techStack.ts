@@ -1,6 +1,6 @@
 /*
 file: techStack.ts
-importable: techStack, Tech
+importable: techStack, techLogos, Tech
 
 Teknoloji seridinde akan araclarin adi ve logosu. Adlar ve sira techNames.ts'ten
 gelir, bu dosya yalnizca her ada logosunu baglar.
@@ -36,8 +36,9 @@ export interface Tech {
 }
 
 // Record her adin bir logosu olmasini zorunlu tutar, listeye yeni bir ad
-// eklenip logosu unutulursa derleme hata verir.
-const logos: Record<TechName, string> = {
+// eklenip logosu unutulursa derleme hata verir. Calisma kartlari araclarin
+// logosunu da buradan adla alir.
+export const techLogos: Record<TechName, string> = {
   Python: pythonLogo,
   PostgreSQL: postgresqlLogo,
   React: reactLogo,
@@ -58,4 +59,4 @@ const logos: Record<TechName, string> = {
   'scikit-learn': scikitLearnLogo,
 }
 
-export const techStack: Tech[] = techNames.map((name) => ({ name, logo: logos[name] }))
+export const techStack: Tech[] = techNames.map((name) => ({ name, logo: techLogos[name] }))

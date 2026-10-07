@@ -1,0 +1,180 @@
+/* kart ayri kutulardan olusur, aralarinda alti piksellik bosluk kalir.
+   Landing'deki disiplin kartlarinin dili: hover'da butun kutular birlikte
+   kalkar ve altlarina sert bir golge duser */
+.card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 6px;
+}
+
+/* ayni satirdaki kartlarin baslik kutulari ortak bir satir yuksekligine
+   baglanir. Baslik iki ya da uc satira kirildiginda o satirdaki butun baslik
+   kutulari en uzununun boyunu alir, alt kutular ayni hizadan baslar. Kart
+   izgarada iki satir tutar, satirlarini izgaradan alir. subgrid desteklemeyen
+   tarayici bu blogu atlar ve kartlar ustteki kendi satirlariyla cizilir */
+@supports (grid-template-rows: subgrid) {
+  .card {
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+  }
+}
+
+.box {
+  background: var(--paper);
+  border: 2px solid var(--charcoal);
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
+}
+.card:hover .box {
+  transform: translateY(-3px);
+  box-shadow: 0 3px 0 var(--charcoal);
+}
+.card:hover h3,
+.card:hover .go {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.head {
+  padding: clamp(18px, 2vw, 24px) 20px;
+  text-align: center;
+}
+.head :global(.eyebrow) {
+  margin-bottom: 10px;
+}
+.head h3 {
+  font-size: clamp(24px, 2.6vw, 34px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 24px 24px;
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.body p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.body .lead {
+  font-size: 15.5px;
+  color: var(--ink);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tags li {
+  padding: 5px 7px;
+  font: 700 11px/1 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+  border: 1.5px solid var(--gray);
+}
+
+.go {
+  font: 700 12px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+/* one cikan calisma tam satir tutar: baslik kutusu iki sutunu boydan boya
+   kaplar, altinda solda metin, sagda teknik detaylar durur */
+.feature {
+  grid-column: 1 / -1;
+  grid-template-columns: 1fr 1.15fr;
+  grid-template-rows: auto 1fr;
+}
+.feature .head {
+  grid-column: 1 / -1;
+}
+.feature .head h3 {
+  font-size: clamp(34px, 4.4vw, 64px);
+  line-height: 0.98;
+}
+.feature .panel {
+  padding: clamp(22px, 2.6vw, 34px);
+}
+.feature .body p {
+  font-size: clamp(15px, 1.3vw, 17px);
+  line-height: 1.62;
+}
+.feature .body .lead {
+  font-size: clamp(17px, 1.5vw, 20px);
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 22px;
+  padding: clamp(22px, 2.6vw, 34px);
+}
+.facts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.facts li {
+  display: flex;
+  gap: 18px;
+  align-items: baseline;
+  padding: 12px 0;
+  border-top: 2px solid var(--ink);
+  font: 500 clamp(15px, 1.4vw, 18px) var(--font-display);
+}
+.facts li:last-child {
+  border-bottom: 2px solid var(--ink);
+}
+.label {
+  flex: none;
+  width: 96px;
+  font: 700 11px/1 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+}
+.mini {
+  display: flex;
+  gap: 8px;
+}
+.mini img {
+  width: 48px;
+  height: 48px;
+  padding: 7px;
+  background: var(--surface);
+  border: 2px solid var(--charcoal);
+}
+
+/* tabletin dar ucunda one cikan kartin iki sutunu alt alta iner */
+@media (max-width: 1100px) {
+  .feature {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+}
