@@ -4,7 +4,7 @@ Testler Playwright ile yazılmıştır ve gerçek bir Chromium tarayıcısında 
 
 ## Çalıştırma
 
-Komutlar `frontend` klasöründe çalıştırılır. Tarayıcı ilk kurulumda bir kez indirilir.
+Komutlar `apps/landing` klasöründe çalıştırılır, bağımlılıklar önce repo kökünde `npm ci` ile kurulur. Tarayıcı ilk kurulumda bir kez indirilir.
 
 ```bash
 npx playwright install chromium

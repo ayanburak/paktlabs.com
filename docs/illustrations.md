@@ -1,8 +1,8 @@
 # Dile göre disiplin görselleri
 
-Disiplinler bölümünün görselleri `frontend/src/routes/Home/sections/Disciplines.tsx` içindeki `illustrations` eşlemesinden seçilir. Dil mevcut dil sağlayıcısından gelir; ekran genişliğine uygun dosyayı `picture` seçer. Her dil şu an mevcut SVG çiftini kullanır. İngilizce SVG metni henüz çevrilmiş değildir.
+Disiplinler bölümünün görselleri `apps/landing/src/routes/Home/sections/Disciplines.tsx` içindeki `illustrations` eşlemesinden seçilir. Dil mevcut dil sağlayıcısından gelir; ekran genişliğine uygun dosyayı `picture` seçer. Her dil şu an mevcut SVG çiftini kullanır. İngilizce SVG metni henüz çevrilmiş değildir.
 
-Yeni görseller `frontend/src/assets/illustrations/` altına eklenir. Önerilen adlar ve eşleme:
+Yeni görseller `apps/landing/src/assets/illustrations/` altına eklenir. Önerilen adlar ve eşleme:
 
 | Dosya | Eşleme |
 | --- | --- |

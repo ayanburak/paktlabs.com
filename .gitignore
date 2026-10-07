@@ -1,3 +1,6 @@
+# workspaces bagimliliklari kokte tek node_modules altinda toplanir
+node_modules/
+
 # backend .venv (ileride eklenecek)
 .venv/
 __pycache__/

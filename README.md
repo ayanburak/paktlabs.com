@@ -10,13 +10,13 @@ Repo yalnızca landing sayfasını içerir. Disiplin bağlantıları ayrı subdo
 - `https://automation.paktlabs.com`
 - `https://data.paktlabs.com`
 
-Bu adresler `frontend/src/content/disciplines.ts` içinde tek yerde tutulur. Üst menü, mobil menü, disiplin kartları, iş kapsamı bantları ve alt menü aynı kaynağı kullanır. Adres değiştiğinde yalnızca bu dosya güncellenir. Subdomain'lerin DNS, sertifika ve uygulama kurulumu bu reponun işi değildir.
+Bu adresler `apps/landing/src/content/disciplines.ts` içinde tek yerde tutulur. Üst menü, mobil menü, disiplin kartları, iş kapsamı bantları ve alt menü aynı kaynağı kullanır. Adres değiştiğinde yalnızca bu dosya güncellenir. Subdomain'lerin DNS, sertifika ve uygulama kurulumu bu reponun işi değildir.
 
 Landing içinde `/web`, `/automation` veya `/data` gibi alt sayfalar tanımlanmaz. Uygulamada tek bir rota vardır. İletişim formu bir backend'e bağlı değildir, gönder düğmesi bilinçli olarak işlem yapmaz. Doğrudan iletişim için sayfadaki e-posta bağlantısı kullanılır.
 
 ## Dil
 
-Arayüz Türkçe ve İngilizcedir. Metinler `frontend/src/i18n/tr.json` ve `en.json` dosyalarında durur. İki sözlüğün aynı şekle sahip olması TypeScript tarafından denetlenir, bir dilde eksik anahtar derleme hatası verir.
+Arayüz Türkçe ve İngilizcedir. Metinler `apps/landing/src/i18n/tr.json` ve `en.json` dosyalarında durur. İki sözlüğün aynı şekle sahip olması TypeScript tarafından denetlenir, bir dilde eksik anahtar derleme hatası verir.
 
 İlk ziyarette dil Türkçedir. Değiştiriciyle yapılan seçim tarayıcının `localStorage` alanına `pl_lang` anahtarıyla yazılır. Tarayıcı depolamayı engellese veya depolama dolu olsa da dil değiştirme çalışır, yalnızca seçim bir sonraki ziyarete taşınmaz. Cookie, IP tabanlı dil seçimi ve dile özel URL henüz kurulmamıştır. `localStorage` origin'e bağlı olduğu için landing'de yapılan seçim subdomain'lere otomatik geçmez.
 
@@ -24,7 +24,7 @@ Sayfa başlığı ve açıklaması `index.html` içinde Türkçe olarak yazılı
 
 ## Tasarım kararları
 
-Bütün stiller elle yazılmıştır, utility CSS framework'ü kullanılmaz. Ortak renk ve boşluklar `frontend/src/styles/tokens.css`, taban stiller `global.css`, bileşene özel stiller bileşenin yanındaki `.module.css` dosyalarında durur.
+Bütün stiller elle yazılmıştır, utility CSS framework'ü kullanılmaz. Ortak renk ve boşluklar `apps/landing/src/styles/tokens.css`, taban stiller `global.css`, bileşene özel stiller bileşenin yanındaki `.module.css` dosyalarında durur.
 
 İllüstrasyonların zemin çizgileri bölüm sınırlarına göre elle hizalanmıştır. İş kapsamı bantlarındaki görsellerin zemin kaydırması `translate`, belirme animasyonu ise ayrı `transform` özelliğiyle taşınır. Böylece animasyon kaldırılsa da yerleşim değişmez. Figürlerin bölüm çizgisinin altına taşan ayak gibi parçaları kırpılacak fazlalık değildir.
 
@@ -34,15 +34,15 @@ Küçük soluk metinler için kullanılan `--faint` rengi, sayfanın açık zemi
 
 Doğrulamalar Linux üzerinde Chromium ile yapılmıştır. Firefox, Safari ve gerçek iPad veya telefon üzerinde test yapılmamıştır.
 
-Medya sorguları klasik `min-width` ve `max-width` biçiminde yazılır. `(768px < width <= 1900px)` gibi range sözdizimi Safari 16.4, Chrome 104 ve Firefox 63 öncesinde desteklenmez, desteklenmeyen tarayıcıda kuralın tamamı sessizce yok sayılır. Aynı nedenle `frontend/vite.config.ts` içinde `build.cssMinify` kapalıdır, çünkü varsayılan minifier klasik sorguları derleme sırasında range sözdizimine çevirir.
+Medya sorguları klasik `min-width` ve `max-width` biçiminde yazılır. `(768px < width <= 1900px)` gibi range sözdizimi Safari 16.4, Chrome 104 ve Firefox 63 öncesinde desteklenmez, desteklenmeyen tarayıcıda kuralın tamamı sessizce yok sayılır. Aynı nedenle `apps/landing/vite.config.ts` içinde `build.cssMinify` kapalıdır, çünkü varsayılan minifier klasik sorguları derleme sırasında range sözdizimine çevirir.
 
 ## Geliştirme
 
-Komutlar `frontend` klasöründe çalıştırılır. Node.js 24 kullanılır.
+Repo npm workspaces ile kurulur. Bağımlılıklar kökte tek bir `package-lock.json` ile kilitlenir ve kökteki tek `node_modules` altına kurulur, bu yüzden `npm ci` kökte çalıştırılır. Uygulama komutları uygulamanın kendi klasöründe çalıştırılır. Node.js 24 kullanılır.
 
 ```bash
-cd frontend
 npm ci
+cd apps/landing
 npm run dev          # http://localhost:5173
 npm run lint
 npm run typecheck
@@ -54,17 +54,17 @@ npm run build        # dist/ klasörüne üretim derlemesi
 Testler Playwright ile üretim derlemesine karşı çalışır. Davranış testleri dil seçimini, bağlantıları, erişilebilirlik davranışlarını, görsel dosya seçimini ve responsive yerleşimi kapsar. Görsel testler onaylı görünümün tam sayfa ekran görüntüleriyle karşılaştırılmasıdır.
 
 ```bash
-cd frontend
+cd apps/landing
 npx playwright install chromium   # yalnızca ilk kurulumda
 npm test
 npm run test:visual
 ```
 
-Test koşulları, toleranslar ve testlerin neyi kanıtlamadığı `frontend/tests/README.md` içinde anlatılır.
+Test koşulları, toleranslar ve testlerin neyi kanıtlamadığı `apps/landing/tests/README.md` içinde anlatılır.
 
 GitHub Actions her push ve pull request'te lint, tip kontrolü ve davranış testlerini çalıştırır. Görsel testler CI'da çalıştırılmaz, çünkü referans görüntüler yerel font çizimiyle alınmıştır ve farklı bir runner'da yanlış alarm üretir.
 
-`docs/visual-baseline/` klasörü, responsive düzeltmelerden önceki durumun `257ed79` commit'inden alınmış arşiv kaydıdır. Güncel referanslar `frontend/tests/visual.spec.ts-snapshots/` altında durur. Arşiv yeni görüntülerle değiştirilmez.
+`docs/visual-baseline/` klasörü, responsive düzeltmelerden önceki durumun `257ed79` commit'inden alınmış arşiv kaydıdır. Güncel referanslar `apps/landing/tests/visual.spec.ts-snapshots/` altında durur. Arşiv yeni görüntülerle değiştirilmez.
 
 Dile özel illüstrasyon dosyalarının nasıl ekleneceği `docs/illustrations.md` içinde anlatılır.
 
@@ -72,7 +72,7 @@ Dile özel illüstrasyon dosyalarının nasıl ekleneceği `docs/illustrations.m
 
 GitHub'a push yapılması canlı sitenin güncellendiği anlamına gelmez. Canlıya alım ayrı ve elle çalıştırılan iki adımdır: paketleme ve yayınlama.
 
-Paket, commit'lenmiş kaynaktan üretilir. Script `git archive` ile yalnızca verilen commit'in `frontend` klasörünü çıkarır, temiz bir ortamda `npm ci` ve `npm run build` çalıştırır. Çalışma ağacındaki commit'lenmemiş bir değişiklik bu yüzden pakete giremez. HTML, JS, CSS ve SVG dosyalarının yanına önceden sıkıştırılmış `.gz` kopyaları eklenir, her dosyanın SHA256 özeti ve kaynak commit pakete yazılır.
+Paket, commit'lenmiş kaynaktan üretilir. Script `git archive` ile verilen commit'ten yalnızca kökteki `package.json` ve `package-lock.json` dosyalarını ve `apps/landing` klasörünü çıkarır, temiz bir ortamda `npm ci` ve landing'in build komutunu çalıştırır. Çalışma ağacındaki commit'lenmemiş bir değişiklik bu yüzden pakete giremez. HTML, JS, CSS ve SVG dosyalarının yanına önceden sıkıştırılmış `.gz` kopyaları eklenir, her dosyanın SHA256 özeti ve kaynak commit pakete yazılır.
 
 ```bash
 scripts/build-release.sh            # HEAD'den release/paktlabs-<zaman>-<commit>.tar.gz üretir

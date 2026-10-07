@@ -18,11 +18,13 @@ name="paktlabs-$(date -u +%Y%m%d-%H%M%S)-${commit:0:7}"
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 
-git -C "$repo" archive "$commit" frontend | tar -x -C "$work"
-(cd "$work/frontend" && npm ci --no-audit --no-fund && npm run build)
+# bagimliliklar workspaces kokunde kilitli, bu yuzden kok package.json ve
+# package-lock.json da arsive girer, npm ci kokte calisir
+git -C "$repo" archive "$commit" package.json package-lock.json apps/landing | tar -x -C "$work"
+(cd "$work" && npm ci --no-audit --no-fund && npm run build -w apps/landing)
 
 mkdir -p "$work/$name"
-cp -a "$work/frontend/dist" "$work/$name/site"
+cp -a "$work/apps/landing/dist" "$work/$name/site"
 
 # gzip_static bu kopyalari hazir sunar, nginx her istekte yeniden sikistirmaz.
 # -n dosya adini ve zamani gz basligina yazmaz, ayni build ayni .gz'yi uretir.
