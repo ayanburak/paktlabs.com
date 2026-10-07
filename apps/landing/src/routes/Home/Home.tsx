@@ -5,10 +5,10 @@ importable: Home
 description: Anasayfayi olusturan bolumleri sirasiyla dizen bilesen.
 */
 
+import { Footer } from '@paktlabs/brand/components/Footer'
 import { Header } from '@paktlabs/brand/components/Header'
 import { useDocumentMeta } from '@paktlabs/brand/i18n/useDocumentMeta'
 
-import { Footer } from '@/components/Footer'
 import { useDict } from '@/i18n'
 
 import { About } from './sections/About'
