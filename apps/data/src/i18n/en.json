@@ -4,5 +4,14 @@
       "title": "Data · PaktLabs",
       "description": "PaktLabs data work. How we clean and merge scattered records, and what came out of it, shown through finished projects."
     }
+  },
+  "notFound": {
+    "meta": {
+      "title": "Page not found · PaktLabs",
+      "description": "There is no page at this address."
+    },
+    "title": "There is no page at this address",
+    "lead": "The link may be out of date, or the work may have been removed.",
+    "back": "Back to the work"
   }
 }

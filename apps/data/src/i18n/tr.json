@@ -4,5 +4,14 @@
       "title": "Veri · PaktLabs",
       "description": "PaktLabs'ın veri çalışmaları. Dağınık kayıtları nasıl temizleyip birleştirdiğimizi ve sonuçlarını tamamlanmış işler üzerinden anlatıyoruz."
     }
+  },
+  "notFound": {
+    "meta": {
+      "title": "Sayfa bulunamadı · PaktLabs",
+      "description": "Bu adreste bir sayfa yok."
+    },
+    "title": "Bu adreste bir sayfa yok",
+    "lead": "Bağlantı eski olabilir ya da çalışma kaldırılmış olabilir.",
+    "back": "Çalışmalara dön"
   }
 }

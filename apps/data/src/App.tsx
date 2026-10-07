@@ -13,6 +13,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { LanguageProvider } from '@paktlabs/brand/i18n/LanguageProvider'
 
 import { Home } from './routes/Home/Home'
+import { NotFound } from './routes/NotFound/NotFound'
 
 export function App() {
   return (
@@ -20,6 +21,7 @@ export function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </LanguageProvider>
