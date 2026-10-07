@@ -1,16 +1,20 @@
 # PaktLabs
 
-PaktLabs bağımsız bir yazılım stüdyosudur. Bu repo, `paktlabs.com` adresinde yayınlanan landing sayfasının kaynağıdır. Sayfa React ve Vite ile yazılmış statik bir uygulamadır, derlenen çıktı nginx tarafından sunulur. Şu an bir backend bulunmaz.
+PaktLabs bağımsız bir yazılım stüdyosudur. Bu repo, PaktLabs'ın vitrin sitelerinin kaynağıdır: `paktlabs.com` adresindeki landing sayfası ve disiplin subdomain'leri. Siteler React ve Vite ile yazılmış statik uygulamalardır, derlenen çıktı nginx tarafından sunulur. Şu an bir backend bulunmaz.
+
+Siteler npm workspaces ile tek repoda durur, çünkü aynı stüdyonun parçalarıdır ve ziyaretçi bir siteden ötekine geçtiğinde aynı görünümle karşılaşmalıdır. Ortak üst bar, alt bilgi, renkler ve dil davranışı `packages/brand` paketindedir, ayrıntısı `packages/brand/README.md` içinde anlatılır. Her site `apps` altında kendi klasöründedir: landing `apps/landing`, veri disiplininin sitesi `apps/data`. data sitesinin sayfa türleri ve içerik kuralları `apps/data/README.md` içinde anlatılır. Bu belgenin geri kalanı landing'i anlatır.
+
+Çalışan uygulamalar bu repoya girmez. Python servisleri, veritabanları ve gecelik işler kendi repolarında yazılır, sunucuda kendi servisleri olarak çalışır ve vitrin sitelerinden yalnızca bağlantıyla açılır. Böylece bir uygulamanın yayını vitrinin yayınına bağlanmaz, her uygulama da müşteriye kendi temiz reposuyla gösterilebilir.
 
 ## Kapsam
 
-Repo yalnızca landing sayfasını içerir. Disiplin bağlantıları ayrı subdomain'lere gider:
+Landing alan bağımsızdır. Disiplin bağlantıları ayrı subdomain'lere gider:
 
 - `https://web.paktlabs.com`
 - `https://automation.paktlabs.com`
 - `https://data.paktlabs.com`
 
-Bu adresler `packages/brand/content/disciplines.ts` içinde tek yerde tutulur. Landing'in üst menüsü, mobil menüsü, disiplin kartları, iş kapsamı bantları ve alt menüsü ile disiplin sitelerinin üst barı aynı kaynağı kullanır. Adres değiştiğinde yalnızca bu dosya güncellenir. Subdomain'lerin DNS, sertifika ve uygulama kurulumu bu reponun işi değildir.
+Bu adresler `packages/brand/content/disciplines.ts` içinde tek yerde tutulur. Landing'in üst menüsü, mobil menüsü, disiplin kartları, iş kapsamı bantları ve alt menüsü ile disiplin sitelerinin üst barı aynı kaynağı kullanır. Adres değiştiğinde yalnızca bu dosya güncellenir. Subdomain'lerin DNS ve sertifika kurulumu bu reponun işi değildir, sunucu tarafında belgelenir. `web` ve `automation` subdomain'lerinin henüz sitesi ve DNS kaydı yoktur.
 
 Landing içinde `/web`, `/automation` veya `/data` gibi alt sayfalar tanımlanmaz. Uygulamada tek bir rota vardır. İletişim formu bir backend'e bağlı değildir, gönder düğmesi bilinçli olarak işlem yapmaz. Doğrudan iletişim için sayfadaki e-posta bağlantısı kullanılır.
 
