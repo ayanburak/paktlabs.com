@@ -1,6 +1,6 @@
 /*
 file: disciplines.ts
-importable: disciplineUrls
+importable: disciplineUrls, Discipline
 
 description: Disiplin baglantilarinin dilden bagimsiz subdomain adreslerini tutar.
 */
@@ -13,3 +13,6 @@ export const disciplineUrls = {
   automation: 'https://automation.paktlabs.com',
   web: 'https://web.paktlabs.com',
 } as const
+
+// Yeni bir disiplin adresi eklendiginde tip de kendiliginden genisler.
+export type Discipline = keyof typeof disciplineUrls

@@ -2,25 +2,39 @@
 file: Header.tsx
 importable: Header
 
-768px altinda .nav gizlenip yerine hamburger + acilir panel geciyor, esik
-Header.module.css'teki @media'da. navLinks dizisi ve LanguageSwitch iki yerde
-yani masaustu bar ve mobil panelde ayni seyi tekrar yazmamak icin var, gercek
-ikinci kullanim oldugu icin erken soyutlama sayilmiyor.
+PaktLabs sitelerinin ortak ust bari. Landing hic prop vermeden kullanir,
+disiplin siteleri bulunduklari disiplini ve logonun gidecegi adresi verir.
 
-description: Hero'nun uzerinde duran, marka adi + disiplin baglantilari + dil degistirici tasiyan ust bar.
+    <Header current="data" homeHref="https://paktlabs.com" />
+
+current verilen disiplinin baglantisi aria-current ile isaretlenir, ust barda
+kalin ve alti cizili gorunur. homeHref verilmezse logo sitenin kokune gider.
+
+description: Sayfanin ustunde duran, logo, disiplin baglantilari ve dil degistirici tasiyan ust bar.
 */
+
+// 768px altinda .nav gizlenip yerine hamburger ve acilir panel geciyor, esik
+// Header.module.css'teki @media'da. navLinks dizisi ve LanguageSwitch iki yerde
+// yani masaustu bar ve mobil panelde ayni seyi tekrar yazmamak icin var, gercek
+// ikinci kullanim oldugu icin erken soyutlama sayilmiyor.
 
 import { useEffect, useId, useRef, useState } from 'react'
 
-import logoUrl from '@paktlabs/brand/assets/logo.svg'
-import { disciplineUrls } from '@paktlabs/brand/content/disciplines'
-import { useLanguage } from '@paktlabs/brand/i18n/language'
-import { useBrandDict } from '@paktlabs/brand/i18n/useBrandDict'
-import { cx } from '@paktlabs/brand/lib/cx'
+import logoUrl from '../assets/logo.svg'
+import { disciplineUrls } from '../content/disciplines'
+import type { Discipline } from '../content/disciplines'
+import { useLanguage } from '../i18n/language'
+import { useBrandDict } from '../i18n/useBrandDict'
+import { cx } from '../lib/cx'
 
 import styles from './Header.module.css'
 
-export function Header() {
+interface HeaderProps {
+  current?: Discipline
+  homeHref?: string
+}
+
+export function Header({ current, homeHref = '/' }: HeaderProps) {
   const { brand, nav, a11y } = useBrandDict()
   const [open, setOpen] = useState(false)
   const panelId = useId()
@@ -39,11 +53,13 @@ export function Header() {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [open])
 
+  // Bulunulan disiplin hem masaustu barda hem mobil panelde aria-current
+  // tasir, ekran okuyucu iki menude de hangi sitede olundugunu soyler.
   const navLinks = [
-    { href: disciplineUrls.web, label: nav.web },
-    { href: disciplineUrls.automation, label: nav.automation },
-    { href: disciplineUrls.data, label: nav.data },
-    { href: '#iletisim', label: nav.contact },
+    { href: disciplineUrls.web, label: nav.web, current: current === 'web' },
+    { href: disciplineUrls.automation, label: nav.automation, current: current === 'automation' },
+    { href: disciplineUrls.data, label: nav.data, current: current === 'data' },
+    { href: '#iletisim', label: nav.contact, current: false },
   ]
 
   // Iki nav ayni anda hic gorunmuyor, biri hep display:none. O yuzden ikisi de
@@ -51,13 +67,13 @@ export function Header() {
   return (
     <header className={styles.top}>
       <div className={styles.inner}>
-        <a href="/">
+        <a href={homeHref}>
           <img className={styles.brand} src={logoUrl} alt={brand} />
         </a>
         <nav className={styles.nav} aria-label={a11y.mainMenu}>
           <span className={styles.links}>
             {navLinks.map((link) => (
-              <a key={link.href} href={link.href}>
+              <a key={link.href} href={link.href} aria-current={link.current ? 'page' : undefined}>
                 {link.label}
               </a>
             ))}
@@ -84,7 +100,12 @@ export function Header() {
         aria-label={a11y.mainMenu}
       >
         {navLinks.map((link) => (
-          <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
+          <a
+            key={link.href}
+            href={link.href}
+            aria-current={link.current ? 'page' : undefined}
+            onClick={() => setOpen(false)}
+          >
             {link.label}
           </a>
         ))}
