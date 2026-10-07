@@ -8,6 +8,9 @@
       "title": "Data",
       "lead": "We collect scattered records, clean them and turn them into one table people can trust. Here we show how, through finished work.",
       "cta": "Go to the work ↓"
+    },
+    "stack": {
+      "title": "Technologies we use"
     }
   },
   "notFound": {
