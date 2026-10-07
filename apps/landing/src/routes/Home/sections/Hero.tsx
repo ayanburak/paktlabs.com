@@ -36,10 +36,12 @@ export function Hero() {
       <div className={styles.inner}>
         <h1 className={styles.slogan}>
           {hero.lines.map((line) => (
-            <span key={line}>{line}</span>
+            <span key={line} className="rise">
+              {line}
+            </span>
           ))}
         </h1>
-        <a className={`cta ${styles.cta}`} href="#iletisim">
+        <a className={`cta rise ${styles.cta}`} href="#iletisim">
           {hero.cta}
         </a>
       </div>

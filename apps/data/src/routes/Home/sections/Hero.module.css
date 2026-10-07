@@ -1,7 +1,8 @@
 /* mockup'taki veri hero'su. Iskelet landing'in hero'suyla ayni: ekrani
    kaplar, header seffaf olarak ustte durur, alt cizgi bolumu bir sonrakinden
    ayirir. Figur ise landing'deki gibi zemine oturmaz, karakter havada duracak
-   sekilde cizildi */
+   sekilde cizildi. Metinler landing'deki gibi global.css'teki rise sinifiyla
+   sirayla yukselir, burada yalnizca siralari verilir */
 .hero {
   position: relative;
   min-height: 100svh;
@@ -21,12 +22,14 @@
 }
 
 .title {
+  --rise-delay: 0.12s;
   font-size: clamp(96px, 17vw, 300px);
   line-height: 0.82;
   letter-spacing: -0.055em;
 }
 
 .lead {
+  --rise-delay: 0.24s;
   margin: 30px 0 0;
   max-width: 40ch;
   font-size: clamp(15px, 1.3vw, 17px);
@@ -36,6 +39,7 @@
 
 /* uc kisa olcu, ustlerinde kalin bir cizgiyle aciklamadan ayrilir */
 .counts {
+  --rise-delay: 0.36s;
   display: flex;
   gap: 32px;
   max-width: 460px;
@@ -61,7 +65,10 @@
   letter-spacing: -0.03em;
 }
 
+/* dugme landing'deki gibi yukselmez, yalnizca belirir */
 .cta {
+  --rise-delay: 0.5s;
+  --rise-offset: 0px;
   margin-top: 30px;
 }
 

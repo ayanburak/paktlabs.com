@@ -56,41 +56,26 @@
   letter-spacing: -0.03em;
   color: var(--ink);
 }
+/* slogan satirlari ve dugme global.css'teki rise sinifiyla sirayla belirir,
+   burada yalnizca siralari verilir. Dugme yukselmez, yalnizca belirir */
 .slogan span {
   display: block;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: heroRise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
 }
 .slogan span:nth-child(1) {
-  animation-delay: 0.12s;
+  --rise-delay: 0.12s;
 }
 .slogan span:nth-child(2) {
-  animation-delay: 0.24s;
+  --rise-delay: 0.24s;
 }
 .slogan span:nth-child(3) {
-  animation-delay: 0.36s;
-}
-@keyframes heroRise {
-  to {
-    opacity: 1;
-    transform: none;
-  }
+  --rise-delay: 0.36s;
 }
 
 .cta {
   align-self: flex-start;
   margin-top: 34px;
-  opacity: 0;
-  animation: heroRise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.5s forwards;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .slogan span,
-  .cta {
-    opacity: 1 !important;
-    transform: none !important;
-  }
+  --rise-delay: 0.5s;
+  --rise-offset: 0px;
 }
 
 /* mobilde hero-mobile.svg masaustundeki gibi arkada duruyor: roket gorselin

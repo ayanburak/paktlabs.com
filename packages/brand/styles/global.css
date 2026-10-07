@@ -1,6 +1,6 @@
 /*
 file: global.css
-importable: .wrap, .eyebrow, .mono, .sr, .cta, .cta.primary
+importable: .wrap, .eyebrow, .mono, .sr, .cta, .cta.primary, .reveal, .rise
 
 Site genelinde paylasilan taban stiller: reset, tipografi ve birden fazla
 bolumde tekrar eden birkac yardimci sinif. Bolume ozel hicbir sey burada
@@ -139,6 +139,27 @@ textarea:focus-visible {
 .reveal.in {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* hero metinleri sayfa acilirken sirayla asagidan yukselir. Siradaki yeri
+   --rise-delay, ne kadar asagidan geldigi --rise-offset ile bilesenin kendi
+   CSS modulunden verilir. Offset sifir verilirse eleman yalnizca belirir.
+   reveal'dan farki ekrana girmeyi beklememesi, sayfa acilir acilmaz baslamasi.
+
+   Elemanin kendi stili son halidir, animasyon yalnizca girisi oynatir. from
+   karesi gecikme boyunca backwards ile tutulur, animasyon bitince geride hic
+   etkisi kalmaz. Son hal animasyonla tutulsaydi eleman ayri bir cizim
+   katmaninda kalir ve yazinin kenar yumusatmasi duragan sayfadan farkli
+   olurdu. Hareket azaltma tercihinde animasyon hic calismadigi icin eleman
+   zaten son halinde baslar, ayrica bir kurala gerek yok */
+.rise {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--rise-delay, 0s) backwards;
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--rise-offset, 20px));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
