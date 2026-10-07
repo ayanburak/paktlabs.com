@@ -12,12 +12,13 @@ description: data sitesinin rota ve bulunamadi sayfasi testleri.
 
 import { expect, test } from '@playwright/test'
 
-import { en as demoEn } from '../src/content/studies/demo-veri/en'
-import { tr as demoTr } from '../src/content/studies/demo-veri/tr'
+import { en as demoEn, sourceEn as demoSourceEn } from '../src/content/studies/demo-veri/en'
+import { sourceTr as demoSourceTr, tr as demoTr } from '../src/content/studies/demo-veri/tr'
 
 import { dict, languages, openPage } from './support'
 
 const demo = { tr: demoTr, en: demoEn }
+const demoSource = { tr: demoSourceTr, en: demoSourceEn }
 
 for (const lang of languages) {
   test(`${lang}: unknown address shows the not found page`, async ({ page }) => {
@@ -44,4 +45,20 @@ test('unknown study slug shows the not found page', async ({ page }) => {
 
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(dict.tr.notFound.title)
   await expect(page).toHaveTitle(dict.tr.notFound.meta.title)
+})
+
+for (const lang of languages) {
+  test(`${lang}: source address opens the code and data page`, async ({ page }) => {
+    await openPage(page, '/work/demo-veri/source', lang)
+
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(demoSource[lang].title)
+    await expect(page).toHaveTitle(`${demoSource[lang].title} · ${dict[lang].home.meta.title}`)
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', demoSource[lang].lede)
+  })
+}
+
+test('source page of an unknown study shows the not found page', async ({ page }) => {
+  await openPage(page, '/work/boyle-bir-calisma-yok/source', 'tr')
+
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(dict.tr.notFound.title)
 })

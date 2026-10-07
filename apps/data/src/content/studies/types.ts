@@ -1,12 +1,16 @@
 /*
 file: types.ts
-importable: Study, StudyText, StudyTag, KunyeRow
+importable: Study, StudyText, SourceText, StudyTag, KunyeRow
 
 Bir calisma iki katmandan olusur. Study dilden bagimsiz alanlari tasir:
 adresteki slug, listedeki numara, yil ve filtrede kullanilan etiketler.
 StudyText ise her dil icin ayri yazilan metinleri tasir. Iki dilin metni
 ayni StudyText tipine uymak zorunda, bir dilde eksik kalan alan derleme
 hatasi verir.
+
+Kod ve veri sayfasi her calismada olmayabilir, firmanin paylasilmasina izin
+vermedigi kod yayinlanmaz. Bu yuzden source alani istege baglidir. Varsa iki
+dilde birden vardir, tek bir dilde yazilmis kod sayfasi derleme hatasi verir.
 
 Tip, sayfalar yazildikca genisler. Su an yalnizca kapak ve listeleme icin
 gereken alanlar var, bolum bloklari detay sayfasi yazilirken eklenecek.
@@ -34,10 +38,23 @@ export interface StudyText {
   kunye: KunyeRow[]
 }
 
+// Kod sayfasinin kendi basligi, aciklamasi ve kunyesi var. Su an StudyText ile
+// ayni alanlari tasiyor ama ayri bir tip, cunku bolumleri calisma sayfasinin
+// bolumlerinden farkli olacak: dosya agaci, kod dosyalari ve veri ornekleri.
+export interface SourceText {
+  title: string
+  lede: string
+  kunye: KunyeRow[]
+}
+
+// source dil basina degil calisma basina tanimli. Alan her dilin StudyText'i
+// icinde istege bagli olsaydi TypeScript tr'de olup en'de olmayan bir kod
+// sayfasini yakalayamazdi.
 export interface Study {
   slug: string
   number: string
   year: number
   tags: StudyTag[]
   text: Record<Language, StudyText>
+  source?: Record<Language, SourceText>
 }

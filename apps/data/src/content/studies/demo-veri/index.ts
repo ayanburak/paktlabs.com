@@ -7,8 +7,8 @@ description: Demo Veri calismasinin dilden bagimsiz alanlarini ve iki dilin metn
 
 import type { Study } from '../types'
 
-import { en } from './en'
-import { tr } from './tr'
+import { en, sourceEn } from './en'
+import { sourceTr, tr } from './tr'
 
 export const demoVeri: Study = {
   slug: 'demo-veri',
@@ -16,4 +16,5 @@ export const demoVeri: Study = {
   year: 2026,
   tags: ['quality', 'machineLearning'],
   text: { tr, en },
+  source: { tr: sourceTr, en: sourceEn },
 }
