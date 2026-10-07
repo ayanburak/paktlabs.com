@@ -65,7 +65,60 @@ test('cards in a row start their text boxes at the same height', async ({ page }
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await openPage(page, '/', 'tr')
 
-  const cards = page.locator('#calismalar > a')
+  const cards = page.locator('#calismalar a')
   const tops = await Promise.all([1, 2, 3].map(async (i) => (await cards.nth(i).locator(':scope > div').nth(1).boundingBox())!.y))
   expect(Math.max(...tops) - Math.min(...tops)).toBeLessThanOrEqual(1)
+})
+
+// Beklenen kartlar calisma listesinden hesaplanir, icerik degisince test
+// kendiliginden uyum saglar. Liste SVG import etmedigi icin burada okunabilir.
+test.describe('work filter', () => {
+  test('panel is closed and unreachable until opened', async ({ page }) => {
+    await openPage(page, '/', 'tr')
+
+    // Playwright'in rol sorgusu inert icindeki dugmeleri de sayar, kirpilmis bir
+    // dugmeyi de kendi kutusu bos olmadigi icin gorunur sayar. Bu yuzden
+    // panelin inert olup olmadigi ve kendi yuksekligi olculur.
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    const toggle = page.getByRole('button', { name: dict.tr.home.works.filter.toggle })
+    const panel = page.locator(`#${await toggle.getAttribute('aria-controls')}`)
+    const height = async () => (await panel.boundingBox())!.height
+
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    await expect(panel).toHaveAttribute('inert', '')
+    expect(await height()).toBe(0)
+
+    await toggle.click()
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true')
+    await expect(panel).not.toHaveAttribute('inert')
+    expect(await height()).toBeGreaterThan(0)
+  })
+
+  test('picked tags show studies carrying any of them', async ({ page }) => {
+    const { studies } = await import('../src/content/studies')
+    const tags = dict.tr.home.works.tags
+    const cards = page.locator('#calismalar a')
+    const expectCount = async (picked: (keyof typeof tags)[]) => {
+      const count = studies.filter((s) => picked.length === 0 || s.tags.some((t) => picked.includes(t))).length
+      await expect(cards).toHaveCount(count)
+    }
+
+    await openPage(page, '/', 'tr')
+    await expectCount([])
+    await page.getByRole('button', { name: dict.tr.home.works.filter.toggle }).click()
+
+    await page.getByRole('button', { name: tags.visualization }).click()
+    await expectCount(['visualization'])
+    await expect(page.getByRole('button', { name: dict.tr.home.works.filter.all })).toHaveAttribute('aria-pressed', 'false')
+
+    await page.getByRole('button', { name: tags.database }).click()
+    await expectCount(['visualization', 'database'])
+
+    await page.getByRole('button', { name: tags.visualization }).click()
+    await expectCount(['database'])
+
+    await page.getByRole('button', { name: dict.tr.home.works.filter.all }).click()
+    await expectCount([])
+    await expect(page.getByRole('button', { name: tags.database })).toHaveAttribute('aria-pressed', 'false')
+  })
 })

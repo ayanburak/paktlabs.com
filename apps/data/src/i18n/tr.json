@@ -13,6 +13,8 @@
       "title": "Kullandığımız teknolojiler"
     },
     "works": {
+      "eyebrow": "Çalışmalar",
+      "title": "Lorem ipsum dolor sit amet",
       "featured": "Öne çıkan",
       "go": "Çalışmayı incele →",
       "details": "Teknik detaylar",
@@ -24,6 +26,11 @@
         "analysis": "Analiz",
         "visualization": "Görselleştirme",
         "machineLearning": "Makine Öğrenmesi"
+      },
+      "filter": {
+        "all": "Tümü",
+        "toggle": "Filtrele",
+        "tagsLabel": "Çalışma etiketleri"
       }
     }
   },
