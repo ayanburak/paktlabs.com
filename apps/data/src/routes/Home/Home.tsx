@@ -8,10 +8,16 @@ description: data.paktlabs.com'un giris sayfasi olan veri sayfasini olusturan bi
 import { Page } from '@/components/Page'
 import { useDict } from '@/i18n'
 
-// Bolumler Faz 3'te tek tek eklenecek: hero, teknoloji seridi, calisma listesi
-// ve iletisim.
+import { Hero } from './sections/Hero'
+
+// Bolumler mockup'taki sirayla eklenir: hero, teknoloji seridi, calisma
+// listesi ve iletisim. Su an yalnizca hero var.
 export function Home() {
   const { home } = useDict()
 
-  return <Page title={home.meta.title} description={home.meta.description} />
+  return (
+    <Page title={home.meta.title} description={home.meta.description}>
+      <Hero />
+    </Page>
+  )
 }

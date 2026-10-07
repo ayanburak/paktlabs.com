@@ -3,6 +3,11 @@
     "meta": {
       "title": "Data · PaktLabs",
       "description": "PaktLabs data work. How we clean and merge scattered records, and what came out of it, shown through finished projects."
+    },
+    "hero": {
+      "title": "Data",
+      "lead": "We collect scattered records, clean them and turn them into one table people can trust. Here we show how, through finished work.",
+      "cta": "Go to the work ↓"
     }
   },
   "notFound": {

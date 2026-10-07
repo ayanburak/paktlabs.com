@@ -1,0 +1,112 @@
+/* landing'in hero'suyla ayni iskelet: ekrani kaplar, header seffaf olarak
+   ustte durur, alt cizgi bolumu bir sonrakinden ayirir. Metin solda, figur
+   sagda ve zemini bu alt cizgiye oturur */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 32px;
+  padding: 0 clamp(20px, 4vw, 56px);
+  border-bottom: 2px solid var(--ink);
+  overflow: hidden;
+}
+
+.copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 128px 0 clamp(48px, 9vh, 110px);
+}
+
+.title {
+  font-size: clamp(96px, 17vw, 300px);
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+}
+
+.lead {
+  margin: 30px 0 0;
+  max-width: 40ch;
+  font-size: clamp(15px, 1.3vw, 17px);
+  line-height: 1.62;
+  color: var(--muted);
+}
+
+.cta {
+  align-self: flex-start;
+  margin-top: 34px;
+}
+
+/* SVG'nin alt kenari cizimin zeminidir, tablonun kalin alt kenari dosyanin son
+   satirina kadar iner. Bu yuzden landing'deki gibi ek bir zemin kaydirmasi
+   gerekmez, cerceve 2px asagi inip bolumun alt cizgisiyle birlesir. Oran
+   mockup'taki 922/1333 degil, reading.svg'nin kendi viewBox orani */
+.artFrame {
+  position: relative;
+  bottom: -2px;
+  align-self: end;
+  height: min(72svh, 680px);
+  aspect-ratio: 717.45746 / 1295.591;
+  margin-right: clamp(0px, 4vw, 90px);
+  pointer-events: none;
+}
+.artFrame img {
+  width: 100%;
+  height: 100%;
+}
+
+/* basliktan dugmeye kadar metin landing'deki gibi sirayla yukselir */
+.title,
+.lead,
+.cta {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: heroRise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+.title {
+  animation-delay: 0.12s;
+}
+.lead {
+  animation-delay: 0.26s;
+}
+.cta {
+  animation-delay: 0.4s;
+}
+@keyframes heroRise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .lead,
+  .cta {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* mobilde header akista durur, metin ustte, figur altta ortalanir ve zemini
+   yine bolumun alt cizgisine oturur */
+@media (max-width: 768px) {
+  .hero {
+    display: block;
+    min-height: 0;
+  }
+  .copy {
+    padding: 40px 0 36px;
+  }
+  .title {
+    font-size: clamp(110px, 38vw, 220px);
+  }
+  .artFrame {
+    height: auto;
+    width: min(52%, 260px);
+    margin: 12px auto 0;
+  }
+}

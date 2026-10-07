@@ -3,6 +3,11 @@
     "meta": {
       "title": "Veri · PaktLabs",
       "description": "PaktLabs'ın veri çalışmaları. Dağınık kayıtları nasıl temizleyip birleştirdiğimizi ve sonuçlarını tamamlanmış işler üzerinden anlatıyoruz."
+    },
+    "hero": {
+      "title": "Veri",
+      "lead": "Dağınık kayıtları toplar, temizler ve güvenilen tek bir tabloya çeviririz. Bu işleri nasıl yaptığımızı tamamlanmış çalışmalar üzerinden anlatıyoruz.",
+      "cta": "Çalışmalara git ↓"
     }
   },
   "notFound": {
