@@ -62,8 +62,37 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: playwright-report
+          name: playwright-report-landing
           path: |
             apps/landing/playwright-report
             apps/landing/test-results
+          retention-days: 7
+
+  data:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: apps/data
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - run: npm ci
+        working-directory: .
+      - run: npm run typecheck
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report-data
+          path: |
+            apps/data/playwright-report
+            apps/data/test-results
           retention-days: 7
