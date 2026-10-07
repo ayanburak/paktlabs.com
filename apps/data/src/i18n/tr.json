@@ -32,6 +32,15 @@
         "toggle": "Filtrele",
         "tagsLabel": "Çalışma etiketleri"
       }
+    },
+    "contact": {
+      "eyebrow": "İletişim",
+      "title": "Konuşalım",
+      "lead": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "slot": {
+        "label": "Svg alanı · C1 · veri-posta.svg · üçe dört",
+        "note": "Karakter ayakta, bir elinde mühürlü bir veri paketi. Diğer eliyle yanındaki posta kutusunu işaret ediyor. Hikaye: teslim hazır, sıra sizde. Ayaklar alt çizgiye otursun."
+      }
     }
   },
   "notFound": {

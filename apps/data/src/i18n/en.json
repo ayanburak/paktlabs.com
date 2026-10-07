@@ -32,6 +32,15 @@
         "toggle": "Filter",
         "tagsLabel": "Study tags"
       }
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Let's talk",
+      "lead": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "slot": {
+        "label": "SVG area · C1 · veri-posta.svg · three by four",
+        "note": "The character stands holding a sealed data package in one hand and points to a mailbox beside them with the other. Story: the delivery is ready, your turn. Feet rest on the bottom line."
+      }
     }
   },
   "notFound": {

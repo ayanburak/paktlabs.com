@@ -10,6 +10,7 @@ description: Iletisim formu ve telefon figurunu yan yana gosteren kapanis bolumu
 */
 
 import { RevealImg } from '@paktlabs/brand/components/RevealImg'
+import { contactEmail } from '@paktlabs/brand/content/contact'
 import { useReveal } from '@paktlabs/brand/hooks/useReveal'
 import { cx } from '@paktlabs/brand/lib/cx'
 
@@ -55,8 +56,8 @@ export function Contact() {
           </form>
 
           <div className={styles.direct}>
-            <a className={styles.mail} href={`mailto:${contact.email}`}>
-              {contact.email}
+            <a className={styles.mail} href={`mailto:${contactEmail}`}>
+              {contactEmail}
             </a>
           </div>
         </div>

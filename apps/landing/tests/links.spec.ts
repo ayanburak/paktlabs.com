@@ -60,5 +60,5 @@ test('no empty, old sub page or new tab links remain', async ({ page }) => {
   }
   // kok adrese giden tek link logo
   expect(all.filter(({ href }) => href?.startsWith('/'))).toEqual([{ href: '/', target: null }])
-  await expect(page.locator('a[href^="mailto:"]')).toHaveAttribute('href', `mailto:${dict.tr.contact.email}`)
+  await expect(page.locator('a[href^="mailto:"]')).toHaveAttribute('href', 'mailto:info@paktlabs.com')
 })

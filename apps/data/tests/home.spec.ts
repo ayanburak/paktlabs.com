@@ -122,3 +122,16 @@ test.describe('work filter', () => {
     await expect(page.getByRole('button', { name: tags.database })).toHaveAttribute('aria-pressed', 'false')
   })
 })
+
+for (const lang of languages) {
+  test(`${lang}: contact section offers the email and keeps the drawing slot`, async ({ page }) => {
+    await openPage(page, '/', lang)
+
+    const contact = page.locator('#iletisim')
+    await expect(contact.getByRole('heading', { level: 2 })).toHaveText(dict[lang].home.contact.title)
+    await expect(contact.getByRole('link', { name: 'info@paktlabs.com' })).toHaveAttribute('href', 'mailto:info@paktlabs.com')
+    await expect(contact.getByText(dict[lang].home.contact.slot.label)).toBeVisible()
+    // mockup'taki landing formuna giden dugme bilerek yok
+    await expect(contact.getByRole('link')).toHaveCount(1)
+  })
+}
