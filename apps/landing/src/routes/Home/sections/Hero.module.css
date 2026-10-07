@@ -13,8 +13,13 @@
 /* Metin ilk sütunda kendi genişliğini ayırır, görsel kalan alana sığar.
    Ekran yüksekliğinden gelen üst sınır masaüstündeki ölçeği korur.
    Başlık alanı daraldığında görsel oranını bozmadan küçülür, zemin çizgisi
-   ise alt kenardaki iki piksellik bölüm çizgisine bağlı kalır. */
+   ise alt kenardaki iki piksellik bölüm çizgisine bağlı kalır.
+   --art-ratio hero.svg'nin viewBox oranıdır ve hem kutunun oranında hem
+   genişlik sınırında kullanılır. Çizim değişirse yalnızca bu değer
+   güncellenir. Figürlerin en alt noktası SVG'nin alt kenarındadır, çizimin
+   kendi zemin çizgisi yoktur, ayakları doğrudan bölüm çizgisine basar. */
 .artFrame {
+  --art-ratio: 2625.8396 / 2176.6922;
   display: block;
   grid-column: 2;
   grid-row: 1;
@@ -23,8 +28,8 @@
   position: relative;
   bottom: -2px;
   width: 100%;
-  max-width: calc((100svh - 84px + 2px) * 2660.3921 / 2291.2388);
-  aspect-ratio: 2660.3921 / 2291.2388;
+  max-width: calc((100svh - 84px + 2px) * var(--art-ratio));
+  aspect-ratio: var(--art-ratio);
   z-index: 1;
   pointer-events: none;
 }
