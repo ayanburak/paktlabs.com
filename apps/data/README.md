@@ -175,15 +175,16 @@ Veri işlerini gösteren çalışan bir uygulama bu repoya girmez. Uygulama kend
 
 ## Yayın
 
-`data.paktlabs.com` şu an sunucuda elle konmuş geçici bir statik sayfa sunar. Gerçek derleme henüz yayına alınmadı. Yayına alındığında landing'deki atomik sürüm düzeni izlenir: paket commit'lenmiş kaynaktan temiz bir ortamda üretilir, sunucuda sürüm klasörüne açılır ve canlı dizin tek bir symlink geçişiyle yeni sürüme çevrilir. Böylece ziyaretçi hiçbir anda yarım kopyalanmış bir sürüm görmez ve eski sürüme dönüş dosya kopyalamadan yapılabilir.
+Site landing'deki atomik sürüm düzeniyle yayınlanır: paket commit'lenmiş kaynaktan temiz bir ortamda üretilir, sunucuda sürüm klasörüne açılır ve canlı dizin tek bir symlink geçişiyle yeni sürüme çevrilir. Böylece ziyaretçi hiçbir anda yarım kopyalanmış bir sürüm görmez ve eski sürüme dönüş dosya kopyalamadan yapılabilir. İlk yayın 2026-10-08'de yapıldı.
 
 ```bash
 scripts/build-release.sh data                                  # repo kökünde
 scripts/deploy-release.sh data release/data-<zaman>-<commit>.tar.gz
-scripts/rollback-release.sh data <sürüm>
+scripts/rollback-release.sh data                               # sürümleri listeler
+scripts/rollback-release.sh data <sürüm>                       # o sürüme döner
 ```
 
-Paketleme bugün de çalışır. Yayınlama ise sunucuda `/var/www/data` atomik düzene çevrilene kadar çalışmaz: script canlı dizinin bir symlink olmadığını görüp durur. Sunucudaki geçiş yapıldığında nginx'e iki ayar daha eklenir. Bilinmeyen yollarda `index.html` döndürülür, böylece bir çalışmanın adresi doğrudan açılabilir. Landing'deki gibi hazır sıkıştırılmış dosyalar sunulur ve hash'li dosyalar uzun süre önbelleğe alınır.
+nginx bilinmeyen yollarda `index.html` döndürür, böylece bir çalışmanın adresi doğrudan açılabilir. Landing'deki gibi hazır sıkıştırılmış dosyalar sunulur, hash'li dosyalar bir yıl önbelleğe alınır, `index.html` her ziyarette yeniden doğrulanır. Sunucu tarafındaki kurulum ayrı bir altyapı belgesinde tutulur.
 
 ## Tasarım referansları
 
