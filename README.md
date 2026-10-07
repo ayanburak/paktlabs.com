@@ -10,7 +10,7 @@ Repo yalnızca landing sayfasını içerir. Disiplin bağlantıları ayrı subdo
 - `https://automation.paktlabs.com`
 - `https://data.paktlabs.com`
 
-Bu adresler `apps/landing/src/content/disciplines.ts` içinde tek yerde tutulur. Üst menü, mobil menü, disiplin kartları, iş kapsamı bantları ve alt menü aynı kaynağı kullanır. Adres değiştiğinde yalnızca bu dosya güncellenir. Subdomain'lerin DNS, sertifika ve uygulama kurulumu bu reponun işi değildir.
+Bu adresler `packages/brand/content/disciplines.ts` içinde tek yerde tutulur. Landing'in üst menüsü, mobil menüsü, disiplin kartları, iş kapsamı bantları ve alt menüsü ile disiplin sitelerinin üst barı aynı kaynağı kullanır. Adres değiştiğinde yalnızca bu dosya güncellenir. Subdomain'lerin DNS, sertifika ve uygulama kurulumu bu reponun işi değildir.
 
 Landing içinde `/web`, `/automation` veya `/data` gibi alt sayfalar tanımlanmaz. Uygulamada tek bir rota vardır. İletişim formu bir backend'e bağlı değildir, gönder düğmesi bilinçli olarak işlem yapmaz. Doğrudan iletişim için sayfadaki e-posta bağlantısı kullanılır.
 
