@@ -6,13 +6,12 @@ description: Sayfanin en altindaki telif hakki satiri ve disiplin baglantilarini
 */
 
 import { disciplineUrls } from '@paktlabs/brand/content/disciplines'
-
-import { useDict } from '@/i18n'
+import { useBrandDict } from '@paktlabs/brand/i18n/useBrandDict'
 
 import styles from './Footer.module.css'
 
 export function Footer() {
-  const { nav, footer, a11y } = useDict()
+  const { nav, footer, a11y } = useBrandDict()
 
   return (
     <footer className={styles.foot}>

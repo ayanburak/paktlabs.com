@@ -7,13 +7,14 @@ description: Gold bant icinde figur ve uc disiplin kartini bir arada gosteren bo
 
 import { RevealImg } from '@paktlabs/brand/components/RevealImg'
 import { disciplineUrls } from '@paktlabs/brand/content/disciplines'
+import { useLanguage } from '@paktlabs/brand/i18n/language'
+import type { Language } from '@paktlabs/brand/i18n/language'
 import { cx } from '@paktlabs/brand/lib/cx'
 
 import inceleyinMobileSvg from '@/assets/illustrations/inceleyin-mobile.svg'
 import inceleyinSvg from '@/assets/illustrations/inceleyin.svg'
 import { DisciplineCard } from '@/components/DisciplineCard'
-import { useDict, useLanguage } from '@/i18n'
-import type { Language } from '@/i18n'
+import { useDict } from '@/i18n'
 
 import styles from './Disciplines.module.css'
 

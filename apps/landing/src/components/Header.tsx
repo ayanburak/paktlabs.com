@@ -14,14 +14,14 @@ import { useEffect, useId, useRef, useState } from 'react'
 
 import logoUrl from '@paktlabs/brand/assets/logo.svg'
 import { disciplineUrls } from '@paktlabs/brand/content/disciplines'
+import { useLanguage } from '@paktlabs/brand/i18n/language'
+import { useBrandDict } from '@paktlabs/brand/i18n/useBrandDict'
 import { cx } from '@paktlabs/brand/lib/cx'
-
-import { useDict, useLanguage } from '@/i18n'
 
 import styles from './Header.module.css'
 
 export function Header() {
-  const { brand, nav, a11y } = useDict()
+  const { brand, nav, a11y } = useBrandDict()
   const [open, setOpen] = useState(false)
   const panelId = useId()
   const burgerRef = useRef<HTMLButtonElement>(null)

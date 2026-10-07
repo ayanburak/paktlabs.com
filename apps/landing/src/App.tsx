@@ -10,7 +10,7 @@ description: Dil saglayicisini ve rotayi kuran en ust bilesen.
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import { LanguageProvider } from '@/i18n'
+import { LanguageProvider } from '@paktlabs/brand/i18n/LanguageProvider'
 
 import { Home } from './routes/Home/Home'
 

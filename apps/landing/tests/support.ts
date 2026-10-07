@@ -3,22 +3,30 @@ file: support.ts
 importable: Language, languages, dict, disciplineUrls, openHome, waitForAssets
 
 Spec dosyalarinin ortak kullandigi sayfa acma yardimcilari ve beklenen degerler.
-Ekrandaki metinler uygulamanin kendi sozluklerinden okunur, metin degisince
-testler degil sozluk guncellenir. Subdomain adresleri ise bilerek burada elle
-yazili, uygulamadaki disciplines.ts'ten okunsaydi yanlis bir adres testi de
-gecirirdi.
+Ekrandaki metinler landing'in ve brand paketinin sozluklerinden okunur, metin
+degisince testler degil sozluk guncellenir. Subdomain adresleri ise bilerek
+burada elle yazili, uygulamadaki disciplines.ts'ten okunsaydi yanlis bir adres
+testi de gecirirdi.
 
 description: Landing testlerinde dil tercihini ayarlayip sayfayi acan ve varliklarin yuklenmesini bekleyen yardimcilar.
 */
 
 import type { Page } from '@playwright/test'
 
+import brandEn from '../../../packages/brand/i18n/en.json' with { type: 'json' }
+import brandTr from '../../../packages/brand/i18n/tr.json' with { type: 'json' }
 import en from '../src/i18n/en.json' with { type: 'json' }
 import tr from '../src/i18n/tr.json' with { type: 'json' }
 
 export type Language = 'tr' | 'en'
 export const languages: Language[] = ['tr', 'en']
-export const dict = { tr, en }
+
+// Sayfada ortak metinler ve landing'in kendi metinleri bir arada gorunur.
+// Spec dosyalari ikisini tek bir sozluk gibi okusun diye birlestiriliyor.
+export const dict = {
+  tr: { ...brandTr, ...tr },
+  en: { ...brandEn, ...en },
+}
 
 export const disciplineUrls = {
   web: 'https://web.paktlabs.com',

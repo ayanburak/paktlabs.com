@@ -16,11 +16,11 @@ Landing içinde `/web`, `/automation` veya `/data` gibi alt sayfalar tanımlanma
 
 ## Dil
 
-Arayüz Türkçe ve İngilizcedir. Metinler `apps/landing/src/i18n/tr.json` ve `en.json` dosyalarında durur. İki sözlüğün aynı şekle sahip olması TypeScript tarafından denetlenir, bir dilde eksik anahtar derleme hatası verir.
+Arayüz Türkçe ve İngilizcedir. Metinler iki katmanda durur. Üst bar, alt bilgi ve menü etiketleri gibi bütün PaktLabs sitelerinde aynı kalan metinler `packages/brand/i18n/tr.json` ve `en.json` dosyalarındadır. Landing'e özel metinler `apps/landing/src/i18n/tr.json` ve `en.json` dosyalarındadır. Böylece ortak bir menü etiketi tek yerde değişir, her site yalnızca kendi sayfalarının metnini taşır. Her katmanda iki sözlüğün aynı şekle sahip olması TypeScript tarafından denetlenir, bir dilde eksik anahtar derleme hatası verir.
 
 İlk ziyarette dil Türkçedir. Değiştiriciyle yapılan seçim tarayıcının `localStorage` alanına `pl_lang` anahtarıyla yazılır. Tarayıcı depolamayı engellese veya depolama dolu olsa da dil değiştirme çalışır, yalnızca seçim bir sonraki ziyarete taşınmaz. Cookie, IP tabanlı dil seçimi ve dile özel URL henüz kurulmamıştır. `localStorage` origin'e bağlı olduğu için landing'de yapılan seçim subdomain'lere otomatik geçmez.
 
-Sayfa başlığı ve açıklaması `index.html` içinde Türkçe olarak yazılıdır. Dil değiştiğinde başlık, açıklama ve `html lang` JavaScript ile güncellenir. Ayrı bir İngilizce adres olmadığı için arama motorlarının İngilizce metni ayrıca indekslediği varsayılmaz. Bu nedenle `hreflang`, sitemap ve Open Graph görseli eklenmemiştir. Türkçe başlık veya açıklama değiştirildiğinde hem `index.html` hem `tr.json` güncellenir.
+Sayfa başlığı ve açıklaması `index.html` içinde Türkçe olarak yazılıdır. Dil değiştiğinde başlık, açıklama ve `html lang` JavaScript ile güncellenir. Ayrı bir İngilizce adres olmadığı için arama motorlarının İngilizce metni ayrıca indekslediği varsayılmaz. Bu nedenle `hreflang`, sitemap ve Open Graph görseli eklenmemiştir. Türkçe başlık veya açıklama değiştirildiğinde hem `index.html` hem landing'in `tr.json` dosyası güncellenir.
 
 ## Tasarım kararları
 

@@ -1,15 +1,19 @@
 /*
 file: index.ts
-importable: LanguageProvider, useLanguage, useDict, Language
+importable: useDict
 
-Iki dilli icerik icin kucuk, elle yazilmis bir context. Landing az metinli
-oldugu icin react-i18next gibi bir kutuphaneye gerek gorulmedi. Bilesenler
-hep bu dosyadan import eder, context.ts, LanguageProvider.tsx ve hooks.ts
-olarak bolunmesi disariya yansimaz.
+Landing'e ozel metinlerin sozlugu. Ust bar, alt bilgi ve menu etiketleri gibi
+butun sitelerde ortak olan metinler burada degil, @paktlabs/brand icindeki
+useBrandDict'te durur. Dil secimi de paketteki LanguageProvider'dan gelir.
+Landing az metinli oldugu icin react-i18next gibi bir kutuphaneye gerek
+gorulmedi.
 
-description: Dil saglayicisini ve dil hook'larini disari acan giris dosyasi.
+description: Landing'in iki dilli sozlugunden aktif dile gore sozluk donduren useDict hook'u.
 */
 
-export { LanguageProvider } from './LanguageProvider'
-export { useDict, useLanguage } from './hooks'
-export type { Language } from './context'
+import { createDictHook } from '@paktlabs/brand/i18n/createDictHook'
+
+import en from './en.json'
+import tr from './tr.json'
+
+export const useDict = createDictHook({ tr, en })

@@ -9,6 +9,8 @@
     "./lib/*": "./lib/*.ts",
     "./hooks/*": "./hooks/*.ts",
     "./content/*": "./content/*.ts",
+    "./i18n/LanguageProvider": "./i18n/LanguageProvider.tsx",
+    "./i18n/*": "./i18n/*.ts",
     "./components/*": "./components/*.tsx"
   },
   "peerDependencies": {

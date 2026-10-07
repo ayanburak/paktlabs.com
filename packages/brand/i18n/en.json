@@ -1,0 +1,18 @@
+{
+  "brand": "PaktLabs",
+  "nav": {
+    "web": "Web",
+    "automation": "Automation",
+    "data": "Data",
+    "contact": "Contact"
+  },
+  "a11y": {
+    "mainMenu": "Main menu",
+    "footerMenu": "Footer menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "footer": {
+    "copy": "© 2026 PaktLabs"
+  }
+}

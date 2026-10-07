@@ -2,9 +2,10 @@
 file: LanguageProvider.tsx
 importable: LanguageProvider
 
-Aktif dili tutar, tercihi localStorage'a yazar ve sayfanin dil bilgilerini
-gunceller. Bu dosya sadece bilesen export eder, ortak tip ve sozlukler
-context.ts'te durur.
+Aktif dili tutar, tercihi localStorage'a yazar ve html lang ozniteligini
+gunceller. Sekme basligi ve aciklama buradan degil, her sayfanin kendi
+useDocumentMeta cagrisindan gelir, cunku bir sitede birden fazla rota olabilir.
+Bu dosya sadece bilesen export eder, dil tipi ve context language.ts'te durur.
 
 description: Aktif dili ve dil degistirme fonksiyonunu bilesen agacina dagitan provider.
 */
@@ -12,12 +13,15 @@ description: Aktif dili ve dil degistirme fonksiyonunu bilesen agacina dagitan p
 // NOTE: sunucu tarafi geoip yonlendirmesi ve dil rotasi kurulmadi, ilk
 // ziyarette varsayilan tr cunku tasarim tr uzerinden yapildi. Gercek rota
 // altyapisi gelirse varsayilan dil sunucudan gelen bilgiyle degismeli.
+//
+// NOTE: tercih localStorage'da tutuldugu icin origin'e bagli. Landing'de
+// secilen dil disiplin subdomainlerine gecmez, her site kendi kaydini tutar.
 
 import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 
-import { dictionaries, LanguageContext } from './context'
-import type { Language } from './context'
+import { LanguageContext } from './language'
+import type { Language } from './language'
 
 const STORAGE_KEY = 'pl_lang'
 const DEFAULT_LANGUAGE: Language = 'tr'
@@ -47,14 +51,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  // <html lang>, sekme basligi ve aciklama aktif dile uymali. index.html ilk
-  // yuklemede tr metnini tasiyor, JS calistirmayan botlar yalnizca onu gorur.
-  // Ayri bir /en adresi olmadigi icin en metni indekslenecek diye varsayilmamali.
+  // html lang aktif dile uymali, ekran okuyucular telaffuzu buna gore secer.
+  // index.html ilk yuklemede tr ile gelir, JS calistirmayan botlar yalnizca onu gorur.
   useEffect(() => {
-    const { meta } = dictionaries[language]
     document.documentElement.lang = language
-    document.title = meta.title
-    document.querySelector('meta[name="description"]')?.setAttribute('content', meta.description)
   }, [language])
 
   const value = useMemo(() => ({ language, setLanguage }), [language])
