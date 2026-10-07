@@ -10,12 +10,11 @@ export default defineConfig({
     alias: { '@': path.resolve(import.meta.dirname, 'src') },
   },
   build: {
-    // esbuild'in css minify'i @media (max-width: X) gibi klasik sorguları
-    // range syntax'a (width<=X) ceviriyor, bu daha eski tarayicilarda
-    // (ör. Safari 16.4 oncesi) gecersiz sayilip tum kural sessizce yok
-    // sayiliyor — su an sadece prefers-reduced-motion sorgusu var ama yeni
-    // bir @media eklenirse (ör. ileride mobil icin) ayni riski tasiyacagi
-    // icin bu kapali kaliyor
+    // esbuild'in css minify'i @media (max-width: X) gibi klasik sorgulari
+    // range syntax'a (width<=X) ceviriyor. Safari 16.4 oncesi gibi eski
+    // tarayicilar bunu gecersiz sayip kuralin tamamini sessizce yok sayiyor,
+    // landing'in butun responsive kurallari klasik sorgularla yazildigi icin
+    // minify acilirsa mobil ve tablet yerlesimi o tarayicilarda tamamen kaybolur
     cssMinify: false,
   },
 })

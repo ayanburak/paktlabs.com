@@ -3,8 +3,8 @@ file: Contact.tsx
 importable: Contact
 
 Form henuz gercek bir backend'e baglanmiyor, gonder butonu su an tiklaninca
-hicbir sey yapmiyor. CLAUDE.md'nin plani geregi backend/ altinda kurulacak
-minik FastAPI servisiyle baglanacak, o gelene kadar bu bilerek boyle birakildi.
+hicbir sey yapmiyor. Ileride landing ile disiplin sitelerinin paylasacagi tek
+bir iletisim servisine baglanacak, o gelene kadar bu bilerek boyle birakildi.
 
 description: Iletisim formu ve telefon figurunu yan yana gosteren kapanis bolumu.
 */
