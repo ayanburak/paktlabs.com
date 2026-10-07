@@ -20,7 +20,7 @@ export function Hero() {
 
   return (
     <section className={styles.hero}>
-      {/* Çerçeve görselin alanını ve zemin konumunu belirler, içindeki
+      {/* Çerçeve görselin alanını ve konumunu belirler, içindeki
           img yalnızca belirme hareketini taşır. source eşiği CSS ile
           aynı kalmalı, tarayıcı yalnızca seçilen kompozisyonu indirir. */}
       <picture className={styles.artFrame}>

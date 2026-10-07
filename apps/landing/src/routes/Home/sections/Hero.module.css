@@ -6,29 +6,42 @@
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
   column-gap: 32px;
-  padding-right: clamp(20px, 4vw, 56px);
+  /* header seffaf olarak hero'nun ustunde durur ve 84px yer kaplar. Bu pay
+     birakildiginda metin de cizim de header'in altinda kalan alanin tam
+     ortasina gore hizalanir */
+  padding: 84px clamp(20px, 4vw, 56px) 0 0;
   border-bottom: 2px solid var(--ink);
 }
 
-/* Metin ilk sütunda kendi genişliğini ayırır, görsel kalan alana sığar.
-   Ekran yüksekliğinden gelen üst sınır masaüstündeki ölçeği korur.
-   Başlık alanı daraldığında görsel oranını bozmadan küçülür, zemin çizgisi
-   ise alt kenardaki iki piksellik bölüm çizgisine bağlı kalır.
+/* Metin ilk sütunda kendi genişliğini ayırır, görsel kalan alana sığar,
+   dikeyde ortalanır ve zemine sabitlenmez, bölümün alt çizgisinden bağımsız
+   havada durur.
+   Yatayda sütunda boşta kalan alanın ne kadarının çizimin sağında kalacağını
+   --art-right-share belirler. 0.5 tam ortalamadır, daha küçük değer çizimi
+   sağa yaklaştırır. Boşta kalan alan sütun genişliği eksi çizimin en fazla
+   genişliğidir. Çizim sütunu tamamen doldurduğunda bu alan sıfırdır, sağ boşluk
+   da sıfır kalır ve çizim hiçbir ekranda taşmaz.
+   --art-height çizimin en fazla ne kadar uzun olacağını belirler, genişlik
+   sınırı bu yükseklikten oranla hesaplanır. Başlık alanı daraldığında görsel
+   oranını bozmadan bundan da küçülür.
    --art-ratio hero.svg'nin viewBox oranıdır ve hem kutunun oranında hem
    genişlik sınırında kullanılır. Çizim değişirse yalnızca bu değer
-   güncellenir. Figürlerin en alt noktası SVG'nin alt kenarındadır, çizimin
-   kendi zemin çizgisi yoktur, ayakları doğrudan bölüm çizgisine basar. */
+   güncellenir. */
 .artFrame {
-  --art-ratio: 2625.8396 / 2176.6922;
+  --art-ratio: 3080.8723 / 2139.4315;
+  --art-height: min(70.4svh, 660px);
+  --art-width: calc(var(--art-height) * var(--art-ratio));
+  --art-right-share: 0.25;
   display: block;
   grid-column: 2;
   grid-row: 1;
-  align-self: end;
+  align-self: center;
   justify-self: end;
+  /* grid ogesinde yuzdelik margin grid alaninin genisligine gore cozulur */
+  margin-right: calc(max(0px, 100% - var(--art-width)) * var(--art-right-share));
   position: relative;
-  bottom: -2px;
   width: 100%;
-  max-width: calc((100svh - 84px + 2px) * var(--art-ratio));
+  max-width: var(--art-width);
   aspect-ratio: var(--art-ratio);
   z-index: 1;
   pointer-events: none;
@@ -45,11 +58,11 @@
   position: relative;
   z-index: 2;
   width: max-content;
-  min-height: 100svh;
+  min-height: calc(100svh - 84px);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 128px 0 clamp(48px, 9vh, 110px) clamp(20px, 4vw, 56px);
+  justify-content: center;
+  padding: 0 0 0 clamp(20px, 4vw, 56px);
 }
 
 .slogan {
@@ -92,7 +105,7 @@
 @media (max-width: 768px) {
   .hero {
     display: block;
-    padding-right: 0;
+    padding: 0;
     position: relative;
     overflow: visible;
     /* 84px header payi + gorselin kendi orani (1536.6208/921.20239 ~ 1.668)
@@ -104,7 +117,7 @@
 
   .artFrame {
     position: absolute;
-    /* Masaüstündeki alt hizalama mutlak konumda da etkili olur.
+    /* Masaüstündeki ortalama mutlak konumda da etkili olur.
        Mobil kompozisyon üst kenardan başladığı için burada sıfırlanır. */
     align-self: auto;
     justify-self: auto;

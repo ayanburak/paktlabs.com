@@ -31,7 +31,7 @@ npx playwright show-trace test-results/<test-klasörü>/trace.zip
 
 `illustrations.spec.ts` ağ isteklerine bakarak ekran genişliğine uygun SVG'nin indirildiğini, diğer kompozisyonun hiç istenmediğini kontrol eder. Derleme çıktısında dosya adları hash taşıdığı için karşılaştırma hash'siz taban adla yapılır. Ekran genişliği eşiği geçtiğinde yeni dosyanın inmesi beklenen davranıştır.
 
-`layout.spec.ts` responsive eşiklerin iki yanındaki ölçülerde, iki dilde yerleşim ilişkilerini ölçer. Yatay taşma, masaüstü Hero başlığı ile çizim arasındaki boşluk, Hero çiziminin bölüm çizgisine oturması, disiplin figürünün ekran içinde ve kartların üstünde durması, iş bantlarında çizimin başlık, açıklama, liste ve düğmeye değmemesi ve zemin çizgisinin bant sınırında kalması kontrol edilir. Ayrıca belirme animasyonları bittikten sonra görsellerin, hareket azaltma tercihindeki konumla aynı yerde durduğu doğrulanır.
+`layout.spec.ts` responsive eşiklerin iki yanındaki ölçülerde, iki dilde yerleşim ilişkilerini ölçer. Yatay taşma, masaüstü Hero başlığı ile çizim arasındaki boşluk, Hero çiziminin ve metninin header'ın altında kalan alanın dikey ortasında durması, disiplin figürünün ekran içinde ve kartların üstünde durması, iş bantlarında çizimin başlık, açıklama, liste ve düğmeye değmemesi ve zemin çizgisinin bant sınırında kalması kontrol edilir. Ayrıca belirme animasyonları bittikten sonra görsellerin, hareket azaltma tercihindeki konumla aynı yerde durduğu doğrulanır.
 
 `visual.spec.ts` onaylı görünümün Türkçe ve İngilizce, 390×844, 1024×1366, 1366×1024 ve 1920×1080 ölçülerinde tam sayfa görüntüsünü referansla karşılaştırır. Referanslar `visual.spec.ts-snapshots/` altında commit'lenir.
 

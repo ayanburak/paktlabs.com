@@ -7,7 +7,7 @@ icin img kutusu kullanilir, SVG icinde bos kalan seffaf alan cakisma gibi gorune
 Zemin hesabi CSS modelini olcer, SVG icindeki cizgiyi piksel olarak bulmaz.
 Gorsel sonucun kendisi visual.spec.ts'te ayrica karsilastirilir.
 
-description: Tasma, hero metni ile cizim, disiplin figuru ve is bandi figurlerinin yerlesim testleri.
+description: Tasma, hero metni ile cizimin yerlesimi, disiplin figuru ve is bandi figurlerinin yerlesim testleri.
 */
 
 import { expect, test } from '@playwright/test'
@@ -44,6 +44,13 @@ async function measure(page: Page) {
 
     const hero = document.querySelector('main > section')!
     const heroFrame = hero.querySelector('picture')!
+    // hero'nun ortalama alani header payindan sonra baslar, alt cizgiden once biter.
+    // Iki deger de sayi olarak yazilmaz, hero'nun hesaplanmis stilinden okunur
+    const heroStyle = getComputedStyle(hero)
+    const heroBox = box(hero)
+    const heroAreaCenter =
+      (heroBox.top + parseFloat(heroStyle.paddingTop) + heroBox.bottom - parseFloat(heroStyle.borderBottomWidth)) / 2
+    const centerOf = (b: Box) => (b.top + b.bottom) / 2
     const discArt = document.querySelector('#disiplinler picture img')!
     const cards = document.querySelector('#disiplinler a')!.parentElement!
 
@@ -68,7 +75,11 @@ async function measure(page: Page) {
       overflowX: document.documentElement.scrollWidth - innerWidth,
       heroGap: box(heroFrame).left - textBox(hero.querySelector('h1')!).right,
       heroCtaHit: overlaps(box(heroFrame), box(hero.querySelector('.cta')!)),
-      heroBottom: box(heroFrame).bottom - box(hero).bottom,
+      heroArtCenter: centerOf(box(heroFrame)) - heroAreaCenter,
+      // metin blogu eleman kutulariyla olculur. Baslik satir yuksekligi fontun
+      // yazi alanindan kucuk oldugu icin Range kutusu eleman kutusunun disina
+      // tasar, ortalamayi ise CSS eleman kutularina gore yapar
+      heroTextCenter: (box(hero.querySelector('h1')!).top + box(hero.querySelector('.cta')!).bottom) / 2 - heroAreaCenter,
       discArt: {
         opacity: getComputedStyle(discArt).opacity,
         left: box(discArt).left,
@@ -96,7 +107,8 @@ test.describe('responsive layout', () => {
         if (width > 768) {
           expect(m.heroGap, 'hero basligi ile cizim arasi').toBeGreaterThanOrEqual(24)
           expect(m.heroCtaHit, 'hero dugmesi cizimle cakisiyor').toBe(false)
-          expect(Math.abs(m.heroBottom), 'hero cizimi bolum cizgisinde').toBeLessThanOrEqual(1)
+          expect(Math.abs(m.heroArtCenter), 'hero cizimi alanin dikey ortasinda').toBeLessThanOrEqual(1)
+          expect(Math.abs(m.heroTextCenter), 'hero metni alanin dikey ortasinda').toBeLessThanOrEqual(1)
         }
 
         expect(m.discArt.opacity).toBe('1')
