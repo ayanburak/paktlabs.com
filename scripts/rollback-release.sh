@@ -1,29 +1,33 @@
 #!/usr/bin/env bash
-# Sunucudaki surumleri listeler veya /var/www/paktlabs symlink'ini verilen
+# Sunucudaki surumleri listeler veya uygulamanin canli symlink'ini verilen
 # eski surume atomik olarak geri cevirir. Hicbir surum silinmez.
 #
 # Kullanim:
-#   scripts/rollback-release.sh             surumleri ve aktif olani listeler
-#   scripts/rollback-release.sh <surum-adi> o surume doner
+#   scripts/rollback-release.sh <uygulama>              surumleri ve aktif olani listeler
+#   scripts/rollback-release.sh <uygulama> <surum-adi>  o surume doner
 set -euo pipefail
 
+source "$(dirname "$0")/apps.sh"
+load_app "${1:-}"
 host=${DEPLOY_HOST:-vps}
 
-ssh "$host" bash -s -- "${1:-}" <<'REMOTE'
-set -euo pipefail
 # ssh argumanlari tek komut satirina birlestirir, bos arguman uzak tarafa hic
-# ulasmaz. Listeleme modunda $1 tanimsiz gelir, set -u yuzunden varsayilan gerekli.
-name=${1:-}
-releases=/var/www/paktlabs-releases
+# ulasmaz. Bu yuzden surum adi en sona konur, listeleme modunda $3 tanimsiz
+# gelir ve set -u yuzunden varsayilan gerekli.
+ssh "$host" bash -s -- "$releases" "$live" "${2:-}" <<'REMOTE'
+set -euo pipefail
+releases=$1
+live=$2
+name=${3:-}
 
 if [ -z "$name" ]; then
-  echo "aktif: $(readlink /var/www/paktlabs)"
+  echo "aktif: $(readlink "$live")"
   ls -1 "$releases"
   exit 0
 fi
 
 test -d "$releases/$name/site" || { echo "$releases/$name/site yok" >&2; exit 1; }
-ln -sfn "$releases/$name/site" /var/www/paktlabs.next
-mv -T /var/www/paktlabs.next /var/www/paktlabs
-echo "aktif: $(readlink /var/www/paktlabs)"
+ln -sfn "$releases/$name/site" "$live.next"
+mv -T "$live.next" "$live"
+echo "aktif: $(readlink "$live")"
 REMOTE

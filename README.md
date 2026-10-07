@@ -42,12 +42,14 @@ Repo npm workspaces ile kurulur. Bağımlılıklar kökte tek bir `package-lock.
 
 ```bash
 npm ci
+npm run lint         # bütün uygulamaları ve ortak paketi tek seferde tarar
 cd apps/landing
 npm run dev          # http://localhost:5173
-npm run lint
 npm run typecheck
 npm run build        # dist/ klasörüne üretim derlemesi
 ```
+
+Lint kökte çalışır ve tek bir `.oxlintrc.json` kullanır, böylece hiçbir uygulamanın import etmediği ortak paket dosyaları da taranır. Ortak paketin tip kontrolü `packages/brand` içinde `npm run typecheck` ile ayrıca yapılır, aynı nedenle.
 
 ## Testler
 
@@ -62,7 +64,7 @@ npm run test:visual
 
 Test koşulları, toleranslar ve testlerin neyi kanıtlamadığı `apps/landing/tests/README.md` içinde anlatılır.
 
-GitHub Actions her push ve pull request'te lint, tip kontrolü ve davranış testlerini çalıştırır. Görsel testler CI'da çalıştırılmaz, çünkü referans görüntüler yerel font çizimiyle alınmıştır ve farklı bir runner'da yanlış alarm üretir.
+GitHub Actions her push ve pull request'te üç iş çalıştırır: bütün repo için lint, ortak paketin tip kontrolü ve landing'in tip kontrolü ile davranış testleri. Görsel testler CI'da çalıştırılmaz, çünkü referans görüntüler yerel font çizimiyle alınmıştır ve farklı bir runner'da yanlış alarm üretir.
 
 `docs/visual-baseline/` klasörü, responsive düzeltmelerden önceki durumun `257ed79` commit'inden alınmış arşiv kaydıdır. Güncel referanslar `apps/landing/tests/visual.spec.ts-snapshots/` altında durur. Arşiv yeni görüntülerle değiştirilmez.
 
@@ -70,26 +72,26 @@ Dile özel illüstrasyon dosyalarının nasıl ekleneceği `docs/illustrations.m
 
 ## Dağıtım
 
-GitHub'a push yapılması canlı sitenin güncellendiği anlamına gelmez. Canlıya alım ayrı ve elle çalıştırılan iki adımdır: paketleme ve yayınlama.
+GitHub'a push yapılması canlı sitenin güncellendiği anlamına gelmez. Canlıya alım ayrı ve elle çalıştırılan iki adımdır: paketleme ve yayınlama. Üç script de ilk argüman olarak uygulamanın adını alır. Her uygulamanın paket adı öneki, sunucudaki klasörleri ve canlı adresi `scripts/apps.sh` içinde tek yerde durur. Landing'in değerleri atomik yayın düzeni kurulduğundan beri aynıdır: paketler `paktlabs-` ile başlar, sürümler `/var/www/paktlabs-releases` altında durur.
 
-Paket, commit'lenmiş kaynaktan üretilir. Script `git archive` ile verilen commit'ten yalnızca kökteki `package.json` ve `package-lock.json` dosyalarını, ortak `packages` klasörünü ve `apps/landing` klasörünü çıkarır, temiz bir ortamda `npm ci` ve landing'in build komutunu çalıştırır. Çalışma ağacındaki commit'lenmemiş bir değişiklik bu yüzden pakete giremez. HTML, JS, CSS ve SVG dosyalarının yanına önceden sıkıştırılmış `.gz` kopyaları eklenir, her dosyanın SHA256 özeti ve kaynak commit pakete yazılır.
+Paket, commit'lenmiş kaynaktan üretilir. Script `git archive` ile verilen commit'ten yalnızca kökteki `package.json` ve `package-lock.json` dosyalarını, ortak `packages` klasörünü ve `apps` klasörünü çıkarır, temiz bir ortamda `npm ci` ve yalnızca seçilen uygulamanın build komutunu çalıştırır. Bütün `apps` klasörünün alınmasının nedeni kilit dosyasının bütün uygulamaları listelemesidir, eksik bir uygulama klasörüyle `npm ci` kilitle uyuşmaz. Çalışma ağacındaki commit'lenmemiş bir değişiklik bu yüzden pakete giremez. HTML, JS, CSS ve SVG dosyalarının yanına önceden sıkıştırılmış `.gz` kopyaları eklenir, her dosyanın SHA256 özeti ve kaynak commit pakete yazılır.
 
 ```bash
-scripts/build-release.sh            # HEAD'den release/paktlabs-<zaman>-<commit>.tar.gz üretir
-scripts/build-release.sh <commit>   # belirli bir commit'ten üretir
+scripts/build-release.sh landing            # HEAD'den release/paktlabs-<zaman>-<commit>.tar.gz üretir
+scripts/build-release.sh landing <commit>   # belirli bir commit'ten üretir
 ```
 
-Yayınlama, paketi sunucuda `/var/www/paktlabs-releases/<sürüm>/` altına açar ve özetleri doğrular. Nginx'in kök dizini olan `/var/www/paktlabs` bir symlink'tir. Yeni sürüme geçiş bu symlink'in tek bir rename işlemiyle çevrilmesidir, ziyaretçi hiçbir anda yarım kopyalanmış bir dizin görmez. Önceki sürümler yerinde kalır. Script son olarak canlı `index.html`'in yeni paketteki dosyaları gösterdiğini kontrol eder.
+Yayınlama, paketi sunucuda uygulamanın sürüm klasörüne, landing için `/var/www/paktlabs-releases/<sürüm>/` altına açar ve özetleri doğrular. Paketin adı uygulamanın önekiyle başlamıyorsa script durur, böylece bir sitenin paketi yanlışlıkla başka bir sitenin canlı dizinine geçemez. Nginx'in kök dizini olan `/var/www/paktlabs` bir symlink'tir. Yeni sürüme geçiş bu symlink'in tek bir rename işlemiyle çevrilmesidir, ziyaretçi hiçbir anda yarım kopyalanmış bir dizin görmez. Önceki sürümler yerinde kalır. Script son olarak canlı `index.html`'in yeni paketteki dosyaları gösterdiğini kontrol eder.
 
 ```bash
-scripts/deploy-release.sh release/paktlabs-<zaman>-<commit>.tar.gz
+scripts/deploy-release.sh landing release/paktlabs-<zaman>-<commit>.tar.gz
 ```
 
 Geri dönüşte symlink eski bir sürüme çevrilir, dosya kopyalanmaz ve hiçbir sürüm silinmez.
 
 ```bash
-scripts/rollback-release.sh            # sürümleri ve aktif olanı listeler
-scripts/rollback-release.sh <sürüm>    # o sürüme döner
+scripts/rollback-release.sh landing            # sürümleri ve aktif olanı listeler
+scripts/rollback-release.sh landing <sürüm>    # o sürüme döner
 ```
 
 Nginx `.gz` kopyalarını `gzip_static` ile hazır sunar. Hash'li dosyalar bir yıl ve değişmez olarak önbelleğe alınır, `index.html` her ziyarette yeniden doğrulanır. Böylece yeni bir sürüm, eski önbellekle karışmadan ilk yenilemede görünür. Eski sürümler birikince elle temizlenir, aktif sürüm ve geri dönüş için en az bir önceki sürüm saklanır. Sunucu tarafındaki kurulum ayrı bir altyapı belgesinde tutulur.

@@ -1,8 +1,8 @@
-# Landing frontend'i icin lint, tip kontrolu ve Playwright davranis testleri.
+# PaktLabs sitelerinin lint, tip kontrolu ve Playwright davranis testleri.
+# Bagimliliklar npm workspaces ile kokte kurulur. Lint butun repoyu tek seferde
+# tarar, her uygulama kendi job'unda tip kontrolu ve testlerini calistirir.
 # Gorsel snapshot testleri burada calismaz: referanslar yerel Linux/Chromium
 # font cizimiyle alindi, GitHub runner'inda piksel farki uretip yanlis alarm verir.
-# Bagimliliklar npm workspaces ile kokte kurulur, komutlar uygulamanin kendi
-# klasorunde calisir.
 name: CI
 
 on:
@@ -11,6 +11,34 @@ on:
   pull_request:
 
 jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - run: npm run lint
+
+  brand:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: packages/brand
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+        working-directory: .
+      - run: npm run typecheck
+
   landing:
     runs-on: ubuntu-24.04
     defaults:
@@ -27,7 +55,6 @@ jobs:
 
       - run: npm ci
         working-directory: .
-      - run: npm run lint
       - run: npm run typecheck
       - run: npx playwright install --with-deps chromium
       - run: npm test

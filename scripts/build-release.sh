@@ -3,8 +3,9 @@
 # commit'in kendisinden cikarilir, calisma agacinda commit'lenmemis bir
 # degisiklik varsa bile pakete giremez.
 #
-# Kullanim: scripts/build-release.sh [commit]
-# Commit verilmezse HEAD kullanilir. Cikti release/<ad>.tar.gz olur.
+# Kullanim: scripts/build-release.sh <uygulama> [commit]
+# Uygulama scripts/apps.sh'taki adlardan biridir. Commit verilmezse HEAD
+# kullanilir. Cikti release/<onek>-<zaman>-<commit>.tar.gz olur.
 #
 # Paketin icinde:
 #   <ad>/site/        nginx'in sunacagi dosyalar ve hazir .gz kopyalari
@@ -12,19 +13,24 @@
 #   <ad>/RELEASE      kaynak commit ve paketleme zamani
 set -euo pipefail
 
+source "$(dirname "$0")/apps.sh"
+app=${1:-}
+load_app "$app"
+
 repo=$(git rev-parse --show-toplevel)
-commit=$(git -C "$repo" rev-parse --verify "${1:-HEAD}^{commit}")
-name="paktlabs-$(date -u +%Y%m%d-%H%M%S)-${commit:0:7}"
+commit=$(git -C "$repo" rev-parse --verify "${2:-HEAD}^{commit}")
+name="$prefix-$(date -u +%Y%m%d-%H%M%S)-${commit:0:7}"
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 
-# bagimliliklar workspaces kokunde kilitli, bu yuzden kok package.json,
-# package-lock.json ve ortak packages klasoru de arsive girer, npm ci kokte calisir
-git -C "$repo" archive "$commit" package.json package-lock.json packages apps/landing | tar -x -C "$work"
-(cd "$work" && npm ci --no-audit --no-fund && npm run build -w apps/landing)
+# bagimliliklar workspaces kokunde kilitli ve kilit dosyasi butun uygulamalari
+# listeler. npm ci kilitle klasorler uyussun diye butun apps klasoru arsive girer,
+# build yalnizca secilen uygulama icin calisir
+git -C "$repo" archive "$commit" package.json package-lock.json packages apps | tar -x -C "$work"
+(cd "$work" && npm ci --no-audit --no-fund && npm run build -w "apps/$app")
 
 mkdir -p "$work/$name"
-cp -a "$work/apps/landing/dist" "$work/$name/site"
+cp -a "$work/apps/$app/dist" "$work/$name/site"
 
 # gzip_static bu kopyalari hazir sunar, nginx her istekte yeniden sikistirmaz.
 # -n dosya adini ve zamani gz basligina yazmaz, ayni build ayni .gz'yi uretir.
