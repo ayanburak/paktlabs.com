@@ -9,8 +9,8 @@ content/disciplines.ts'ten gelir.
 description: Ust kisa baslikli, alt paneli detay tasiyan, hover'da birlikte kalkan disiplin karti.
 */
 
-import { useReveal } from '@/hooks/useReveal'
-import { cx } from '@/lib/cx'
+import { useReveal } from '@paktlabs/brand/hooks/useReveal'
+import { cx } from '@paktlabs/brand/lib/cx'
 
 import styles from './DisciplineCard.module.css'
 

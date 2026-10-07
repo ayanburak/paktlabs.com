@@ -10,9 +10,9 @@ description: Isler bolumundeki tek bir disiplin seridi, buyuk sozcuk/aciklama su
 
 import type { CSSProperties } from 'react'
 
-import { RevealImg } from '@/components/RevealImg'
-import { useReveal } from '@/hooks/useReveal'
-import { cx } from '@/lib/cx'
+import { RevealImg } from '@paktlabs/brand/components/RevealImg'
+import { useReveal } from '@paktlabs/brand/hooks/useReveal'
+import { cx } from '@paktlabs/brand/lib/cx'
 
 import styles from './Band.module.css'
 

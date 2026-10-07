@@ -5,13 +5,14 @@ importable: Work
 description: Kabul ettigimiz isler basligi ve veri/otomasyon/web seritlerini sirayla dizen bolum.
 */
 
+import { disciplineUrls } from '@paktlabs/brand/content/disciplines'
+import { useReveal } from '@paktlabs/brand/hooks/useReveal'
+import { cx } from '@paktlabs/brand/lib/cx'
+
 import autoSvg from '@/assets/illustrations/auto.svg'
 import dataSvg from '@/assets/illustrations/data.svg'
 import webSvg from '@/assets/illustrations/web.svg'
-import { disciplineUrls } from '@/content/disciplines'
-import { useReveal } from '@/hooks/useReveal'
 import { useDict } from '@/i18n'
-import { cx } from '@/lib/cx'
 
 import styles from './Work.module.css'
 import { Band } from './Work/Band'

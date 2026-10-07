@@ -5,14 +5,15 @@ importable: Disciplines
 description: Gold bant icinde figur ve uc disiplin kartini bir arada gosteren bolum.
 */
 
+import { RevealImg } from '@paktlabs/brand/components/RevealImg'
+import { disciplineUrls } from '@paktlabs/brand/content/disciplines'
+import { cx } from '@paktlabs/brand/lib/cx'
+
 import inceleyinMobileSvg from '@/assets/illustrations/inceleyin-mobile.svg'
 import inceleyinSvg from '@/assets/illustrations/inceleyin.svg'
 import { DisciplineCard } from '@/components/DisciplineCard'
-import { RevealImg } from '@/components/RevealImg'
-import { disciplineUrls } from '@/content/disciplines'
 import { useDict, useLanguage } from '@/i18n'
 import type { Language } from '@/i18n'
-import { cx } from '@/lib/cx'
 
 import styles from './Disciplines.module.css'
 

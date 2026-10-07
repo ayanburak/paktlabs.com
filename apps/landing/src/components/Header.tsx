@@ -12,10 +12,11 @@ description: Hero'nun uzerinde duran, marka adi + disiplin baglantilari + dil de
 
 import { useEffect, useId, useRef, useState } from 'react'
 
-import logoUrl from '@/assets/brand/logo.svg'
-import { disciplineUrls } from '@/content/disciplines'
+import logoUrl from '@paktlabs/brand/assets/logo.svg'
+import { disciplineUrls } from '@paktlabs/brand/content/disciplines'
+import { cx } from '@paktlabs/brand/lib/cx'
+
 import { useDict, useLanguage } from '@/i18n'
-import { cx } from '@/lib/cx'
 
 import styles from './Header.module.css'
 

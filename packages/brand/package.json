@@ -4,6 +4,15 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./styles/*": "./styles/*"
+    "./styles/*": "./styles/*",
+    "./assets/*": "./assets/*",
+    "./lib/*": "./lib/*.ts",
+    "./hooks/*": "./hooks/*.ts",
+    "./content/*": "./content/*.ts",
+    "./components/*": "./components/*.tsx"
+  },
+  "peerDependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   }
 }

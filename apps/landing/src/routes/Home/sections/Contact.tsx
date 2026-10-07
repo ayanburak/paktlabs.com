@@ -9,11 +9,12 @@ minik FastAPI servisiyle baglanacak, o gelene kadar bu bilerek boyle birakildi.
 description: Iletisim formu ve telefon figurunu yan yana gosteren kapanis bolumu.
 */
 
+import { RevealImg } from '@paktlabs/brand/components/RevealImg'
+import { useReveal } from '@paktlabs/brand/hooks/useReveal'
+import { cx } from '@paktlabs/brand/lib/cx'
+
 import phoneSvg from '@/assets/illustrations/phone.svg'
-import { RevealImg } from '@/components/RevealImg'
-import { useReveal } from '@/hooks/useReveal'
 import { useDict } from '@/i18n'
-import { cx } from '@/lib/cx'
 
 import styles from './Contact.module.css'
 

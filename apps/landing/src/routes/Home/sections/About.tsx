@@ -5,9 +5,10 @@ importable: About
 description: Biz kimiz bolumu, ortalanmis tek bir baslik blogundan olusur.
 */
 
-import { useReveal } from '@/hooks/useReveal'
+import { useReveal } from '@paktlabs/brand/hooks/useReveal'
+import { cx } from '@paktlabs/brand/lib/cx'
+
 import { useDict } from '@/i18n'
-import { cx } from '@/lib/cx'
 
 import styles from './About.module.css'
 

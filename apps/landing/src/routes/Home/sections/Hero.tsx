@@ -5,11 +5,12 @@ importable: Hero
 description: Açılış bölümündeki sloganı, iletişim bağlantısını ve ekrana uygun illüstrasyonu gösterir.
 */
 
+import { useReveal } from '@paktlabs/brand/hooks/useReveal'
+import { cx } from '@paktlabs/brand/lib/cx'
+
 import heroMobileSvg from '@/assets/illustrations/hero-mobile.svg'
 import heroSvg from '@/assets/illustrations/hero.svg'
-import { useReveal } from '@/hooks/useReveal'
 import { useDict } from '@/i18n'
-import { cx } from '@/lib/cx'
 
 import styles from './Hero.module.css'
 

@@ -5,7 +5,8 @@ importable: Footer
 description: Sayfanin en altindaki telif hakki satiri ve disiplin baglantilarini tasiyan alt bilgi bandi.
 */
 
-import { disciplineUrls } from '@/content/disciplines'
+import { disciplineUrls } from '@paktlabs/brand/content/disciplines'
+
 import { useDict } from '@/i18n'
 
 import styles from './Footer.module.css'
