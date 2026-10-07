@@ -16,7 +16,7 @@ Site üç tür sayfadan oluşur. Üçü de landing ile aynı üst barı ve alt b
 
 ### Veri sayfası
 
-Sitenin girişidir. Açılışta ekranı kaplayan bir hero bulunur, solda büyük "Veri" kelimesi ve kısa bir açıklama, sağda bir illüstrasyon yer alır. Altında kullanılan teknolojilerin logolarının aktığı bir şerit, ardından çalışmaların listesi gelir. Çalışmalar landing'deki altın renkli disiplin bandının içinde, iki kutulu kartlar olarak dizilir: üst kutuda numara ve başlık, alt kutuda kısa açıklama, etiketler ve bağlantı. Listenin üstündeki süzgeç, çalışmaları etiketlerine göre ayırır. Sayfa bir iletişim bölümüyle kapanır.
+Sitenin girişidir. Açılışta ekranı kaplayan bir hero bulunur, solda büyük "Veri" kelimesi ve kısa bir açıklama, sağda bir illüstrasyon yer alır. Mockup'taki hero'da sayıları büyük puntoyla gösteren üç kutu vardı, sayı kutusu kuralına uymadığı için kaldırıldı. Altında kullanılan teknolojilerin logolarının aktığı bir şerit, ardından çalışmaların listesi gelir. Şeritteki ürün adları iki dilde aynı kaldığı için sözlükte değil `src/content/techStack.ts` içinde durur. Çalışmalar landing'deki altın renkli disiplin bandının içinde, iki kutulu kartlar olarak dizilir: üst kutuda numara ve başlık, alt kutuda kısa açıklama, etiketler ve bağlantı. Listenin üstündeki süzgeç, çalışmaları etiketlerine göre ayırır. Sayfa bir iletişim bölümüyle kapanır. Bu bölümde yalnızca e-posta bağlantısı bulunur. Mockup'taki landing formuna giden düğme kaldırıldı, çünkü o formun gönder düğmesi ortak iletişim servisi kurulana kadar işlem yapmaz.
 
 ### Çalışma detay sayfası
 
@@ -62,7 +62,7 @@ Başlıklar slogan olmaz. "Dört katalog, tek ürün listesi" ya da "Tek eşik y
 
 ### Etkileşim
 
-Sunum durağandır. Sürgüyle değiştirilen grafikler, sekmeler, üzerine gelince açılan terim balonları gibi öğeler kullanılmaz. Gösterişli görünseler de sayfaya üretilmiş bir vitrin havası verir ve okuyucuyu içerikten uzaklaştırırlar. Kalan tek etkileşim açılır kutudur ve yalnızca ayrıntıyı ilk katmandan ayırmak için kullanılır. Kod sayfasında kod bloklarının kopyalama düğmesi bu kuralın dışındadır.
+Sunum durağandır. Sürgüyle değiştirilen grafikler, sekmeler, üzerine gelince açılan terim balonları gibi öğeler kullanılmaz. Gösterişli görünseler de sayfaya üretilmiş bir vitrin havası verir ve okuyucuyu içerikten uzaklaştırırlar. Kalan tek etkileşim açılır kutudur ve yalnızca ayrıntıyı ilk katmandan ayırmak için kullanılır. Kural iki istisna taşır. Kod sayfasında kod bloklarının kopyalama düğmesi bulunur. Veri sayfasının teknoloji şeridinde ise üzerine gelinen logonun adı küçük bir kutuda açılır. Bu kutu bir terimi açıklamaz, yalnızca logonun hangi araca ait olduğunu söyler. Bir logo herkes tarafından tanınmayabileceği için Burak'ın kararıyla kalır.
 
 ### Tekrar eden bloklar
 
@@ -122,7 +122,7 @@ Başlıklarda Space Grotesk, gövde metninde Atkinson Hyperlegible, küçük eti
 
 Bu öğeler bir sayfada her bloğa uygulanırsa sayfa marka öğeleriyle dolar ve içerik geri planda kalır. Kutu, mono etiket ve sert gölge vurgu olarak az kullanılır, gövde metni çoğunlukla kâğıt zemin üzerinde düz akar.
 
-Henüz çizilmemiş illüstrasyonlar kesikli çizgili boş alanlar olarak bırakılır, alanın içinde hangi çizimin önerildiği yazar. Çizim hazır olunca alanın yerine tek bir `img` konur, alanın oranı değişmez. Figürlerin ayakları bölüm çizgisine oturur.
+Henüz çizilmemiş illüstrasyonlar kesikli çizgili boş alanlar olarak bırakılır, alanın içinde hangi çizimin önerildiği yazar. Bu alanlar yayında da görünür, çizim gelene kadar sayfa bilerek bu haliyle durur. Çizim hazır olunca alanın yerine tek bir `img` konur, alanın oranı değişmez. Figürlerin ayakları bölüm çizgisine oturur.
 
 ### Tarayıcı uyumu
 
