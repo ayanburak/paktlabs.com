@@ -18,9 +18,9 @@ name="paktlabs-$(date -u +%Y%m%d-%H%M%S)-${commit:0:7}"
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 
-# bagimliliklar workspaces kokunde kilitli, bu yuzden kok package.json ve
-# package-lock.json da arsive girer, npm ci kokte calisir
-git -C "$repo" archive "$commit" package.json package-lock.json apps/landing | tar -x -C "$work"
+# bagimliliklar workspaces kokunde kilitli, bu yuzden kok package.json,
+# package-lock.json ve ortak packages klasoru de arsive girer, npm ci kokte calisir
+git -C "$repo" archive "$commit" package.json package-lock.json packages apps/landing | tar -x -C "$work"
 (cd "$work" && npm ci --no-audit --no-fund && npm run build -w apps/landing)
 
 mkdir -p "$work/$name"

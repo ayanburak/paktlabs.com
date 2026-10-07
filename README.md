@@ -24,7 +24,7 @@ Sayfa başlığı ve açıklaması `index.html` içinde Türkçe olarak yazılı
 
 ## Tasarım kararları
 
-Bütün stiller elle yazılmıştır, utility CSS framework'ü kullanılmaz. Ortak renk ve boşluklar `apps/landing/src/styles/tokens.css`, taban stiller `global.css`, bileşene özel stiller bileşenin yanındaki `.module.css` dosyalarında durur.
+Bütün stiller elle yazılmıştır, utility CSS framework'ü kullanılmaz. Bütün PaktLabs sitelerinin paylaştığı renk ve boşluklar `packages/brand/styles/tokens.css`, taban stiller aynı klasördeki `global.css` dosyasında durur. Böylece landing ve disiplin subdomain'leri tek bir tasarım kaynağından beslenir, bir renk değiştiğinde bütün siteler birlikte değişir. Bileşene özel stiller bileşenin yanındaki `.module.css` dosyalarında durur.
 
 İllüstrasyonların zemin çizgileri bölüm sınırlarına göre elle hizalanmıştır. İş kapsamı bantlarındaki görsellerin zemin kaydırması `translate`, belirme animasyonu ise ayrı `transform` özelliğiyle taşınır. Böylece animasyon kaldırılsa da yerleşim değişmez. Figürlerin bölüm çizgisinin altına taşan ayak gibi parçaları kırpılacak fazlalık değildir.
 
@@ -72,7 +72,7 @@ Dile özel illüstrasyon dosyalarının nasıl ekleneceği `docs/illustrations.m
 
 GitHub'a push yapılması canlı sitenin güncellendiği anlamına gelmez. Canlıya alım ayrı ve elle çalıştırılan iki adımdır: paketleme ve yayınlama.
 
-Paket, commit'lenmiş kaynaktan üretilir. Script `git archive` ile verilen commit'ten yalnızca kökteki `package.json` ve `package-lock.json` dosyalarını ve `apps/landing` klasörünü çıkarır, temiz bir ortamda `npm ci` ve landing'in build komutunu çalıştırır. Çalışma ağacındaki commit'lenmemiş bir değişiklik bu yüzden pakete giremez. HTML, JS, CSS ve SVG dosyalarının yanına önceden sıkıştırılmış `.gz` kopyaları eklenir, her dosyanın SHA256 özeti ve kaynak commit pakete yazılır.
+Paket, commit'lenmiş kaynaktan üretilir. Script `git archive` ile verilen commit'ten yalnızca kökteki `package.json` ve `package-lock.json` dosyalarını, ortak `packages` klasörünü ve `apps/landing` klasörünü çıkarır, temiz bir ortamda `npm ci` ve landing'in build komutunu çalıştırır. Çalışma ağacındaki commit'lenmemiş bir değişiklik bu yüzden pakete giremez. HTML, JS, CSS ve SVG dosyalarının yanına önceden sıkıştırılmış `.gz` kopyaları eklenir, her dosyanın SHA256 özeti ve kaynak commit pakete yazılır.
 
 ```bash
 scripts/build-release.sh            # HEAD'den release/paktlabs-<zaman>-<commit>.tar.gz üretir

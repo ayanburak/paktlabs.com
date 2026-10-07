@@ -2,6 +2,7 @@
   "name": "paktlabs",
   "private": true,
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ]
 }

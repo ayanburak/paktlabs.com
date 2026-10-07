@@ -2,11 +2,13 @@
 file: tokens.css
 importable: bu dosyadaki --degiskenlerin hepsi
 
-Landing bolumlerinin ortak marka paleti, bosluk olcegi ve golge degerleri.
-Disiplin subdomainleri bu uygulamanin rotalari degildir, bu dosya onlarin
-stil dosyalarini yonetmez.
+PaktLabs'in butun sitelerinin ortak marka paleti, bosluk olcegi ve golge
+degerleri. Landing ve disiplin subdomainleri bu dosyayi global.css uzerinden
+alir, kendi stillerinde renk ya da font sabiti tekrar yazmaz. Burada bir
+deger degisirse butun siteler birlikte degisir, o yuzden landing'in gorsel
+testleri her degisiklikte calistirilmali.
 
-description: Site genelinde paylasilan renk, bosluk ve golge degiskenlerini tanimlayan tek dosya.
+description: PaktLabs sitelerinin paylastigi renk, bosluk ve golge degiskenlerini tanimlayan tek dosya.
 */
 
 /* renk degerleri dogrudan landing_mockup.html'deki :root'tan tasindi, hue'lara
