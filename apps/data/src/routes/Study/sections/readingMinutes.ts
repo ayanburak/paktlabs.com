@@ -20,8 +20,8 @@ const WORDS_PER_MINUTE = 200
 
 // Bir parcanin okunan metni. Donus tipi acikca yazili, BlockView'deki gibi
 // Block'a yeni bir tur eklenip burada karsiligi yazilmazsa derleme durur.
-// Tablo hucreleri ve sekillerdeki sayilar sayilmayacak, okur onlari okumaz,
-// goz atar. Yalnizca duz metin sayilir.
+// Tablo hucreleri ve sekillerdeki sayilar sayilmaz, okur onlari okumaz, goz
+// atar. Yalnizca duz metin sayilir, duz tablonun tamami da bu yuzden disarida.
 function blockText(block: Block, language: Language): string[] {
   switch (block.type) {
     case 'paragraph':
@@ -35,6 +35,21 @@ function blockText(block: Block, language: Language): string[] {
       return [block.meta[language], block.title[language], ...block.blocks.flatMap((inner) => blockText(inner, language))]
     case 'sheet':
       return block.notes?.map((note) => note[language]) ?? []
+    case 'table':
+      return []
+    case 'stations':
+      return block.items.flatMap((station) => [
+        station.title[language],
+        station.text[language],
+        ...(station.details ?? []).map((paragraph) => paragraph[language]),
+      ])
+    case 'chart':
+      return [
+        block.label[language],
+        block.title[language],
+        block.reading[language],
+        ...(block.blocks ?? []).flatMap((inner) => blockText(inner, language)),
+      ]
   }
 }
 

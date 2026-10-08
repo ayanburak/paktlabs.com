@@ -13,10 +13,13 @@ import type { ReactElement } from 'react'
 
 import type { Block } from '@/content/studies/blocks'
 
+import { Chart } from './Chart'
 import { Details } from './Details'
 import { List } from './List'
 import { Paragraph } from './Paragraph'
 import { Sheet } from './Sheet'
+import { Stations } from './Stations'
+import { Table } from './Table'
 
 interface BlockViewProps {
   block: Block
@@ -35,5 +38,11 @@ export function BlockView({ block }: BlockViewProps): ReactElement {
       return <Details block={block} />
     case 'sheet':
       return <Sheet block={block} />
+    case 'table':
+      return <Table block={block} />
+    case 'stations':
+      return <Stations block={block} />
+    case 'chart':
+      return <Chart block={block} />
   }
 }

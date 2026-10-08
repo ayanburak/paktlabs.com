@@ -148,6 +148,41 @@ export const page: StudyPage = {
       },
       blocks: [
         {
+          type: 'table',
+          head: [
+            { tr: 'Kaynak', en: 'Source' },
+            { tr: 'Biçim', en: 'Format' },
+            { tr: 'Barkod dolu', en: 'Barcode filled' },
+            { tr: 'Öne çıkan sorun', en: 'Main problem' },
+          ],
+          rows: [
+            [
+              { tr: 'ERP stok kartları', en: 'ERP stock cards' },
+              { tr: 'CSV, noktalı virgülle ayrılmış', en: 'CSV, separated by semicolons' },
+              { meter: 34 },
+              { tr: 'Adlar büyük harf ve kısaltmalı, kategori ağacı üç seviye', en: 'Names in capitals and abbreviated, three-level category tree' },
+            ],
+            [
+              { tr: 'Tedarikçi A', en: 'Supplier A' },
+              { tr: 'Excel, birleştirilmiş başlık satırları', en: 'Excel, merged header rows' },
+              { meter: 71 },
+              { tr: 'Ölçü adın içinde, birim paket bazında', en: 'Size inside the name, unit per pack' },
+            ],
+            [
+              { tr: 'Tedarikçi B', en: 'Supplier B' },
+              { tr: 'Gecelik XML ürün akışı', en: 'Nightly XML product feed' },
+              { meter: 88 },
+              { tr: 'Aynı ürün renk varyantıyla ayrı satırda', en: 'The same product on separate rows for each colour' },
+            ],
+            [
+              { tr: 'Tedarikçi C', en: 'Supplier C' },
+              { tr: "PDF'ten dönüştürülmüş CSV, ondalık virgül", en: 'CSV converted from PDF, decimal comma' },
+              { meter: 12 },
+              { tr: 'Barkod neredeyse yok, adlar serbest yazım', en: 'Almost no barcodes, names written freely' },
+            ],
+          ],
+        },
+        {
           type: 'details',
           meta: { tr: 'Profil', en: 'Profile' },
           title: { tr: 'Birim alanı tek başına yirmi üç farklı yazım taşıyordu', en: 'The unit field alone had twenty-three different spellings' },
@@ -209,7 +244,119 @@ export const page: StudyPage = {
         tr: 'Her kayıt aynı altı adımdan sırayla geçer. Her adımın tek bir işi var. Ayrıntısını merak ettiğiniz adımı açabilirsiniz.',
         en: 'Every record passes through the same six steps in order. Each step has a single job. You can open any step to see its details.',
       },
-      blocks: [],
+      blocks: [
+        {
+          type: 'stations',
+          items: [
+            {
+              title: { tr: 'Doğrulama', en: 'Validation' },
+              text: {
+                tr: 'Her kayıt önce bir dizi kuraldan geçer: barkod geçerli mi, fiyat sıfırdan büyük mü, birim tanınıyor mu, ürün adı dolu mu. Kurallardan geçemeyen kayıt düzeltilmez, nedeniyle birlikte kaynağına geri gönderilir.',
+                en: 'Every record first passes a set of rules: is the barcode valid, is the price above zero, is the unit known, is the product name filled in. A record that fails is not corrected but sent back to its source with the reason.',
+              },
+              details: [
+                {
+                  tr: "Kurallar dört grupta, toplam otuz bir tane. Her biri tek bir şeyi kontrol eder ve ayrı ayrı test edilir. Doğrulama 184.312 kaydın 3.947'sini, yani yüzde 2,1'ini karantinaya aldı. En büyük pay bozuk barkodlarındı.",
+                  en: 'There are thirty-one rules in four groups. Each checks a single thing and is tested on its own. Validation sent 3,947 of the 184,312 records, 2.1 percent, to quarantine. Broken barcodes made up the largest share.',
+                },
+                {
+                  tr: 'Kurallar veriyi düzeltmeye çalışmaz. Bozuk bir barkodu tahmin etmek yerine kaydı geri göndermeyi seçtik, çünkü yanlış tahmin edilmiş tek bir barkod iki farklı ürünü birbirine bağlayabilirdi.',
+                  en: 'The rules do not try to fix the data. We chose to send the record back rather than guess a broken barcode, because a single wrongly guessed barcode could tie two different products together.',
+                },
+              ],
+            },
+            {
+              title: { tr: 'Normalizasyon', en: 'Normalisation' },
+              text: {
+                tr: 'Ürün adı parçalarına ayrılır: ne olduğu, ölçüsü, kaplaması, markası ve paketteki adet. Böylece dört kaynağın farklı yazdığı aynı ürün, aynı alanlarda aynı değerleri taşır hale gelir.',
+                en: 'The product name is split into its parts: what it is, its size, finish, brand and the number of pieces in the pack. The same product written differently by four sources then carries the same values in the same fields.',
+              },
+              details: [
+                {
+                  tr: 'Ölçü için ayrı bir okuyucu yazdık. 4x40, 4,0*40 ve Ø4 x L40 gibi yazımların hepsi aynı 4,0 × 40 değerine iner. Ürün türleri için bir eş anlam sözlüğü kurduk, sunta vidası ile yonga levha vidası bu sözlükte aynı türdür. Sözlükte 412 tür kaydı var, markaların kısaltma ve yazım hataları için ayrıca 61 kayıt tutuluyor.',
+                  en: 'We wrote a separate reader for sizes. Spellings such as 4x40, 4,0*40 and Ø4 x L40 all come down to the same 4.0 × 40. We built a synonym dictionary for product kinds, in which two different names for a chipboard screw are the same kind. The dictionary has 412 kind entries, plus 61 entries for brand abbreviations and misspellings.',
+                },
+                {
+                  tr: 'Ölçüyü bilerek ayrı bir alan yaptık. 4x40 ile 4x45 yazı olarak neredeyse aynıdır ama ürün olarak tamamen farklıdır. Bu farkı yazı benzerliğinden tahmin ettirmek yerine doğrudan okuduk.',
+                  en: 'We made the size a separate field on purpose. 4x40 and 4x45 are nearly the same as text but completely different as products. We read that difference directly instead of leaving it to text similarity.',
+                },
+                {
+                  tr: 'Türkçe harfler de ayrı bir iş çıkardı. Büyük İ harfini küçültmek bazı araçlarda beklenmedik bir sonuç verir ve VİDASI ile vidası birbirini tutmaz. Bunun için kendi harf dönüşüm tablomuzu kullandık.',
+                  en: 'Turkish letters were a job of their own. Lowercasing the capital İ gives unexpected results in some tools, so VİDASI and vidası do not match. We used our own letter conversion table for this.',
+                },
+              ],
+            },
+            {
+              title: { tr: 'Aday seçimi', en: 'Candidate selection' },
+              text: {
+                tr: 'Her kaydı diğer bütün kayıtlarla karşılaştırmak çok uzun sürerdi. Bu yüzden önce aynı ürün olma ihtimali olan kayıt çiftleri seçilir, yalnızca onlar karşılaştırılır.',
+                en: 'Comparing every record with every other record would take far too long. So the pairs of records that might be the same product are picked first, and only they are compared.',
+              },
+              details: [
+                {
+                  tr: 'Yüz seksen bin kayıtta olası çift sayısı on altı milyarı geçiyor. Seçimi iki yoldan yaptık: aynı kategori, ölçü ve markayı paylaşan kayıtlar ve adları birbirine en çok benzeyen kayıtlar. İkinci yol, ölçüsü adında hiç yazmayan kayıtları yakalamak için gerekiyordu. Sonunda yaklaşık 2,1 milyon çift kaldı.',
+                  en: 'With a hundred and eighty thousand records the number of possible pairs passes sixteen billion. We picked pairs in two ways: records that share a category, size and brand, and records whose names are most alike. The second way was needed to catch records with no size in their name. About 2.1 million pairs were left in the end.',
+                },
+                {
+                  tr: "Bu adımda kaçan bir eşleşme sonradan hiçbir şekilde geri gelmez. Bu yüzden burada hızdan çok kapsama baktık. Elle işaretlenmiş gerçek eşleşmelerin yüzde 99,1'i seçilen çiftlerin içinde kaldı.",
+                  en: 'A match lost at this step never comes back later. That is why we cared more about coverage than speed here. 99.1 percent of the hand-labelled true matches stayed among the selected pairs.',
+                },
+              ],
+            },
+            {
+              title: { tr: 'Eşleştirme modeli', en: 'Matching model' },
+              text: {
+                tr: 'Seçilen her çift için iki kaydın ne kadar benzediğini ölçen bir dizi özellik hesaplanır. Bir makine öğrenmesi modeli bu özelliklerden çiftin aynı ürün olma olasılığını çıkarır.',
+                en: 'For every selected pair a set of features measuring how alike the two records are is calculated. A machine learning model turns these features into the probability that the pair is the same product.',
+              },
+              details: [
+                {
+                  tr: 'Özellikler on dört ölçüden oluşuyor: ölçünün tutup tutmadığı, adların benzerliği, barkodun aynı, çelişkili ya da eksik olması, marka, kaplama ve adet başı fiyat oranı bunların başlıcaları.',
+                  en: 'The features are fourteen measures. The main ones are whether the sizes agree, how alike the names are, whether the barcode is the same, conflicting or missing, the brand, the finish and the ratio of the unit prices.',
+                },
+                {
+                  tr: 'Modeli eğitmek için firmanın satın alma ekibinden iki kişi 6.400 çifti tek tek aynı ya da farklı diye işaretledi. 400 çifti ikisi de ayrı ayrı işaretledi ve büyük ölçüde aynı kararları verdiler, bu da işaretlerin güvenilir olduğunu gösterdi. Çiftlerin dörtte biri, modelin hiç görmediği bir test için ayrıldı.',
+                  en: "To train the model, two people from the company's purchasing team labelled 6,400 pairs one by one as same or different. Both of them labelled 400 of the pairs separately and largely made the same decisions, which showed the labels could be trusted. A quarter of the pairs was set aside for a test the model never saw.",
+                },
+                {
+                  tr: 'Karar ağaçlarına dayanan, yaygın kullanılan bir model seçtik. Elimizdeki işaretli veri bunun için yeterliydi, model sıradan bir sunucuda dakikalar içinde eğitiliyor ve her kararın hangi özellikten geldiği görülebiliyor. Modelin verdiği olasılıkları ayrıca gerçek oranlara göre ayarladık. Yüzde doksan diyen bir skor, gerçekten de yaklaşık yüzde doksan oranında haklı çıkıyor. Bir sonraki bölümdeki eşikler bu ayar sayesinde seçilebildi.',
+                  en: "We chose a widely used model built on decision trees. The labelled data we had was enough for it, the model trains in minutes on an ordinary server and it is possible to see which feature each decision came from. We also calibrated the model's probabilities against the real rates. A score that says ninety percent turns out to be right about ninety percent of the time. The thresholds in the next chapter could be chosen thanks to this calibration.",
+                },
+              ],
+            },
+            {
+              title: { tr: 'Kümeleme', en: 'Clustering' },
+              text: {
+                tr: 'Model çiftler hakkında karar verir. Aynı ürün olduğuna karar verilen çiftler birleştirilerek ürün grupları kurulur.',
+                en: 'The model decides about pairs. Pairs judged to be the same product are joined to form product groups.',
+              },
+              details: [
+                {
+                  tr: "Bunun bilinen bir tuzağı var. A, B'ye, B de C'ye benziyorsa A ile C aynı gruba düşer, oysa A 4x40, C 4x45 olabilir. Bu yüzden her grupta bir çelişki kontrolü çalışır: grubun içinde ölçüsü ya da markası çelişen iki kayıt varsa grup en zayıf bağlantılarından bölünür. 1.212 grup bu şekilde bölündü, sekiz kayıttan büyük gruplar ise otomatik kabul edilmeden incelemeye gitti.",
+                  en: 'There is a well-known trap here. If A looks like B and B looks like C, A and C end up in the same group, even though A may be 4x40 and C 4x45. So a conflict check runs on every group: if two records in a group disagree on size or brand, the group is split at its weakest links. 1,212 groups were split this way, and groups larger than eight records went to review instead of being accepted automatically.',
+                },
+              ],
+            },
+            {
+              title: { tr: 'Tek ürün kartı', en: 'Single product card' },
+              text: {
+                tr: 'Her gruptan tek bir ürün kartı çıkar. Kartın her alanı, o alan için en güvenilir kaynaktan alınır.',
+                en: 'Each group produces a single product card. Every field of the card is taken from the most reliable source for that field.',
+              },
+              details: [
+                {
+                  tr: "Ad ERP'de varsa ERP'den, barkod geçerli barkodların çoğunluğundan, ölçü ve kaplama ayrıştırılmış değerlerden gelir. Her alan hangi kaynaktan geldiğini yanında taşır, bir değer yanlış çıkarsa nereden geldiği görülür.",
+                  en: 'The name comes from the ERP if it is there, the barcode from the majority of valid barcodes, and the size and finish from the parsed values. Every field carries its source next to it, so if a value turns out wrong it is clear where it came from.',
+                },
+                {
+                  tr: 'Tedarikçi fiyatlarını bilerek birleştirmedik. Her tedarikçinin fiyatı ayrı satırda ve adet başına çevrilmiş olarak durur, çünkü firmanın asıl istediği bu karşılaştırmaydı.',
+                  en: "We deliberately did not merge supplier prices. Each supplier's price sits on its own row converted to a price per piece, because this comparison is what the company really wanted.",
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
     {
       id: 'esik',
@@ -221,86 +368,159 @@ export const page: StudyPage = {
       },
       blocks: [
         {
-          type: 'details',
-          meta: { tr: 'Şekil 1 · veri ve ayrıntı', en: 'Figure 1 · data and details' },
-          title: { tr: 'Test seti, eşikler ve belirsizlik', en: 'Test set, thresholds and uncertainty' },
+          type: 'chart',
+          direction: 'vertical',
+          label: { tr: 'Şekil 1', en: 'Figure 1' },
+          title: { tr: 'Skora göre gerçekten aynı ürün olan çiftlerin oranı', en: 'Share of pairs that really are the same product, by score' },
+          reading: {
+            tr: "Skor düşükken çiftler neredeyse hiç aynı ürün değil, 0,92'nin üstünde neredeyse hep aynı ürün. Arada kalan bantta oran yarı yarıya, bu yüzden o bant insana bırakıldı.",
+            en: 'When the score is low the pairs are almost never the same product, above 0.92 they almost always are. In the band between the rate is about half, so that band was left to people.',
+          },
+          unit: 'percent',
+          decimals: 1,
+          max: 100,
+          ticks: [0, 25, 50, 75, 100],
+          bars: [
+            { label: { tr: '0 – 0,10', en: '0 – 0.10' }, value: 0.1, zone: 'reject' },
+            { label: { tr: '0,10 – 0,30', en: '0.10 – 0.30' }, value: 1.4, zone: 'reject' },
+            { label: { tr: '0,30 – 0,55', en: '0.30 – 0.55' }, value: 18.3, zone: 'reject' },
+            { label: { tr: '0,55 – 0,92', en: '0.55 – 0.92' }, value: 44.6, zone: 'review' },
+            { label: { tr: '0,92 – 1', en: '0.92 – 1' }, value: 99.3, zone: 'auto' },
+          ],
+          zones: [
+            { id: 'reject', label: { tr: 'Reddedilir', en: 'Rejected' }, style: 'none' },
+            { id: 'review', label: { tr: 'İncelemeye gider', en: 'Goes to review' }, style: 'hatched' },
+            { id: 'auto', label: { tr: 'Otomatik birleşir', en: 'Merged automatically' }, style: 'shaded' },
+          ],
           blocks: [
             {
-              type: 'sheet',
-              csv: 'score-bands',
-              name: { tr: 'skor_dilimleri.xlsx', en: 'score_bands.xlsx' },
-              tabs: { tr: ['dilimler', 'test_cifleri'], en: ['bands', 'test_pairs'] },
-              cell: 'F6',
-              formula: { tr: '=D6/C6', en: '=D6/C6' },
-              numbers: ['C', 'D', 'E', 'F'],
-              total: true,
-              notes: [
+              type: 'details',
+              meta: { tr: 'Şekil 1 · veri ve ayrıntı', en: 'Figure 1 · data and details' },
+              title: { tr: 'Test seti, eşikler ve belirsizlik', en: 'Test set, thresholds and uncertainty' },
+              blocks: [
                 {
-                  tr: 'Test seti, ekibin elle işaretlediği 6.400 çiftin dörtte biri. Model bu çiftleri eğitim sırasında hiç görmedi. Zor örnekler, yani adı benzeyen ama farklı olan ürünler, bilerek fazla seçildi. Bu yüzden orta skorlardaki farklı ürün oranı gerçek veride olduğundan yüksek görünür.',
-                  en: 'The test set is a quarter of the 6,400 pairs the team labelled by hand. The model never saw these pairs during training. Hard examples, products with similar names that are actually different, were picked on purpose. That is why the share of different products in the middle scores looks higher than it is in the real data.',
-                },
-                {
-                  tr: "Otomatik birleşen 581 çiftin 577'si gerçekten aynı üründü, yani yüzde 99,3. Bu kadar çiftle ölçülen bir oranın gerçek değeri büyük olasılıkla yüzde 98,2 ile 99,7 arasında. Reddedilen 918 çiftin 18'i ise gerçekte aynı üründü, bunlar Şekil 3'te ayrıca inceleniyor.",
-                  en: 'Of the 581 pairs merged automatically, 577 really were the same product, which is 99.3 percent. With this many pairs the true value of the rate is most likely between 98.2 and 99.7 percent. Of the 918 rejected pairs, 18 were actually the same product, and Figure 3 looks at them separately.',
-                },
-                {
-                  tr: 'Aynı eşikler 2,1 milyon aday çiftin tamamına uygulandığında yaklaşık 132 bin çift otomatik birleşti, yaklaşık 14,5 bin çift incelemeye gitti. Bu iki sayı test setindeki oranlardan yapılmış tahminler, tam sayımlar değil.',
-                  en: 'When the same thresholds were applied to all 2.1 million candidate pairs, about 132 thousand pairs were merged automatically and about 14.5 thousand went to review. These two numbers are estimates made from the rates in the test set, not exact counts.',
+                  type: 'sheet',
+                  csv: 'score-bands',
+                  name: { tr: 'skor_dilimleri.xlsx', en: 'score_bands.xlsx' },
+                  tabs: { tr: ['dilimler', 'test_cifleri'], en: ['bands', 'test_pairs'] },
+                  cell: 'F6',
+                  formula: { tr: '=D6/C6', en: '=D6/C6' },
+                  numbers: ['C', 'D', 'E', 'F'],
+                  total: true,
+                  notes: [
+                    {
+                      tr: 'Test seti, ekibin elle işaretlediği 6.400 çiftin dörtte biri. Model bu çiftleri eğitim sırasında hiç görmedi. Zor örnekler, yani adı benzeyen ama farklı olan ürünler, bilerek fazla seçildi. Bu yüzden orta skorlardaki farklı ürün oranı gerçek veride olduğundan yüksek görünür.',
+                      en: 'The test set is a quarter of the 6,400 pairs the team labelled by hand. The model never saw these pairs during training. Hard examples, products with similar names that are actually different, were picked on purpose. That is why the share of different products in the middle scores looks higher than it is in the real data.',
+                    },
+                    {
+                      tr: "Otomatik birleşen 581 çiftin 577'si gerçekten aynı üründü, yani yüzde 99,3. Bu kadar çiftle ölçülen bir oranın gerçek değeri büyük olasılıkla yüzde 98,2 ile 99,7 arasında. Reddedilen 918 çiftin 18'i ise gerçekte aynı üründü, bunlar Şekil 3'te ayrıca inceleniyor.",
+                      en: 'Of the 581 pairs merged automatically, 577 really were the same product, which is 99.3 percent. With this many pairs the true value of the rate is most likely between 98.2 and 99.7 percent. Of the 918 rejected pairs, 18 were actually the same product, and Figure 3 looks at them separately.',
+                    },
+                    {
+                      tr: 'Aynı eşikler 2,1 milyon aday çiftin tamamına uygulandığında yaklaşık 132 bin çift otomatik birleşti, yaklaşık 14,5 bin çift incelemeye gitti. Bu iki sayı test setindeki oranlardan yapılmış tahminler, tam sayımlar değil.',
+                      en: 'When the same thresholds were applied to all 2.1 million candidate pairs, about 132 thousand pairs were merged automatically and about 14.5 thousand went to review. These two numbers are estimates made from the rates in the test set, not exact counts.',
+                    },
+                  ],
                 },
               ],
             },
           ],
         },
         {
-          type: 'details',
-          meta: { tr: 'Şekil 2 · veri ve ayrıntı', en: 'Figure 2 · data and details' },
-          title: { tr: 'Tedarikçi C neden geride kaldı', en: 'Why Supplier C fell behind' },
+          type: 'chart',
+          direction: 'horizontal',
+          label: { tr: 'Şekil 2', en: 'Figure 2' },
+          title: { tr: 'Kaynağa göre kaçırılan eşleşme oranı', en: 'Share of missed matches, by source' },
+          reading: {
+            tr: "Model gerçek eşleşmelerin küçük bir kısmını kaçırdı. Bu pay Tedarikçi C'de diğer kaynakların üç katı.",
+            en: 'The model missed a small part of the true matches. For Supplier C this share is three times that of the other sources.',
+          },
+          unit: 'percent',
+          decimals: 1,
+          max: 8,
+          ticks: [0, 2, 4, 6, 8],
+          bars: [
+            { label: { tr: 'ERP stok kartları', en: 'ERP stock cards' }, value: 1.9 },
+            { label: { tr: 'Tedarikçi A', en: 'Supplier A' }, value: 2.0 },
+            { label: { tr: 'Tedarikçi B', en: 'Supplier B' }, value: 2.3 },
+            { label: { tr: 'Tedarikçi C', en: 'Supplier C' }, value: 6.2, highlight: true },
+          ],
           blocks: [
             {
-              type: 'sheet',
-              csv: 'by-source',
-              name: { tr: 'kaynak_bazinda.xlsx', en: 'by_source.xlsx' },
-              tabs: { tr: ['kaynak', 'test_cifleri'], en: ['source', 'test_pairs'] },
-              cell: 'E5',
-              formula: { tr: '=D5/B5', en: '=D5/B5' },
-              numbers: ['B', 'C', 'D', 'E'],
-              notes: [
+              type: 'details',
+              meta: { tr: 'Şekil 2 · veri ve ayrıntı', en: 'Figure 2 · data and details' },
+              title: { tr: 'Tedarikçi C neden geride kaldı', en: 'Why Supplier C fell behind' },
+              blocks: [
                 {
-                  tr: 'Bir çift iki kayıttan oluştuğu için aynı çift iki kaynağın satırında da sayılır. Satırların toplamı bu yüzden test setindeki gerçek eşleşme sayısından büyüktür.',
-                  en: 'A pair is made of two records, so the same pair is counted in the rows of both sources. That is why the rows add up to more than the number of true matches in the test set.',
-                },
-                {
-                  tr: "Tedarikçi C'nin listesi PDF'ten çevrilmişti. Kayıtların yalnızca yüzde 12'sinde barkod vardı ve ürün adları kısa, serbest yazılmıştı. Model barkod ve ölçü gibi kesin bilgilere en çok dayandığı için, bu bilgiler eksik olduğunda eşleşmeleri daha sık kaçırdı. Firma Tedarikçi C'den barkodlu bir liste istedi, liste geldiğinde bu oranın yeniden ölçülmesi planlandı.",
-                  en: "Supplier C's list had been converted from a PDF. Only 12 percent of its records had a barcode, and the product names were short and written freely. The model relies most on exact facts such as the barcode and the size, so it missed matches more often when those were missing. The company asked Supplier C for a list with barcodes, and the rate will be measured again when it arrives.",
+                  type: 'sheet',
+                  csv: 'by-source',
+                  name: { tr: 'kaynak_bazinda.xlsx', en: 'by_source.xlsx' },
+                  tabs: { tr: ['kaynak', 'test_cifleri'], en: ['source', 'test_pairs'] },
+                  cell: 'E5',
+                  formula: { tr: '=D5/B5', en: '=D5/B5' },
+                  numbers: ['B', 'C', 'D', 'E'],
+                  notes: [
+                    {
+                      tr: 'Bir çift iki kayıttan oluştuğu için aynı çift iki kaynağın satırında da sayılır. Satırların toplamı bu yüzden test setindeki gerçek eşleşme sayısından büyüktür.',
+                      en: 'A pair is made of two records, so the same pair is counted in the rows of both sources. That is why the rows add up to more than the number of true matches in the test set.',
+                    },
+                    {
+                      tr: "Tedarikçi C'nin listesi PDF'ten çevrilmişti. Kayıtların yalnızca yüzde 12'sinde barkod vardı ve ürün adları kısa, serbest yazılmıştı. Model barkod ve ölçü gibi kesin bilgilere en çok dayandığı için, bu bilgiler eksik olduğunda eşleşmeleri daha sık kaçırdı. Firma Tedarikçi C'den barkodlu bir liste istedi, liste geldiğinde bu oranın yeniden ölçülmesi planlandı.",
+                      en: "Supplier C's list had been converted from a PDF. Only 12 percent of its records had a barcode, and the product names were short and written freely. The model relies most on exact facts such as the barcode and the size, so it missed matches more often when those were missing. The company asked Supplier C for a list with barcodes, and the rate will be measured again when it arrives.",
+                    },
+                  ],
                 },
               ],
             },
           ],
         },
         {
-          type: 'details',
-          meta: { tr: 'Şekil 3 · veri ve ayrıntı', en: 'Figure 3 · data and details' },
-          title: { tr: 'Hatalı çiftlerden örnekler ve yapılan düzeltme', en: 'Examples of wrong pairs and the fix' },
+          type: 'chart',
+          direction: 'horizontal',
+          label: { tr: 'Şekil 3', en: 'Figure 3' },
+          title: { tr: 'Modelin yanıldığı yerler', en: 'Where the model went wrong' },
+          reading: {
+            tr: 'Yanlış birleşmelerin çoğu adı ve ölçüsü aynı olan renk varyantlarından, kaçırılanlar ise eksik ya da çok kısa yazılmış kayıtlardan geldi.',
+            en: 'Most wrong merges came from colour variants with the same name and size, and most missed pairs from records that were incomplete or written very briefly.',
+          },
+          unit: 'count',
+          decimals: 0,
+          max: 8,
+          ticks: [0, 2, 4, 6, 8],
+          bars: [
+            { label: { tr: 'Renk ya da kaplama varyantı', en: 'Colour or finish variant' }, value: 3, group: { tr: 'Yanlış birleşen · 4 çift', en: 'Merged by mistake · 4 pairs' } },
+            { label: { tr: 'Paketteki adet farkı', en: 'Different pack size' }, value: 1 },
+            { label: { tr: 'Ölçü adda yazmıyor', en: 'Size missing from the name' }, value: 7, group: { tr: 'Kaçırılan · 18 çift', en: 'Missed · 18 pairs' } },
+            { label: { tr: 'Ad çok kısa, barkod yok', en: 'Name too short, no barcode' }, value: 6 },
+            { label: { tr: 'Tür sözlükte yoktu', en: 'Kind not in the dictionary' }, value: 5 },
+          ],
           blocks: [
             {
-              type: 'sheet',
-              csv: 'error-pairs',
-              name: { tr: 'hatali_ciftler.xlsx', en: 'error_pairs.xlsx' },
-              tabs: { tr: ['ornekler', 'tum_hatalar'], en: ['examples', 'all_errors'] },
-              cell: 'D2',
-              numbers: ['D'],
-              notes: [
+              type: 'details',
+              meta: { tr: 'Şekil 3 · veri ve ayrıntı', en: 'Figure 3 · data and details' },
+              title: { tr: 'Hatalı çiftlerden örnekler ve yapılan düzeltme', en: 'Examples of wrong pairs and the fix' },
+              blocks: [
                 {
-                  tr: 'Tabloda yanlış birleşen dört çiftin hepsi, kaçırılan on sekiz çiftten de üç örnek var.',
-                  en: 'The table shows all four pairs that were merged by mistake and three examples of the eighteen missed pairs.',
-                },
-                {
-                  tr: "Yanlış birleşen dört çiftin üçü aynı ürünün renk ya da kaplama varyantıydı. Adları ve ölçüleri birebir aynı olduğu için model bunları yüksek skorla eşleştirdi. Kümeleme adımındaki çelişki kontrolüne kaplama ve rengi de ekledik. Aynı test setinde otomatik birleşen yanlış çift sayısı dörtten bire indi. Kalan tek hata paket farkı, 100'lü ve 1000'li paket ayrı ürün olarak satılıyor.",
-                  en: 'Three of the four wrong merges were colour or finish variants of the same product. Their names and sizes were identical, so the model matched them with a high score. We added finish and colour to the conflict check in the clustering step. On the same test set the number of wrong automatic merges fell from four to one. The one error left is a pack difference, packs of 100 and 1000 are sold as separate products.',
-                },
-                {
-                  tr: "Kaçırılanların çoğu Tedarikçi C'den geldi. Tür sözlüğünde olmayan beş yazım, inceleme kararlarından öğrenilerek sözlüğe eklendi.",
-                  en: 'Most of the missed pairs came from Supplier C. Five spellings that were not in the kind dictionary were learned from review decisions and added to it.',
+                  type: 'sheet',
+                  csv: 'error-pairs',
+                  name: { tr: 'hatali_ciftler.xlsx', en: 'error_pairs.xlsx' },
+                  tabs: { tr: ['ornekler', 'tum_hatalar'], en: ['examples', 'all_errors'] },
+                  cell: 'D2',
+                  numbers: ['D'],
+                  notes: [
+                    {
+                      tr: 'Tabloda yanlış birleşen dört çiftin hepsi, kaçırılan on sekiz çiftten de üç örnek var.',
+                      en: 'The table shows all four pairs that were merged by mistake and three examples of the eighteen missed pairs.',
+                    },
+                    {
+                      tr: "Yanlış birleşen dört çiftin üçü aynı ürünün renk ya da kaplama varyantıydı. Adları ve ölçüleri birebir aynı olduğu için model bunları yüksek skorla eşleştirdi. Kümeleme adımındaki çelişki kontrolüne kaplama ve rengi de ekledik. Aynı test setinde otomatik birleşen yanlış çift sayısı dörtten bire indi. Kalan tek hata paket farkı, 100'lü ve 1000'li paket ayrı ürün olarak satılıyor.",
+                      en: 'Three of the four wrong merges were colour or finish variants of the same product. Their names and sizes were identical, so the model matched them with a high score. We added finish and colour to the conflict check in the clustering step. On the same test set the number of wrong automatic merges fell from four to one. The one error left is a pack difference, packs of 100 and 1000 are sold as separate products.',
+                    },
+                    {
+                      tr: "Kaçırılanların çoğu Tedarikçi C'den geldi. Tür sözlüğünde olmayan beş yazım, inceleme kararlarından öğrenilerek sözlüğe eklendi.",
+                      en: 'Most of the missed pairs came from Supplier C. Five spellings that were not in the kind dictionary were learned from review decisions and added to it.',
+                    },
+                  ],
                 },
               ],
             },

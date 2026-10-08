@@ -35,47 +35,12 @@
   letter-spacing: -0.015em;
 }
 
-/* arti isareti iki cizgiden yapilir, acilinca dikey cizgi yatar ve eksiye
-   doner */
-.sign {
-  position: relative;
-  flex: none;
-  width: 26px;
-  height: 26px;
-  border: 2px solid var(--ink);
-}
-.sign::before,
-.sign::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 12px;
-  height: 2px;
-  background: var(--ink);
-  translate: -50% -50%;
-  transition: transform 0.2s ease;
-}
-.sign::after {
-  transform: rotate(90deg);
-}
-
 .details[open] > .summary {
   color: var(--on-ink);
   background: var(--ink);
 }
 .details[open] .meta {
   color: var(--gold);
-}
-.details[open] .sign {
-  border-color: var(--on-ink);
-}
-.details[open] .sign::before,
-.details[open] .sign::after {
-  background: var(--on-ink);
-}
-.details[open] .sign::after {
-  transform: rotate(0deg);
 }
 
 .content {

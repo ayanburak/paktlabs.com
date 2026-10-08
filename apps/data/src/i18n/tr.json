@@ -90,6 +90,9 @@
         "tr": "Türkçe",
         "en": "İngilizce"
       }
+    },
+    "stations": {
+      "more": "Ayrıntı"
     }
   },
   "notFound": {

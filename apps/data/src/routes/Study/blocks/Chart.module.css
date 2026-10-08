@@ -1,0 +1,213 @@
+.figure {
+  margin: 0;
+}
+.figure > * + * {
+  margin-top: 24px;
+}
+.figure > figcaption + * {
+  margin-top: 24px;
+}
+/* seklin altindaki acilir kutu sekle biraz daha yakin durur */
+.figure > details {
+  margin-top: 20px;
+}
+
+.title {
+  margin-top: 10px;
+  font-size: clamp(19px, 1.7vw, 23px);
+  letter-spacing: -0.02em;
+}
+.reading {
+  margin: 8px 0 0;
+  max-width: 64ch;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* --- dikey sekil --- */
+/* cubuk alani sifirdan max'a, ustte deger yazisi icin otuz piksel pay var */
+.vertical {
+  padding-left: 44px;
+}
+.plot {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  height: 260px;
+  border-bottom: 2px solid var(--ink);
+}
+.grid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc((100% - 30px) * var(--y) / 100);
+  border-top: 1px solid var(--line);
+}
+.grid em {
+  position: absolute;
+  left: -44px;
+  top: -8px;
+  width: 36px;
+  font: 500 11px/1 var(--font-mono);
+  font-style: normal;
+  text-align: right;
+  color: var(--faint);
+}
+.column {
+  position: relative;
+}
+.bar {
+  position: absolute;
+  left: 24%;
+  right: 24%;
+  bottom: 0;
+  height: max(2px, calc((100% - 30px) * var(--h) / 100));
+  background: var(--ink);
+}
+.value {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc((100% - 30px) * var(--h) / 100 + 6px);
+  font: 700 12px/1 var(--font-mono);
+  text-align: center;
+}
+.labels {
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+}
+.labels span {
+  padding-top: 8px;
+  font: 500 11px/1.3 var(--font-mono);
+  text-align: center;
+  color: var(--faint);
+}
+.zones {
+  display: grid;
+  margin-top: 10px;
+}
+.zones span {
+  padding: 8px 6px;
+  font: 600 13px/1.3 var(--font-display);
+  text-align: center;
+  border-top: 2px solid var(--ink);
+}
+.zones span + span {
+  border-left: 2px solid var(--paper);
+}
+
+/* bolge zeminleri. Sutunda taramali altin, bantta duz altin, golgeli bolge
+   ikisinde de acik gri */
+.column.hatched {
+  background: repeating-linear-gradient(135deg, var(--gold-wash) 0 6px, transparent 6px 10px);
+}
+.column.shaded {
+  background: rgba(45, 48, 55, 0.06);
+}
+.zones .hatched {
+  background: var(--gold-wash);
+}
+.zones .shaded {
+  background: var(--panel);
+}
+
+/* --- yatay sekil --- */
+.row {
+  display: grid;
+  grid-template-columns: minmax(120px, 220px) minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  padding: 7px 0;
+}
+.name {
+  font: 600 14.5px/1.3 var(--font-display);
+}
+/* ince dikey cizgiler eksen degerlerinin hizasinda */
+.track {
+  position: relative;
+  height: 24px;
+  background: linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / var(--step) 100%;
+  border-left: 2px solid var(--ink);
+}
+.track i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--w);
+  background: var(--ink);
+}
+.track i.highlight {
+  background: var(--gold);
+  border: 2px solid var(--ink);
+  border-left: 0;
+}
+/* deger cubugun hemen ucunda durur, goz sayiyi ayri bir sutunda aramasin */
+.track b {
+  position: absolute;
+  left: calc(var(--w) + 8px);
+  top: 50%;
+  font: 700 13px/1 var(--font-mono);
+  translate: 0 -50%;
+}
+.group {
+  margin-top: 14px;
+  padding-top: 12px;
+  font: 700 11px/1 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+  border-top: 2px solid var(--ink);
+}
+.horizontal > :first-child .group {
+  margin-top: 0;
+}
+.ticks {
+  position: relative;
+  height: 14px;
+  border-top: 2px solid var(--ink);
+}
+.ticks em {
+  position: absolute;
+  left: var(--x);
+  top: 4px;
+  font: 500 11px/1 var(--font-mono);
+  font-style: normal;
+  color: var(--faint);
+  translate: -50% 0;
+}
+.ticks em:first-child {
+  translate: 0 0;
+}
+
+/* dar ekranda etiket sutunlari daralir */
+@media (max-width: 768px) {
+  .vertical {
+    padding-left: 34px;
+  }
+  .plot {
+    height: 220px;
+  }
+  .grid em {
+    left: -34px;
+    width: 28px;
+    font-size: 10px;
+  }
+  .value {
+    font-size: 11px;
+  }
+  .labels span {
+    font-size: 10px;
+  }
+  .zones span {
+    font-size: 12px;
+  }
+  .row {
+    grid-template-columns: minmax(96px, 120px) minmax(0, 1fr);
+    gap: 10px;
+  }
+  .name {
+    font-size: 13px;
+  }
+}

@@ -90,6 +90,9 @@
         "tr": "Turkish",
         "en": "English"
       }
+    },
+    "stations": {
+      "more": "Details"
     }
   },
   "notFound": {

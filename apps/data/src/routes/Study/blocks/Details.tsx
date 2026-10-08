@@ -18,13 +18,12 @@ import type { DetailsBlock } from '@/content/studies/blocks'
 
 import { BlockView } from './BlockView'
 import styles from './Details.module.css'
+import { Sign } from './Sign'
 
 interface DetailsProps {
   block: DetailsBlock
 }
 
-// Arti isareti yalnizca gorsel, ekran okuyucu acik ya da kapali oldugunu
-// details ogesinin kendisinden ogrenir.
 export function Details({ block }: DetailsProps) {
   const { language } = useLanguage()
   const { ref, visible } = useReveal<HTMLDetailsElement>()
@@ -36,7 +35,7 @@ export function Details({ block }: DetailsProps) {
           <span className={styles.meta}>{block.meta[language]}</span>
           <h3 className={styles.title}>{block.title[language]}</h3>
         </div>
-        <span className={styles.sign} aria-hidden="true" />
+        <Sign />
       </summary>
       <div className={styles.content}>
         {block.blocks.map((inner, index) => (

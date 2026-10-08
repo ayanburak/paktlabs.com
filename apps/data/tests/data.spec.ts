@@ -38,12 +38,13 @@ function readCsv(slug: string, language: string, id: string): string[][] {
   return parseCsv(readFileSync(join(root, slug, 'data', language, `${id}.csv`), 'utf8'))
 }
 
-// Acilir kutularin icindekiler dahil, bir parca listesindeki butun hesap
+// Acilir kutularin ve sekillerin icindekiler dahil, bir parca listesindeki butun hesap
 // tablolarinin cagirdigi CSV kimlikleri.
 function sheetIds(blocks: Block[]): string[] {
   return blocks.flatMap((block) => {
     if (block.type === 'sheet') return [block.csv]
     if (block.type === 'details') return sheetIds(block.blocks)
+    if (block.type === 'chart') return sheetIds(block.blocks ?? [])
     return []
   })
 }

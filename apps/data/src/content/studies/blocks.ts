@@ -1,6 +1,6 @@
 /*
 file: blocks.ts
-importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock
+importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock, TableBlock, TableCell, StationsBlock, Station, ChartBlock, ChartBar, ChartZone
 
 Detay sayfasinin bolumlerine konan parcalarin tipleri. Bir parca icerigi
 bilmez, adini hikayeden degil bicimden alir. Bir bolumde hangi parcanin hangi
@@ -75,5 +75,77 @@ export interface SheetBlock {
   notes?: Localized[]
 }
 
+// Duz tablonun bir hucresi: ya iki dilli bir metin ya da yuzde olarak bir
+// oran. Oran hucreye kucuk bir cubukla ve yaninda degeriyle cizilir.
+export type TableCell = Localized | { meter: number }
+
+// Sitenin diliyle yazilan, hesap tablosu gorunumu tasimayan duz tablo. Ham
+// veri degil, kisa bir karsilastirma icin. Ilk sutun satirin adidir ve
+// kalin yazilir. Her satirda basliklar kadar hucre olmalidir.
+export interface TableBlock {
+  type: 'table'
+  head: Localized[]
+  rows: TableCell[][]
+}
+
+// Hattin bir istasyonu: adi, ne yaptigini anlatan kisa metin ve istege bagli
+// ayrinti paragraflari. Ayrinti istasyonun alt kenarinda acilan bir seritte
+// durur, okur ancak isterse sayiya ve gerekceye iner.
+export interface Station {
+  title: Localized
+  text: Localized
+  details?: Localized[]
+}
+
+// Sirayla gecilen adimlar, solda numarali bir hattin uzerinde alt alta.
+// Numaralar siradan cikar.
+export interface StationsBlock {
+  type: 'stations'
+  items: Station[]
+}
+
+// Cubuk seklinin bir cubugu. value sifirdan baslayan eksendeki degeridir.
+// zone cubugun hangi bolgede durdugunu soyler, bolgeler seklin zones
+// listesinde adlandirilir. highlight cubugu altin cizer, okurun gozunu tek
+// bir degere cekmek icin. group verilirse cubugun ustunde yeni bir grup
+// basligi acilir, ornegin yanlis birlesenler ve kacirilanlar.
+export interface ChartBar {
+  label: Localized
+  value: number
+  zone?: string
+  highlight?: true
+  group?: Localized
+}
+
+// Seklin bolgeleri, ornegin otomatik karar, inceleme ve ret. style bolgenin
+// zeminini secer: none zeminsiz, hatched altin taramali, shaded acik gri.
+// Bolgeler dikey sekilde cubuklarin altinda adlariyla bir bant olarak durur.
+export interface ChartZone {
+  id: string
+  label: Localized
+  style: 'none' | 'hatched' | 'shaded'
+}
+
+// Tek bir soruya cevap veren cubuk sekli. label seklin ustundeki kucuk
+// etiket, ornegin Sekil 1, title soru, reading tek cumlelik okumasi. Eksen
+// sifirdan max'a kadar uzanir ve kesilmez, ticks eksende yazan degerlerdir.
+// unit ve decimals degerlerin nasil yazilacagini soyler, yuzdeler sitenin
+// diline gore %0,1 ya da 0.1% yazilir. blocks seklin altina konan parcalar,
+// genellikle verisini ve ayrintisini tasiyan acilir kutu.
+export interface ChartBlock {
+  type: 'chart'
+  direction: 'vertical' | 'horizontal'
+  label: Localized
+  title: Localized
+  reading: Localized
+  unit: 'percent' | 'count'
+  decimals: number
+  max: number
+  ticks: number[]
+  bars: ChartBar[]
+  zones?: ChartZone[]
+  blocks?: Block[]
+}
+
 // Bolumlerde kullanilabilecek butun parcalar. Yeni parca tipi buraya eklenir.
-export type Block = ParagraphBlock | ListBlock | DetailsBlock | SheetBlock
+export type Block = ParagraphBlock | ListBlock | DetailsBlock | SheetBlock | TableBlock | StationsBlock | ChartBlock

@@ -112,6 +112,7 @@ Renkler `packages/brand/styles/tokens.css` dosyasından gelir, landing de aynı 
 | `--muted` | `#565a62` | ikincil metin |
 | `--faint` | `#52626e` | küçük etiketler |
 | `--gold` | `#e5b32e` | vurgu, ilerleme, seçili durum |
+| `--gold-wash` | altının kâğıda karışmış açık tonu | şekillerde vurgulu bölgenin zemini |
 | `--gray` | `#7e909e` | dekoratif çizgiler, etiket çerçeveleri |
 
 Başlıklarda Space Grotesk, gövde metninde Atkinson Hyperlegible, küçük etiketlerde, numaralarda ve kodda IBM Plex Mono kullanılır. Üst etiketler büyük harfli, geniş harf aralıklı ve mono fontludur.
@@ -256,6 +257,49 @@ Ham veriyi hesap tablosu programlarına benzeyen bir görünümle gösterir. Hü
   numbers: ['C', 'D'],
   total: true,
   notes: [{ tr: '…', en: '…' }],
+}
+```
+
+### Düz tablo
+
+Kısa bir karşılaştırma içindir, hesap tablosu görünümü taşımaz ve sitenin dilini izler. İlk sütun satırın adıdır ve kalın yazılır. Bir hücre ya iki dilli bir metin ya da `{ meter: 34 }` gibi yüzde olarak bir orandır. Oran hücresine küçük bir çubuk ve yanında değeri çizilir.
+
+```ts
+{
+  type: 'table',
+  head: [{ tr: 'Kaynak', en: 'Source' }, { tr: 'Barkod dolu', en: 'Barcode filled' }],
+  rows: [[{ tr: 'Tedarikçi A', en: 'Supplier A' }, { meter: 71 }]],
+}
+```
+
+### İstasyon hattı
+
+Sırayla geçilen adımlar içindir. İstasyonlar soldaki numaralı bir hattın üzerinde alt alta durur, numaralar sıradan çıkar. Her istasyonun adı ve ne yaptığını anlatan kısa bir metni vardır. `details` verilirse istasyonun alt kenarında "Ayrıntı" şeridi çıkar ve paragraflar okur açınca görünür.
+
+```ts
+{
+  type: 'stations',
+  items: [{ title: { tr: 'Doğrulama', en: 'Validation' }, text: { tr: '…', en: '…' }, details: [{ tr: '…', en: '…' }] }],
+}
+```
+
+### Çubuk şekli
+
+Tek bir soruya cevap verir. `label` şeklin üstündeki küçük etikettir, örneğin Şekil 1, `title` soru, `reading` tek cümlelik okuması. `direction` çubukların dikey mi yatay mı duracağını seçer. Eksen sıfırdan `max`'a uzanır ve kesilmez, `ticks` eksende yazan değerlerdir. `unit` ve `decimals` değerlerin nasıl yazılacağını söyler, yüzdeler sitenin diline göre %0,1 ya da 0.1% yazılır. Bir çubuğa `highlight` verilirse altın çizilir. `group` verilirse çubuğun üstünde yeni bir grup başlığı açılır. `zones` verilirse çubukların `zone` alanıyla bağlandığı bölgeler adlandırılır ve dikey şekilde çubukların altında bir bant olarak durur, `style` bölgenin zeminini seçer: `none`, `hatched` ya da `shaded`. `blocks` şeklin altına konan parçalardır, genellikle verisini taşıyan açılır kutu. Ekran okuyucunun okuduğu açıklama elle yazılmaz, çubuklardan üretilir.
+
+```ts
+{
+  type: 'chart',
+  direction: 'horizontal',
+  label: { tr: 'Şekil 2', en: 'Figure 2' },
+  title: { tr: 'Kaynağa göre kaçırılan eşleşme oranı', en: 'Share of missed matches, by source' },
+  reading: { tr: '…', en: '…' },
+  unit: 'percent',
+  decimals: 1,
+  max: 8,
+  ticks: [0, 2, 4, 6, 8],
+  bars: [{ label: { tr: 'Tedarikçi C', en: 'Supplier C' }, value: 6.2, highlight: true }],
+  blocks: [/* açılır kutu ve hesap tablosu */],
 }
 ```
 

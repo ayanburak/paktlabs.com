@@ -29,6 +29,9 @@ description: PaktLabs sitelerinin paylastigi renk, bosluk ve golge degiskenlerin
      paper, panel ve surface zeminlerin hepsinde en az 4.5 kontrasti gecsin diye.
      dekoratif cizgiler bu degiskeni degil --gray'i kullanir */
   --faint: #52626e;
+  /* altinin kagit zemine karismis acik tonu. Sekillerde vurgulu bolgenin
+     zemini gibi altinin dolu haliyle bagirmamasi gereken yerlerde */
+  --gold-wash: color-mix(in srgb, var(--gold) 26%, var(--paper));
   --line: #d3d2c6;
   --line-strong: #b7b6a8;
   --on-ink: #e9e8e0;

@@ -1,0 +1,37 @@
+.sign {
+  position: relative;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border: 2px solid currentColor;
+}
+.sign::before,
+.sign::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 12px;
+  height: 2px;
+  background: currentColor;
+  translate: -50% -50%;
+  transition: transform 0.2s ease;
+}
+.sign::after {
+  transform: rotate(90deg);
+}
+.small {
+  width: 22px;
+  height: 22px;
+}
+.small::before,
+.small::after {
+  width: 10px;
+}
+
+/* kutu acikken dikey cizgi yatar, isaret eksiye doner. Renk summary'nin
+   yazi renginden gelir, acik kutuda summary koyulastigi icin isaret de
+   kendiliginden acik renge doner */
+details[open] > summary > .sign::after {
+  transform: rotate(0deg);
+}

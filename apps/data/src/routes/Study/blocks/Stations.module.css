@@ -1,0 +1,126 @@
+/* soldaki iki piksellik cizgi hattin kendisi, istasyonlar onun boyunca alt
+   alta durur */
+.line {
+  counter-reset: station;
+  position: relative;
+  display: grid;
+  gap: 28px;
+  padding-left: 72px;
+}
+.line::before {
+  content: '';
+  position: absolute;
+  left: 26px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--ink);
+}
+
+.station {
+  counter-increment: station;
+  position: relative;
+  background: var(--surface);
+  border: 2px solid var(--charcoal);
+}
+/* numara hattin uzerinde, istasyonun sol ust kosesinin hizasinda koyu bir
+   kutuya oturur */
+.station::before {
+  content: counter(station, decimal-leading-zero);
+  position: absolute;
+  left: -72px;
+  top: -2px;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 40px;
+  font: 700 13px/1 var(--font-mono);
+  color: var(--gold);
+  background: var(--ink);
+}
+
+.text {
+  padding: clamp(20px, 2.4vw, 32px);
+}
+.text h3 {
+  margin: 0 0 12px;
+  font-size: clamp(22px, 2.2vw, 30px);
+  letter-spacing: -0.025em;
+}
+.text p {
+  margin: 0;
+  max-width: 58ch;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* ayrinti seridi istasyonun alt kenarinda. Kapaliyken istasyonda yalnizca ne
+   yapildigi yazar */
+.more > summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px clamp(20px, 2.4vw, 32px);
+  font: 700 12px/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  list-style: none;
+  background: var(--paper);
+  border-top: 2px solid var(--charcoal);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.more > summary::-webkit-details-marker {
+  display: none;
+}
+.more > summary:hover {
+  background: var(--panel);
+}
+.more[open] > summary {
+  color: var(--on-ink);
+  background: var(--ink);
+}
+
+.details {
+  padding: clamp(18px, 2.2vw, 28px) clamp(20px, 2.4vw, 32px);
+  border-top: 2px solid var(--charcoal);
+}
+.more[open] .details {
+  animation: drop 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+.details p {
+  margin: 0;
+  max-width: 64ch;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.details p + p {
+  margin-top: 12px;
+}
+
+/* dar ekranda hat cizgisi kalkar, numara kutusu istasyonun ust kenarina
+   biner */
+@media (max-width: 768px) {
+  .line {
+    gap: 40px;
+    padding-left: 0;
+  }
+  .line::before {
+    display: none;
+  }
+  .station::before {
+    left: -2px;
+    top: -26px;
+    width: 48px;
+    height: 26px;
+    font-size: 12px;
+  }
+}
