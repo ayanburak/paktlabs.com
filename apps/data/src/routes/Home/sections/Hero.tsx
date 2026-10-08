@@ -7,6 +7,7 @@ description: Veri sayfasinin acilis bolumu, disiplin adi, kisa aciklama, uc kisa
 
 import { RevealImg } from '@paktlabs/brand/components/RevealImg'
 import { cx } from '@paktlabs/brand/lib/cx'
+import layout from '@paktlabs/brand/styles/HeroLayout.module.css'
 
 import heroSvg from '@/assets/illustrations/hero.svg'
 import { useDict } from '@/i18n'
@@ -25,8 +26,8 @@ export function Hero() {
   const { home } = useDict()
 
   return (
-    <section className={styles.hero}>
-      <div className={styles.copy}>
+    <section className={cx(layout.hero, styles.hero)}>
+      <div className={cx(layout.copy, styles.copy)}>
         <h1 className={cx('rise', styles.title)}>{home.hero.title}</h1>
         <p className={cx('rise', styles.lead)}>{home.hero.lead}</p>
         <dl className={cx('rise', styles.counts)}>
@@ -41,7 +42,7 @@ export function Hero() {
           {home.hero.cta}
         </a>
       </div>
-      <figure className={styles.art}>
+      <figure className={cx(layout.art, styles.art)}>
         <RevealImg src={heroSvg} />
       </figure>
     </section>

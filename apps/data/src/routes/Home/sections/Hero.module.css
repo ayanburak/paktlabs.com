@@ -3,11 +3,9 @@
    durur. Metinler landing'deki gibi global.css'teki rise sinifiyla sirayla
    yukselir, burada yalnizca siralari verilir */
 .hero {
-  composes: hero from '@paktlabs/brand/styles/HeroLayout.module.css';
 }
 
 .copy {
-  composes: copy from '@paktlabs/brand/styles/HeroLayout.module.css';
 }
 
 .title {
@@ -67,7 +65,6 @@
 /* --art-ratio hero.svg'nin viewBox oranidir, cizim degisirse yalnizca bu
    deger guncellenir */
 .art {
-  composes: art from '@paktlabs/brand/styles/HeroLayout.module.css';
   --art-ratio: 2972.0993 / 1239.5531;
 }
 

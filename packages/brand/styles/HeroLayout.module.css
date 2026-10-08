@@ -3,11 +3,14 @@ file: HeroLayout.module.css
 importable: .hero, .copy, .art
 
 Butun PaktLabs sitelerinin hero'larinda ortak olan masaustu yerlesimi. Bugun
-landing ve data kullaniyor, web ve automation siteleri kuruldugunda onlarin
-hero'lari da buradan baslar. Site ortak kurallari kendi sinifina composes ile
-alir:
+landing ve data'nin hero'lari kullaniyor, web ve automation siteleri kuruldugunda onlarin hero'lari da buradan baslar. Bilesen
+bu dosyayi kendi stil dosyasindan once import eder ve iki sinifi birlikte
+verir:
 
-  .hero { composes: hero from '@paktlabs/brand/styles/HeroLayout.module.css'; }
+  import layout from '@paktlabs/brand/styles/HeroLayout.module.css'
+  import styles from './Hero.module.css'
+
+  <section className={cx(layout.hero, styles.hero)}>
 
 Cizimin orani her sitede farkli oldugu icin site kendi .art sinifinda
 --art-ratio verir, bu deger olmadan cizim kutusu cozulmez. Yazi stilleri,
@@ -17,11 +20,16 @@ ozel hicbir sey girmez.
 description: Sitelerin hero bolumlerinde metni ve cizimi header'in altinda kalan alanin dikey ortasina yerlestiren ortak masaustu yerlesimi.
 */
 
-/* NOTE: composes ile gelen bu kurallar derlenen CSS'te sitenin kendi
-   kurallarindan once gelir, 2026-10-08'de Vite 8 ile denendi. Site esit
-   onemdeki bir kuralla buradakini ezebilir, mobil duzenler de boyle kurulur.
-   Bu sira bir gun degisirse sitelerin mobil hero'lari sessizce bozulur, ilk
-   bakilacak yer burasi */
+/* NOTE: site bu kurallari esit onemdeki bir kuralla ezer, mobil duzenler de
+   boyle kurulur. Bu yalnizca buradaki kurallar derlenen CSS'te sitenin
+   kurallarindan once gelirse calisir. Bilesende import sirasi bu yuzden
+   once bu dosya, sonra kendi stil dosyasi.
+
+   XXX: composes kullanilmaz. composes bu dosyanin kurallarini kullanan her
+   stil dosyasinin icine ayrica kopyaliyor, 2026-10-09'da Vite 8 ile
+   goruldu. Ikinci bir kullanici geldiginde, ornegin bulunamadi sayfasi,
+   onun kopyasi data hero'sunun mobil kurallarindan sonra geldi ve mobil
+   hero masaustu duzenine dondu. import ile dosya derlemeye bir kez girer */
 
 /* hero ekrani kaplar ve alt cizgiyle bir sonraki bolumden ayrilir. Header
    seffaf olarak hero'nun ustunde durur ve kendi yuksekligi kadar yer kaplar,

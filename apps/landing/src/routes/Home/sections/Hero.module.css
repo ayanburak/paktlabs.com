@@ -2,7 +2,6 @@
    ortalanmasi ve cizimin olcusu, brand'deki HeroLayout.module.css'ten gelir.
    Burada yalnizca landing'e ozel olanlar durur */
 .hero {
-  composes: hero from '@paktlabs/brand/styles/HeroLayout.module.css';
   background: var(--paper);
 }
 
@@ -10,7 +9,6 @@
    deger guncellenir. Cerceve bir picture oldugu icin varsayilan olarak inline
    gelir, block yapilir. Cizim dekoratif, tiklamalar onu delip gecer */
 .artFrame {
-  composes: art from '@paktlabs/brand/styles/HeroLayout.module.css';
   --art-ratio: 2658.6299 / 1117.7186;
   display: block;
   position: relative;
@@ -18,7 +16,6 @@
 }
 
 .inner {
-  composes: copy from '@paktlabs/brand/styles/HeroLayout.module.css';
   width: max-content;
 }
 

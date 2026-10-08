@@ -7,6 +7,7 @@ description: Açılış bölümündeki sloganı, iletişim bağlantısını ve e
 
 import { useReveal } from '@paktlabs/brand/hooks/useReveal'
 import { cx } from '@paktlabs/brand/lib/cx'
+import layout from '@paktlabs/brand/styles/HeroLayout.module.css'
 
 import heroMobileSvg from '@/assets/illustrations/hero-mobile.svg'
 import heroSvg from '@/assets/illustrations/hero.svg'
@@ -19,11 +20,11 @@ export function Hero() {
   const art = useReveal<HTMLImageElement>()
 
   return (
-    <section className={styles.hero}>
+    <section className={cx(layout.hero, styles.hero)}>
       {/* Çerçeve görselin alanını ve konumunu belirler, içindeki
           img yalnızca belirme hareketini taşır. source eşiği CSS ile
           aynı kalmalı, tarayıcı yalnızca seçilen kompozisyonu indirir. */}
-      <picture className={styles.artFrame}>
+      <picture className={cx(layout.art, styles.artFrame)}>
         <source media="(max-width: 768px)" srcSet={heroMobileSvg} />
         <img
           ref={art.ref}
@@ -33,7 +34,7 @@ export function Hero() {
           className={cx('reveal', art.visible && 'in')}
         />
       </picture>
-      <div className={styles.inner}>
+      <div className={cx(layout.copy, styles.inner)}>
         <h1 className={styles.slogan}>
           {hero.lines.map((line) => (
             <span key={line} className="rise">
