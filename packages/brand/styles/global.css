@@ -17,8 +17,13 @@ description: Reset, temel tipografi ve tum sayfalarda tekrar eden birkac paylasi
   box-sizing: border-box;
 }
 
+/* sayfa ici bir baglantiya tiklaninca sayfa hedefe atlamak yerine kayarak
+   gider, okur nereye geldigini gorur. Hedefin ustunde biraz pay kalir ki
+   baslik ekranin tam kenarina yapismasin */
 html {
   -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
 }
 
 body {
@@ -163,6 +168,9 @@ textarea:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   * {
     transition: none !important;
     animation: none !important;

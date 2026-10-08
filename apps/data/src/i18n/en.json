@@ -68,6 +68,9 @@
       "problem": "Problem",
       "approach": "Approach",
       "result": "Result"
+    },
+    "toc": {
+      "title": "Contents"
     }
   },
   "notFound": {

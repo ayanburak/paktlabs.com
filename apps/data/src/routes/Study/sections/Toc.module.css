@@ -1,0 +1,140 @@
+/* masaustunde liste solda sabit durur, okur kaydirdikca ekranda kalir */
+.toc {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  padding: 64px 0 40px;
+}
+
+/* bar yalnizca dar ekranda gorunur */
+.bar {
+  display: none;
+}
+
+.list {
+  position: relative;
+  margin: 18px 0 0;
+  padding: 0 0 0 18px;
+  list-style: none;
+}
+/* listenin solundaki ince cizgi, ustunde okudukca altinla dolan ikinci cizgi.
+   Doluluk --p'den gelir, sifir ile bir arasinda */
+.list::before,
+.list::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+}
+.list::before {
+  bottom: 0;
+  background: var(--line);
+}
+.list::after {
+  height: calc(var(--p, 0) * 100%);
+  background: var(--gold);
+}
+
+.list a {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  font: 600 14.5px/1.25 var(--font-display);
+  color: var(--muted);
+  transition: color 0.15s ease;
+}
+.list a:hover {
+  color: var(--ink);
+}
+
+.number {
+  display: grid;
+  place-items: center;
+  height: 26px;
+  font: 700 11px/1 var(--font-mono);
+  color: var(--faint);
+  border: 2px solid var(--line);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+/* okunan bolumun numara kutusu koyulasir, numara altin olur */
+.list a[aria-current] {
+  color: var(--ink);
+}
+.list a[aria-current] .number {
+  color: var(--gold);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+/* dar ekranda icindekiler sayfanin ustune yapisan bir bara donusur. Kenar
+   boslugunu tasarak tam genislige yayilir, liste bara dokununca acilir.
+   Altin cizgi okudukca soldan saga dolar. Cizgi barin degil butun kutunun
+   alt kenarinda durur, liste acikken listenin altina iner */
+@media (max-width: 1100px) {
+  .toc {
+    z-index: 15;
+    margin: 0 calc(-1 * var(--gutter));
+    padding: 0;
+    background: var(--paper);
+    border-bottom: 2px solid var(--ink);
+  }
+  /* global.css'teki .eyebrow derlenen CSS'te bu dosyadan sonra gelir ve
+     display: block verir, esit onemde bir kural onu ezemiyor. Kural bu
+     yuzden kutuya baglanip daha belirgin yazildi */
+  .toc .title {
+    display: none;
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px var(--gutter);
+    font: 700 15px/1.2 var(--font-display);
+    color: var(--ink);
+    text-align: left;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+  .bar .number {
+    width: 34px;
+    color: var(--gold);
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+  .bar::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: calc(var(--p, 0) * 100%);
+    height: 2px;
+    background: var(--gold);
+  }
+  .caret {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    transition: transform 0.2s ease;
+  }
+  .open .caret {
+    transform: rotate(180deg);
+  }
+  .list {
+    display: none;
+    margin: 0;
+    padding: 4px var(--gutter) 14px;
+    border-top: 1px solid var(--line);
+  }
+  .list::before,
+  .list::after {
+    display: none;
+  }
+  .open .list {
+    display: block;
+  }
+}

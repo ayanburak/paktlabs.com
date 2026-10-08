@@ -17,17 +17,18 @@ import type { Chapter as ChapterContent } from '@/content/studies/types'
 import { BlockView } from '@/routes/Study/blocks/BlockView'
 
 import styles from './Chapter.module.css'
+import { chapterNumber } from './chapterNumber'
 
 interface ChapterProps {
   chapter: ChapterContent
-  number: number
+  index: number
 }
 
-// Numara bolumun sayfadaki sirasidir ve iki haneli yazilir. Ekran okuyucu
+// index bolumun sayfadaki sirasidir, numara ondan uretilir. Ekran okuyucu
 // numarayi atlar, bolumu basligiyla tanitir. Bolumun id'si adresteki parca
 // oldugu icin icindekiler ve #sorun gibi bir baglanti dogrudan buraya gelir.
 // Baslik satiri ve giris parcalar gibi ekrana girerken ayri ayri belirir.
-export function Chapter({ chapter, number }: ChapterProps) {
+export function Chapter({ chapter, index }: ChapterProps) {
   const { language } = useLanguage()
   const head = useReveal<HTMLElement>()
   const lede = useReveal<HTMLParagraphElement>()
@@ -37,7 +38,7 @@ export function Chapter({ chapter, number }: ChapterProps) {
     <section id={chapter.id} className={styles.chapter} aria-labelledby={headingId}>
       <header ref={head.ref} className={cx('reveal', head.visible && 'in', styles.head)}>
         <span className={styles.number} aria-hidden="true">
-          {String(number).padStart(2, '0')}
+          {chapterNumber(index)}
         </span>
         <div>
           <span className="eyebrow">{chapter.label[language]}</span>
