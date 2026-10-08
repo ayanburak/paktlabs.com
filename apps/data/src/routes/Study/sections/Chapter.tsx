@@ -2,59 +2,56 @@
 file: Chapter.tsx
 importable: Chapter
 
-Detay sayfasinin numarali bir bolumu: numara kutusu, kisa etiket, baslik,
-giris paragrafi ve altinda parcalar. Parcalari BlockView ile gosterir, bu
-yuzden yeni bir parca turu eklendiginde buraya dokunulmaz.
+Detay sayfasinin numarali bir bolumunun cercevesi: numara kutusu, kisa
+etiket, baslik ve giris paragrafi. Altina ne konacagini disaridan alir.
+Icerik bolumlerinde calismanin parcalari, veri dili bolumunde dil secicisi
+gelir, ikisi de ayni gorunusle durur.
 
-description: Calisma detay sayfasindaki bir bolumu basligi, girisi ve parcalariyla gosteren cerceve.
+description: Calisma detay sayfasindaki bir bolumu numarasi, basligi ve girisiyle cizen cerceve.
 */
 
+import type { ReactNode } from 'react'
+
 import { useReveal } from '@paktlabs/brand/hooks/useReveal'
-import { useLanguage } from '@paktlabs/brand/i18n/language'
 import { cx } from '@paktlabs/brand/lib/cx'
 
-import type { Chapter as ChapterContent } from '@/content/studies/types'
-import { BlockView } from '@/routes/Study/blocks/BlockView'
-
 import styles from './Chapter.module.css'
-import { chapterNumber } from './chapterNumber'
 
 interface ChapterProps {
-  chapter: ChapterContent
-  index: number
+  id: string
+  number: string
+  label: string
+  title: string
+  lede: string
+  children: ReactNode
 }
 
-// index bolumun sayfadaki sirasidir, numara ondan uretilir. Ekran okuyucu
-// numarayi atlar, bolumu basligiyla tanitir. Bolumun id'si adresteki parca
-// oldugu icin icindekiler ve #sorun gibi bir baglanti dogrudan buraya gelir.
-// Baslik satiri ve giris parcalar gibi ekrana girerken ayri ayri belirir.
-export function Chapter({ chapter, index }: ChapterProps) {
-  const { language } = useLanguage()
+// Metinler secili dilde hazir gelir, cerceve dil bilmez. Ekran okuyucu
+// numarayi atlar, bolumu basligiyla tanitir. id adresteki parca oldugu icin
+// icindekiler ve #sorun gibi bir baglanti dogrudan buraya gelir. Baslik satiri
+// ve giris ekrana girerken ayri ayri belirir.
+export function Chapter({ id, number, label, title, lede, children }: ChapterProps) {
   const head = useReveal<HTMLElement>()
-  const lede = useReveal<HTMLParagraphElement>()
-  const headingId = `h-${chapter.id}`
+  const intro = useReveal<HTMLParagraphElement>()
+  const headingId = `h-${id}`
 
   return (
-    <section id={chapter.id} className={styles.chapter} aria-labelledby={headingId}>
+    <section id={id} className={styles.chapter} aria-labelledby={headingId}>
       <header ref={head.ref} className={cx('reveal', head.visible && 'in', styles.head)}>
         <span className={styles.number} aria-hidden="true">
-          {chapterNumber(index)}
+          {number}
         </span>
         <div>
-          <span className="eyebrow">{chapter.label[language]}</span>
+          <span className="eyebrow">{label}</span>
           <h2 id={headingId} className={styles.title}>
-            {chapter.title[language]}
+            {title}
           </h2>
         </div>
       </header>
-      <p ref={lede.ref} className={cx('reveal', lede.visible && 'in', styles.lede)}>
-        {chapter.lede[language]}
+      <p ref={intro.ref} className={cx('reveal', intro.visible && 'in', styles.lede)}>
+        {lede}
       </p>
-      <div className={styles.body}>
-        {chapter.blocks.map((block, index) => (
-          <BlockView key={index} block={block} />
-        ))}
-      </div>
+      <div className={styles.body}>{children}</div>
     </section>
   )
 }

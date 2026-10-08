@@ -12,18 +12,23 @@ description: Bolumleri listeleyen, okunan bolumu ve okuma ilerlemesini gosteren 
 
 import { type CSSProperties, type RefObject, useEffect, useMemo, useRef, useState } from 'react'
 
-import { useLanguage } from '@paktlabs/brand/i18n/language'
 import { cx } from '@paktlabs/brand/lib/cx'
 
-import type { Chapter } from '@/content/studies/types'
 import { useDict } from '@/i18n'
 
-import { chapterNumber } from './chapterNumber'
 import styles from './Toc.module.css'
 import { useReadingProgress } from './useReadingProgress'
 
+// Icindekilerde bir satir. Numara ve ad govdeden secili dilde hazir gelir,
+// boylece icerik bolumleriyle veri dili bolumu ayni listede durabilir.
+export interface TocEntry {
+  id: string
+  number: string
+  label: string
+}
+
 interface TocProps {
-  chapters: Chapter[]
+  entries: TocEntry[]
   chaptersRef: RefObject<HTMLElement | null>
   minutes: number
 }
@@ -33,10 +38,9 @@ interface TocProps {
 // orada bara dokununca acilir. Bir bolum secilince ya da Escape'e basilinca
 // kapanir, Escape'te odak bara doner ki klavyeyle gezen okur yerini kaybetmesin.
 // Okuma suresi disaridan hesaplanmis gelir, burada yalnizca gosterilir.
-export function Toc({ chapters, chaptersRef, minutes }: TocProps) {
-  const { language } = useLanguage()
+export function Toc({ entries, chaptersRef, minutes }: TocProps) {
   const { study } = useDict()
-  const ids = useMemo(() => chapters.map((chapter) => chapter.id), [chapters])
+  const ids = useMemo(() => entries.map((entry) => entry.id), [entries])
   const { current, progress } = useReadingProgress(ids, chaptersRef)
   const [open, setOpen] = useState(false)
   const button = useRef<HTMLButtonElement>(null)
@@ -66,23 +70,23 @@ export function Toc({ chapters, chaptersRef, minutes }: TocProps) {
         aria-controls="toc-list"
         onClick={() => setOpen(!open)}
       >
-        <span className={styles.number}>{chapterNumber(current)}</span>
-        <span>{chapters[current].label[language]}</span>
+        <span className={styles.number}>{entries[current].number}</span>
+        <span>{entries[current].label}</span>
         <span className={styles.caret} aria-hidden="true">
           ↓
         </span>
       </button>
       <span className={cx('eyebrow', styles.title)}>{study.toc.title}</span>
       <ol id="toc-list" className={styles.list}>
-        {chapters.map((chapter, index) => (
-          <li key={chapter.id}>
+        {entries.map((entry, index) => (
+          <li key={entry.id}>
             <a
-              href={`#${chapter.id}`}
+              href={`#${entry.id}`}
               aria-current={index === current ? 'location' : undefined}
               onClick={() => setOpen(false)}
             >
-              <span className={styles.number}>{chapterNumber(index)}</span>
-              {chapter.label[language]}
+              <span className={styles.number}>{entry.number}</span>
+              {entry.label}
             </a>
           </li>
         ))}

@@ -79,15 +79,13 @@
     "sheet": {
       "rows": "rows"
     },
-    "dataNote": {
-      "lead": {
-        "before": "This study's data is originally in",
-        "after": "."
-      },
-      "translated": "Because of the language you chose, the tables are shown translated.",
-      "original": "The tables are now shown in their original form.",
-      "showOriginal": "View the original data",
-      "showTranslated": "Back to the translation",
+    "dataLanguage": {
+      "label": "Data language",
+      "title": "This study's data is in",
+      "lede": "The tables on this page are shown translated. You can switch to the original data at any time, the rest of the page does not change.",
+      "group": "Table language",
+      "translated": "Translated",
+      "original": "Original",
       "languages": {
         "tr": "Turkish",
         "en": "English"

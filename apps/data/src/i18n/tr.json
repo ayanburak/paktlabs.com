@@ -79,15 +79,13 @@
     "sheet": {
       "rows": "satır"
     },
-    "dataNote": {
-      "lead": {
-        "before": "Bu çalışmanın verisi aslen",
-        "after": "."
-      },
-      "translated": "Seçtiğiniz dil yüzünden tablolar çevrilmiş haliyle görünüyor.",
-      "original": "Tablolar şu an orijinal haliyle görünüyor.",
-      "showOriginal": "Orijinal veriyi gör",
-      "showTranslated": "Çevrilmiş haline dön",
+    "dataLanguage": {
+      "label": "Verinin dili",
+      "title": "Bu çalışmanın verisi",
+      "lede": "Bu sayfadaki tablolar çevrilmiş haliyle gösteriliyor. İstediğiniz an orijinal veriye geçebilirsiniz, sayfanın geri kalanı değişmez.",
+      "group": "Tabloların dili",
+      "translated": "Çeviri",
+      "original": "Orijinal",
       "languages": {
         "tr": "Türkçe",
         "en": "İngilizce"

@@ -1,0 +1,26 @@
+.switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* mockup'taki secim dugmesi: kagit zeminde murekkep cerceve, secili olan
+   koyu zemine doner */
+.option {
+  padding: 9px 14px;
+  font: 700 12px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: var(--ink);
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.option:hover {
+  background: var(--panel);
+}
+.option[aria-pressed='true'] {
+  color: var(--on-ink);
+  background: var(--ink);
+}
