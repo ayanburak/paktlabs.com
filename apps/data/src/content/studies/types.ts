@@ -28,6 +28,7 @@ description: data sitesindeki calismalarin icerik tiplerini tanimlayan modul.
 
 import type { Language } from '@paktlabs/brand/i18n/language'
 
+import type { AuthorId } from '../authors'
 import type { TechName } from '../techNames'
 import type { Block } from './blocks'
 import type { studyTags } from './tags'
@@ -77,7 +78,9 @@ export interface Chapter {
 // kapaktaki tek cumlelik aciklamadir, sekmenin aciklamasi da ondan gelir.
 // summary kapagin altindaki Sorun, Yaklasim ve Sonuc bandidir, sayfayi
 // yalnizca kaydirip gecen okur isi bu uc paragraftan anlar. Bolumler
-// sayfadaki sirasiyla yazilir.
+// sayfadaki sirasiyla yazilir. closing sayfayi kapatan bolumun sorusu ve
+// yanindaki cizimin yeri, cizim gelene kadar alanin icinde hangi cizimin
+// istendigi yazar.
 export interface StudyPage {
   lede: Localized
   kunye: KunyeRow[]
@@ -87,6 +90,10 @@ export interface StudyPage {
     result: Localized
   }
   chapters: Chapter[]
+  closing: {
+    title: Localized
+    art: { label: Localized; note: Localized }
+  }
 }
 
 // Kod sayfasinin icerigi, calismanin source.ts dosyasi bu tipe uyar. Kendi
@@ -124,9 +131,11 @@ export interface StudyListing {
 }
 
 // dataLanguage verinin orijinal dilidir. Sayfa acildiginda hesap tablolari
-// sitenin dilinde gosterilir, bu dil ondan farkliysa kunyenin altinda
-// orijinal veriye gecis notu cikar.
+// sitenin dilinde gosterilir, bu dil ondan farkliysa ilk bolumden once veri
+// dili bolumu cikar. author calismayi hazirlayan kisinin kimligidir, yazar
+// kutusu her detay sayfasinda bulunur.
 export interface Study extends StudyListing {
+  author: AuthorId
   dataLanguage: Language
   code: CodeLocation
   page: StudyPage

@@ -17,8 +17,11 @@ import { findStudy } from '@/content/studies'
 import { useDict } from '@/i18n'
 import { NotFound } from '@/routes/NotFound/NotFound'
 
+import { Author } from './sections/Author'
 import { Body } from './sections/Body'
+import { Closing } from './sections/Closing'
 import { Cover } from './sections/Cover'
+import { Curious } from './sections/Curious'
 import { readingMinutes } from './sections/readingMinutes'
 import { Summary } from './sections/Summary'
 import { StudyDataProvider } from './StudyDataProvider'
@@ -42,8 +45,18 @@ export function Study() {
       <StudyDataProvider key={study.slug} slug={study.slug} original={study.dataLanguage}>
         <Cover study={study} />
         <Summary summary={study.page.summary} />
-        <Body chapters={study.page.chapters} minutes={readingMinutes(study.page, language)} />
+        <Body
+          chapters={study.page.chapters}
+          minutes={readingMinutes(study.page, language)}
+          afterChapters={
+            <>
+              <Curious study={study} />
+              <Author id={study.author} />
+            </>
+          }
+        />
       </StudyDataProvider>
+      <Closing study={study} />
     </Page>
   )
 }

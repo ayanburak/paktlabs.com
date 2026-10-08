@@ -104,6 +104,37 @@
     "compare": {
       "before": "Önce",
       "after": "Sonra"
+    },
+    "curious": {
+      "label": "Meraklısına",
+      "page": {
+        "title": "Kodun ve verinin bir kısmı",
+        "text": "Firma, kodun ve verinin tamamının GitHub'da açık kaynak olarak yayınlanmasına izin vermedi. Paylaşılmasına onay verilen kod parçalarını ve veri örneklerini ayrı bir sayfada topladık.",
+        "go": "Kod ve veri örneklerini incele →"
+      },
+      "repo": {
+        "title": "Kodun tamamı GitHub'da",
+        "text": "Firma, kodun açık kaynak olarak yayınlanmasına izin verdi. Kodun ve paylaşılan verinin tamamı GitHub'daki depoda duruyor.",
+        "go": "Depoya git →"
+      }
+    },
+    "author": {
+      "label": "Hazırlayan",
+      "photo": "profil.svg"
+    },
+    "closing": {
+      "label": "Devam",
+      "nav": "Çalışmalar arasında gezinme",
+      "all": {
+        "label": "Tüm çalışmalar",
+        "title": "Çalışmalar",
+        "text": "Veri sayfasına dön",
+        "go": "← Geri"
+      },
+      "next": {
+        "label": "Sonraki",
+        "go": "İncele →"
+      }
     }
   },
   "notFound": {

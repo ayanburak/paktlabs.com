@@ -104,6 +104,37 @@
     "compare": {
       "before": "Before",
       "after": "After"
+    },
+    "curious": {
+      "label": "For the curious",
+      "page": {
+        "title": "Part of the code and data",
+        "text": "The company did not allow the full code and data to be published as open source on GitHub. We gathered the code excerpts and data samples it approved for sharing on a separate page.",
+        "go": "See the code and data samples →"
+      },
+      "repo": {
+        "title": "All the code is on GitHub",
+        "text": "The company allowed the code to be published as open source. All of the code and the shared data are in the repository on GitHub.",
+        "go": "Go to the repository →"
+      }
+    },
+    "author": {
+      "label": "Written by",
+      "photo": "profil.svg"
+    },
+    "closing": {
+      "label": "Next",
+      "nav": "Moving between studies",
+      "all": {
+        "label": "All studies",
+        "title": "Work",
+        "text": "Back to the data page",
+        "go": "← Back"
+      },
+      "next": {
+        "label": "Next",
+        "go": "View →"
+      }
     }
   },
   "notFound": {

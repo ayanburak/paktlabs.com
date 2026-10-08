@@ -28,7 +28,7 @@ Kapağın altında üç sütunlu bir özet bandı yer alır: Sorun, Yaklaşım v
 
 Gövde solda sabit duran içindekiler ve sağda numaralı bölümlerden oluşur. İçindekiler okurun hangi bölümde olduğunu gösterir, soldaki dikey çizgi okuma ilerledikçe altınla dolar. Dar ekranda içindekiler sayfanın üstüne yapışan ince bir bara dönüşür. Bölümler genellikle şu sırayı izler: sorun, eldeki veri, çözüm hattı, sonuçların şekillerle gösterildiği bölüm, verilen kararlar, teslim ve takvim, sonuç ve sınırlar. Bir işin doğası farklı bir sıra gerektiriyorsa sıra değişebilir.
 
-Bölümler bittikten sonra bir "Meraklısına" kartı kod ve veri sayfasına bağlanır. Altında sayfayı hazırlayan kişinin adını, e-posta adresini ve profil fotoğrafını taşıyan siyah zeminli bir yazar kutusu bulunur. Sayfa, diğer çalışmalara geçişin bulunduğu bir kapanış bölümüyle biter.
+Bölümler bittikten sonra bir "Meraklısına" kartı bulunur. Firma kodun açık kaynak olarak yayınlanmasına izin verdiyse kart yalnızca GitHub'daki depoya, vermediyse sitedeki kod ve veri sayfasına bağlanır. Altında sayfayı hazırlayan kişinin adını, e-posta adresini ve profil fotoğrafını taşıyan siyah zeminli bir yazar kutusu bulunur, kutu ana sitedeki profil sayfasına bağlanır. Sayfa, tüm çalışmalara ve varsa sonraki çalışmaya geçişin bulunduğu bir kapanış bölümüyle biter. Sonraki çalışma listede bu çalışmadan sonra gelen ilk gerçek çalışmadır, yer tutucular atlanır, başka gerçek çalışma yoksa yalnızca tüm çalışmalara dönüş kartı görünür.
 
 ### Kod ve veri sayfası
 
@@ -193,6 +193,17 @@ Veri işlerini gösteren çalışan bir uygulama bu repoya girmez. Uygulama kend
 Detay sayfası her çalışmada aynı iskeletle kurulur: kapak ve künye, Sorun, Yaklaşım ve Sonuç bandı, içindekiler, numaralı bölümler, Meraklısına kartı, yazar kutusu ve kapanış. İskeletin içeriği çalışmanın `page.ts` dosyasında yazılır. Bölümlerin içi ise serbesttir. Her bölüm `blocks` listesinde sırayla dizilen parçalardan oluşur. Bir parça içeriği bilmez, adını hikâyeden değil biçimden alır. Hangi parçanın hangi sırayla ve kaç kez kullanılacağı serbesttir, böylece iki çalışmanın sayfası birbirine benzemek zorunda kalmaz. Yeni bir anlatım biçimi gerektiğinde `src/content/studies/blocks.ts` içine yeni bir parça tipi, `src/routes/Study/blocks/` altına bileşeni eklenir. Eski sayfalara dokunulmaz. Yanlış ya da eksik yazılmış bir parça derleme hatası verir.
 
 Her metin iki dili yan yana taşır. Aşağıdaki örneklerde kısalık için yalnızca bir iki alan gösterilir.
+
+### Sayfa iskeleti
+
+`page.ts` iskeletin içeriğini taşır. `lede` kapaktaki tek cümlelik açıklama ve sekmenin açıklamasıdır. `kunye` kapağın sağındaki satırlardır. `summary` Sorun, Yaklaşım ve Sonuç bandıdır. `chapters` numaralı bölümlerdir. `closing` kapanış bölümünün sorusu ve yanındaki çizimin yeridir, çizim gelene kadar alanın içinde hangi çizimin istendiği yazar. Yazar ise künye dosyasında `author` kimliğiyle anılır, adı ve e-postası `src/content/authors.ts` içinde durur. Meraklısına kartının metni çalışmaya değil sitenin sözlüğüne aittir ve kodun yerine göre seçilir.
+
+```ts
+closing: {
+  title: { tr: 'Benzer bir dağınıklık sizde de var mı?', en: '…' },
+  art: { label: { tr: 'Svg alanı · D2 · detay-teslim.svg · üçe dört', en: '…' }, note: { tr: '…', en: '…' } },
+}
+```
 
 ### Bölüm
 

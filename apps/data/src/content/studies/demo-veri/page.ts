@@ -750,4 +750,14 @@ export const page: StudyPage = {
       ],
     },
   ],
+  closing: {
+    title: { tr: 'Benzer bir dağınıklık sizde de var mı?', en: 'Is there a similar mess on your side?' },
+    art: {
+      label: { tr: 'Svg alanı · D2 · detay-teslim.svg · üçe dört', en: 'Svg area · D2 · detay-teslim.svg · three by four' },
+      note: {
+        tr: 'Karakter tek ve düzgün bir koliyi iki eliyle önüne doğru uzatıyor, kolinin üstünde tek bir etiket var. Arkasında yere bırakılmış dört dağınık koli. Hikaye: dört kaynak, tek liste. Ayaklar alt çizgiye otursun.',
+        en: 'The character holds out a single neat box with both hands, with one label on top. Behind it, four messy boxes left on the floor. Story: four sources, one list. The feet should rest on the bottom line.',
+      },
+    },
+  },
 }

@@ -10,7 +10,7 @@ kurulur. Sitenin dili verinin orijinal dilinden farkliysa bolumlerin onune
 description: Calisma detay sayfasinda bolumleri icindekilerle yan yana dizen govde.
 */
 
-import { useMemo, useRef } from 'react'
+import { type ReactNode, useMemo, useRef } from 'react'
 
 import { useLanguage } from '@paktlabs/brand/i18n/language'
 
@@ -28,13 +28,15 @@ import { Toc, type TocEntry } from './Toc'
 interface BodyProps {
   chapters: ChapterContent[]
   minutes: number
+  afterChapters: ReactNode
 }
 
 // Icindekiler okuma ilerlemesini bolumlerin kapsayicisina gore olcer, ref bu
 // yuzden ona veriliyor. Veri dili bolumunun numarasi 00, boylece eklendiginde
 // icerik bolumlerinin numaralari kaymaz. Bolumun id'si sayfada tekil oldugu
-// icin anahtar olarak kullaniliyor.
-export function Body({ chapters, minutes }: BodyProps) {
+// icin anahtar olarak kullaniliyor. afterChapters son bolumun govdesine, parcalarin
+// ardina konur, Meraklisina karti ve yazar kutusu orada bolumun hizasinda durur.
+export function Body({ chapters, minutes, afterChapters }: BodyProps) {
   const { language } = useLanguage()
   const { study } = useDict()
   const data = useStudyData()
@@ -69,6 +71,7 @@ export function Body({ chapters, minutes }: BodyProps) {
             {chapter.blocks.map((block, blockIndex) => (
               <BlockView key={blockIndex} block={block} />
             ))}
+            {index === chapters.length - 1 && afterChapters}
           </Chapter>
         ))}
       </div>

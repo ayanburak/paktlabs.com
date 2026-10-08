@@ -43,6 +43,7 @@ export const demoVeri: Study = {
       },
     ],
   },
+  author: 'ayanburak',
   dataLanguage: 'tr',
   code: { kind: 'page', page: source },
   page,

@@ -1,0 +1,111 @@
+/* bant zemininde, ustte kalin cizgiyle govdeden ayrilir. Figur alanin altina
+   yaslanir, ayaklari alt bilginin ust cizgisine oturur */
+.closing {
+  padding: clamp(48px, 6vw, 88px) var(--gutter) 0;
+  background: var(--panel);
+  border-top: 2px solid var(--ink);
+}
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(200px, 22vw, 320px);
+  gap: clamp(24px, 4vw, 72px);
+  align-items: end;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+.copy {
+  padding-bottom: clamp(48px, 6vw, 88px);
+}
+.copy h2 {
+  margin-top: 16px;
+  max-width: 18ch;
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+/* donus ve sonraki calisma kartlari yan yana, iki kutulu kart dili */
+.next {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  max-width: 760px;
+  margin-top: 32px;
+}
+.next a {
+  display: grid;
+  gap: 6px;
+}
+.box {
+  background: var(--paper);
+  border: 2px solid var(--charcoal);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+.next a:hover .box {
+  transform: translateY(-3px);
+  box-shadow: 0 3px 0 var(--charcoal);
+}
+.next a:hover h3,
+.next a:hover .go {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.head {
+  padding: 16px 18px;
+}
+.head :global(.eyebrow) {
+  margin-bottom: 10px;
+}
+.head h3 {
+  font-size: clamp(22px, 2.2vw, 30px);
+  letter-spacing: -0.03em;
+}
+.back .head {
+  background: var(--surface);
+}
+.panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.go {
+  font: 700 12px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: var(--ink);
+}
+
+.mail {
+  display: inline-block;
+  margin-top: 28px;
+  font: 500 clamp(16px, 1.6vw, 20px) / 1 var(--font-mono);
+}
+.mail:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.art {
+  margin: 0;
+  aspect-ratio: 3 / 4;
+}
+
+@media (max-width: 768px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+  .copy {
+    padding-bottom: 36px;
+  }
+  .next {
+    grid-template-columns: 1fr;
+  }
+  .art {
+    width: 56%;
+    margin: 0 auto;
+  }
+}
