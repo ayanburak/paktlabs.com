@@ -74,23 +74,6 @@
   color: var(--ink);
 }
 
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.tags li {
-  padding: 5px 7px;
-  font: 700 11px/1 var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--faint);
-  border: 1.5px solid var(--gray);
-}
-
 .go {
   font: 700 12px/1 var(--font-mono);
   letter-spacing: 0.04em;

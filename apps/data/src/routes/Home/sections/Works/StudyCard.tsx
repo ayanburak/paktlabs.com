@@ -15,6 +15,7 @@ import { useReveal } from '@paktlabs/brand/hooks/useReveal'
 import { useLanguage } from '@paktlabs/brand/i18n/language'
 import { cx } from '@paktlabs/brand/lib/cx'
 
+import { TagList } from '@/components/TagList'
 import type { StudyListing } from '@/content/studies/types'
 import { techLogos } from '@/content/techStack'
 import { useDict } from '@/i18n'
@@ -55,14 +56,7 @@ export function StudyCard({ study }: StudyCardProps) {
             <p key={paragraph[language]}>{paragraph[language]}</p>
           ))}
         </div>
-        {!feature && (
-          <ul className={styles.tags}>
-            {study.tags.map((tag) => (
-              <li key={tag}>{home.works.tags[tag]}</li>
-            ))}
-            <li>{study.year}</li>
-          </ul>
-        )}
+        {!feature && <TagList tags={study.tags} year={study.year} />}
         <span className={styles.go}>{home.works.go}</span>
       </div>
 

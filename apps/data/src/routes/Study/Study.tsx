@@ -17,10 +17,12 @@ import { findStudy } from '@/content/studies'
 import { useDict } from '@/i18n'
 import { NotFound } from '@/routes/NotFound/NotFound'
 
+import { Cover } from './sections/Cover'
+
 // Sekme basligi calismanin basligi ve sitenin basligindan olusur, mockup'taki
 // "baslik · Veri · PaktLabs" bicimi. Sitenin basligi veri sayfasinin kendi
-// basligidir, ayrica bir anahtar tutulmaz. Kapak, kunye ve bolumler Faz 4'te
-// gelecek, su an sayfada yalnizca baslik var.
+// basligidir, ayrica bir anahtar tutulmaz. Sayfa bolumleri sections altinda
+// durur ve sirayla dizilir.
 export function Study() {
   const { slug = '' } = useParams()
   const { language } = useLanguage()
@@ -33,7 +35,7 @@ export function Study() {
 
   return (
     <Page title={`${title} · ${home.meta.title}`} description={study.page.lede[language]}>
-      <h1>{title}</h1>
+      <Cover study={study} />
     </Page>
   )
 }

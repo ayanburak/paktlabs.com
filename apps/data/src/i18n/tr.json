@@ -57,6 +57,13 @@
       }
     }
   },
+  "study": {
+    "cover": {
+      "back": "← Çalışmalar",
+      "crumb": "Konum",
+      "tags": "Etiketler"
+    }
+  },
   "notFound": {
     "meta": {
       "title": "Sayfa bulunamadı · PaktLabs",

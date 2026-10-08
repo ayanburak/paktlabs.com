@@ -57,6 +57,13 @@
       }
     }
   },
+  "study": {
+    "cover": {
+      "back": "← Work",
+      "crumb": "Breadcrumb",
+      "tags": "Tags"
+    }
+  },
   "notFound": {
     "meta": {
       "title": "Page not found · PaktLabs",
