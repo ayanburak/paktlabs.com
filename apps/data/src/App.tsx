@@ -12,6 +12,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import { LanguageProvider } from '@paktlabs/brand/i18n/LanguageProvider'
 
+import { ScrollToTop } from './components/ScrollToTop'
 import { Home } from './routes/Home/Home'
 import { NotFound } from './routes/NotFound/NotFound'
 import { Study } from './routes/Study/Study'
@@ -27,6 +28,7 @@ export function App() {
           <Route path="/work/:slug/source" element={<StudySource />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <ScrollToTop />
       </BrowserRouter>
     </LanguageProvider>
   )

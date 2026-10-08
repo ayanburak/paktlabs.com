@@ -145,6 +145,8 @@ Her sayfa `src/components/Page.tsx` çerçevesiyle kurulur. Çerçeve üst barı
 
 Sitede üç adres bulunur. `/` veri sayfasıdır. `/work/<slug>` bir çalışmanın detay sayfası, `/work/<slug>/source` aynı çalışmanın kod ve veri sayfasıdır. Adreste bilinmeyen bir yol, bilinmeyen bir çalışma ya da kod sayfası olmayan bir çalışma varsa bulunamadı sayfası gösterilir. Bu sayfanın içeriği ve metinleri bütün PaktLabs siteleriyle ortaktır ve brand paketindeki `NotFound` bileşeninden gelir, data yalnızca onu kendi üst barı ve alt bilgisiyle çerçeveler. Sayfadaki geri dön düğmesi ziyaretçiyi data içinde geldiği sayfaya, adresi doğrudan açtıysa veri sayfasına götürür.
 
+Site içindeki geçişler sayfayı yeniden yüklemez, bu yüzden tarayıcı kaydırma konumunu kendisi sıfırlamaz. `src/components/ScrollToTop.tsx` ileri gidilen sayfayı en üste, adreste bir bölüm varsa o bölüme taşır. Geri ve ileri düğmesinde kalınan yeri tarayıcı kurar. React Router'ın bu iş için kendi parçası yalnızca kütüphanenin diğer kurulum biçiminde çalışır. O kurulum data'nın kullanmadığı veri yükleme parçalarını da pakete aldığı için kullanılmadı, sıkıştırılmış paketi 17 KB büyütüyordu. `tests/scroll.spec.ts` bu davranışı denetler.
+
 Site tek sayfalık bir uygulama olarak sunulur. nginx bilinmeyen her yolda `index.html` döndürür ve hangi sayfanın gösterileceğine tarayıcıdaki uygulama karar verir. Bu yüzden bulunamadı sayfası da HTTP 200 koduyla gelir. Arama motorları bunu gerçek bir 404 olarak görmez. Bu bilinen bir sınırdır, sayfalar derleme sırasında önceden üretilirse kaldırılabilir.
 
 ### Çalışmaların içeriği
