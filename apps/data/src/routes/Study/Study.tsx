@@ -29,11 +29,11 @@ export function Study() {
 
   if (!study) return <NotFound />
 
-  const text = study.text[language]
+  const title = study.title[language]
 
   return (
-    <Page title={`${text.title} · ${home.meta.title}`} description={text.lede}>
-      <h1>{text.title}</h1>
+    <Page title={`${title} · ${home.meta.title}`} description={study.page.lede[language]}>
+      <h1>{title}</h1>
     </Page>
   )
 }

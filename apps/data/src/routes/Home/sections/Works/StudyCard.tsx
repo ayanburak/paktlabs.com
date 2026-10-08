@@ -15,25 +15,25 @@ import { useReveal } from '@paktlabs/brand/hooks/useReveal'
 import { useLanguage } from '@paktlabs/brand/i18n/language'
 import { cx } from '@paktlabs/brand/lib/cx'
 
-import type { Study } from '@/content/studies/types'
+import type { StudyListing } from '@/content/studies/types'
 import { techLogos } from '@/content/techStack'
 import { useDict } from '@/i18n'
 
 import styles from './StudyCard.module.css'
 
 interface StudyCardProps {
-  study: Study
+  study: StudyListing
 }
 
 // Site ici gecis oldugu icin duz a yerine Link kullaniliyor, sayfa yeniden
 // yuklenmeden detay sayfasina gecilir. One cikan kartta etiket satiri yok,
-// mockup'ta da yok, yerini teknik detaylar aliyor.
+// mockup'ta da yok, yerini teknik detaylar aliyor. Kart yalnizca liste katini
+// okur, boylece gercek calismayi da yer tutucuyu da ayni sekilde gosterir.
 export function StudyCard({ study }: StudyCardProps) {
   const { language } = useLanguage()
   const { home } = useDict()
   const { ref, visible } = useReveal<HTMLAnchorElement>()
-  const text = study.text[language]
-  const { feature } = study
+  const { title, card, feature } = study
 
   return (
     <Link
@@ -45,14 +45,14 @@ export function StudyCard({ study }: StudyCardProps) {
         <span className="eyebrow mono">
           {feature ? `${study.number} · ${home.works.featured}` : study.number}
         </span>
-        <h3>{text.title}</h3>
+        <h3>{title[language]}</h3>
       </div>
 
       <div className={cx(styles.box, styles.panel)}>
         <div className={styles.body}>
-          <p className={styles.lead}>{text.card.lead}</p>
-          {text.card.body.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
+          <p className={styles.lead}>{card.lead[language]}</p>
+          {card.body.map((paragraph) => (
+            <p key={paragraph[language]}>{paragraph[language]}</p>
           ))}
         </div>
         {!feature && (
@@ -70,10 +70,10 @@ export function StudyCard({ study }: StudyCardProps) {
         <div className={cx(styles.box, styles.detail)}>
           <span className="eyebrow">{home.works.details}</span>
           <ul className={styles.facts}>
-            {feature.facts[language].map((row) => (
-              <li key={row.label}>
-                <span className={styles.label}>{row.label}</span>
-                {row.value}
+            {feature.facts.map((row) => (
+              <li key={row.label[language]}>
+                <span className={styles.label}>{row.label[language]}</span>
+                {row.value[language]}
               </li>
             ))}
           </ul>

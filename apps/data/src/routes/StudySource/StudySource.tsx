@@ -3,7 +3,7 @@ file: StudySource.tsx
 importable: StudySource
 
 /work/:slug/source adresindeki kod ve veri sayfasi. Calisma yoksa ya da
-calismanin paylasilan bir kodu yoksa bulunamadi sayfasi gosterilir.
+calismanin kodu sitede degil GitHub'daysa bulunamadi sayfasi gosterilir.
 
 description: Bir calismanin paylasilan kod ve veri orneklerini gosteren sayfayi olusturan bilesen.
 */
@@ -24,15 +24,17 @@ export function StudySource() {
   const { slug = '' } = useParams()
   const { language } = useLanguage()
   const { home } = useDict()
-  const source = findStudy(slug)?.source
+  const code = findStudy(slug)?.code
 
-  if (!source) return <NotFound />
+  // Kodu GitHub'da olan calismanin Meraklisina karti depoya gider, sitede kod
+  // sayfasi yoktur. Bu adres de bilinmeyen bir adres gibi davranir.
+  if (code?.kind !== 'page') return <NotFound />
 
-  const text = source[language]
+  const title = code.page.title[language]
 
   return (
-    <Page title={`${text.title} · ${home.meta.title}`} description={text.lede}>
-      <h1>{text.title}</h1>
+    <Page title={`${title} · ${home.meta.title}`} description={code.page.lede[language]}>
+      <h1>{title}</h1>
     </Page>
   )
 }

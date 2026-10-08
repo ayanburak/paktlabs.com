@@ -12,13 +12,10 @@ description: data sitesinin rota ve bulunamadi sayfasi testleri.
 
 import { expect, test } from '@playwright/test'
 
-import { en as demoEn, sourceEn as demoSourceEn } from '../src/content/studies/demo-veri/en'
-import { sourceTr as demoSourceTr, tr as demoTr } from '../src/content/studies/demo-veri/tr'
+import { demoVeri } from '../src/content/studies/demo-veri'
+import { source as demoSource } from '../src/content/studies/demo-veri/source'
 
 import { dict, languages, openPage } from './support'
-
-const demo = { tr: demoTr, en: demoEn }
-const demoSource = { tr: demoSourceTr, en: demoSourceEn }
 
 for (const lang of languages) {
   test(`${lang}: unknown address shows the not found page`, async ({ page }) => {
@@ -34,9 +31,9 @@ for (const lang of languages) {
   test(`${lang}: study address opens the study`, async ({ page }) => {
     await openPage(page, '/work/demo-veri', lang)
 
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(demo[lang].title)
-    await expect(page).toHaveTitle(`${demo[lang].title} · ${dict[lang].home.meta.title}`)
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', demo[lang].lede)
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(demoVeri.title[lang])
+    await expect(page).toHaveTitle(`${demoVeri.title[lang]} · ${dict[lang].home.meta.title}`)
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', demoVeri.page.lede[lang])
   })
 }
 
@@ -51,9 +48,9 @@ for (const lang of languages) {
   test(`${lang}: source address opens the code and data page`, async ({ page }) => {
     await openPage(page, '/work/demo-veri/source', lang)
 
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(demoSource[lang].title)
-    await expect(page).toHaveTitle(`${demoSource[lang].title} · ${dict[lang].home.meta.title}`)
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', demoSource[lang].lede)
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(demoSource.title[lang])
+    await expect(page).toHaveTitle(`${demoSource.title[lang]} · ${dict[lang].home.meta.title}`)
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', demoSource.lede[lang])
   })
 }
 

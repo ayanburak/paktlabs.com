@@ -14,31 +14,45 @@ description: Veri sayfasindaki listede gorunen lorem ipsum yer tutucu calismalar
 // Bu dosya tamamen bosaldiginda silinmeli, index.ts'teki import'u da onunla
 // birlikte kalkar.
 
-import type { Language } from '@paktlabs/brand/i18n/language'
+import type { KunyeRow, Localized, PlaceholderStudy, StudyTag } from './types'
 
-import type { KunyeRow, Study, StudyCard, StudyTag, StudyText } from './types'
-
-// Iki dile ayni metni koyan kucuk yardimci. Yer tutucunun detay sayfasi
-// olmadigi icin lede ve kunye hic gorunmez, tip istedigi icin dolu duruyor.
-function lorem(title: string, card: StudyCard): Record<Language, StudyText> {
-  const text: StudyText = { title, lede: card.lead, kunye: [], card }
+// Ayni metni iki dile birden koyar. Lorem ipsum'un cevirisi olmadigi icin yer
+// tutucularin butun metinleri bundan gecer.
+function lorem(text: string): Localized {
   return { tr: text, en: text }
 }
 
-function placeholder(number: string, title: string, year: number, tags: StudyTag[], card: StudyCard): Study {
-  return { slug: `lorem-${number}`, number, year, tags, text: lorem(title, card), placeholder: true }
+// Kart metni duz metin olarak alinir ve iki dile cevrilir, boylece listedeki
+// her yer tutucu tek dilde yazilabiliyor.
+function placeholder(
+  number: string,
+  title: string,
+  year: number,
+  tags: StudyTag[],
+  card: { lead: string; body: string[] },
+): PlaceholderStudy {
+  return {
+    slug: `lorem-${number}`,
+    number,
+    year,
+    tags,
+    title: lorem(title),
+    card: { lead: lorem(card.lead), body: card.body.map(lorem) },
+    placeholder: true,
+  }
 }
 
+// Etiketler gercek etiketler gibi iki dilde yazili, degerler lorem.
 const featureFacts: KunyeRow[] = [
-  { label: 'Girdi', value: 'Lorem ipsum dolor sit' },
-  { label: 'Yöntem', value: 'Consectetur adipiscing' },
-  { label: 'Çıktı', value: 'Sed do eiusmod tempor' },
-  { label: 'Veri', value: 'Incididunt ut labore' },
-  { label: 'Süre', value: 'Et dolore magna' },
-  { label: 'Doğrulama', value: 'Ut enim ad minim' },
+  { label: { tr: 'Girdi', en: 'Input' }, value: lorem('Lorem ipsum dolor sit') },
+  { label: { tr: 'Yöntem', en: 'Method' }, value: lorem('Consectetur adipiscing') },
+  { label: { tr: 'Çıktı', en: 'Output' }, value: lorem('Sed do eiusmod tempor') },
+  { label: { tr: 'Veri', en: 'Data' }, value: lorem('Incididunt ut labore') },
+  { label: { tr: 'Süre', en: 'Duration' }, value: lorem('Et dolore magna') },
+  { label: { tr: 'Doğrulama', en: 'Validation' }, value: lorem('Ut enim ad minim') },
 ]
 
-export const placeholders: Study[] = [
+export const placeholders: PlaceholderStudy[] = [
   {
     ...placeholder('00', 'Lorem Ipsum Dolor', 2026, ['preparation', 'analysis'], {
       lead: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
@@ -48,10 +62,7 @@ export const placeholders: Study[] = [
       ],
     }),
     feature: {
-      facts: {
-        tr: featureFacts,
-        en: featureFacts.map((row, i) => ({ ...row, label: ['Input', 'Method', 'Output', 'Data', 'Duration', 'Validation'][i] })),
-      },
+      facts: featureFacts,
       tools: ['Python', 'Pandas', 'PostgreSQL', 'Jupyter'],
     },
   },

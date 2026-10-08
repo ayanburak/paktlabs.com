@@ -148,9 +148,13 @@ Site tek sayfalık bir uygulama olarak sunulur. nginx bilinmeyen her yolda `inde
 
 ### Çalışmaların içeriği
 
-Her çalışma `src/content/studies/<slug>/` klasöründe durur. `index.ts` dilden bağımsız alanları tutar: adresteki slug, listedeki numara, yıl ve filtre etiketleri. `tr.ts` ve `en.ts` aynı tipte iki dilin metnini tutar. Metinler JSON yerine TypeScript dosyalarında yazılır, çünkü bir çalışma düz metinden ibaret değildir. Tablolar, şekiller ve hat istasyonları gibi blokların her birinin kendi alanları vardır ve TypeScript bu alanları derleme sırasında denetler. Bir dilde eksik kalan alan derleme hatası verir.
+Her çalışma `src/content/studies/<slug>/` klasöründe durur. Klasördeki `index.ts` künye dosyasıdır: adresteki slug, listedeki numara, yıl, filtre etiketleri, başlık, listedeki kartın metni, verinin orijinal dili ve kodun yeri burada yazılır. Detay sayfasının içeriği `page.ts`, kodu sitede paylaşılan çalışmalarda kod sayfasının içeriği `source.ts` dosyasındadır. Künye dosyası bu iki dosyayı alıp tek bir çalışmada birleştirir. Böylece yeni bir çalışma eklenirken yalnızca bu klasör yazılır, bileşen ya da CSS yazılmaz.
 
-Kod ve veri sayfası her çalışmada olmayabilir, çünkü firmanın paylaşılmasına izin vermediği kod yayınlanmaz. Sayfa varsa iki dilde birden yazılır, tek dilde yazılmış bir kod sayfası derleme hatası verir. Yeni bir çalışma kendi klasöründe yazılır ve `src/content/studies/index.ts` içindeki listeye numara sırasıyla eklenir.
+Metinler dil başına ayrı dosyalarda değil, aynı yerde iki dili yan yana yazılır. Bir paragrafın Türkçesi ve İngilizcesi aynı alanın içinde durur, böylece çevirisi ayrı bir dosyada unutulamaz. İngilizcesi eksik kalan bir metin derleme hatası verir. Metinler JSON yerine TypeScript dosyalarında yazılır, çünkü bir çalışma düz metinden ibaret değildir. Tablolar, şekiller ve hat istasyonları gibi parçaların her birinin kendi alanları vardır ve TypeScript bu alanları derleme sırasında denetler.
+
+Kodun yeri iki seçenekten biridir. Firma kodun paylaşılmasına izin verdiyse künye dosyasına GitHub deposunun adresi yazılır, detay sayfasındaki Meraklısına kartı yalnızca depoya bağlanır ve sitede ayrıca kod sayfası bulunmaz. İzin vermediyse paylaşılan kısım sitedeki kod sayfasında gösterilir. İkisinden birinin yazılması zorunludur, ikisi birden yazılamaz. Kodu GitHub'da olan bir çalışmanın kod sayfası adresi bulunamadı sayfasına düşer.
+
+Veri sayfasındaki listede gerçek çalışmalarla birlikte mockup'tan taşınan lorem yer tutucular da durur. Yer tutucular yalnızca listede görünen alanları taşır, detay ve kod sayfaları yoktur. Gerçek bir çalışma geldiğinde aynı numaralı yer tutucu `placeholders.ts`'ten silinir. Yeni bir çalışma kendi klasöründe yazılır ve `src/content/studies/index.ts` içindeki listeye eklenir, liste numara sırasıyla dizilir.
 
 ### Komutlar
 
