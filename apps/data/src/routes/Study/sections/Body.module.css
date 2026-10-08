@@ -1,0 +1,24 @@
+/* govde landing'in icerik genisligi artisi iki kenar boslugu kadar genisler.
+   Kenar boslugu genisligin icinden dusmesin diye boyle, kapak ve ozet bandiyla
+   ayni sol hizaya oturur. Sol sutun icindekiler icin */
+.body {
+  max-width: calc(var(--maxw) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 4vw, 72px);
+}
+
+.chapters {
+  grid-column: 2;
+  min-width: 0;
+}
+
+/* icindekiler bu genisligin altinda ustte bir bara donusur, govde tek
+   sutuna iner */
+@media (max-width: 1100px) {
+  .body {
+    display: block;
+  }
+}

@@ -1,0 +1,82 @@
+/* bolumler arasinda kalin cizgi var, ilk bolumun ustunde yok. min-width
+   sifir, cunku bolum bir izgara sutununda duruyor ve icindeki genis bir
+   tablo sutunu disari itmesin */
+.chapter {
+  min-width: 0;
+  padding: 64px 0 72px;
+  border-top: 2px solid var(--ink);
+}
+.chapter:first-child {
+  border-top: 0;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.number {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  font: 700 18px/1 var(--font-mono);
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  box-shadow: 0 3px 0 var(--charcoal);
+}
+
+.title {
+  margin-top: 10px;
+  max-width: 22ch;
+  font-size: clamp(28px, 3.3vw, 46px);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+
+/* giris ve parcalar numara kutusunun genisligi ve aradaki bosluk kadar
+   iceriden baslar, basligin hizasina oturur. Giris bolumun kisa halidir,
+   okur yalnizca bunlari okusa bile isin hikayesini alir */
+.lede {
+  margin: 26px 0 0 74px;
+  max-width: 60ch;
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.55;
+}
+
+.body {
+  margin: 36px 0 0 74px;
+}
+
+/* parcalar arasi bosluk burada verilir, parcalar kendi disinda bosluk
+   birakmaz. Art arda gelen paragraflar birbirine daha yakin durur */
+.body > * + * {
+  margin-top: 36px;
+}
+.body > p + p {
+  margin-top: 14px;
+}
+
+/* icindekiler ustte bara donustugunde giris ve parcalar sol kenardan baslar */
+@media (max-width: 1100px) {
+  .lede,
+  .body {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .chapter {
+    padding: 48px 0 56px;
+  }
+  .head {
+    gap: 14px;
+  }
+  .number {
+    width: 44px;
+    height: 44px;
+    font-size: 15px;
+  }
+}

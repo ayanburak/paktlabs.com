@@ -1,6 +1,6 @@
 /*
 file: types.ts
-importable: Localized, Study, StudyListing, PlaceholderStudy, StudyPage, CodeLocation, StudyCard, SourcePage, StudyFeature, StudyTag, KunyeRow
+importable: Localized, Study, StudyListing, PlaceholderStudy, StudyPage, Chapter, CodeLocation, StudyCard, SourcePage, StudyFeature, StudyTag, KunyeRow
 
 Bir calisma iki kattan olusur. StudyListing veri sayfasindaki listede gorunen
 kisimdir: adresteki slug, numara, yil, etiketler, baslik ve kart metni. Study
@@ -20,8 +20,8 @@ Veri sayfasindaki listede bir calisma ya normal bir kart ya da tam satir
 tutan one cikan kart olarak gorunur. One cikan kartin teknik detaylari ve
 araclari feature alaninda durur.
 
-Tip, sayfalar yazildikca genisler. Bolumler ve parcalar detay sayfasi
-yazilirken her parcanin bileseniyle birlikte eklenecek.
+Detay sayfasi bolumlerden, bolumler de parcalardan olusur. Parca tipleri
+blocks.ts'te durur ve her parcanin bileseniyle birlikte eklenir.
 
 description: data sitesindeki calismalarin icerik tiplerini tanimlayan modul.
 */
@@ -29,6 +29,7 @@ description: data sitesindeki calismalarin icerik tiplerini tanimlayan modul.
 import type { Language } from '@paktlabs/brand/i18n/language'
 
 import type { TechName } from '../techNames'
+import type { Block } from './blocks'
 import type { studyTags } from './tags'
 
 // Bir icerigin her dildeki hali. Calisma dosyalarinda her metin iki dili yan
@@ -59,11 +60,24 @@ export interface StudyCard {
   body: Localized[]
 }
 
+// Detay sayfasinin numarali bir bolumu. id adresteki bolum parcasidir,
+// icindekiler bolume onunla atlar, bu yuzden dilden bagimsizdir ve sayfada
+// tekil olmalidir. label basligin ustunde ve icindekilerde gorunen kisa ad,
+// lede okurun yalnizca onu okusa bile hikayeyi alacagi giris paragrafi.
+// Numara yazilmaz, bolumun sayfadaki sirasindan cikar.
+export interface Chapter {
+  id: string
+  label: Localized
+  title: Localized
+  lede: Localized
+  blocks: Block[]
+}
+
 // Detay sayfasinin icerigi, calismanin page.ts dosyasi bu tipe uyar. lede
 // kapaktaki tek cumlelik aciklamadir, sekmenin aciklamasi da ondan gelir.
 // summary kapagin altindaki Sorun, Yaklasim ve Sonuc bandidir, sayfayi
-// yalnizca kaydirip gecen okur isi bu uc paragraftan anlar. Bolumler bolum
-// cercevesiyle birlikte eklenecek.
+// yalnizca kaydirip gecen okur isi bu uc paragraftan anlar. Bolumler
+// sayfadaki sirasiyla yazilir.
 export interface StudyPage {
   lede: Localized
   kunye: KunyeRow[]
@@ -72,6 +86,7 @@ export interface StudyPage {
     approach: Localized
     result: Localized
   }
+  chapters: Chapter[]
 }
 
 // Kod sayfasinin icerigi, calismanin source.ts dosyasi bu tipe uyar. Kendi
