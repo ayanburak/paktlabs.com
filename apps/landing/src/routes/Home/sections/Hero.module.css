@@ -16,29 +16,26 @@
 /* Metin ilk sütunda kendi genişliğini ayırır, görsel kalan alana sığar,
    dikeyde ortalanır ve zemine sabitlenmez, bölümün alt çizgisinden bağımsız
    havada durur.
-   Yatayda sütunda boşta kalan alanın ne kadarının çizimin sağında kalacağını
-   --art-right-share belirler. 0.5 tam ortalamadır, daha küçük değer çizimi
-   sağa yaklaştırır. Boşta kalan alan sütun genişliği eksi çizimin en fazla
-   genişliğidir. Çizim sütunu tamamen doldurduğunda bu alan sıfırdır, sağ boşluk
-   da sıfır kalır ve çizim hiçbir ekranda taşmaz.
-   --art-height çizimin en fazla ne kadar uzun olacağını belirler, genişlik
-   sınırı bu yükseklikten oranla hesaplanır. Başlık alanı daraldığında görsel
-   oranını bozmadan bundan da küçülür.
+   Çizimin en fazla yüksekliği ve sağa ne kadar yaklaşacağı bütün sitelerin
+   hero'larında ortak, değerleri brand'deki tokens.css'te --hero-art-height ve
+   --hero-art-right-share olarak durur. Boşta kalan alan sütun genişliği eksi
+   çizimin en fazla genişliğidir. Çizim sütunu tamamen doldurduğunda bu alan
+   sıfırdır, sağ boşluk da sıfır kalır ve çizim hiçbir ekranda taşmaz.
+   Genişlik sınırı bu yükseklikten oranla hesaplanır. Başlık alanı
+   daraldığında görsel oranını bozmadan bundan da küçülür.
    --art-ratio hero.svg'nin viewBox oranıdır ve hem kutunun oranında hem
    genişlik sınırında kullanılır. Çizim değişirse yalnızca bu değer
    güncellenir. */
 .artFrame {
-  --art-ratio: 3080.8723 / 2139.4315;
-  --art-height: min(70.4svh, 660px);
-  --art-width: calc(var(--art-height) * var(--art-ratio));
-  --art-right-share: 0.25;
+  --art-ratio: 2658.6299 / 1117.7186;
+  --art-width: calc(var(--hero-art-height) * var(--art-ratio));
   display: block;
   grid-column: 2;
   grid-row: 1;
   align-self: center;
   justify-self: end;
   /* grid ogesinde yuzdelik margin grid alaninin genisligine gore cozulur */
-  margin-right: calc(max(0px, 100% - var(--art-width)) * var(--art-right-share));
+  margin-right: calc(max(0px, 100% - var(--art-width)) * var(--hero-art-right-share));
   position: relative;
   width: 100%;
   max-width: var(--art-width);

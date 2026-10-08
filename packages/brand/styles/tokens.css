@@ -40,6 +40,13 @@ description: PaktLabs sitelerinin paylastigi renk, bosluk ve golge degiskenlerin
   --maxw: 1040px;
   --measure: 780px;
 
+  /* sitelerin hero cizimleri ayni his ve olcuyle durur. Cizimin en fazla
+     yuksekligi ve sutunda bosta kalan alanin ne kadarinin cizimin saginda
+     kalacagi burada tek yerde tutulur, her site yalnizca kendi cizim oranini
+     verir. 0.5 tam ortalamadir, daha kucuk deger cizimi saga yaklastirir */
+  --hero-art-height: min(70.4svh, 660px);
+  --hero-art-right-share: 0.25;
+
   --gap: 112px;
   --gap-lg: 152px;
   --gap-sm: 96px;

@@ -1,16 +1,19 @@
-/* mockup'taki veri hero'su. Iskelet landing'in hero'suyla ayni: ekrani
+/* veri sayfasinin hero'su. Iskelet landing'in hero'suyla ayni: ekrani
    kaplar, header seffaf olarak ustte durur, alt cizgi bolumu bir sonrakinden
-   ayirir. Figur ise landing'deki gibi zemine oturmaz, karakter havada duracak
-   sekilde cizildi. Metinler landing'deki gibi global.css'teki rise sinifiyla
-   sirayla yukselir, burada yalnizca siralari verilir */
+   ayirir. Metin kendi genisligini alir, cizim kalan alana sigar ve zemine
+   oturmadan havada durur. Metin de cizim de landing'deki gibi header'in
+   altinda kalan alanin dikey ortasina hizalanir, iki sitenin hero dugmeleri
+   ayni kurala gore yerlesir. Metinler landing'deki gibi global.css'teki rise
+   sinifiyla sirayla yukselir, burada yalnizca siralari verilir */
 .hero {
   position: relative;
   min-height: 100svh;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
+  grid-template-columns: max-content minmax(0, 1fr);
   column-gap: 32px;
-  padding: 0 clamp(20px, 4vw, 56px);
+  /* header seffaf olarak hero'nun ustunde durur ve 84px yer kaplar, ortalama
+     bu payin altinda kalan alana gore yapilir */
+  padding: 84px clamp(20px, 4vw, 56px) 0;
   border-bottom: 2px solid var(--ink);
   overflow: hidden;
 }
@@ -18,7 +21,10 @@
 .copy {
   position: relative;
   z-index: 2;
-  padding: 128px 0 clamp(48px, 9vh, 100px);
+  min-height: calc(100svh - 84px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .title {
@@ -65,8 +71,11 @@
   letter-spacing: -0.03em;
 }
 
-/* dugme landing'deki gibi yukselmez, yalnizca belirir */
+/* dugme landing'deki gibi yukselmez, yalnizca belirir. Metin blogu dikey
+   flex oldugu icin dugme kendi genisliginde kalsin diye sola yaslanir, yoksa
+   sutun boyunca uzanir */
 .cta {
+  align-self: flex-start;
   --rise-delay: 0.5s;
   --rise-offset: 0px;
   margin-top: 30px;
@@ -75,12 +84,23 @@
 /* figur dikeyde ortada, biraz saga kaydirilmis ve havada durur. Kutunun orani
    mockup'taki 922/1333, cizimin kendi oranindan genis. SVG kutunun icinde
    ortalanir, boylece figur mockup'taki yerine birebir oturur */
+/* cizim landing'in hero cizimiyle ayni his ve olcuyle durur: kendi sutununda
+   dikeyde ortalanir, sutunda bosta kalan alanin bir kismi soluna kalir ve
+   biraz saga yaklasir. En fazla yuksekligi ve saga yaklasma orani brand'deki
+   tokens.css'te iki site icin ortak tutulur. --art-ratio hero.svg'nin viewBox
+   oranidir, cizim degisirse yalnizca bu deger guncellenir. Cizim sutunu
+   tamamen doldurdugunda bosta alan sifirdir, sag bosluk da sifir kalir */
 .art {
+  --art-ratio: 2972.0993 / 1239.5531;
+  --art-width: calc(var(--hero-art-height) * var(--art-ratio));
   grid-column: 2;
   align-self: center;
-  height: min(56svh, 580px);
-  aspect-ratio: 922 / 1333;
-  margin: 64px clamp(0px, 4vw, 90px) 0 0;
+  justify-self: end;
+  /* grid ogesinde yuzdelik margin grid alaninin genisligine gore cozulur */
+  margin-right: calc(max(0px, 100% - var(--art-width)) * var(--hero-art-right-share));
+  width: 100%;
+  max-width: var(--art-width);
+  aspect-ratio: var(--art-ratio);
   z-index: 1;
 }
 .art img {
@@ -88,23 +108,23 @@
   height: 100%;
 }
 
-/* mobilde header akista durur, metin ustte, figur altta ortalanir ve alt
-   cizgiden bir bosluk birakir */
+/* mobilde header akista durur, metin ustte, cizim altta icerik genisliginin
+   tamamini kaplar ve alt cizgiden bir bosluk birakir */
 @media (max-width: 768px) {
   .hero {
     display: block;
     min-height: 0;
-    padding-bottom: 0;
+    padding: 0 clamp(20px, 4vw, 56px);
   }
   .copy {
+    min-height: 0;
     padding: 40px 0 36px;
   }
   .title {
     font-size: clamp(110px, 38vw, 220px);
   }
   .art {
-    width: min(46%, 240px);
-    height: auto;
-    margin: 0 auto 48px;
+    max-width: none;
+    margin: 0 0 48px;
   }
 }

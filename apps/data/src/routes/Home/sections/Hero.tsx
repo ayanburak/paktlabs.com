@@ -8,14 +8,13 @@ description: Veri sayfasinin acilis bolumu, disiplin adi, kisa aciklama, uc kisa
 import { RevealImg } from '@paktlabs/brand/components/RevealImg'
 import { cx } from '@paktlabs/brand/lib/cx'
 
-import readingSvg from '@/assets/illustrations/reading.svg'
+import heroSvg from '@/assets/illustrations/hero.svg'
 import { useDict } from '@/i18n'
 
 import styles from './Hero.module.css'
 
-// Durgun gorunum mockup'taki hero'nun aynisi, metinler de mockup'taki gibi
-// lorem. Acilistaki hareket landing'in hero'sundan gelir: metinler sirayla
-// yukselir, figur belirir. Hareket konuma dokunmaz, son kare mockup'la ayni.
+// Metinler mockup'taki gibi lorem. Acilistaki hareket landing'in hero'sundan
+// gelir: metinler sirayla yukselir, cizim belirir. Hareket konuma dokunmaz.
 // Olculer sozlukten gelir, gercek icerik geldiginde yalnizca sozluk degisir.
 // Her olcu bir terim ve aciklama cifti oldugu icin dl ile yazilir. Gorselde
 // deger ustte, etiket altta durur, siralamayi CSS degistirir.
@@ -43,7 +42,7 @@ export function Hero() {
         </a>
       </div>
       <figure className={styles.art}>
-        <RevealImg src={readingSvg} />
+        <RevealImg src={heroSvg} />
       </figure>
     </section>
   )
