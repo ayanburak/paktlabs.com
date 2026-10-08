@@ -34,12 +34,12 @@
   margin-top: 34px;
 }
 
-/* mobilde header 84px yuksekliginde akista durur, ust bosluga ihtiyac kalmaz.
+/* mobilde header kendi yuksekliginde akista durur, ust bosluga ihtiyac kalmaz.
    Bolum ekranin geri kalanini doldurur, yoksa kisa sayfada alt bilginin
    altinda bos zemin kaliyordu */
 @media (max-width: 768px) {
   .notFound {
-    min-height: calc(100svh - 84px);
+    min-height: calc(100svh - var(--header-height));
     padding-top: 56px;
   }
 }

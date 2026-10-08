@@ -40,6 +40,11 @@ description: PaktLabs sitelerinin paylastigi renk, bosluk ve golge degiskenlerin
   --maxw: 1040px;
   --measure: 780px;
 
+  /* ust barin yuksekligi. Bar hero'larin ustunde seffaf durdugu icin hero'lar
+     ve tam ekran bolumler bu kadar payi kendileri birakir, mobilde de akista
+     bu kadar yer kaplar. Bar degisirse hepsi buradan birlikte kayar */
+  --header-height: 84px;
+
   /* sitelerin hero cizimleri ayni his ve olcuyle durur. Cizimin en fazla
      yuksekligi ve sutunda bosta kalan alanin ne kadarinin cizimin saginda
      kalacagi burada tek yerde tutulur, her site yalnizca kendi cizim oranini
