@@ -70,8 +70,9 @@
     overflow: visible;
     /* header payi + gorselin kendi orani (1536.6208/921.20239 ~ 1.668)
        ile genislige (92vw) gore hesaplanan yukseklik + gorselle alt cizgi
-       arasinda hafif bir bosluk kalsin diye +20px (bilerek: sadece mobil
-       hero icin, digerleri hala cizgiye bitisik) */
+       arasinda hafif bir bosluk kalsin diye +20px. Bu pay yalnizca mobilde
+       gerekir, masaustunde cizim dikeyde ortada havada durdugu icin alt
+       cizgiye zaten yaklasmaz */
     min-height: calc(var(--header-height) + 153.7vw + 20px);
   }
 
