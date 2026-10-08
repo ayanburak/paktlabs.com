@@ -70,7 +70,11 @@
       "result": "Sonuç"
     },
     "toc": {
-      "title": "İçindekiler"
+      "title": "İçindekiler",
+      "readingTime": {
+        "before": "Okuma süresi yaklaşık",
+        "after": "dakika."
+      }
     }
   },
   "notFound": {

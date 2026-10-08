@@ -70,6 +70,15 @@
   border-color: var(--ink);
 }
 
+/* okuma suresi listenin altinda kalin bir cizgiyle ayrilir */
+.time {
+  margin: 28px 0 0;
+  padding-top: 16px;
+  font: 500 12px/1.4 var(--font-mono);
+  color: var(--faint);
+  border-top: 2px solid var(--ink);
+}
+
 /* dar ekranda icindekiler sayfanin ustune yapisan bir bara donusur. Kenar
    boslugunu tasarak tam genislige yayilir, liste bara dokununca acilir.
    Altin cizgi okudukca soldan saga dolar. Cizgi barin degil butun kutunun
@@ -85,7 +94,8 @@
   /* global.css'teki .eyebrow derlenen CSS'te bu dosyadan sonra gelir ve
      display: block verir, esit onemde bir kural onu ezemiyor. Kural bu
      yuzden kutuya baglanip daha belirgin yazildi */
-  .toc .title {
+  .toc .title,
+  .time {
     display: none;
   }
   .bar {

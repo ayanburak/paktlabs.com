@@ -25,13 +25,15 @@ import { useReadingProgress } from './useReadingProgress'
 interface TocProps {
   chapters: Chapter[]
   chaptersRef: RefObject<HTMLElement | null>
+  minutes: number
 }
 
 // Okuma ilerlemesi CSS'e --p degiskeniyle verilir, cizginin ne kadar
 // dolacagini stil dosyasi hesaplar. Bar yalnizca dar ekranda gorunur, liste
 // orada bara dokununca acilir. Bir bolum secilince ya da Escape'e basilinca
 // kapanir, Escape'te odak bara doner ki klavyeyle gezen okur yerini kaybetmesin.
-export function Toc({ chapters, chaptersRef }: TocProps) {
+// Okuma suresi disaridan hesaplanmis gelir, burada yalnizca gosterilir.
+export function Toc({ chapters, chaptersRef, minutes }: TocProps) {
   const { language } = useLanguage()
   const { study } = useDict()
   const ids = useMemo(() => chapters.map((chapter) => chapter.id), [chapters])
@@ -85,6 +87,9 @@ export function Toc({ chapters, chaptersRef }: TocProps) {
           </li>
         ))}
       </ol>
+      <p className={styles.time}>
+        {study.toc.readingTime.before} {minutes} {study.toc.readingTime.after}
+      </p>
     </nav>
   )
 }

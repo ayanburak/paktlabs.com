@@ -1,0 +1,75 @@
+.title {
+  margin-bottom: 14px;
+  font-size: clamp(19px, 1.7vw, 23px);
+  letter-spacing: -0.02em;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  color: var(--muted);
+}
+.list strong {
+  color: var(--ink);
+}
+
+/* yan yana uc sutun, her maddenin ustunde kalin cizgi ve kucuk numara.
+   Bas cumlesi kendi satirinda buyuk durur */
+.columns {
+  counter-reset: item;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 24px;
+  line-height: 1.55;
+}
+.columns li {
+  counter-increment: item;
+  padding-top: 14px;
+  border-top: 2px solid var(--ink);
+}
+.columns li::before {
+  content: counter(item, decimal-leading-zero);
+  display: block;
+  margin-bottom: 10px;
+  font: 700 11px/1 var(--font-mono);
+  letter-spacing: 0.12em;
+  color: var(--faint);
+}
+.columns strong {
+  display: block;
+  margin-bottom: 4px;
+  font: 700 17px/1.25 var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* alt alta maddeler, solda kucuk bos bir kare, aralarda ve en altta kalin
+   cizgi. Bas cumlesi metnin icinde kalin yazilir */
+.stack {
+  line-height: 1.6;
+}
+.stack li {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 14px;
+  padding: 16px 0;
+  border-top: 2px solid var(--ink);
+}
+.stack li:last-child {
+  border-bottom: 2px solid var(--ink);
+}
+.stack li::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  margin-top: 6px;
+  border: 1.5px solid var(--gray);
+}
+
+@media (max-width: 768px) {
+  .columns {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}

@@ -19,6 +19,7 @@ import { NotFound } from '@/routes/NotFound/NotFound'
 
 import { Body } from './sections/Body'
 import { Cover } from './sections/Cover'
+import { readingMinutes } from './sections/readingMinutes'
 import { Summary } from './sections/Summary'
 
 // Sekme basligi calismanin basligi ve sitenin basligindan olusur, mockup'taki
@@ -39,7 +40,7 @@ export function Study() {
     <Page title={`${title} · ${home.meta.title}`} description={study.page.lede[language]}>
       <Cover study={study} />
       <Summary summary={study.page.summary} />
-      <Body chapters={study.page.chapters} />
+      <Body chapters={study.page.chapters} minutes={readingMinutes(study.page, language)} />
     </Page>
   )
 }

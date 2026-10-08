@@ -70,7 +70,11 @@
       "result": "Result"
     },
     "toc": {
-      "title": "Contents"
+      "title": "Contents",
+      "readingTime": {
+        "before": "Reading time about",
+        "after": "minutes."
+      }
     }
   },
   "notFound": {

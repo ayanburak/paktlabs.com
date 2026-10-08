@@ -1,6 +1,6 @@
 /*
 file: blocks.ts
-importable: Block, ParagraphBlock
+importable: Block, ParagraphBlock, ListBlock, ListItem
 
 Detay sayfasinin bolumlerine konan parcalarin tipleri. Bir parca icerigi
 bilmez, adini hikayeden degil bicimden alir. Bir bolumde hangi parcanin hangi
@@ -23,5 +23,23 @@ export interface ParagraphBlock {
   text: Localized
 }
 
+// Listenin bir maddesi: kalin yazilan kisa bir bas cumlesi ve aciklamasi.
+export interface ListItem {
+  title: Localized
+  text: Localized
+}
+
+// Kisa maddelerden olusan liste, iki gorunusu var. columns maddeleri
+// numarali ve yan yana dizer, birkac kisa etkiyi bir bakista gostermek icin.
+// stack maddeleri alt alta, aralarinda cizgiyle dizer, her biri biraz daha
+// uzun anlatilan sinirlar ya da uyarilar icin. title verilirse listenin
+// ustunde kucuk bir baslik olarak durur.
+export interface ListBlock {
+  type: 'list'
+  view: 'columns' | 'stack'
+  title?: Localized
+  items: ListItem[]
+}
+
 // Bolumlerde kullanilabilecek butun parcalar. Yeni parca tipi buraya eklenir.
-export type Block = ParagraphBlock
+export type Block = ParagraphBlock | ListBlock

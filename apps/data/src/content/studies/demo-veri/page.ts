@@ -60,6 +60,33 @@ export const page: StudyPage = {
       },
       blocks: [
         {
+          type: 'list',
+          view: 'columns',
+          items: [
+            {
+              title: { tr: 'Stok bölünüyordu', en: 'Stock was split' },
+              text: {
+                tr: 'Aynı ürün için en fazla beş ayrı kart açılmıştı. Depoda duran mal, raporda iki üç parçaya dağılıyordu.',
+                en: 'Up to five separate cards had been opened for the same product. Goods sitting in the warehouse were spread across two or three lines in the reports.',
+              },
+            },
+            {
+              title: { tr: 'Fiyat karşılaştırılamıyordu', en: 'Prices could not be compared' },
+              text: {
+                tr: "Üç tedarikçinin aynı ürüne verdiği fiyat yan yana konamıyor, karşılaştırma elle ve Excel'de yapılıyordu.",
+                en: 'The prices the three suppliers gave for the same product could not be put side by side, so comparisons were made by hand in Excel.',
+              },
+            },
+            {
+              title: { tr: 'Mevcut yöntem kaçırıyordu', en: 'The existing method missed most pairs' },
+              text: {
+                tr: "Ad üzerinden yapılan tam eşleşme, gerçekte aynı olan kayıt çiftlerinin yalnızca yüzde 18'ini buluyordu.",
+                en: 'Exact matching on the name found only 18 percent of the record pairs that were actually the same.',
+              },
+            },
+          ],
+        },
+        {
           type: 'paragraph',
           text: {
             tr: 'Aşağıdaki iki tablo aynı ürün grubunun eşleştirmeden önceki ve sonraki halini gösterir. Satırlar firmanın dosyalarından alınmış bir kesit gibi, olduğu gibi bırakıldı.',
@@ -126,7 +153,43 @@ export const page: StudyPage = {
         tr: 'Aynı ürün artık tek kartta duruyor ve tedarikçi fiyatları yan yana. Hat yeni bir tedarikçi listesini bir günlük tanımla içeri alabiliyor.',
         en: 'The same product now sits on a single card and supplier prices sit side by side. The pipeline can take in a new supplier list with one day of setup.',
       },
-      blocks: [],
+      blocks: [
+        {
+          type: 'list',
+          view: 'stack',
+          title: { tr: 'Bilinen sınırlar', en: 'Known limits' },
+          items: [
+            {
+              title: { tr: 'Set ve kit ürünler kapsam dışında.', en: 'Sets and kits are out of scope.' },
+              text: {
+                tr: 'Birden fazla ürünü bir arada satan kayıtlar, örneğin vida ve dübel seti, tek bir ürünle eşleştirilmiyor. Bu kayıtlar ayrı bir etiketle işaretlenip olduğu gibi bırakılıyor.',
+                en: 'Records that sell several products together, such as a set of screws and wall plugs, are not matched to a single product. They are marked with a separate label and left as they are.',
+              },
+            },
+            {
+              title: { tr: "Tedarikçi C'de duyarlılık daha düşük.", en: 'Recall is lower for Supplier C.' },
+              text: {
+                tr: 'Barkod neredeyse hiç olmadığı için bu kaynakta bulunan eşleşme oranı yüzde 93,8, diğer kaynaklarda yüzde 97,9.',
+                en: 'Because this source has almost no barcodes, the share of matches found is 93.8 percent here and 97.9 percent in the other sources.',
+              },
+            },
+            {
+              title: { tr: 'Alt eşiğin altında kalanlar kayboluyor.', en: 'Pairs below the lower threshold are lost.' },
+              text: {
+                tr: "Gerçek eşleşmelerin yüzde 2,5'i 0,55 altında kalıyor ve kimse görmüyor. Bu pay, rastgele seçilen bir örneklemle her ay yeniden ölçülüyor.",
+                en: 'Of the true matches, 2.5 percent score below 0.55 and nobody ever sees them. This share is measured again every month on a random sample.',
+              },
+            },
+            {
+              title: { tr: 'Model yaşlanır.', en: 'The model ages.' },
+              text: {
+                tr: 'Tedarikçiler yazım alışkanlıklarını değiştirdikçe skorlar kayar. İnceleme kararları yeni etiket olarak birikiyor, altı ayda bir yeniden eğitim ve kalibrasyon öneriyoruz.',
+                en: 'Scores drift as suppliers change the way they write. Review decisions keep piling up as new labels, and we recommend retraining and recalibrating every six months.',
+              },
+            },
+          ],
+        },
+      ],
     },
   ],
 }

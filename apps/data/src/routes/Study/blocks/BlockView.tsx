@@ -13,6 +13,7 @@ import type { ReactElement } from 'react'
 
 import type { Block } from '@/content/studies/blocks'
 
+import { List } from './List'
 import { Paragraph } from './Paragraph'
 
 interface BlockViewProps {
@@ -26,5 +27,7 @@ export function BlockView({ block }: BlockViewProps): ReactElement {
   switch (block.type) {
     case 'paragraph':
       return <Paragraph block={block} />
+    case 'list':
+      return <List block={block} />
   }
 }

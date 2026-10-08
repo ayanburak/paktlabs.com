@@ -18,17 +18,18 @@ import { Toc } from './Toc'
 
 interface BodyProps {
   chapters: ChapterContent[]
+  minutes: number
 }
 
 // Icindekiler okuma ilerlemesini bolumlerin kapsayicisina gore olcer, ref bu
 // yuzden ona veriliyor. Bolumun id'si sayfada tekil oldugu icin anahtar olarak
 // kullaniliyor.
-export function Body({ chapters }: BodyProps) {
+export function Body({ chapters, minutes }: BodyProps) {
   const chaptersRef = useRef<HTMLDivElement>(null)
 
   return (
     <div className={styles.body}>
-      <Toc chapters={chapters} chaptersRef={chaptersRef} />
+      <Toc chapters={chapters} chaptersRef={chaptersRef} minutes={minutes} />
       <div ref={chaptersRef} className={styles.chapters}>
         {chapters.map((chapter, index) => (
           <Chapter key={chapter.id} chapter={chapter} index={index} />
