@@ -1,0 +1,80 @@
+/*
+file: HeroLayout.module.css
+importable: .hero, .copy, .art
+
+Butun PaktLabs sitelerinin hero'larinda ortak olan masaustu yerlesimi. Bugun
+landing ve data kullaniyor, web ve automation siteleri kuruldugunda onlarin
+hero'lari da buradan baslar. Site ortak kurallari kendi sinifina composes ile
+alir:
+
+  .hero { composes: hero from '@paktlabs/brand/styles/HeroLayout.module.css'; }
+
+Cizimin orani her sitede farkli oldugu icin site kendi .art sinifinda
+--art-ratio verir, bu deger olmadan cizim kutusu cozulmez. Yazi stilleri,
+rise siralari, dugme, zemin rengi ve mobil duzen sitede kalir, buraya siteye
+ozel hicbir sey girmez.
+
+description: Sitelerin hero bolumlerinde metni ve cizimi header'in altinda kalan alanin dikey ortasina yerlestiren ortak masaustu yerlesimi.
+*/
+
+/* NOTE: composes ile gelen bu kurallar derlenen CSS'te sitenin kendi
+   kurallarindan once gelir, 2026-10-08'de Vite 8 ile denendi. Site esit
+   onemdeki bir kuralla buradakini ezebilir, mobil duzenler de boyle kurulur.
+   Bu sira bir gun degisirse sitelerin mobil hero'lari sessizce bozulur, ilk
+   bakilacak yer burasi */
+
+/* hero ekrani kaplar ve alt cizgiyle bir sonraki bolumden ayrilir. Header
+   seffaf olarak hero'nun ustunde durur ve kendi yuksekligi kadar yer kaplar,
+   ust bosluk bu pay kadardir. Boylece metin de cizim de header'in altinda
+   kalan alanin ortasina gore hizalanir */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: 32px;
+  padding: var(--header-height) clamp(20px, 4vw, 56px) 0;
+  border-bottom: 2px solid var(--ink);
+  overflow: hidden;
+}
+
+/* metin ilk sutunda kendi genisligini alir ve header'in altindaki alanin
+   dikey ortasinda durur. Satir ve sutun acikca verilir, cunku bazi sitelerde
+   cizim DOM'da metinden once gelir */
+.copy {
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
+  z-index: 2;
+  min-height: calc(100svh - var(--header-height));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* cizim kalan sutuna sigar, dikeyde ortalanir ve zemine oturmadan havada
+   durur. En fazla yuksekligi ve saga ne kadar yaklasacagi tokens.css'te
+   --hero-art-height ve --hero-art-right-share olarak butun siteler icin ortak.
+   Genislik siniri bu yukseklikten oranla hesaplanir, baslik alani daraldiginda
+   cizim oranini bozmadan bundan da kuculur.
+   Sutunda bosta kalan alan, sutun genisligi eksi cizimin en fazla
+   genisligidir, bu alanin --hero-art-right-share kadari cizimin sagina kalir.
+   Cizim sutunu tamamen doldurdugunda bosta alan sifirdir, sag bosluk da sifir
+   kalir ve cizim hicbir ekranda tasmaz */
+.art {
+  --art-width: calc(var(--hero-art-height) * var(--art-ratio));
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  justify-self: end;
+  /* grid ogesinde yuzdelik margin grid alaninin genisligine gore cozulur */
+  margin-right: calc(max(0px, 100% - var(--art-width)) * var(--hero-art-right-share));
+  width: 100%;
+  max-width: var(--art-width);
+  aspect-ratio: var(--art-ratio);
+  z-index: 1;
+}
+.art img {
+  width: 100%;
+  height: 100%;
+}

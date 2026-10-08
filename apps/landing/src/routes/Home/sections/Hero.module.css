@@ -1,65 +1,28 @@
+/* masaustu yerlesimi, yani izgara, header payi, metnin ve cizimin dikey
+   ortalanmasi ve cizimin olcusu, brand'deki HeroLayout.module.css'ten gelir.
+   Burada yalnizca landing'e ozel olanlar durur */
 .hero {
-  position: relative;
-  min-height: 100svh;
-  overflow: hidden;
+  composes: hero from '@paktlabs/brand/styles/HeroLayout.module.css';
   background: var(--paper);
-  display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
-  column-gap: 32px;
-  /* header seffaf olarak hero'nun ustunde durur ve kendi yuksekligi kadar yer
-     kaplar. Bu pay birakildiginda metin de cizim de header'in altinda kalan
-     alanin tam ortasina gore hizalanir */
-  padding: var(--header-height) clamp(20px, 4vw, 56px) 0 0;
-  border-bottom: 2px solid var(--ink);
 }
 
-/* Metin ilk sütunda kendi genişliğini ayırır, görsel kalan alana sığar,
-   dikeyde ortalanır ve zemine sabitlenmez, bölümün alt çizgisinden bağımsız
-   havada durur.
-   Çizimin en fazla yüksekliği ve sağa ne kadar yaklaşacağı bütün sitelerin
-   hero'larında ortak, değerleri brand'deki tokens.css'te --hero-art-height ve
-   --hero-art-right-share olarak durur. Boşta kalan alan sütun genişliği eksi
-   çizimin en fazla genişliğidir. Çizim sütunu tamamen doldurduğunda bu alan
-   sıfırdır, sağ boşluk da sıfır kalır ve çizim hiçbir ekranda taşmaz.
-   Genişlik sınırı bu yükseklikten oranla hesaplanır. Başlık alanı
-   daraldığında görsel oranını bozmadan bundan da küçülür.
-   --art-ratio hero.svg'nin viewBox oranıdır ve hem kutunun oranında hem
-   genişlik sınırında kullanılır. Çizim değişirse yalnızca bu değer
-   güncellenir. */
+/* --art-ratio hero.svg'nin viewBox oranidir, cizim degisirse yalnizca bu
+   deger guncellenir. Cerceve bir picture oldugu icin varsayilan olarak inline
+   gelir, block yapilir. Cizim dekoratif, tiklamalar onu delip gecer */
 .artFrame {
+  composes: art from '@paktlabs/brand/styles/HeroLayout.module.css';
   --art-ratio: 2658.6299 / 1117.7186;
-  --art-width: calc(var(--hero-art-height) * var(--art-ratio));
   display: block;
-  grid-column: 2;
-  grid-row: 1;
-  align-self: center;
-  justify-self: end;
-  /* grid ogesinde yuzdelik margin grid alaninin genisligine gore cozulur */
-  margin-right: calc(max(0px, 100% - var(--art-width)) * var(--hero-art-right-share));
   position: relative;
-  width: 100%;
-  max-width: var(--art-width);
-  aspect-ratio: var(--art-ratio);
-  z-index: 1;
   pointer-events: none;
 }
 .artFrame img {
   display: block;
-  width: 100%;
-  height: 100%;
 }
 
 .inner {
-  grid-column: 1;
-  grid-row: 1;
-  position: relative;
-  z-index: 2;
+  composes: copy from '@paktlabs/brand/styles/HeroLayout.module.css';
   width: max-content;
-  min-height: calc(100svh - var(--header-height));
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 0 0 clamp(20px, 4vw, 56px);
 }
 
 .slogan {

@@ -1,30 +1,13 @@
-/* veri sayfasinin hero'su. Iskelet landing'in hero'suyla ayni: ekrani
-   kaplar, header seffaf olarak ustte durur, alt cizgi bolumu bir sonrakinden
-   ayirir. Metin kendi genisligini alir, cizim kalan alana sigar ve zemine
-   oturmadan havada durur. Metin de cizim de landing'deki gibi header'in
-   altinda kalan alanin dikey ortasina hizalanir, iki sitenin hero dugmeleri
-   ayni kurala gore yerlesir. Metinler landing'deki gibi global.css'teki rise
-   sinifiyla sirayla yukselir, burada yalnizca siralari verilir */
+/* veri sayfasinin hero'su. Masaustu yerlesimi landing'le ortak ve brand'deki
+   HeroLayout.module.css'ten gelir, burada yalnizca bu sayfaya ozel olanlar
+   durur. Metinler landing'deki gibi global.css'teki rise sinifiyla sirayla
+   yukselir, burada yalnizca siralari verilir */
 .hero {
-  position: relative;
-  min-height: 100svh;
-  display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
-  column-gap: 32px;
-  /* header seffaf olarak hero'nun ustunde durur ve kendi yuksekligi kadar yer
-     kaplar, ortalama bu payin altinda kalan alana gore yapilir */
-  padding: var(--header-height) clamp(20px, 4vw, 56px) 0;
-  border-bottom: 2px solid var(--ink);
-  overflow: hidden;
+  composes: hero from '@paktlabs/brand/styles/HeroLayout.module.css';
 }
 
 .copy {
-  position: relative;
-  z-index: 2;
-  min-height: calc(100svh - var(--header-height));
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  composes: copy from '@paktlabs/brand/styles/HeroLayout.module.css';
 }
 
 .title {
@@ -81,31 +64,11 @@
   margin-top: 30px;
 }
 
-/* figur dikeyde ortada, biraz saga kaydirilmis ve havada durur. Kutunun orani
-   mockup'taki 922/1333, cizimin kendi oranindan genis. SVG kutunun icinde
-   ortalanir, boylece figur mockup'taki yerine birebir oturur */
-/* cizim landing'in hero cizimiyle ayni his ve olcuyle durur: kendi sutununda
-   dikeyde ortalanir, sutunda bosta kalan alanin bir kismi soluna kalir ve
-   biraz saga yaklasir. En fazla yuksekligi ve saga yaklasma orani brand'deki
-   tokens.css'te iki site icin ortak tutulur. --art-ratio hero.svg'nin viewBox
-   oranidir, cizim degisirse yalnizca bu deger guncellenir. Cizim sutunu
-   tamamen doldurdugunda bosta alan sifirdir, sag bosluk da sifir kalir */
+/* --art-ratio hero.svg'nin viewBox oranidir, cizim degisirse yalnizca bu
+   deger guncellenir */
 .art {
+  composes: art from '@paktlabs/brand/styles/HeroLayout.module.css';
   --art-ratio: 2972.0993 / 1239.5531;
-  --art-width: calc(var(--hero-art-height) * var(--art-ratio));
-  grid-column: 2;
-  align-self: center;
-  justify-self: end;
-  /* grid ogesinde yuzdelik margin grid alaninin genisligine gore cozulur */
-  margin-right: calc(max(0px, 100% - var(--art-width)) * var(--hero-art-right-share));
-  width: 100%;
-  max-width: var(--art-width);
-  aspect-ratio: var(--art-ratio);
-  z-index: 1;
-}
-.art img {
-  width: 100%;
-  height: 100%;
 }
 
 /* mobilde header akista durur, metin ustte, cizim altta icerik genisliginin
