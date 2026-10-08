@@ -118,7 +118,7 @@ Başlıklarda Space Grotesk, gövde metninde Atkinson Hyperlegible, küçük eti
 
 ### Biçim
 
-İçerik genişliği landing'in `--maxw` değeridir, mockup'lardaki 1180 piksel kullanılmaz. Kenar boşlukları da landing'deki `clamp(20px, 4vw, 56px)` değeridir. Bölümler iki piksellik mürekkep çizgilerle ayrılır. Köşeler düzdür. Kartlar iki ayrı kutudan oluşur: üstte başlık kutusu, aralarında altı piksellik bir boşluk, altta içerik kutusu. Bağlantı olan kartlar hover'da üç piksel kalkar ve altına sert bir gölge düşer. Altın renk vurgu içindir, zemin olarak yalnızca veri sayfasındaki çalışma bandında kullanılır.
+İçerik genişliği landing'in `--maxw` değeridir, mockup'lardaki 1180 piksel kullanılmaz. Kenar boşlukları da landing'le aynıdır ve brand'in `--gutter` değişkeninden gelir. Bölümler iki piksellik mürekkep çizgilerle ayrılır. Köşeler düzdür. Kartlar iki ayrı kutudan oluşur: üstte başlık kutusu, aralarında altı piksellik bir boşluk, altta içerik kutusu. Bağlantı olan kartlar hover'da üç piksel kalkar ve altına sert bir gölge düşer. Altın renk vurgu içindir, zemin olarak yalnızca veri sayfasındaki çalışma bandında kullanılır.
 
 Bu öğeler bir sayfada her bloğa uygulanırsa sayfa marka öğeleriyle dolar ve içerik geri planda kalır. Kutu, mono etiket ve sert gölge vurgu olarak az kullanılır, gövde metni çoğunlukla kâğıt zemin üzerinde düz akar.
 

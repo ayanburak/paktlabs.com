@@ -40,6 +40,10 @@ description: PaktLabs sitelerinin paylastigi renk, bosluk ve golge degiskenlerin
   --maxw: 1040px;
   --measure: 780px;
 
+  /* sayfanin sag ve sol kenar boslugu. Bolumlerin ic boslugu, header ve kenara
+     hizalanan figurler hep bunu kullanir, bosluk degisirse hepsi birlikte kayar */
+  --gutter: clamp(20px, 4vw, 56px);
+
   /* ust barin yuksekligi. Bar hero'larin ustunde seffaf durdugu icin hero'lar
      ve tam ekran bolumler bu kadar payi kendileri birakir, mobilde de akista
      bu kadar yer kaplar. Bar degisirse hepsi buradan birlikte kayar */

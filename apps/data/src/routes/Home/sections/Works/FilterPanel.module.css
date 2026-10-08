@@ -20,7 +20,7 @@
   grid-template-columns: repeat(6, 1fr);
   gap: 12px;
   margin: 0;
-  padding: 20px clamp(20px, 4vw, 56px) 28px;
+  padding: 20px var(--gutter) 28px;
   list-style: none;
   border-bottom: 2px solid var(--ink);
 }

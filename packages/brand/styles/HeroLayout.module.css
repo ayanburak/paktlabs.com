@@ -33,7 +33,7 @@ description: Sitelerin hero bolumlerinde metni ve cizimi header'in altinda kalan
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
   column-gap: 32px;
-  padding: var(--header-height) clamp(20px, 4vw, 56px) 0;
+  padding: var(--header-height) var(--gutter) 0;
   border-bottom: 2px solid var(--ink);
   overflow: hidden;
 }

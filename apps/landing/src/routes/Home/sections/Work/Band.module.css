@@ -2,7 +2,7 @@
    yikama, --tone her band'e kendi rengini (props uzerinden inline style ile) verir */
 .band {
   position: relative;
-  padding: clamp(60px, 7vw, 104px) clamp(20px, 4vw, 56px);
+  padding: clamp(60px, 7vw, 104px) var(--gutter);
   background: color-mix(in srgb, var(--tone) 6%, var(--paper));
 }
 .band + .band {
@@ -117,10 +117,10 @@
   z-index: 1;
 }
 .artLeft {
-  left: clamp(20px, 4vw, 56px);
+  left: var(--gutter);
 }
 .artRight {
-  right: clamp(20px, 4vw, 56px);
+  right: var(--gutter);
 }
 
 /* Web figuru digerlerinden daha uzun. Dar masaustu ve tablette metnin

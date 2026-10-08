@@ -12,7 +12,7 @@
 }
 
 .head {
-  padding: 0 clamp(20px, 4vw, 56px) clamp(28px, 3.5vw, 44px);
+  padding: 0 var(--gutter) clamp(28px, 3.5vw, 44px);
   border-bottom: 2px solid var(--ink);
 }
 .head :global(.eyebrow) {

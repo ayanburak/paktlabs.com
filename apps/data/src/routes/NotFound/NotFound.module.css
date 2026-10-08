@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 128px clamp(20px, 4vw, 56px) clamp(48px, 9vh, 110px);
+  padding: 128px var(--gutter) clamp(48px, 9vh, 110px);
 }
 
 .notFound h1 {

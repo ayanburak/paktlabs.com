@@ -5,7 +5,7 @@
   background: var(--gold);
   border-top: 2px solid var(--ink);
   border-bottom: 2px solid var(--ink);
-  padding: clamp(56px, 8vw, 104px) clamp(20px, 4vw, 56px);
+  padding: clamp(56px, 8vw, 104px) var(--gutter);
 }
 
 .wrap {

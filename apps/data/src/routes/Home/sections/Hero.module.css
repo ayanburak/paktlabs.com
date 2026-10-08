@@ -77,7 +77,7 @@
   .hero {
     display: block;
     min-height: 0;
-    padding: 0 clamp(20px, 4vw, 56px);
+    padding: 0 var(--gutter);
   }
   .copy {
     min-height: 0;
