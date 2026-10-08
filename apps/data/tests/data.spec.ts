@@ -5,7 +5,7 @@ Calismalarin veri dosyalarini denetler. Her calismanin data/tr ve data/en
 klasorlerinde ayni kimlikli CSV'ler bulunmali, ayni kimlikli iki dosya ayni
 sayida satir ve her satirda ayni sayida hucre tasimali, yoksa okur veri
 dilini degistirdiginde tablo kayar. Detay sayfasindaki her hesap tablosunun
-cagirdigi CSV de iki dilde var olmali. Tarayiciya ihtiyac yok, dosyalar
+cagirdigi CSV de iki dilde var olmali, bolum adresleri de tekil olmali. Tarayiciya ihtiyac yok, dosyalar
 diskten okunur.
 
 description: data sitesindeki calisma CSV'lerinin iki dilde eslestigini denetleyen testler.
@@ -66,6 +66,14 @@ for (const study of realStudies) {
       const en = readCsv(slug, 'en', id).map((row) => row.length)
       expect(en, `${id}.csv`).toEqual(tr)
     }
+  })
+
+  // Icindekiler bolume adresteki parcayla atlar, ayni parcayi tasiyan iki
+  // bolum olursa yanlis bolume gidilir. 00 veri dili bolumunun adresi de
+  // bir icerik bolumuyle cakismamali.
+  test(`${slug}: chapter addresses are unique`, () => {
+    const ids = ['veri-dili', ...study.page.chapters.map((chapter) => chapter.id)]
+    expect(new Set(ids).size).toBe(ids.length)
   })
 
   test(`${slug}: every sheet points to a data file`, () => {

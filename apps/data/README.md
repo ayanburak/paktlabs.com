@@ -180,7 +180,7 @@ npx playwright install chromium   # yalnızca ilk kurulumda
 npm test
 ```
 
-Testler landing'deki gibi üretim derlemesine karşı çalışır. Üst bar ve alt bilginin data'ya doğru bağlandığını, sayfa başlıklarını iki dilde, rotaları ve bulunamadı davranışını kontrol eder.
+Testler landing'deki gibi üretim derlemesine karşı çalışır. Üst bar ve alt bilginin data'ya doğru bağlandığını, sayfa başlıklarını iki dilde, rotaları ve bulunamadı davranışını, veri sayfasındaki hero'nun yerleşimini kontrol eder. `study.spec.ts` detay sayfasının davranışını Demo Veri üzerinden denetler: bölümlerin ve içindekilerin sırası, veri dili bölümünün yalnızca diller farklıyken çıkması, seçicinin tabloları orijinal dile çevirmesi ve site dili değişince geri dönmesi, açılır kutular, içindekilerden bölüme geçiş, Meraklısına kartının, yazar kutusunun ve kapanış kartlarının adresleri, eşiklerin iki yanında yatay taşma. `data.spec.ts` tarayıcı açmadan iki dilin CSV'lerini, hesap tablolarının çağırdığı dosyaları ve bölüm adreslerinin tekilliğini denetler. Görsel karşılaştırma testleri henüz yoktur.
 
 ### İletişim formu
 
