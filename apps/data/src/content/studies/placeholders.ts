@@ -14,11 +14,13 @@ description: Veri sayfasindaki listede gorunen lorem ipsum yer tutucu calismalar
 // Bu dosya tamamen bosaldiginda silinmeli, index.ts'teki import'u da onunla
 // birlikte kalkar.
 
+import type { Language } from '@paktlabs/brand/i18n/language'
+
 import type { KunyeRow, Study, StudyCard, StudyTag, StudyText } from './types'
 
 // Iki dile ayni metni koyan kucuk yardimci. Yer tutucunun detay sayfasi
 // olmadigi icin lede ve kunye hic gorunmez, tip istedigi icin dolu duruyor.
-function lorem(title: string, card: StudyCard): Record<'tr' | 'en', StudyText> {
+function lorem(title: string, card: StudyCard): Record<Language, StudyText> {
   const text: StudyText = { title, lede: card.lead, kunye: [], card }
   return { tr: text, en: text }
 }
