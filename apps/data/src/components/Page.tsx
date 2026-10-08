@@ -17,11 +17,8 @@ import type { ReactNode } from 'react'
 
 import { Footer } from '@paktlabs/brand/components/Footer'
 import { Header } from '@paktlabs/brand/components/Header'
+import { mainSiteUrl } from '@paktlabs/brand/content/site'
 import { useDocumentMeta } from '@paktlabs/brand/i18n/useDocumentMeta'
-
-// Ana sitenin adresi logo ve alt bilgideki donus baglantisinda ayni kalmali,
-// bu yuzden yalnizca burada yaziliyor.
-const mainSiteUrl = 'https://paktlabs.com'
 
 interface PageProps {
   title: string

@@ -10,7 +10,7 @@ Bu paket PaktLabs'ın bütün vitrin sitelerinin ortak katmanıdır. Landing ve 
 
 `i18n/` altında dil katmanı durur. `LanguageProvider` aktif dili tutar ve `pl_lang` anahtarıyla saklar. `useDocumentMeta` sayfanın başlığını ve açıklamasını günceller, bu iş provider'da değil sayfada yapılır çünkü bir sitenin her rotası kendi başlığını taşır. `createDictHook` bir sitenin iki sözlüğünden `useDict` hook'unu üretir ve en sözlüğünde eksik kalan bir anahtarı derleme hatasına çevirir. `useBrandDict` menü, alt bilgi ve erişilebilirlik etiketleri gibi bütün sitelerde aynı kalan metinleri döndürür.
 
-`hooks/useReveal.ts`, `lib/cx.ts`, `content/disciplines.ts`, `content/contact.ts` ve `assets/logo.svg` küçük ortak parçalardır. Disiplin adresleri yalnızca `disciplines.ts` içinde, iletişim adresi yalnızca `contact.ts` içinde tutulur. Bir adres değiştiğinde bütün siteler aynı anda doğru yere gider.
+`hooks/useReveal.ts`, `lib/cx.ts`, `content/disciplines.ts`, `content/contact.ts`, `content/site.ts` ve `assets/logo.svg` küçük ortak parçalardır. Disiplin adresleri yalnızca `disciplines.ts` içinde, iletişim adresi yalnızca `contact.ts` içinde, disiplin sitelerinin logoda ve alt bilgide döndüğü ana site adresi yalnızca `site.ts` içinde tutulur. Bir adres değiştiğinde bütün siteler aynı anda doğru yere gider.
 
 ## Kullanım
 
