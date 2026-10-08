@@ -136,14 +136,5 @@
         "go": "View →"
       }
     }
-  },
-  "notFound": {
-    "meta": {
-      "title": "Page not found · PaktLabs",
-      "description": "There is no page at this address."
-    },
-    "title": "There is no page at this address",
-    "lead": "The link may be out of date, or the work may have been removed.",
-    "back": "Back to the work"
   }
 }

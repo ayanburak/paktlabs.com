@@ -23,9 +23,26 @@ for (const lang of languages) {
 
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(dict[lang].notFound.title)
     await expect(page).toHaveTitle(dict[lang].notFound.meta.title)
-    await expect(page.getByRole('link', { name: dict[lang].notFound.back })).toHaveAttribute('href', '/#calismalar')
+    await expect(page.getByRole('link', { name: dict[lang].notFound.back })).toHaveAttribute('href', '/')
   })
 }
+
+// Geri don dugmesi sitenin icinden gelen ziyaretciyi geldigi sayfaya,
+// adresi dogrudan acan ziyaretciyi ana sayfaya goturur.
+test('back button returns to the previous page of the site', async ({ page }) => {
+  await openPage(page, '/work/demo-veri', 'tr')
+  await page.goto('/boyle-bir-sayfa-yok', { waitUntil: 'networkidle' })
+  await page.getByRole('link', { name: dict.tr.notFound.back }).click()
+
+  await expect(page).toHaveURL('/work/demo-veri')
+})
+
+test('back button opens the home page when the address was opened directly', async ({ page }) => {
+  await openPage(page, '/boyle-bir-sayfa-yok', 'tr')
+  await page.getByRole('link', { name: dict.tr.notFound.back }).click()
+
+  await expect(page).toHaveURL('/')
+})
 
 for (const lang of languages) {
   test(`${lang}: study address opens the study`, async ({ page }) => {

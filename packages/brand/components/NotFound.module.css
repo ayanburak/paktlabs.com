@@ -1,0 +1,68 @@
+/* masaustu yerlesimi hero'larinki, bilesen HeroLayout'un siniflarini bu
+   dosyanin siniflariyla birlikte verir. Hero'dan farki alt cizginin olmamasi,
+   cunku hemen altinda alt bilgi geliyor ve onun kendi ust cizgisi var, ikisi
+   ust uste binince iki kat kalin bir cizgi cikiyordu */
+.notFound {
+  border-bottom: 0;
+}
+
+.code {
+  --rise-delay: 0s;
+}
+
+/* metin sutunu max-content oldugu icin baslik kendiliginden hic kirilmaz ve
+   cizimin yerini yer. Genislik siniri onu iki satira indirir, balance da iki
+   satiri dengeler. balance desteklemeyen tarayici bunu yok sayar */
+.title {
+  --rise-delay: 0.12s;
+  max-width: 11ch;
+  margin-top: 18px;
+  text-wrap: balance;
+  font-size: clamp(40px, 6vw, 88px);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+
+.lead {
+  --rise-delay: 0.24s;
+  margin: 26px 0 0;
+  max-width: 40ch;
+  font-size: clamp(15px, 1.3vw, 17px);
+  line-height: 1.62;
+  color: var(--muted);
+}
+
+/* dugme hero'lardaki gibi yukselmez, yalnizca belirir. Dikey flex icinde
+   sutun boyunca uzamasin diye sola yaslanir */
+.back {
+  --rise-delay: 0.36s;
+  --rise-offset: 0px;
+  align-self: flex-start;
+  margin-top: 34px;
+}
+
+/* --art-ratio barrier.svg'nin viewBox oranidir, cizim degisirse yalnizca bu
+   deger guncellenir */
+.art {
+  --art-ratio: 1134.8297 / 1198.7447;
+}
+
+/* mobilde header akista durur, metin ustte, cizim altta. Cizim neredeyse kare
+   oldugu icin icerik genisligini tamamen kaplarsa telefonda ekrandan uzun
+   olur, bu yuzden bir genislik siniri var ve sola yaslanir, metinle ayni
+   kenardan baslasin diye */
+@media (max-width: 768px) {
+  .notFound {
+    display: block;
+    min-height: calc(100svh - var(--header-height));
+    padding: 0 var(--gutter);
+  }
+  .copy {
+    min-height: 0;
+    padding: 56px 0 36px;
+  }
+  .art {
+    max-width: 360px;
+    margin: 0 0 48px;
+  }
+}

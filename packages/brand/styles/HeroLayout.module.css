@@ -3,7 +3,8 @@ file: HeroLayout.module.css
 importable: .hero, .copy, .art
 
 Butun PaktLabs sitelerinin hero'larinda ortak olan masaustu yerlesimi. Bugun
-landing ve data'nin hero'lari kullaniyor, web ve automation siteleri kuruldugunda onlarin hero'lari da buradan baslar. Bilesen
+landing ve data'nin hero'lari ile ortak bulunamadi sayfasi kullaniyor, web ve
+automation siteleri kuruldugunda onlarin hero'lari da buradan baslar. Bilesen
 bu dosyayi kendi stil dosyasindan once import eder ve iki sinifi birlikte
 verir:
 

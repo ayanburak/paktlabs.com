@@ -14,5 +14,14 @@
   },
   "footer": {
     "copy": "© 2026 PaktLabs"
+  },
+  "notFound": {
+    "meta": {
+      "title": "Page not found · PaktLabs",
+      "description": "There is no page at this address."
+    },
+    "title": "This road is closed for now",
+    "lead": "The address may be mistyped, the page may have moved, or it may not be ready yet.",
+    "back": "Go back"
   }
 }

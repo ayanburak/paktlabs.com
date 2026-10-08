@@ -35,6 +35,8 @@ npx playwright show-trace test-results/<test-klasörü>/trace.zip
 
 `visual.spec.ts` onaylı görünümün Türkçe ve İngilizce, 390×844, 1024×1366, 1366×1024 ve 1920×1080 ölçülerinde tam sayfa görüntüsünü referansla karşılaştırır. Referanslar `visual.spec.ts-snapshots/` altında commit'lenir.
 
+`notFound.spec.ts` bulunamadı sayfasının iki dilde ortak metinleri gösterdiğini, `404.html`'in JS çalışmadan önce de Türkçe başlık taşıdığını, geri dön düğmesinin siteden gelen ziyaretçiyi önceki sayfaya, adresi doğrudan açanı ana sayfaya götürdüğünü ve eşiklerin iki yanında yatay taşma olmadığını kontrol eder. Sayfa `/404.html` adresinden açılır, çünkü `vite preview` bilinmeyen bir adreste bu dosyayı döndürmez. Canlıda nginx'in bu dosyayı 404 koduyla döndürdüğü yayından sonra ayrıca denetlenir. Chromium Navigation API'yi desteklediği için düğmenin bu API olmayan tarayıcılardaki yedek yolu test edilmez.
+
 `support.ts` sayfayı istenen dil tercihiyle açan ve fontlarla görsellerin yüklenmesini bekleyen ortak yardımcıları taşır.
 
 ## Koşullar ve toleranslar

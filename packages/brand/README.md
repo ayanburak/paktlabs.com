@@ -6,11 +6,11 @@ Bu paket PaktLabs'ın bütün vitrin sitelerinin ortak katmanıdır. Landing ve 
 
 `styles/` altında üç dosya durur. `tokens.css` renk, boşluk, font ve ölçü değişkenlerini, `global.css` reset'i, tipografiyi ve `.wrap`, `.eyebrow`, `.cta`, `.reveal`, `.rise` gibi paylaşılan sınıfları taşır. `HeroLayout.module.css` sitelerin hero'larında ortak olan masaüstü yerleşimidir. Global değildir, bir bileşen onu import edip sınıflarını verdiğinde devreye girer. Bir site renk ya da font sabitini kendi stillerinde tekrar yazmaz, her zaman bu değişkenleri kullanır.
 
-`components/` altında `Header`, `Footer` ve `RevealImg` bileşenleri durur. Header bulunulan disiplini `current` ile, logonun gideceği adresi `homeHref` ile alır. Footer'a `homeHref` verildiğinde ana siteye dönen bir bağlantı eklenir. Landing ikisine de prop vermez.
+`components/` altında `Header`, `Footer`, `NotFound` ve `RevealImg` bileşenleri durur. Header bulunulan disiplini `current` ile, logonun gideceği adresi `homeHref` ile alır. Footer'a `homeHref` verildiğinde ana siteye dönen bir bağlantı eklenir. Landing ikisine de prop vermez.
 
 `i18n/` altında dil katmanı durur. `LanguageProvider` aktif dili tutar ve `pl_lang` anahtarıyla saklar. `useDocumentMeta` sayfanın başlığını ve açıklamasını günceller, bu iş provider'da değil sayfada yapılır çünkü bir sitenin her rotası kendi başlığını taşır. `createDictHook` bir sitenin iki sözlüğünden `useDict` hook'unu üretir ve en sözlüğünde eksik kalan bir anahtarı derleme hatasına çevirir. `useBrandDict` menü, alt bilgi ve erişilebilirlik etiketleri gibi bütün sitelerde aynı kalan metinleri döndürür.
 
-`hooks/useReveal.ts`, `lib/cx.ts`, `content/disciplines.ts`, `content/contact.ts`, `content/site.ts`, `assets/logo.svg` küçük ortak parçalardır. Disiplin adresleri yalnızca `disciplines.ts` içinde, iletişim adresi yalnızca `contact.ts` içinde, disiplin sitelerinin logoda ve alt bilgide döndüğü ana site adresi yalnızca `site.ts` içinde tutulur. Bir adres değiştiğinde bütün siteler aynı anda doğru yere gider.
+`hooks/useReveal.ts`, `lib/cx.ts`, `content/disciplines.ts`, `content/contact.ts`, `content/site.ts`, `assets/logo.svg` ve bulunamadı sayfasının çizimi `assets/barrier.svg` küçük ortak parçalardır. Disiplin adresleri yalnızca `disciplines.ts` içinde, iletişim adresi yalnızca `contact.ts` içinde, disiplin sitelerinin logoda ve alt bilgide döndüğü ana site adresi yalnızca `site.ts` içinde tutulur. Bir adres değiştiğinde bütün siteler aynı anda doğru yere gider.
 
 ## Kullanım
 
@@ -69,7 +69,13 @@ Sitenin `.art` sınıfı çiziminin oranını verir:
 
 Yerleşimin ölçüleri `tokens.css` içindeki üç değişkenden gelir. `--header-height` üst barın yüksekliğidir. Hero'nun üst boşluğu ve dikey ortalaması bu değerden hesaplanır, bar değişirse hero'lar da onunla birlikte kayar. `--hero-art-height` çizimin en fazla yüksekliğidir. `--hero-art-right-share` ise sütunda boşta kalan alanın ne kadarının çizimin sağında kalacağını belirler: 0.5 tam ortalamadır, daha küçük bir değer çizimi sağa yaklaştırır. Site yalnızca kendi çiziminin oranını `--art-ratio` ile verir, bu değer olmadan çizim kutusunun boyutu hesaplanamaz. Yazı stilleri, giriş sıraları, düğme, zemin rengi ve mobil düzen sitede kalır, çünkü her sitenin mobil kompozisyonu farklıdır.
 
-Ortak kurallar derlenen CSS'te sitenin kendi kurallarından önce gelir, çünkü bileşen ortak dosyayı kendi stil dosyasından önce import eder. Bu yüzden site, eşit önemdeki bir kuralla ortak kuralı ezebilir. Mobil düzenler de böyle kurulur. CSS modüllerinin `composes` özelliği bu yüzden kullanılmaz: `composes` ortak kuralları onları kullanan her stil dosyasının içine ayrıca kopyalar. Bir sitede ikinci bir kullanıcı olduğunda ikinci kopya ilk kullanıcının mobil kurallarından sonra gelir ve onları sessizce ezer. Import ile ortak dosya derlemeye bir kez girer. Bu dosyada yapılan bir değişiklikten sonra landing'in testlerine ek olarak data'nın yerleşim testleri de çalıştırılır.
+Ortak kurallar derlenen CSS'te sitenin kendi kurallarından önce gelir, çünkü bileşen ortak dosyayı kendi stil dosyasından önce import eder. Bu yüzden site, eşit önemdeki bir kuralla ortak kuralı ezebilir. Mobil düzenler de böyle kurulur. CSS modüllerinin `composes` özelliği bu yüzden kullanılmaz: `composes` ortak kuralları onları kullanan her stil dosyasının içine ayrıca kopyalar. Bir sitede ikinci bir kullanıcı olduğunda, örneğin hero ile bulunamadı sayfası, ikinci kopya ilk kullanıcının mobil kurallarından sonra gelir ve onları sessizce ezer. Import ile ortak dosya derlemeye bir kez girer. Bu dosyada yapılan bir değişiklikten sonra landing'in testlerine ek olarak data'nın yerleşim testleri de çalıştırılır.
+
+### Bulunamadı sayfası
+
+Bütün sitelerin bulunamadı sayfası `components/NotFound.tsx`'tir. Metni solda, bariyere yaslanmış bir karakter çizimini sağda gösterir ve masaüstünde hero'ların yerleşimini kullanır. Ziyaretçi hangi sitede yanlış bir adrese düşerse düşsün aynı sayfayı görür, sunucunun kendi hata sayfasını görmez. Bileşen yalnızca sayfanın içeriğini çizer, üst bar, alt bilgi ve sekme başlığı sitenin kendi sayfa çerçevesinden gelir. Metinleri ortak sözlükte `notFound` altında durur.
+
+Geri dön düğmesi ziyaretçiyi aynı sitede geldiği sayfaya götürür. Ziyaretçi adrese başka bir siteden ya da adres çubuğuna yazarak geldiyse sitenin ana sayfasına gider, böylece düğme ziyaretçiyi hiçbir zaman PaktLabs'ın dışına çıkarmaz. Önceki sayfanın aynı siteden olup olmadığı tarayıcının Navigation API'siyle, bu API'yi desteklemeyen tarayıcılarda ise önceki sayfanın adresiyle anlaşılır.
 
 ## Değişiklik yaparken
 

@@ -14,5 +14,14 @@
   },
   "footer": {
     "copy": "© 2026 PaktLabs"
+  },
+  "notFound": {
+    "meta": {
+      "title": "Sayfa bulunamadı · PaktLabs",
+      "description": "Bu adreste bir sayfa yok."
+    },
+    "title": "Bu yol şimdilik kapalı",
+    "lead": "Adres yanlış yazılmış, sayfa taşınmış ya da henüz hazır olmayabilir.",
+    "back": "Geri dön"
   }
 }

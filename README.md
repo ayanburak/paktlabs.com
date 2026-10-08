@@ -16,7 +16,7 @@ Landing alan bağımsızdır. Disiplin bağlantıları ayrı subdomain'lere gide
 
 Bu adresler `packages/brand/content/disciplines.ts` içinde tek yerde tutulur. Landing'in üst menüsü, mobil menüsü, disiplin kartları, iş kapsamı bantları ve alt menüsü ile disiplin sitelerinin üst barı aynı kaynağı kullanır. Adres değiştiğinde yalnızca bu dosya güncellenir. Subdomain'lerin DNS ve sertifika kurulumu bu reponun işi değildir, sunucu tarafında belgelenir. `web` ve `automation` subdomain'lerinin henüz sitesi ve DNS kaydı yoktur.
 
-Landing içinde `/web`, `/automation` veya `/data` gibi alt sayfalar tanımlanmaz. Uygulamada tek bir rota vardır. İletişim formu bir backend'e bağlı değildir, gönder düğmesi bilinçli olarak işlem yapmaz. Doğrudan iletişim için sayfadaki e-posta bağlantısı kullanılır.
+Landing içinde `/web`, `/automation` veya `/data` gibi alt sayfalar tanımlanmaz. Uygulamada tek bir rota vardır. Bunun dışında kalan her adreste sunucu, derlemenin ayrı bir girişi olan `404.html` dosyasını gerçek 404 koduyla döndürür. Bu dosya brand paketindeki ortak bulunamadı sayfasını landing'in üst barı ve alt bilgisiyle gösterir, böylece ziyaretçi sunucunun kendi hata sayfasını görmez. Derleme iki giriş taşıdığı halde CSS tek dosya olarak üretilir, çünkü Vite ortak stilleri ayrı bir parçaya ayırdığında global stiller bileşen stillerinden önce yüklenir ve brand'in istediği sıra bozulur. İletişim formu bir backend'e bağlı değildir, gönder düğmesi bilinçli olarak işlem yapmaz. Doğrudan iletişim için sayfadaki e-posta bağlantısı kullanılır.
 
 ## Dil
 
