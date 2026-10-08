@@ -1,8 +1,8 @@
 /*
 file: format.ts
-importable: formatValue
+importable: formatValue, sequenceNumber
 
-description: Sekil ve tablolardaki sayilari sitenin diline gore yazan yardimci.
+description: Sekil ve tablolardaki sayilari ve sira numaralarini yazan yardimcilar.
 */
 
 import type { Language } from '@paktlabs/brand/i18n/language'
@@ -18,4 +18,11 @@ export function formatValue(value: number, unit: 'percent' | 'count', decimals: 
   }).format(value)
   if (unit === 'count') return number
   return language === 'tr' ? `%${number}` : `${number}%`
+}
+
+// Bolumler, icindekiler ve kararlar ayni iki haneli numarayi gosterir, bicim
+// burada tek yerde durur ki birbirinden ayrismasinlar. Sira sifirdan baslar,
+// numara birden: ilk oge 01.
+export function sequenceNumber(index: number): string {
+  return String(index + 1).padStart(2, '0')
 }

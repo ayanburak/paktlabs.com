@@ -17,11 +17,11 @@ import { useLanguage } from '@paktlabs/brand/i18n/language'
 import type { Chapter as ChapterContent } from '@/content/studies/types'
 import { useDict } from '@/i18n'
 import { BlockView } from '@/routes/Study/blocks/BlockView'
+import { sequenceNumber } from '@/routes/Study/blocks/format'
 import { useStudyData } from '@/routes/Study/studyData'
 
 import styles from './Body.module.css'
 import { Chapter } from './Chapter'
-import { chapterNumber } from './chapterNumber'
 import { DATA_LANGUAGE_ID, DataLanguage } from './DataLanguage'
 import { Toc, type TocEntry } from './Toc'
 
@@ -44,7 +44,7 @@ export function Body({ chapters, minutes }: BodyProps) {
   const entries = useMemo<TocEntry[]>(() => {
     const list = chapters.map((chapter, index) => ({
       id: chapter.id,
-      number: chapterNumber(index),
+      number: sequenceNumber(index),
       label: chapter.label[language],
     }))
     return showDataLanguage
@@ -61,7 +61,7 @@ export function Body({ chapters, minutes }: BodyProps) {
           <Chapter
             key={chapter.id}
             id={chapter.id}
-            number={chapterNumber(index)}
+            number={sequenceNumber(index)}
             label={chapter.label[language]}
             title={chapter.title[language]}
             lede={chapter.lede[language]}

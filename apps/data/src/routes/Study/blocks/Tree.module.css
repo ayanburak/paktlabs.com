@@ -1,0 +1,18 @@
+/* agac koyu zeminde, kod bloklariyla ayni ailede */
+.tree {
+  margin: 0;
+  padding: 18px 20px;
+  overflow-x: auto;
+  font: 400 13px/1.8 var(--font-mono);
+  white-space: pre;
+  color: var(--on-ink);
+  background: var(--ink);
+  border: 2px solid var(--ink);
+}
+.root {
+  font-weight: 700;
+  color: var(--gold);
+}
+.note {
+  color: #9a9ca3;
+}

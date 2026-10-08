@@ -93,6 +93,17 @@
     },
     "stations": {
       "more": "Details"
+    },
+    "decisions": {
+      "label": "Decision"
+    },
+    "timeline": {
+      "task": "Task",
+      "label": "Work schedule"
+    },
+    "compare": {
+      "before": "Before",
+      "after": "After"
     }
   },
   "notFound": {

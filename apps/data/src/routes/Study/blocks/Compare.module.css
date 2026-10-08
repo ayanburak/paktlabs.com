@@ -1,0 +1,66 @@
+.compare {
+  display: grid;
+  grid-template-columns: minmax(140px, 0.9fr) 1fr 1fr;
+  border: 2px solid var(--ink);
+}
+.compare > * {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.compare > :nth-last-child(-n + 3) {
+  border-bottom: 0;
+}
+
+.head {
+  font: 700 11px/1 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+  background: var(--paper);
+  border-bottom: 2px solid var(--ink);
+}
+.afterHead {
+  color: var(--gold);
+  background: var(--ink);
+}
+.label {
+  font: 600 14.5px/1.35 var(--font-display);
+}
+.before {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--muted);
+  border-left: 1px solid var(--line);
+}
+.after {
+  font-size: 14.5px;
+  line-height: 1.5;
+  background: var(--surface);
+  border-left: 2px solid var(--ink);
+}
+.after strong {
+  font-family: var(--font-display);
+}
+
+/* dar ekranda satir adi ustte tam genislikte, iki hal altinda yan yana */
+@media (max-width: 768px) {
+  .compare {
+    grid-template-columns: 1fr 1fr;
+  }
+  .compare > .head:first-child {
+    display: none;
+  }
+  .label {
+    grid-column: 1 / -1;
+    background: var(--panel);
+  }
+  .before {
+    border-left: 0;
+  }
+  .compare > :nth-last-child(-n + 3) {
+    border-bottom: 1px solid var(--line);
+  }
+  .compare > :nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+}

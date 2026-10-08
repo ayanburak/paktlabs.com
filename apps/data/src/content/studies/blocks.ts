@@ -1,6 +1,6 @@
 /*
 file: blocks.ts
-importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock, TableBlock, TableCell, StationsBlock, Station, ChartBlock, ChartBar, ChartZone
+importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock, TableBlock, TableCell, StationsBlock, Station, ChartBlock, ChartBar, ChartZone, DecisionsBlock, TimelineBlock, TimelineTask, TreeBlock, TreeGroup, CompareBlock, CompareRow, NoteBlock
 
 Detay sayfasinin bolumlerine konan parcalarin tipleri. Bir parca icerigi
 bilmez, adini hikayeden degil bicimden alir. Bir bolumde hangi parcanin hangi
@@ -147,5 +147,84 @@ export interface ChartBlock {
   blocks?: Block[]
 }
 
+// Verilen kararlar, alt alta ve numarali. Her kararin sorusu baslik, cevabi
+// paragraf olarak yazilir. Numara siradan cikar, ustundeki kucuk etiketin
+// adi sitenin sozlugunden gelir.
+export interface DecisionsBlock {
+  type: 'decisions'
+  items: ListItem[]
+}
+
+// Takvimdeki bir is. start isin basladigi donemdir, birden sayilir, length
+// kac donem surdugudur. Yarim donemler icin ondalik verilebilir, ornegin 1.6.
+// highlight isi altin cizer, takvimde ayri bir tarafin isini gostermek icin.
+export interface TimelineTask {
+  label: Localized
+  start: number
+  length: number
+  highlight?: true
+}
+
+// Zaman cizelgesi. periods donem sayisidir, periodLabel donemlerin kisaltmasi,
+// ornegin hafta icin H ve W, basliklar H1, H2 diye yazilir. legend
+// cizelgenin altinda vurgulu cubuklarin ne anlama geldigini soyler.
+export interface TimelineBlock {
+  type: 'timeline'
+  periods: number
+  periodLabel: Localized
+  tasks: TimelineTask[]
+  legend?: Localized
+}
+
+// Dosya agacinin bir kolu: bir kok ad ve altindaki ogeler. Ogelerin adi
+// dosya ya da tablo adi oldugu icin iki dilde aynidir, yanindaki aciklama
+// sitenin dilini izler. Agac cizgileri ve hizalama kendiliginden kurulur.
+export interface TreeGroup {
+  root: string
+  items: { name: string; note?: Localized }[]
+}
+
+// Kod gorunumlu dosya agaci, ornegin teslim edilen depo ve veritabani.
+export interface TreeBlock {
+  type: 'tree'
+  label: Localized
+  groups: TreeGroup[]
+}
+
+// Karsilastirmanin bir satiri. lead verilirse sonraki halin basinda kalin
+// durur, okurun gozu once degisimin kendisine gitsin diye.
+export interface CompareRow {
+  label: Localized
+  before: Localized
+  after: Localized
+  lead?: Localized
+}
+
+// Once ve sonra karsilastirmasi. Sutun basliklari sitenin sozlugunden gelir.
+export interface CompareBlock {
+  type: 'compare'
+  rows: CompareRow[]
+}
+
+// Akisin disinda kalan ama okurun bilmesi gereken kisa bir not, ornegin bir
+// sinirlama ya da bir uyari. label notun ustundeki kucuk etiket.
+export interface NoteBlock {
+  type: 'note'
+  label: Localized
+  text: Localized
+}
+
 // Bolumlerde kullanilabilecek butun parcalar. Yeni parca tipi buraya eklenir.
-export type Block = ParagraphBlock | ListBlock | DetailsBlock | SheetBlock | TableBlock | StationsBlock | ChartBlock
+export type Block =
+  | ParagraphBlock
+  | ListBlock
+  | DetailsBlock
+  | SheetBlock
+  | TableBlock
+  | StationsBlock
+  | ChartBlock
+  | DecisionsBlock
+  | TimelineBlock
+  | TreeBlock
+  | CompareBlock
+  | NoteBlock

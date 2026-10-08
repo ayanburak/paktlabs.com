@@ -93,6 +93,17 @@
     },
     "stations": {
       "more": "Ayrıntı"
+    },
+    "decisions": {
+      "label": "Karar"
+    },
+    "timeline": {
+      "task": "İş",
+      "label": "Çalışma takvimi"
+    },
+    "compare": {
+      "before": "Önce",
+      "after": "Sonra"
     }
   },
   "notFound": {

@@ -536,7 +536,48 @@ export const page: StudyPage = {
         tr: 'Teknik bir okurun ilk soracağı soruların cevabı burada. Her biri bir deneme ya da ölçümle verildi.',
         en: 'These are the answers to the first questions a technical reader would ask. Each one was settled by a trial or a measurement.',
       },
-      blocks: [],
+      blocks: [
+        {
+          type: 'decisions',
+          items: [
+            {
+              title: { tr: 'Neden bir dil modeli ya da derin öğrenme değil', en: 'Why not a language model or deep learning' },
+              text: {
+                tr: 'Çok dilli bir cümle gömme modelini ek özellik olarak denedik. Kesinlik ve duyarlılık eğrisinin altındaki alana yalnızca 0,003 ekledi, gecelik çalışmaya ise kırk dakika. Hatanın çoğu ölçü ve kaplama gibi kesin alanlardan geliyordu, onları da metni anlamak değil doğru ayrıştırmak çözdü. Gömme özelliğini teslimde kapalı ama hazır bıraktık.',
+                en: 'We tried a multilingual sentence embedding model as an extra feature. It added only 0.003 to the area under the precision and recall curve, and forty minutes to the nightly run. Most errors came from exact fields such as size and finish, and those were solved by parsing correctly, not by understanding the text. We delivered the embedding feature switched off but ready.',
+              },
+            },
+            {
+              title: { tr: 'Neden hazır bir kayıt eşleştirme kütüphanesi değil', en: 'Why not an off-the-shelf record linkage library' },
+              text: {
+                tr: 'Fellegi Sunter tabanlı araçlar, özelliklerin birbirinden bağımsız olduğunu varsayar. Bizim özelliklerimiz güçlü biçimde bağlıydı: ölçü hem adın içinde hem ayrı bir alanda geçiyordu. Türkçe normalizasyonu da her durumda kendimiz yazmak zorundaydık. Aday üretme ve kümelemede kendi kontrolümüzün olması, çelişki kuralını eklemeyi de kolaylaştırdı.',
+                en: 'Tools based on Fellegi Sunter assume the features are independent of each other. Ours were strongly linked: the size appeared both inside the name and in a separate field. We would have had to write the Turkish normalisation ourselves in any case. Having our own control over candidate generation and clustering also made it easy to add the conflict rule.',
+              },
+            },
+            {
+              title: { tr: 'Neden barkodu doğrudan anahtar yapmadık', en: 'Why we did not use the barcode as the key' },
+              text: {
+                tr: "Barkod Tedarikçi C'de yüzde 12, ERP'de yüzde 34 doluydu. Dolu olanların da yüzde 2'si kontrol hanesinden geçmedi. Ayrıca bazı tedarikçiler koli ve tekil ürün için aynı barkodu kullanıyordu. Barkodu kesin bir anahtar değil, modelin özelliklerinden biri yaptık: aynı, çelişkili ya da eksik.",
+                en: "The barcode was filled in for 12 percent of Supplier C's records and 34 percent of the ERP's. Of those filled in, 2 percent failed the check digit. Some suppliers also used the same barcode for a carton and a single item. We made the barcode one of the model's features instead of a hard key: same, conflicting or missing.",
+              },
+            },
+            {
+              title: { tr: 'Neden inceleme bandını daha dar tutmadık', en: 'Why we did not make the review band narrower' },
+              text: {
+                tr: 'Bandı 0,60 ile 0,95 arasına çekmek kesinliği artırır ama kuyruğu 23.833 çifte çıkarır. 0,50 ile 0,90 arası ise kuyruğu biraz küçültür ama otomatik kararlardaki yanlışı artırır. Firmanın ekibi bir çifte ortalama altı saniye bakıyordu, 14 bin çift yaklaşık 24 saatlik iş demekti. Dokuz iş gününe yayılabilecek bir yük olarak birlikte karar verdik.',
+                en: "Moving the band to between 0.60 and 0.95 raises precision but grows the queue to 23,833 pairs. Between 0.50 and 0.90 shrinks the queue a little but adds wrong automatic decisions. The company's team spent about six seconds on each pair, so 14 thousand pairs meant about 24 hours of work. We decided together that this was a load that could be spread over nine working days.",
+              },
+            },
+            {
+              title: { tr: 'Neden tedarikçi fiyatlarını tek fiyata indirmedik', en: 'Why we did not reduce supplier prices to one price' },
+              text: {
+                tr: 'Çünkü işin asıl amacı buydu. Ürünü tekilleştirmek, fiyatları yan yana koyabilmek içindi. Altın kayıt fiyat taşımaz, fiyat her tedarikçinin ayrı satırında adet başına çevrilmiş olarak durur.',
+                en: "Because that was the real point of the work. Deduplicating the products was a way to put prices side by side. The golden record carries no price, the price stays on each supplier's own row, converted to a price per piece.",
+              },
+            },
+          ],
+        },
+      ],
     },
     {
       id: 'teslim',
@@ -547,6 +588,56 @@ export const page: StudyPage = {
         en: 'The delivery is not a report but a pipeline that runs every night on the company’s own server. New or changed records enter the pipeline at two in the morning, are matched against existing products, and the uncertain ones wait on the review screen in the morning.',
       },
       blocks: [
+        {
+          type: 'timeline',
+          periods: 7,
+          periodLabel: { tr: 'H', en: 'W' },
+          tasks: [
+            { label: { tr: 'Denetim ve profil', en: 'Audit and profiling' }, start: 1, length: 1 },
+            { label: { tr: 'Kurallar ve normalizasyon', en: 'Rules and normalisation' }, start: 1.6, length: 1.6 },
+            { label: { tr: 'Etiketleme', en: 'Labelling' }, start: 3, length: 1.2, highlight: true },
+            { label: { tr: 'Aday üretme ve model', en: 'Candidates and model' }, start: 3.6, length: 1.6 },
+            { label: { tr: 'Kümeleme ve altın kayıt', en: 'Clustering and golden record' }, start: 5, length: 1 },
+            { label: { tr: 'Gecelik hat ve testler', en: 'Nightly pipeline and tests' }, start: 5.6, length: 1.4 },
+            { label: { tr: 'İnceleme ve devir', en: 'Review and handover' }, start: 6, length: 2, highlight: true },
+          ],
+          legend: { tr: 'Altın çubuklar firmanın ekibinin çalıştığı haftalar: etiketleme ve inceleme kuyruğu.', en: "Gold bars are the weeks when the company's team worked: labelling and the review queue." },
+        },
+        {
+          type: 'tree',
+          label: { tr: 'Teslim edilen depo yapısı', en: 'Structure of the delivered repository' },
+          groups: [
+            {
+              root: 'matcher/',
+              items: [
+                { name: 'pipeline/', note: { tr: 'altı istasyon, her biri tek modül', en: 'six stations, one module each' } },
+                { name: 'rules/', note: { tr: '31 doğrulama kuralı', en: '31 validation rules' } },
+                { name: 'dictionaries/', note: { tr: '412 eş anlam, 61 marka takma adı', en: '412 synonyms, 61 brand aliases' } },
+                { name: 'review/', note: { tr: 'inceleme ekranı, FastAPI + düz HTML', en: 'review screen, FastAPI and plain HTML' } },
+                { name: 'sql/', note: { tr: 'şema ve hazır sorgular', en: 'schema and ready-made queries' } },
+                { name: 'tests/', note: { tr: '214 test', en: '214 tests' } },
+                { name: 'docs/', note: { tr: 'veri sözlüğü ve devir notu', en: 'data dictionary and handover note' } },
+              ],
+            },
+            {
+              root: 'PostgreSQL',
+              items: [
+                { name: 'product', note: { tr: '85.850 altın kayıt', en: '85,850 golden records' } },
+                { name: 'product_source', note: { tr: 'kaynak kayıt ↔ ürün', en: 'source record ↔ product' } },
+                { name: 'product_offer', note: { tr: 'tedarikçi fiyatları', en: 'supplier prices' } },
+                { name: 'match_decision', note: { tr: 'her kararın izi', en: 'a trace of every decision' } },
+                { name: 'quarantine', note: { tr: 'nedeniyle reddedilenler', en: 'rejected records and why' } },
+              ],
+            },
+            {
+              root: 'cron',
+              items: [
+                { name: '0 2 * * *', note: { tr: 'her gece artımlı çalışma, ~6 dk', en: 'nightly incremental run, ~6 min' } },
+                { name: '0 3 * * 0', note: { tr: 'pazar tam çalışma, 2 sa 40 dk', en: 'full run on Sundays, 2 h 40 min' } },
+              ],
+            },
+          ],
+        },
         {
           type: 'details',
           meta: { tr: 'İnceleme', en: 'Review' },
@@ -573,6 +664,14 @@ export const page: StudyPage = {
             },
           ],
         },
+        {
+          type: 'note',
+          label: { tr: 'Erişim', en: 'Access' },
+          text: {
+            tr: 'Hat firmanın kendi sunucusunda çalışıyor. Devirden sonra bizim sunucuya erişimimiz kapatıldı, bakım ve yeniden eğitim firmanın ekibinde.',
+            en: "The pipeline runs on the company's own server. Our access to the server was closed after the handover, and maintenance and retraining are with the company's team.",
+          },
+        },
       ],
     },
     {
@@ -584,6 +683,35 @@ export const page: StudyPage = {
         en: 'The same product now sits on a single card and supplier prices sit side by side. The pipeline can take in a new supplier list with one day of setup.',
       },
       blocks: [
+        {
+          type: 'compare',
+          rows: [
+            {
+              label: { tr: 'Aynı ürünün kart sayısı', en: 'Cards for the same product' },
+              before: { tr: 'Bir ile beş arası', en: 'Between one and five' },
+              lead: { tr: 'Bir', en: 'One' },
+              after: { tr: ', kaynakları altında listeli', en: ', with its sources listed under it' },
+            },
+            {
+              label: { tr: 'Bulunan gerçek eşleşme', en: 'True matches found' },
+              before: { tr: 'Yüzde 18, ad üzerinden tam eşleşme', en: '18 percent, exact match on the name' },
+              lead: { tr: 'Yüzde 97,2', en: '97.2 percent' },
+              after: { tr: ', inceleme sonrası test setinde', en: ', on the test set after review' },
+            },
+            {
+              label: { tr: 'Tedarikçi fiyat karşılaştırması', en: 'Supplier price comparison' },
+              before: { tr: "Elle, Excel'de, ürün ürün", en: 'By hand, in Excel, product by product' },
+              lead: { tr: '38.420 ürün', en: '38,420 products' },
+              after: { tr: 'için hazır sorgu', en: 'with a ready-made query' },
+            },
+            {
+              label: { tr: 'Yeni tedarikçi listesi', en: 'A new supplier list' },
+              before: { tr: 'Yaklaşık iki haftalık elle eşleştirme', en: 'About two weeks of manual matching' },
+              lead: { tr: 'Bir günlük', en: 'One day' },
+              after: { tr: 'kaynak tanımı, sonra gecelik hat', en: 'of source setup, then the nightly pipeline' },
+            },
+          ],
+        },
         {
           type: 'list',
           view: 'stack',

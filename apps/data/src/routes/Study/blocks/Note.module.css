@@ -1,0 +1,15 @@
+/* acik zeminli, ince cerceveli kutu. Solundaki altin cizgi notu paragraflardan
+   ayirir, kutunun geri kalani sakin kalir */
+.note {
+  max-width: 64ch;
+  padding: 16px 20px 18px;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-left: 6px solid var(--gold);
+}
+.text {
+  margin: 8px 0 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink);
+}

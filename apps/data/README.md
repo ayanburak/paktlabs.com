@@ -303,6 +303,62 @@ Tek bir soruya cevap verir. `label` şeklin üstündeki küçük etikettir, örn
 }
 ```
 
+### Karar listesi
+
+Teknik okurun ilk soracağı "neden böyle" sorularının cevabı içindir. Her kararın sorusu başlık, cevabı paragraf olarak yazılır, üstünde "Karar 01" gibi numaralı bir etiket durur. Numara sıradan, etiketteki kelime sitenin sözlüğünden gelir. Her cevap bir deneme ya da ölçüme dayanmalıdır.
+
+```ts
+{
+  type: 'decisions',
+  items: [{ title: { tr: 'Neden barkodu doğrudan anahtar yapmadık', en: '…' }, text: { tr: '…', en: '…' } }],
+}
+```
+
+### Zaman çizelgesi
+
+Bir işin takvimini gösterir. `periods` dönem sayısı, `periodLabel` dönemlerin kısaltmasıdır, hafta için H ve W yazılırsa başlıklar H1, H2 diye çıkar. Her işin `start` başladığı dönem, `length` kaç dönem sürdüğüdür, yarım dönemler ondalıkla yazılır. `highlight` işi altın çizer, `legend` altın çubukların ne anlama geldiğini söyler.
+
+```ts
+{
+  type: 'timeline',
+  periods: 7,
+  periodLabel: { tr: 'H', en: 'W' },
+  tasks: [{ label: { tr: 'Etiketleme', en: 'Labelling' }, start: 3, length: 1.2, highlight: true }],
+  legend: { tr: '…', en: '…' },
+}
+```
+
+### Dosya ağacı
+
+Teslim edilen bir deponun ya da veritabanının yapısını kod görünümünde gösterir. Her kolun bir kök adı ve altında öğeleri vardır. Öğe adları dosya ya da tablo adı olduğu için iki dilde aynı yazılır, yanındaki açıklama sitenin dilini izler. Ağaç çizgileri ve açıklamaların hizası kendiliğinden kurulur, boşlukla elle hizalama yapılmaz. `label` ekran okuyucunun ağacı tanıttığı addır.
+
+```ts
+{
+  type: 'tree',
+  label: { tr: 'Teslim edilen depo yapısı', en: 'Structure of the delivered repository' },
+  groups: [{ root: 'matcher/', items: [{ name: 'rules/', note: { tr: '31 doğrulama kuralı', en: '31 validation rules' } }] }],
+}
+```
+
+### Önce ve sonra
+
+Bir işin öncesini ve sonrasını satır satır karşılaştırır. Her satırda neyin ölçüldüğü, önceki ve sonraki hal yazılır. `lead` verilirse sonraki halin başında kalın durur, okurun gözü önce değişimin kendisine gitsin diye. Sütun başlıkları sitenin sözlüğünden gelir.
+
+```ts
+{
+  type: 'compare',
+  rows: [{ label: { tr: 'Bulunan gerçek eşleşme', en: '…' }, before: { tr: 'Yüzde 18', en: '…' }, lead: { tr: 'Yüzde 97,2', en: '…' }, after: { tr: ', test setinde', en: '…' } }],
+}
+```
+
+### Not kutusu
+
+Akışın dışında kalan ama okurun bilmesi gereken kısa bir not içindir, örneğin bir sınırlama ya da bir uyarı. Paragraflardan ayrılsın diye solunda altın bir çizgiyle çerçeveli bir kutuda durur. Bir sayfada az kullanılır, çok kullanılırsa vurgusu kaybolur.
+
+```ts
+{ type: 'note', label: { tr: 'Erişim', en: 'Access' }, text: { tr: '…', en: '…' } }
+```
+
 Okuma süresi elle yazılmaz. İçindekilerin altında görünen süre, sayfadaki düz metnin kelime sayısından dakikada yaklaşık iki yüz kelimeyle hesaplanır. Tablo hücreleri sayılmaz, okur onları okumaz, göz atar.
 
 ## Yayın
