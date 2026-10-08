@@ -12,15 +12,11 @@ import type { CSSProperties } from 'react'
 
 import { cx } from '@paktlabs/brand/lib/cx'
 
+import { studyTags } from '@/content/studies/tags'
 import type { StudyTag } from '@/content/studies/types'
 import { useDict } from '@/i18n'
 
 import styles from './FilterPanel.module.css'
-
-// Kutularin sirasi mockup'taki sira. Etiket kimlikleri sozlukteki adlarla
-// eslesir, sira burada tutulur cunku sozluk nesnesinin anahtar sirasina
-// guvenilmez.
-const order: StudyTag[] = ['preparation', 'database', 'quality', 'analysis', 'visualization', 'machineLearning']
 
 interface FilterPanelProps {
   id: string
@@ -39,7 +35,7 @@ export function FilterPanel({ id, open, picked, onToggle }: FilterPanelProps) {
     <div id={id} className={cx(styles.panel, open && styles.open)} inert={!open}>
       <div className={styles.inner}>
         <ul className={styles.grid} aria-label={home.works.filter.tagsLabel}>
-          {order.map((tag, i) => (
+          {studyTags.map((tag, i) => (
             <li key={tag} style={{ '--i': i } as CSSProperties}>
               <button
                 type="button"

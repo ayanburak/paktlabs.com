@@ -30,10 +30,12 @@ description: data sitesindeki calismalarin icerik tiplerini tanimlayan modul.
 import type { Language } from '@paktlabs/brand/i18n/language'
 
 import type { TechName } from '../techNames'
+import type { studyTags } from './tags'
 
-// Filtrede ve kartlarda gorunen etiketlerin kimlikleri. Ekranda gorunen adlari
-// sozlukte durur, burada yalnizca dilden bagimsiz anahtarlar var.
-export type StudyTag = 'preparation' | 'database' | 'quality' | 'analysis' | 'visualization' | 'machineLearning'
+// Filtrede ve kartlarda gorunen etiketlerin kimlikleri. Liste ve sira
+// tags.ts'te, tip oradan turetilir ki filtre ile tip birbirinden ayrilamasin.
+// Ekranda gorunen adlari sozlukte durur.
+export type StudyTag = (typeof studyTags)[number]
 
 // Kunye satirlari calismadan calismaya ve sayfadan sayfaya degisir. Detay
 // sayfasi sektor, sure, girdi ve teslimi, kod sayfasi dil ve kutuphaneleri
