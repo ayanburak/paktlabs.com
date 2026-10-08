@@ -75,8 +75,8 @@
 
   .artFrame {
     position: absolute;
-    /* Masaüstündeki ortalama mutlak konumda da etkili olur.
-       Mobil kompozisyon üst kenardan başladığı için burada sıfırlanır. */
+    /* masaustundeki ortalama mutlak konumda da etkili olur. Mobil
+       kompozisyon ust kenardan basladigi icin burada sifirlanir */
     align-self: auto;
     justify-self: auto;
     top: var(--header-height);
@@ -86,7 +86,7 @@
     max-width: none;
     /* .inner'in z-index:2'sinin arkasinda kalsin diye */
     z-index: 0;
-    /* hero-mobile.svg'nin kendi viewBox orani — masaustundeki hero.svg'den
+    /* hero-mobile.svg'nin kendi viewBox orani, masaustundeki hero.svg'den
        farkli bir kompozisyon, oran da farkli */
     aspect-ratio: 921.20239 / 1536.6208;
   }
