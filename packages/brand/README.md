@@ -4,7 +4,7 @@ Bu paket PaktLabs'ın bütün vitrin sitelerinin ortak katmanıdır. Landing ve 
 
 ## İçerik
 
-`styles/` altında `tokens.css` ve `global.css` durur. Renk, boşluk ve font değişkenleri ile reset, tipografi ve `.wrap`, `.eyebrow`, `.cta`, `.reveal` gibi paylaşılan sınıflar buradadır. Bir site renk ya da font sabitini kendi stillerinde tekrar yazmaz, her zaman bu değişkenleri kullanır.
+`styles/` altında üç dosya durur. `tokens.css` renk, boşluk, font ve ölçü değişkenlerini, `global.css` reset'i, tipografiyi ve `.wrap`, `.eyebrow`, `.cta`, `.reveal`, `.rise` gibi paylaşılan sınıfları taşır. `HeroLayout.module.css` sitelerin hero'larında ortak olan masaüstü yerleşimidir. Global değildir, bir site onu kendi hero sınıfına bağladığında devreye girer. Bir site renk ya da font sabitini kendi stillerinde tekrar yazmaz, her zaman bu değişkenleri kullanır.
 
 `components/` altında `Header`, `Footer` ve `RevealImg` bileşenleri durur. Header bulunulan disiplini `current` ile, logonun gideceği adresi `homeHref` ile alır. Footer'a `homeHref` verildiğinde ana siteye dönen bir bağlantı eklenir. Landing ikisine de prop vermez.
 
@@ -31,6 +31,38 @@ import '@paktlabs/brand/styles/global.css'
 Global stil dosyası uygulamanın giriş dosyasında, `App` import edildikten sonra import edilir. Bu sıra derlenen CSS içinde global kuralların bileşen kurallarından sonra gelmesini sağlar, sıra değişirse eşit önem derecesindeki kurallarda kazanan değişir.
 
 Paketin içindeki dosyalar birbirini göreli yolla import eder. Uygulamalardaki `@/` alias'ı paketin içinde çalışmaz, çünkü o alias her uygulamanın kendi `src` klasörünü gösterir.
+
+## Hero
+
+Bütün PaktLabs sitelerinin hero'su aynı açılışı ve aynı masaüstü yerleşimini paylaşır. Ziyaretçi landing'den bir disiplin sitesine geçtiğinde ilk ekran tanıdık gelmelidir, bu yüzden ortak kısım brand'de bir kez yazılır. Bugün landing ve data bu kısmı kullanır, web ve automation siteleri kurulduğunda onların hero'ları da buradan başlar.
+
+### Giriş animasyonu
+
+Hero metinleri sayfa açılırken sırayla aşağıdan yükselir. Bu davranış `global.css` içindeki `.rise` sınıfıyla verilir. `.reveal`'dan farkı, elemanın ekrana girmesini beklememesidir. Animasyon sayfa açılır açılmaz başlar. Elemanın sırası `--rise-delay`, ne kadar aşağıdan geleceği `--rise-offset` ile sitenin kendi CSS modülünde verilir. Offset sıfır verilirse eleman yalnızca belirir.
+
+```css
+.title { --rise-delay: 0.12s; }
+.cta   { --rise-delay: 0.5s; --rise-offset: 0px; }
+```
+
+Elemanın kendi stili son halidir. Animasyon yalnızca girişi oynatır, bittiğinde geride bir etki bırakmaz ve elemanın konumuna dokunmaz. Bu yüzden animasyon kaldırılsa da yerleşim değişmez. Son hal animasyonla tutulsaydı eleman ayrı bir çizim katmanında kalırdı ve yazının kenar yumuşatması durağan sayfadakinden farklı olurdu. Hareket azaltma tercihinde animasyon hiç oynamaz, eleman baştan son halinde görünür. Landing'in yerleşim ve görsel testleri bu tercihle çalıştığı için ölçümler animasyonun zamanlamasına bağlı kalmaz.
+
+### Masaüstü yerleşimi
+
+Masaüstünde metin kendi genişliğini alan bir sütunda, çizim kalan sütunda durur. İkisi de header'ın altında kalan alanın dikey ortasına hizalanır. Çizim zemine oturmadan havada durur ve sağ kenara biraz yaklaşır. Bu kurallar `styles/HeroLayout.module.css` dosyasındadır. Bir site ortak kuralları kendi sınıflarına `composes` ile alır:
+
+```css
+.hero { composes: hero from '@paktlabs/brand/styles/HeroLayout.module.css'; }
+.copy { composes: copy from '@paktlabs/brand/styles/HeroLayout.module.css'; }
+.art {
+  composes: art from '@paktlabs/brand/styles/HeroLayout.module.css';
+  --art-ratio: 1600 / 900;
+}
+```
+
+Yerleşimin ölçüleri `tokens.css` içindeki üç değişkenden gelir. `--header-height` üst barın yüksekliğidir. Hero'nun üst boşluğu ve dikey ortalaması bu değerden hesaplanır, bar değişirse hero'lar da onunla birlikte kayar. `--hero-art-height` çizimin en fazla yüksekliğidir. `--hero-art-right-share` ise sütunda boşta kalan alanın ne kadarının çizimin sağında kalacağını belirler: 0.5 tam ortalamadır, daha küçük bir değer çizimi sağa yaklaştırır. Site yalnızca kendi çiziminin oranını `--art-ratio` ile verir, bu değer olmadan çizim kutusunun boyutu hesaplanamaz. Yazı stilleri, giriş sıraları, düğme, zemin rengi ve mobil düzen sitede kalır, çünkü her sitenin mobil kompozisyonu farklıdır.
+
+`composes` ile gelen kurallar derlenen CSS'te sitenin kendi kurallarından önce gelir. Bu yüzden site, eşit önemdeki bir kuralla ortak kuralı ezebilir. Mobil düzenler de böyle kurulur. Bu sıra bir gün değişirse sitelerin mobil hero'ları sessizce bozulur. Bu dosyada yapılan bir değişiklikten sonra landing'in testlerine ek olarak data'nın yerleşim testleri de çalıştırılır.
 
 ## Değişiklik yaparken
 
