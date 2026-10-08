@@ -1,0 +1,52 @@
+/* kapagin altinda bant zemininde duran serit. Icerik landing'in genisligine
+   ortalanir, zemin ve alt cizgi tam genislikte kalir */
+.summary {
+  padding: clamp(36px, 4.4vw, 60px) var(--gutter);
+  background: var(--panel);
+  border-bottom: 2px solid var(--ink);
+}
+
+.inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* sutunlar arasinda dikey cizgi var, kapaktaki kunyenin yatay cizgileriyle
+   karismasin diye. Ilk sutunun solunda cizgi ve bosluk yok */
+.column {
+  padding: 0 clamp(20px, 2.6vw, 40px);
+  border-left: 2px solid var(--ink);
+}
+.column:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+.column h2 {
+  margin-bottom: 12px;
+  font-size: clamp(19px, 1.6vw, 22px);
+  letter-spacing: -0.02em;
+}
+.column p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+/* mobilde sutunlar alt alta iner, aradaki cizgiler yataya doner */
+@media (max-width: 768px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .column {
+    padding: 22px 0 0;
+    border-left: 0;
+    border-top: 2px solid var(--ink);
+  }
+  .column:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+}

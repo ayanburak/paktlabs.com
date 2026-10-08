@@ -62,6 +62,12 @@
       "back": "← Work",
       "crumb": "Breadcrumb",
       "tags": "Tags"
+    },
+    "summary": {
+      "label": "Summary",
+      "problem": "Problem",
+      "approach": "Approach",
+      "result": "Result"
     }
   },
   "notFound": {

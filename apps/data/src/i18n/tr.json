@@ -62,6 +62,12 @@
       "back": "← Çalışmalar",
       "crumb": "Konum",
       "tags": "Etiketler"
+    },
+    "summary": {
+      "label": "Özet",
+      "problem": "Sorun",
+      "approach": "Yaklaşım",
+      "result": "Sonuç"
     }
   },
   "notFound": {

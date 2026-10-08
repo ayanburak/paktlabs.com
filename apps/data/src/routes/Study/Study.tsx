@@ -18,6 +18,7 @@ import { useDict } from '@/i18n'
 import { NotFound } from '@/routes/NotFound/NotFound'
 
 import { Cover } from './sections/Cover'
+import { Summary } from './sections/Summary'
 
 // Sekme basligi calismanin basligi ve sitenin basligindan olusur, mockup'taki
 // "baslik · Veri · PaktLabs" bicimi. Sitenin basligi veri sayfasinin kendi
@@ -36,6 +37,7 @@ export function Study() {
   return (
     <Page title={`${title} · ${home.meta.title}`} description={study.page.lede[language]}>
       <Cover study={study} />
+      <Summary summary={study.page.summary} />
     </Page>
   )
 }
