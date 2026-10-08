@@ -16,9 +16,6 @@
   position: relative;
   pointer-events: none;
 }
-.artFrame img {
-  display: block;
-}
 
 .inner {
   composes: copy from '@paktlabs/brand/styles/HeroLayout.module.css';
