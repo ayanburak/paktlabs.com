@@ -17,6 +17,7 @@ import type { Study } from '@/content/studies/types'
 import { useDict } from '@/i18n'
 
 import styles from './Cover.module.css'
+import { DataNote } from './DataNote'
 
 interface CoverProps {
   study: Study
@@ -25,7 +26,8 @@ interface CoverProps {
 // Donus baglantisi veri sayfasindaki listeye gider, bulunamadi sayfasindaki
 // donus dugmesiyle ayni adres. Yanindaki numara konumu gosterir, baglanti
 // degildir. Kunye satirlarinin sayisi ve adlari calismadan gelir, her satir
-// bir terim ve aciklama cifti oldugu icin dl ile yazilir.
+// bir terim ve aciklama cifti oldugu icin dl ile yazilir. Kunyenin altinda,
+// sitenin dili verinin dilinden farkliysa veri dili notu durur.
 export function Cover({ study }: CoverProps) {
   const { language } = useLanguage()
   const { study: dict } = useDict()
@@ -43,14 +45,17 @@ export function Cover({ study }: CoverProps) {
           <h1 className={styles.title}>{study.title[language]}</h1>
           <p className={styles.lede}>{study.page.lede[language]}</p>
         </div>
-        <dl className={styles.kunye}>
-          {study.page.kunye.map((row) => (
-            <div key={row.label[language]}>
-              <dt>{row.label[language]}</dt>
-              <dd>{row.value[language]}</dd>
-            </div>
-          ))}
-        </dl>
+        <div>
+          <dl className={styles.kunye}>
+            {study.page.kunye.map((row) => (
+              <div key={row.label[language]}>
+                <dt>{row.label[language]}</dt>
+                <dd>{row.value[language]}</dd>
+              </div>
+            ))}
+          </dl>
+          <DataNote />
+        </div>
       </div>
     </section>
   )

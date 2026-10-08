@@ -1,0 +1,8 @@
+hata;kayit_a;kayit_b;skor;neden
+yanlış birleşme;TED-B · SUNTA VİDASI 3,5*30 YHB SARI;TED-A · Yonga Levha Vidası 3,5 x 30 mm Beyaz Çinko;0,947;kaplama farklı
+yanlış birleşme;ERP · PANEL VIDA 4X25 SIYAH;TED-A · Panel Vidası 4,0 x 25 mm Galvaniz;0,951;kaplama farklı
+yanlış birleşme;TED-B · AKRİLİK MASTİK BEYAZ 280 GR;TED-C · akrilik mastik gri 280gr;0,932;renk farklı
+yanlış birleşme;TED-A · Dübel Plastik 6 mm Gri · Paket (100);TED-C · PLASTIK DUBEL 6LIK GRI · 1000 adet;0,928;paket farklı
+kaçırılan;ERP · MATKAP UCU HSS 8MM;TED-C · Matkap ucu metal 8;0,412;ad kısa, barkod yok
+kaçırılan;TED-B · KÖPÜK PU 750ML KIŞLIK;ERP · POLIURETAN KOPUK 750 ML KIS;0,468;tür sözlükte yok
+kaçırılan;TED-A · Silikon Tabancası Profesyonel Metal;TED-C · Silikon tabancası;0,383;ad kısa, barkod yok

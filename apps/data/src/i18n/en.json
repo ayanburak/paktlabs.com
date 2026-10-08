@@ -75,6 +75,23 @@
         "before": "Reading time about",
         "after": "minutes."
       }
+    },
+    "sheet": {
+      "rows": "rows"
+    },
+    "dataNote": {
+      "lead": {
+        "before": "This study's data is originally in",
+        "after": "."
+      },
+      "translated": "Because of the language you chose, the tables are shown translated.",
+      "original": "The tables are now shown in their original form.",
+      "showOriginal": "View the original data",
+      "showTranslated": "Back to the translation",
+      "languages": {
+        "tr": "Turkish",
+        "en": "English"
+      }
     }
   },
   "notFound": {

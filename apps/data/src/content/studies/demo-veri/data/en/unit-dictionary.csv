@@ -1,0 +1,7 @@
+unit;spelling_count;raw_spellings;sources
+piece;8;PC, PCS, Pcs, pcs., pc., EA, 1 PC, each;ERP, A, B, C
+pack;5;Pack (1000), Pack (100), PK, 100-pack, 1000-pack;A, C
+box;4;BOX/1000, BOX, BX, Box;B
+metre;3;MTR, mtr., m;ERP, B
+kilogram;2;KG, kg;ERP, A
+litre;1;LTR;B

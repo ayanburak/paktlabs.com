@@ -156,6 +156,14 @@ Kodun yeri iki seçenekten biridir. Firma kodun paylaşılmasına izin verdiyse 
 
 Veri sayfasındaki listede gerçek çalışmalarla birlikte mockup'tan taşınan lorem yer tutucular da durur. Yer tutucular yalnızca listede görünen alanları taşır, detay ve kod sayfaları yoktur. Gerçek bir çalışma geldiğinde aynı numaralı yer tutucu `placeholders.ts`'ten silinir. Yeni bir çalışma kendi klasöründe yazılır ve `src/content/studies/index.ts` içindeki listeye eklenir, liste numara sırasıyla dizilir.
 
+### Verinin dili
+
+Bir çalışmanın ham verisi Türkçe ya da İngilizce olabilir ve her çalışmanın verisi iki dilde de hazırlanır. Sayfada iki ayrı dil vardır. Sitenin dili metni, başlıkları, menüleri, şekilleri ve düz tabloları belirler, sayfadaki TR ve EN değiştiricisi onu değiştirir. Verinin dili yalnızca veri sayılan parçaları, yani hesap tablolarını ve indirilen dosyaları belirler. Böylece okur her zaman okuyabildiği metni görür, ama isterse verinin orijinal halini de inceleyebilir.
+
+Künye dosyasındaki `dataLanguage` verinin orijinal dilidir. Sayfa açıldığında verinin dili sitenin diline eşittir. İkisi farklıysa kapakta, künyenin altında bir not çıkar: verinin aslen hangi dilde olduğunu söyler ve tablolara orijinal halini gösteren bir düğme taşır. Düğme sitenin dilini değiştirmez. Seçim hiçbir yere kaydedilmez, sayfa yenilendiğinde, başka bir çalışmaya geçildiğinde ya da sitenin dili değiştiğinde veri dili yeniden sitenin diline döner. Notun metni çalışmaya değil sitenin sözlüğüne aittir.
+
+Veri dosyaları çalışmanın klasöründe `data/tr/` ve `data/en/` altında durur. İki klasörde aynı kimlikle adlandırılmış CSV'ler bulunur, örneğin `data/tr/raw-records.csv` ve `data/en/raw-records.csv`. Kimlik dilden bağımsızdır, ekranda görünen dosya adı ise hesap tablosunun ayarlarından gelir ve çevrilebilir. Dosyalar Türkçe Excel dışa aktarımları gibi noktalı virgülle ayrılır, çünkü Türkçe sayılarda virgül ondalık ayıracıdır. Kaynak kusurları, örneğin bozuk Türkçe harfler ya da farklı ondalık ayıraçları, CSV'de olduğu gibi bırakılır. `src/content/studies/data.ts` bütün çalışmaların dosyalarını derleme sırasında kendiliğinden bulur. `tests/data.spec.ts` iki dilin dosyalarının aynı kimliklerde, aynı satır ve hücre sayısında olduğunu ve her hesap tablosunun çağırdığı dosyanın var olduğunu denetler.
+
 ### Komutlar
 
 Bağımlılıklar repo kökünde kurulur, lint de kökte bütün repoyu tek seferde tarar. Uygulama komutları bu klasörde çalıştırılır.
@@ -178,6 +186,80 @@ Testler landing'deki gibi üretim derlemesine karşı çalışır. Üst bar ve a
 Bu sitenin kendine ait bir backend'i yoktur. İletişim formu gerektiğinde landing ile disiplin sitelerinin paylaşacağı tek bir servis kurulur, bir siteye özel bir servis yazılmaz. Bu servis kurulana kadar landing'deki formun gönder düğmesi bilerek işlem yapmaz, bu yüzden data'dan o forma yönlendirmek ziyaretçiyi çalışmayan bir düğmeye götürür.
 
 Veri işlerini gösteren çalışan bir uygulama bu repoya girmez. Uygulama kendi reposunda yazılır, sunucuda kendi servisi olarak çalışır ve bu siteden yalnızca bağlantıyla açılır.
+
+## Yazım rehberi
+
+Detay sayfası her çalışmada aynı iskeletle kurulur: kapak ve künye, Sorun, Yaklaşım ve Sonuç bandı, içindekiler, numaralı bölümler, Meraklısına kartı, yazar kutusu ve kapanış. İskeletin içeriği çalışmanın `page.ts` dosyasında yazılır. Bölümlerin içi ise serbesttir. Her bölüm `blocks` listesinde sırayla dizilen parçalardan oluşur. Bir parça içeriği bilmez, adını hikâyeden değil biçimden alır. Hangi parçanın hangi sırayla ve kaç kez kullanılacağı serbesttir, böylece iki çalışmanın sayfası birbirine benzemek zorunda kalmaz. Yeni bir anlatım biçimi gerektiğinde `src/content/studies/blocks.ts` içine yeni bir parça tipi, `src/routes/Study/blocks/` altına bileşeni eklenir. Eski sayfalara dokunulmaz. Yanlış ya da eksik yazılmış bir parça derleme hatası verir.
+
+Her metin iki dili yan yana taşır. Aşağıdaki örneklerde kısalık için yalnızca bir iki alan gösterilir.
+
+### Bölüm
+
+Bölümün `id`'si adresteki parçadır, içindekiler bölüme onunla atlar. Sayfada tekil olmalı ve dilden bağımsız yazılmalıdır. Numara yazılmaz, bölümün sırasından çıkar. `label` hem başlığın üstünde hem içindekilerde görünen kısa addır. `lede` okurun yalnızca onu okusa bile hikâyeyi alacağı giriş paragrafıdır.
+
+```ts
+{
+  id: 'sorun',
+  label: { tr: 'Sorun', en: 'Problem' },
+  title: { tr: 'Aynı vida, dört farklı stok kartı', en: 'One screw, four different stock cards' },
+  lede: { tr: '…', en: '…' },
+  blocks: [],
+}
+```
+
+### Paragraf
+
+Bölüm girişinden sonra gelen ara anlatım içindir, örneğin bir tabloyu tanıtan cümle. Girişten daha küçük ve soluk yazılır.
+
+```ts
+{ type: 'paragraph', text: { tr: '…', en: '…' } }
+```
+
+### Liste
+
+Kısa maddelerden oluşur, her maddenin kalın bir baş cümlesi ve açıklaması vardır. `columns` görünüşü maddeleri numaralı ve yan yana dizer, birkaç kısa etkiyi bir bakışta göstermek için. `stack` görünüşü maddeleri alt alta ve aralarında çizgiyle dizer, biraz daha uzun anlatılan sınırlar ya da uyarılar için. `title` verilirse listenin üstünde küçük bir başlık olarak durur.
+
+```ts
+{
+  type: 'list',
+  view: 'stack',
+  title: { tr: 'Bilinen sınırlar', en: 'Known limits' },
+  items: [{ title: { tr: 'Model yaşlanır.', en: 'The model ages.' }, text: { tr: '…', en: '…' } }],
+}
+```
+
+### Açılır kutu
+
+Ayrıntıyı ilk katmandan ayırır, okur isterse açar. Kapalıyken üstte küçük bir etiket ve başlık görünür. İçine başka parçalar konur, en sık hesap tablosu. Kapalı kutunun başlığında sayı kullanılmaz, çünkü o başlık da okurun karşısına kendiliğinden çıkar.
+
+```ts
+{
+  type: 'details',
+  meta: { tr: 'Tablo 1 · önce', en: 'Table 1 · before' },
+  title: { tr: 'Ham veri: dört kaynaktan gelen kayıtlar', en: 'Raw data: records from four sources' },
+  blocks: [/* hesap tablosu */],
+}
+```
+
+### Hesap tablosu
+
+Ham veriyi hesap tablosu programlarına benzeyen bir görünümle gösterir. Hücreler `csv` kimliğiyle çağrılan dosyadan gelir, buradaki alanlar yalnızca görünümü ayarlar. `name`, `tabs` ve `formula` verinin parçası sayılır ve verinin dilini izler: Türkçe veride `=TOPLA(C2:C5)`, İngilizce veride `=SUM(C2:C5)` yazılır. `cell` seçili hücredir, `formula` verilmezse formül çubuğu bu hücrenin değerini gösterir. `numbers` sağa yaslanan sayı sütunlarının harfleridir. `total` son satırın toplam satırı olduğunu söyler, `rows` dosya gerçek tablonun bir kesitiyse gerçek satır sayısını verir. `notes` tablonun altındaki açıklamalardır, sitenin dilini izler ve kaynak kusurlarını burada açıklar.
+
+```ts
+{
+  type: 'sheet',
+  csv: 'quarantine-summary',
+  name: { tr: 'karantina_ozet.xlsx', en: 'quarantine_summary.xlsx' },
+  tabs: { tr: ['ozet', 'kayitlar'], en: ['summary', 'records'] },
+  cell: 'C6',
+  formula: { tr: '=TOPLA(C2:C5)', en: '=SUM(C2:C5)' },
+  numbers: ['C', 'D'],
+  total: true,
+  notes: [{ tr: '…', en: '…' }],
+}
+```
+
+Okuma süresi elle yazılmaz. İçindekilerin altında görünen süre, sayfadaki düz metnin kelime sayısından dakikada yaklaşık iki yüz kelimeyle hesaplanır. Tablo hücreleri sayılmaz, okur onları okumaz, göz atar.
 
 ## Yayın
 

@@ -1,0 +1,6 @@
+kural;neden;kayit;pay
+ean_checksum;Barkodun kontrol hanesi tutmuyor;1.412;%35,8
+price_positive;Fiyat sıfır veya negatif;1.106;%28,0
+unit_known;Birim sözlükteki hiçbir yazıma uymuyor;1.041;%26,4
+name_present;Ürün adı boş;388;%9,8
+toplam;;3.947;%100,0

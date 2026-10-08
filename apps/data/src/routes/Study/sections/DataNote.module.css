@@ -1,0 +1,21 @@
+/* kunyenin altinda ince bir cizgiyle ayrilan kucuk not. Kapagin diger kucuk
+   etiketleriyle ayni mono yazi, bilgi dili, uyari gibi durmaz */
+.note {
+  margin: 24px 0 0;
+  padding-top: 14px;
+  font: 500 12px/1.55 var(--font-mono);
+  color: var(--faint);
+  border-top: 1px solid var(--line);
+}
+
+.toggle {
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}

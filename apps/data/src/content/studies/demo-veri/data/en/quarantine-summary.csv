@@ -1,0 +1,6 @@
+rule;reason;records;share
+ean_checksum;Barcode check digit does not match;1,412;35.8%
+price_positive;Price is zero or negative;1,106;28.0%
+unit_known;Unit matches no spelling in the dictionary;1,041;26.4%
+name_present;Product name is empty;388;9.8%
+total;;3,947;100.0%

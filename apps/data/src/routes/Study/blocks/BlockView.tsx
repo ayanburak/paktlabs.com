@@ -13,8 +13,10 @@ import type { ReactElement } from 'react'
 
 import type { Block } from '@/content/studies/blocks'
 
+import { Details } from './Details'
 import { List } from './List'
 import { Paragraph } from './Paragraph'
+import { Sheet } from './Sheet'
 
 interface BlockViewProps {
   block: Block
@@ -29,5 +31,9 @@ export function BlockView({ block }: BlockViewProps): ReactElement {
       return <Paragraph block={block} />
     case 'list':
       return <List block={block} />
+    case 'details':
+      return <Details block={block} />
+    case 'sheet':
+      return <Sheet block={block} />
   }
 }

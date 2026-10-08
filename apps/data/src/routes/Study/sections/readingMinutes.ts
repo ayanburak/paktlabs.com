@@ -31,6 +31,10 @@ function blockText(block: Block, language: Language): string[] {
         block.title?.[language] ?? '',
         ...block.items.flatMap((item) => [item.title[language], item.text[language]]),
       ]
+    case 'details':
+      return [block.meta[language], block.title[language], ...block.blocks.flatMap((inner) => blockText(inner, language))]
+    case 'sheet':
+      return block.notes?.map((note) => note[language]) ?? []
   }
 }
 

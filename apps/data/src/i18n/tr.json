@@ -75,6 +75,23 @@
         "before": "Okuma süresi yaklaşık",
         "after": "dakika."
       }
+    },
+    "sheet": {
+      "rows": "satır"
+    },
+    "dataNote": {
+      "lead": {
+        "before": "Bu çalışmanın verisi aslen",
+        "after": "."
+      },
+      "translated": "Seçtiğiniz dil yüzünden tablolar çevrilmiş haliyle görünüyor.",
+      "original": "Tablolar şu an orijinal haliyle görünüyor.",
+      "showOriginal": "Orijinal veriyi gör",
+      "showTranslated": "Çevrilmiş haline dön",
+      "languages": {
+        "tr": "Türkçe",
+        "en": "İngilizce"
+      }
     }
   },
   "notFound": {

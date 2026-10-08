@@ -1,0 +1,7 @@
+skor_araligi;karar;cift;ayni_urun;farkli_urun;oran
+0 – 0,10;ret;696;1;695;%0,1
+0,10 – 0,30;ret;140;2;138;%1,4
+0,30 – 0,55;ret;82;15;67;%18,3
+0,55 – 0,92;inceleme;101;45;56;%44,6
+0,92 – 1;otomatik;581;577;4;%99,3
+toplam;;1.600;640;960;%40,0

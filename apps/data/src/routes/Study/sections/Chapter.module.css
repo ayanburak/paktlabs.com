@@ -58,6 +58,14 @@
 .body > p + p {
   margin-top: 14px;
 }
+/* acilir kutular bir paragraftan sonra biraz daha yakin, art arda geldiklerinde
+   birbirine cok yakin durur, bir grup gibi okunsunlar diye */
+.body > p + details {
+  margin-top: 28px;
+}
+.body > details + details {
+  margin-top: 10px;
+}
 
 /* icindekiler ustte bara donustugunde giris ve parcalar sol kenardan baslar */
 @media (max-width: 1100px) {

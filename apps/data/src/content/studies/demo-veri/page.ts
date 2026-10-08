@@ -93,6 +93,49 @@ export const page: StudyPage = {
             en: 'The two tables below show the same group of products before and after matching. The rows are left exactly as they were, like an excerpt taken from the company’s files.',
           },
         },
+        {
+          type: 'details',
+          meta: { tr: 'Tablo 1 · önce', en: 'Table 1 · before' },
+          title: { tr: 'Ham veri: dört kaynaktan gelen 15 kayıt', en: 'Raw data: 15 records from four sources' },
+          blocks: [
+            {
+              type: 'sheet',
+              csv: 'raw-records',
+              name: { tr: 'birlesik_ham_kayitlar.xlsx', en: 'combined_raw_records.xlsx' },
+              tabs: { tr: ['birlesik_ham', 'ERP', 'TED-A', 'TED-B', 'TED-C'], en: ['combined_raw', 'ERP', 'SUP-A', 'SUP-B', 'SUP-C'] },
+              cell: 'C6',
+              numbers: ['F'],
+              notes: [
+                {
+                  tr: "ERP dosyası Windows-1254 ile kaydedildiği için İ ve Ş harfleri Ý ve Þ olarak görünüyor. Tedarikçi B ondalık ayıracı olarak nokta, diğerleri virgül kullanıyor. Tedarikçi C'nin listesi PDF'ten çevrildiği için ürün kodu yok. 9. satır, 8. satırdaki vidanın beyaz kaplamalı varyantı, yani başka bir ürün.",
+                  en: "The ERP file was saved as Windows-1254, so the letters İ and Ş show up as Ý and Þ. Supplier B uses a different decimal separator from the others. Supplier C's list was converted from a PDF, so it has no product codes. Row 9 is the white zinc variant of the screw in row 8, which makes it a different product.",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'details',
+          meta: { tr: 'Tablo 2 · sonra', en: 'Table 2 · after' },
+          title: { tr: 'Eşleştirme sonrası: aynı kayıtlardan 5 ürün', en: 'After matching: 5 products from the same records' },
+          blocks: [
+            {
+              type: 'sheet',
+              csv: 'product-table',
+              name: { tr: 'urun_tablosu.xlsx', en: 'product_table.xlsx' },
+              tabs: { tr: ['urun', 'urun_kaynak', 'karantina'], en: ['product', 'product_source', 'quarantine'] },
+              cell: 'H2',
+              formula: { tr: '0,27990', en: '0.27990' },
+              numbers: ['E', 'H'],
+              notes: [
+                {
+                  tr: 'On beş kaydın on üçü beş ürüne indi. Barkod ve kaynak kayıtlar urun_kaynak sayfasında duruyor. Fiyatlar paket içi adede bölünüp karşılaştırıldı. ERP fiyatı satış fiyatı olduğu için karşılaştırmaya girmedi. Ham tablonun 15. satırı barkodun kontrol hanesi tutmadığı, 16. satırı fiyatı sıfır olduğu için karantinaya gitti.',
+                  en: 'Thirteen of the fifteen records came down to five products. Barcodes and source records sit on the product_source sheet. Prices were divided by the number of pieces in the pack before comparing. The ERP price is a sales price, so it was left out of the comparison. Row 15 of the raw table went to quarantine because its barcode check digit failed, and row 16 because its price was zero.',
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
     {
@@ -103,7 +146,60 @@ export const page: StudyPage = {
         tr: 'Kaynakların hiçbiri hatalı değildi, her biri kendi içinde tutarlıydı. Sorun, dördünün aynı ürünü farklı dillerde anlatmasıydı. Barkod ise kaynaklarda çok farklı oranlarda doluydu, tek başına anahtar olamazdı.',
         en: 'None of the sources was wrong, each was consistent within itself. The problem was that all four described the same product in different languages. Barcodes were filled in at very different rates across the sources, so they could not serve as a key on their own.',
       },
-      blocks: [],
+      blocks: [
+        {
+          type: 'details',
+          meta: { tr: 'Profil', en: 'Profile' },
+          title: { tr: 'Birim alanı tek başına yirmi üç farklı yazım taşıyordu', en: 'The unit field alone had twenty-three different spellings' },
+          blocks: [
+            {
+              type: 'sheet',
+              csv: 'unit-dictionary',
+              name: { tr: 'birim_sozlugu.xlsx', en: 'unit_dictionary.xlsx' },
+              tabs: { tr: ['sozluk', 'ham_birimler'], en: ['dictionary', 'raw_units'] },
+              cell: 'B2',
+              numbers: ['B'],
+              notes: [
+                {
+                  tr: 'Denetimin ilk gününde her alanın değer dağılımını çıkardık. En dağınık alan birimdi: aynı anlama gelen yirmi üç yazım altı birime toplandı. En çok yazım adet için vardı, çünkü her kaynak onu farklı kısaltıyordu.',
+                  en: 'On the first day of the audit we listed the values of every field. The messiest field was the unit: twenty-three spellings with the same meaning were gathered into six units. Piece had the most spellings, because every source abbreviated it differently.',
+                },
+                {
+                  tr: "Diğer bulgular: Tedarikçi A'nın dosyasında ilk dört satır birleştirilmiş başlık hücreleriydi ve her ay yeri değişiyordu. Tedarikçi C'de ondalık ayraç virgül, binlik ayraç noktaydı, yani 1.250 bazen bin iki yüz elli, bazen bir virgül iki beş anlamına geliyordu. ERP dışa aktarımı Windows-1254 ile kodlanmıştı, UTF-8 okununca İ, ş ve ğ harfleri bozuluyordu.",
+                  en: "Other findings: in Supplier A's file the first four rows were merged header cells, and they moved every month. Supplier C used a comma as the decimal separator and a dot for thousands, so 1.250 sometimes meant one thousand two hundred and fifty and sometimes one point two five. The ERP export was encoded as Windows-1254, and the letters İ, ş and ğ broke when it was read as UTF-8.",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'details',
+          meta: { tr: 'Karantina', en: 'Quarantine' },
+          title: { tr: 'Eşleştirmeye alınmayan kayıtlar ve nedenleri', en: 'Records kept out of matching, and why' },
+          blocks: [
+            {
+              type: 'sheet',
+              csv: 'quarantine-summary',
+              name: { tr: 'karantina_ozet.xlsx', en: 'quarantine_summary.xlsx' },
+              tabs: { tr: ['ozet', 'kayitlar'], en: ['summary', 'records'] },
+              cell: 'C6',
+              formula: { tr: '=TOPLA(C2:C5)', en: '=SUM(C2:C5)' },
+              numbers: ['C', 'D'],
+              total: true,
+              notes: [
+                {
+                  tr: "Dört kaynaktaki kayıtların yüzde 2,1'i doğrulama kurallarından geçemedi. Kural adları koddaki doğrulama fonksiyonlarının adlarıyla aynı.",
+                  en: '2.1 percent of the records across the four sources failed the validation rules. The rule names are the same as the names of the validation functions in the code.',
+                },
+                {
+                  tr: 'Karantinadaki bir kayıt düzeltilmez, tahminle doldurulmaz. Kaynağına nedeniyle birlikte geri gider. Kaynak düzeltince bir sonraki gece kendiliğinden hatta girer.',
+                  en: 'A record in quarantine is not corrected or filled in with a guess. It goes back to its source together with the reason. Once the source fixes it, it enters the pipeline on its own the next night.',
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
     {
       id: 'hat',
@@ -123,7 +219,94 @@ export const page: StudyPage = {
         tr: 'Model her çifte, iki kaydın aynı ürün olma olasılığını gösteren bir skor verir. Skor çok yüksekse çift otomatik birleşir, çok düşükse reddedilir, aradaki bantta kalan çiftlere satın alma ekibi bakar. Aşağıdaki şekiller bu kararların, modelin hiç görmediği ve ekibin elle işaretlediği 1.600 çiftte nasıl sonuç verdiğini gösterir.',
         en: 'The model gives every pair a score showing how likely the two records are to be the same product. If the score is very high the pair is merged automatically, if it is very low it is rejected, and the purchasing team looks at the pairs in the band between. The figures below show how these decisions turned out on 1,600 pairs that the model had never seen and the team had labelled by hand.',
       },
-      blocks: [],
+      blocks: [
+        {
+          type: 'details',
+          meta: { tr: 'Şekil 1 · veri ve ayrıntı', en: 'Figure 1 · data and details' },
+          title: { tr: 'Test seti, eşikler ve belirsizlik', en: 'Test set, thresholds and uncertainty' },
+          blocks: [
+            {
+              type: 'sheet',
+              csv: 'score-bands',
+              name: { tr: 'skor_dilimleri.xlsx', en: 'score_bands.xlsx' },
+              tabs: { tr: ['dilimler', 'test_cifleri'], en: ['bands', 'test_pairs'] },
+              cell: 'F6',
+              formula: { tr: '=D6/C6', en: '=D6/C6' },
+              numbers: ['C', 'D', 'E', 'F'],
+              total: true,
+              notes: [
+                {
+                  tr: 'Test seti, ekibin elle işaretlediği 6.400 çiftin dörtte biri. Model bu çiftleri eğitim sırasında hiç görmedi. Zor örnekler, yani adı benzeyen ama farklı olan ürünler, bilerek fazla seçildi. Bu yüzden orta skorlardaki farklı ürün oranı gerçek veride olduğundan yüksek görünür.',
+                  en: 'The test set is a quarter of the 6,400 pairs the team labelled by hand. The model never saw these pairs during training. Hard examples, products with similar names that are actually different, were picked on purpose. That is why the share of different products in the middle scores looks higher than it is in the real data.',
+                },
+                {
+                  tr: "Otomatik birleşen 581 çiftin 577'si gerçekten aynı üründü, yani yüzde 99,3. Bu kadar çiftle ölçülen bir oranın gerçek değeri büyük olasılıkla yüzde 98,2 ile 99,7 arasında. Reddedilen 918 çiftin 18'i ise gerçekte aynı üründü, bunlar Şekil 3'te ayrıca inceleniyor.",
+                  en: 'Of the 581 pairs merged automatically, 577 really were the same product, which is 99.3 percent. With this many pairs the true value of the rate is most likely between 98.2 and 99.7 percent. Of the 918 rejected pairs, 18 were actually the same product, and Figure 3 looks at them separately.',
+                },
+                {
+                  tr: 'Aynı eşikler 2,1 milyon aday çiftin tamamına uygulandığında yaklaşık 132 bin çift otomatik birleşti, yaklaşık 14,5 bin çift incelemeye gitti. Bu iki sayı test setindeki oranlardan yapılmış tahminler, tam sayımlar değil.',
+                  en: 'When the same thresholds were applied to all 2.1 million candidate pairs, about 132 thousand pairs were merged automatically and about 14.5 thousand went to review. These two numbers are estimates made from the rates in the test set, not exact counts.',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'details',
+          meta: { tr: 'Şekil 2 · veri ve ayrıntı', en: 'Figure 2 · data and details' },
+          title: { tr: 'Tedarikçi C neden geride kaldı', en: 'Why Supplier C fell behind' },
+          blocks: [
+            {
+              type: 'sheet',
+              csv: 'by-source',
+              name: { tr: 'kaynak_bazinda.xlsx', en: 'by_source.xlsx' },
+              tabs: { tr: ['kaynak', 'test_cifleri'], en: ['source', 'test_pairs'] },
+              cell: 'E5',
+              formula: { tr: '=D5/B5', en: '=D5/B5' },
+              numbers: ['B', 'C', 'D', 'E'],
+              notes: [
+                {
+                  tr: 'Bir çift iki kayıttan oluştuğu için aynı çift iki kaynağın satırında da sayılır. Satırların toplamı bu yüzden test setindeki gerçek eşleşme sayısından büyüktür.',
+                  en: 'A pair is made of two records, so the same pair is counted in the rows of both sources. That is why the rows add up to more than the number of true matches in the test set.',
+                },
+                {
+                  tr: "Tedarikçi C'nin listesi PDF'ten çevrilmişti. Kayıtların yalnızca yüzde 12'sinde barkod vardı ve ürün adları kısa, serbest yazılmıştı. Model barkod ve ölçü gibi kesin bilgilere en çok dayandığı için, bu bilgiler eksik olduğunda eşleşmeleri daha sık kaçırdı. Firma Tedarikçi C'den barkodlu bir liste istedi, liste geldiğinde bu oranın yeniden ölçülmesi planlandı.",
+                  en: "Supplier C's list had been converted from a PDF. Only 12 percent of its records had a barcode, and the product names were short and written freely. The model relies most on exact facts such as the barcode and the size, so it missed matches more often when those were missing. The company asked Supplier C for a list with barcodes, and the rate will be measured again when it arrives.",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'details',
+          meta: { tr: 'Şekil 3 · veri ve ayrıntı', en: 'Figure 3 · data and details' },
+          title: { tr: 'Hatalı çiftlerden örnekler ve yapılan düzeltme', en: 'Examples of wrong pairs and the fix' },
+          blocks: [
+            {
+              type: 'sheet',
+              csv: 'error-pairs',
+              name: { tr: 'hatali_ciftler.xlsx', en: 'error_pairs.xlsx' },
+              tabs: { tr: ['ornekler', 'tum_hatalar'], en: ['examples', 'all_errors'] },
+              cell: 'D2',
+              numbers: ['D'],
+              notes: [
+                {
+                  tr: 'Tabloda yanlış birleşen dört çiftin hepsi, kaçırılan on sekiz çiftten de üç örnek var.',
+                  en: 'The table shows all four pairs that were merged by mistake and three examples of the eighteen missed pairs.',
+                },
+                {
+                  tr: "Yanlış birleşen dört çiftin üçü aynı ürünün renk ya da kaplama varyantıydı. Adları ve ölçüleri birebir aynı olduğu için model bunları yüksek skorla eşleştirdi. Kümeleme adımındaki çelişki kontrolüne kaplama ve rengi de ekledik. Aynı test setinde otomatik birleşen yanlış çift sayısı dörtten bire indi. Kalan tek hata paket farkı, 100'lü ve 1000'li paket ayrı ürün olarak satılıyor.",
+                  en: 'Three of the four wrong merges were colour or finish variants of the same product. Their names and sizes were identical, so the model matched them with a high score. We added finish and colour to the conflict check in the clustering step. On the same test set the number of wrong automatic merges fell from four to one. The one error left is a pack difference, packs of 100 and 1000 are sold as separate products.',
+                },
+                {
+                  tr: "Kaçırılanların çoğu Tedarikçi C'den geldi. Tür sözlüğünde olmayan beş yazım, inceleme kararlarından öğrenilerek sözlüğe eklendi.",
+                  en: 'Most of the missed pairs came from Supplier C. Five spellings that were not in the kind dictionary were learned from review decisions and added to it.',
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
     {
       id: 'kararlar',
@@ -143,7 +326,34 @@ export const page: StudyPage = {
         tr: 'Teslim bir rapor değil, firmanın kendi sunucusunda her gece çalışan bir hat. Yeni ya da değişen kayıtlar gece ikide hatta girer, mevcut ürünlerle eşleşir, belirsiz olanlar sabah inceleme ekranında bekler.',
         en: 'The delivery is not a report but a pipeline that runs every night on the company’s own server. New or changed records enter the pipeline at two in the morning, are matched against existing products, and the uncertain ones wait on the review screen in the morning.',
       },
-      blocks: [],
+      blocks: [
+        {
+          type: 'details',
+          meta: { tr: 'İnceleme', en: 'Review' },
+          title: { tr: 'İnceleme kuyruğu ve karar kaydı', en: 'The review queue and decision log' },
+          blocks: [
+            {
+              type: 'sheet',
+              csv: 'review-decisions',
+              name: { tr: 'match_decision_disa_aktarim.xlsx', en: 'match_decision_export.xlsx' },
+              tabs: { tr: ['kararlar', 'ozet'], en: ['decisions', 'summary'] },
+              cell: 'E2',
+              numbers: ['D', 'G'],
+              rows: 14486,
+              notes: [
+                {
+                  tr: 'Tablo, inceleme kararlarının tutulduğu tablodan alınmış bir kesit. Ekran her seferinde tek bir çift gösteriyordu, karar tek tuşla veriliyor ve sıradaki çift hemen geliyordu. Emin olunamayan çift atlanıp sona bırakılabiliyordu.',
+                  en: 'The table is an excerpt from the table where review decisions are kept. The screen showed one pair at a time, a decision took a single key press and the next pair came up at once. A pair the reviewer was unsure about could be skipped and left for the end.',
+                },
+                {
+                  tr: "İki kişi kuyruğu dokuz iş gününde bitirdi, bir çifte ortalama altı saniyeye yakın bakıldı. Her karar, kimin, ne zaman ve hangi skorla verdiğiyle birlikte kaydedildi. Bu kararlar aynı zamanda modelin bir sonraki eğitimi için yeni işaretli veri oldu. İlk kuyruk bittiğinde işaretli çift sayısı 6.400'den 20.886'ya çıktı.",
+                  en: "Two people finished the queue in nine working days, spending close to six seconds on each pair. Every decision was logged with who made it, when and at what score. The decisions also became new labelled data for the model's next training. When the first queue was done, the number of labelled pairs had grown from 6,400 to 20,886.",
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
     {
       id: 'sonuc',

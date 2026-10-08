@@ -1,0 +1,8 @@
+error;record_a;record_b;score;reason
+false merge;SUP-B · CHIPBOARD SCREW 3,5*30 PZ YELLOW;SUP-A · Chipboard Screw 3.5 x 30 mm White Zinc;0.947;different finish
+false merge;ERP · PANEL SCREW 4X25 BLACK;SUP-A · Panel Screw 4.0 x 25 mm Galvanised;0.951;different finish
+false merge;SUP-B · ACRYLIC SEALANT WHITE 280 G;SUP-C · acrylic sealant grey 280g;0.932;different colour
+false merge;SUP-A · Wall Plug Plastic 6 mm Grey · Pack (100);SUP-C · PLASTIC PLUG 6MM GREY · 1000 pcs;0.928;different pack
+missed;ERP · DRILL BIT HSS 8MM;SUP-C · Drill bit metal 8;0.412;short name, no barcode
+missed;SUP-B · PU FOAM 750ML WINTER;ERP · POLYURETHANE FOAM 750 ML WNTR;0.468;kind not in dictionary
+missed;SUP-A · Silicone Gun Professional Metal;SUP-C · Silicone gun;0.383;short name, no barcode

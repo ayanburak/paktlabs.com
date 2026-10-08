@@ -21,6 +21,7 @@ import { Body } from './sections/Body'
 import { Cover } from './sections/Cover'
 import { readingMinutes } from './sections/readingMinutes'
 import { Summary } from './sections/Summary'
+import { StudyDataProvider } from './StudyDataProvider'
 
 // Sekme basligi calismanin basligi ve sitenin basligindan olusur, mockup'taki
 // "baslik · Veri · PaktLabs" bicimi. Sitenin basligi veri sayfasinin kendi
@@ -38,9 +39,11 @@ export function Study() {
 
   return (
     <Page title={`${title} · ${home.meta.title}`} description={study.page.lede[language]}>
-      <Cover study={study} />
-      <Summary summary={study.page.summary} />
-      <Body chapters={study.page.chapters} minutes={readingMinutes(study.page, language)} />
+      <StudyDataProvider key={study.slug} slug={study.slug} original={study.dataLanguage}>
+        <Cover study={study} />
+        <Summary summary={study.page.summary} />
+        <Body chapters={study.page.chapters} minutes={readingMinutes(study.page, language)} />
+      </StudyDataProvider>
     </Page>
   )
 }

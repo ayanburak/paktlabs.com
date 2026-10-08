@@ -1,0 +1,7 @@
+score_range;decision;pairs;same_product;different_product;rate
+0 – 0.10;reject;696;1;695;0.1%
+0.10 – 0.30;reject;140;2;138;1.4%
+0.30 – 0.55;reject;82;15;67;18.3%
+0.55 – 0.92;review;101;45;56;44.6%
+0.92 – 1;automatic;581;577;4;99.3%
+total;;1,600;640;960;40.0%
