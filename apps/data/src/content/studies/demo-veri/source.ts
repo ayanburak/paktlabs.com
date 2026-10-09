@@ -3,8 +3,8 @@ file: source.ts
 importable: source
 
 Demo Veri calismasinin kod ve veri sayfasi. Calismanin kodu GitHub'da degil,
-bu sayfada paylasiliyor. Kod parcalari, dosya agaci ve veri ornekleri Faz 5'te
-eklenecek, su an yalnizca kapagin metinleri var.
+bu sayfada paylasiliyor. Bolumler Faz 5'in besinci paketinde yazilacak, su an
+yalnizca kapagin metinleri var.
 
 description: Demo Veri calismasinin kod ve veri sayfasindaki metinleri iki dilde tasiyan modul.
 */
@@ -20,6 +20,7 @@ export const source: SourcePage = {
     tr: 'Ürün kataloğu tekilleştirme işinden, paylaşılmasına onay verilen kod parçaları ve veri örnekleri. Kod parçaları okunabilsin diye kısaltıldı, depodaki tam halleri daha uzun.',
     en: 'Code excerpts and data samples from the product catalog deduplication work that were approved for sharing. The code is shortened for reading, the full files in the repository are longer.',
   },
+  tags: ['Python', 'SQL', 'CSV'],
   kunye: [
     {
       label: { tr: 'Dil', en: 'Language' },
@@ -38,4 +39,5 @@ export const source: SourcePage = {
       value: { tr: '8 kod dosyası, 5 veri dosyası', en: '8 code files, 5 data files' },
     },
   ],
+  chapters: [],
 }

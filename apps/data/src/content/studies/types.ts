@@ -96,14 +96,18 @@ export interface StudyPage {
   }
 }
 
-// Kod sayfasinin icerigi, calismanin source.ts dosyasi bu tipe uyar. Kendi
-// basligi, aciklamasi ve kunyesi var. StudyPage'den ayri bir tip, cunku
-// bolumleri detay sayfasinin bolumlerinden farkli olacak: dosya agaci, kod
-// dosyalari ve veri ornekleri. Bolumler Faz 5'te eklenecek.
+// Kod sayfasinin icerigi, calismanin source.ts dosyasi bu tipe uyar. Detay
+// sayfasiyla ayni iskeleti kullanir: kapak, kunye, icindekiler ve numarali
+// bolumler. Bolumler detay sayfasindakiyle ayni Chapter tipindedir, icine kod
+// dosyasi, terminal ciktisi ve veri dosyasi gibi parcalar konur. tags kapaktaki
+// arac adlaridir, ornegin Python ve SQL, urun adi olduklari icin iki dilde
+// aynidir. Ozet bandi ve kapanis bu sayfada yoktur.
 export interface SourcePage {
   title: Localized
   lede: Localized
+  tags: string[]
   kunye: KunyeRow[]
+  chapters: Chapter[]
 }
 
 // One cikan kartin sag kutusu. Araclar urun adlari oldugu icin iki dilde

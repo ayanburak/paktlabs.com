@@ -1,8 +1,8 @@
 /*
 file: blocks.ts
-importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock, TableBlock, TableCell, StationsBlock, Station, ChartBlock, ChartBar, ChartZone, DecisionsBlock, TimelineBlock, TimelineTask, TreeBlock, TreeGroup, CompareBlock, CompareRow, NoteBlock
+importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock, TableBlock, TableCell, StationsBlock, Station, ChartBlock, ChartBar, ChartZone, DecisionsBlock, TimelineBlock, TimelineTask, TreeBlock, TreeGroup, TreeItem, CompareBlock, CompareRow, NoteBlock, CodeBlock, OutputBlock, DataFileBlock
 
-Detay sayfasinin bolumlerine konan parcalarin tipleri. Bir parca icerigi
+Calisma sayfalarinin bolumlerine konan parcalarin tipleri. Bir parca icerigi
 bilmez, adini hikayeden degil bicimden alir. Bir bolumde hangi parcanin hangi
 sirayla ve kac kez kullanilacagi serbesttir. Her parcanin type alani onu
 digerlerinden ayirir, sayfa da bu alana bakip dogru bileseni secer.
@@ -11,7 +11,7 @@ Yeni bir anlatim bicimi gerektiginde buraya yeni bir parca tipi eklenir ve
 Block birlesimine katilir, eski sayfalara dokunulmaz. Yanlis ya da eksik
 yazilmis bir parca derleme hatasi verir.
 
-description: Calisma detay sayfasindaki bolum parcalarinin tiplerini tanimlayan modul.
+description: Calisma sayfalarindaki bolum parcalarinin tiplerini tanimlayan modul.
 */
 
 import type { Localized } from './types'
@@ -176,12 +176,24 @@ export interface TimelineBlock {
   legend?: Localized
 }
 
-// Dosya agacinin bir kolu: bir kok ad ve altindaki ogeler. Ogelerin adi
-// dosya ya da tablo adi oldugu icin iki dilde aynidir, yanindaki aciklama
-// sitenin dilini izler. Agac cizgileri ve hizalama kendiliginden kurulur.
+// Dosya agacinin bir ogesi. Adi dosya, klasor ya da tablo adi oldugu icin
+// iki dilde aynidir, yanindaki aciklama sitenin dilini izler. items verilirse
+// oge bir klasordur ve altindaki ogeler bir kademe iceride cizilir.
+// highlight ogeyi altin cizer, ornegin kod sayfasinda paylasilan dosyalar.
+// muted ogeyi soluk cizer, ornegin paylasilmayan dosyalar.
+export interface TreeItem {
+  name: string
+  note?: Localized
+  highlight?: true
+  muted?: true
+  items?: TreeItem[]
+}
+
+// Dosya agacinin bir kolu: bir kok ad ve altindaki ogeler. Agac cizgileri ve
+// hizalama kendiliginden kurulur.
 export interface TreeGroup {
   root: string
-  items: { name: string; note?: Localized }[]
+  items: TreeItem[]
 }
 
 // Kod gorunumlu dosya agaci, ornegin teslim edilen depo ve veritabani.
@@ -212,6 +224,36 @@ export interface NoteBlock {
   type: 'note'
   label: Localized
   text: Localized
+}
+
+// Calismanin code klasorundeki bir kod dosyasi, satir numaralari, yolu ve
+// kopyalama dugmesiyle. path dosyanin calismanin kodundaki yoludur, ornegin
+// rules/catalog.py, basliginda da bu yol yazar. Dosya verinin dilini izler,
+// iki dilde yorumlari cevrilmis ayni kod durur. Dil adi ve renklendirme
+// dosyanin uzantisindan secilir.
+export interface CodeBlock {
+  type: 'code'
+  path: string
+}
+
+// Bir komutun terminal ciktisi. Metni code klasorundeki bir dosyada durur,
+// ornegin out/evaluate.txt, ve kod gibi verinin dilini izler. Ciktidaki
+// sayilar sayfadaki tablolar ve sekillerle ayni olmalidir.
+export interface OutputBlock {
+  type: 'output'
+  path: string
+}
+
+// Indirilebilir bir veri dosyasi: tam onizlemesi, indirme baglantisi ve
+// altinda bir not. csv calismanin data klasorundeki dosyanin kimligidir,
+// hesap tablosundaki gibi. name indirilen ve basliginda gorunen dosya
+// adidir, verinin dilini izler. note sitenin dilini izler. Satir, sutun ve
+// boyut dosyadan hesaplanir, elle yazilmaz.
+export interface DataFileBlock {
+  type: 'datafile'
+  csv: string
+  name: Localized
+  note?: Localized
 }
 
 // Bolumlerde kullanilabilecek butun parcalar. Yeni parca tipi buraya eklenir.
