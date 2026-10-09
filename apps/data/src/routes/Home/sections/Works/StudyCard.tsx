@@ -17,6 +17,7 @@ import { cx } from '@paktlabs/brand/lib/cx'
 
 import { TagList } from '@/components/TagList'
 import { TechLogo } from '@/components/TechLogo'
+import { useStudyTags } from '@/components/useStudyTags'
 import type { StudyListing } from '@/content/studies/types'
 import { useDict } from '@/i18n'
 
@@ -34,6 +35,7 @@ export function StudyCard({ study }: StudyCardProps) {
   const { language } = useLanguage()
   const { home } = useDict()
   const { ref, visible } = useReveal<HTMLAnchorElement>()
+  const tags = useStudyTags(study)
   const { title, card, feature } = study
 
   return (
@@ -56,7 +58,7 @@ export function StudyCard({ study }: StudyCardProps) {
             <p key={paragraph[language]}>{paragraph[language]}</p>
           ))}
         </div>
-        {!feature && <TagList tags={study.tags} year={study.year} />}
+        {!feature && <TagList items={tags} />}
         <span className={styles.go}>{home.works.go}</span>
       </div>
 

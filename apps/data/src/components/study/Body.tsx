@@ -2,12 +2,12 @@
 file: Body.tsx
 importable: Body
 
-Detay sayfasinin govdesi: solda icindekiler, sagda numarali bolumler. Bolum
+Calisma sayfalarinin govdesi: solda icindekiler, sagda numarali bolumler. Bolum
 numaralari ve icindekilerin listesi burada, bolumlerin sayfadaki sirasindan
 kurulur. Sitenin dili verinin orijinal dilinden farkliysa bolumlerin onune
 00 numarali veri dili bolumu eklenir.
 
-description: Calisma detay sayfasinda bolumleri icindekilerle yan yana dizen govde.
+description: Calisma sayfalarinda bolumleri icindekilerle yan yana dizen govde.
 */
 
 import { type ReactNode, useMemo, useRef } from 'react'
@@ -16,18 +16,18 @@ import { useLanguage } from '@paktlabs/brand/i18n/language'
 
 import type { Chapter as ChapterContent } from '@/content/studies/types'
 import { useDict } from '@/i18n'
-import { BlockView } from '@/routes/Study/blocks/BlockView'
-import { sequenceNumber } from '@/routes/Study/blocks/format'
-import { useStudyData } from '@/routes/Study/studyData'
 
+import { BlockView } from './blocks/BlockView'
+import { sequenceNumber } from './blocks/format'
 import styles from './Body.module.css'
 import { Chapter } from './Chapter'
 import { DATA_LANGUAGE_ID, DataLanguage } from './DataLanguage'
+import { useStudyData } from './studyData'
 import { Toc, type TocEntry } from './Toc'
 
 interface BodyProps {
   chapters: ChapterContent[]
-  minutes: number
+  tocNote: string
   afterChapters: ReactNode
 }
 
@@ -35,8 +35,9 @@ interface BodyProps {
 // yuzden ona veriliyor. Veri dili bolumunun numarasi 00, boylece eklendiginde
 // icerik bolumlerinin numaralari kaymaz. Bolumun id'si sayfada tekil oldugu
 // icin anahtar olarak kullaniliyor. afterChapters son bolumun govdesine, parcalarin
-// ardina konur, Meraklisina karti ve yazar kutusu orada bolumun hizasinda durur.
-export function Body({ chapters, minutes, afterChapters }: BodyProps) {
+// ardina konur, ornegin detay sayfasinda Meraklisina karti ve yazar kutusu
+// orada bolumun hizasinda durur. tocNote icindekilerin altindaki nottur.
+export function Body({ chapters, tocNote, afterChapters }: BodyProps) {
   const { language } = useLanguage()
   const { study } = useDict()
   const data = useStudyData()
@@ -56,7 +57,7 @@ export function Body({ chapters, minutes, afterChapters }: BodyProps) {
 
   return (
     <div className={styles.body}>
-      <Toc entries={entries} chaptersRef={chaptersRef} minutes={minutes} />
+      <Toc entries={entries} chaptersRef={chaptersRef} note={tocNote} />
       <div ref={chaptersRef} className={styles.chapters}>
         {showDataLanguage && <DataLanguage />}
         {chapters.map((chapter, index) => (

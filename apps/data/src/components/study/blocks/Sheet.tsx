@@ -20,8 +20,8 @@ import { cx } from '@paktlabs/brand/lib/cx'
 import type { SheetBlock } from '@/content/studies/blocks'
 import { parseCsv } from '@/content/studies/csv'
 import { useDict } from '@/i18n'
-import { useStudyData } from '@/routes/Study/studyData'
 
+import { useStudyData } from '../studyData'
 import styles from './Sheet.module.css'
 
 interface SheetProps {

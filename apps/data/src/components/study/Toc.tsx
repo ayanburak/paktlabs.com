@@ -2,10 +2,11 @@
 file: Toc.tsx
 importable: Toc
 
-Detay sayfasinin icindekileri. Masaustunde solda sabit duran numarali bir
+Calisma sayfalarinin icindekileri. Masaustunde solda sabit duran numarali bir
 liste, 1100 pikselin altinda sayfanin ustune yapisan ince bir bar. Ikisi ayni
 oge, yalnizca ekran genisligine gore gorunusu degisir. Okunan bolumu ve okuma
-ilerlemesini useReadingProgress'ten alir.
+ilerlemesini useReadingProgress'ten alir. Listenin altinda sayfanin verdigi
+kisa bir not durur, detay sayfasinda okuma suresi.
 
 description: Bolumleri listeleyen, okunan bolumu ve okuma ilerlemesini gosteren icindekiler.
 */
@@ -30,15 +31,15 @@ export interface TocEntry {
 interface TocProps {
   entries: TocEntry[]
   chaptersRef: RefObject<HTMLElement | null>
-  minutes: number
+  note: string
 }
 
 // Okuma ilerlemesi CSS'e --p degiskeniyle verilir, cizginin ne kadar
 // dolacagini stil dosyasi hesaplar. Bar yalnizca dar ekranda gorunur, liste
 // orada bara dokununca acilir. Bir bolum secilince ya da Escape'e basilinca
 // kapanir, Escape'te odak bara doner ki klavyeyle gezen okur yerini kaybetmesin.
-// Okuma suresi disaridan hesaplanmis gelir, burada yalnizca gosterilir.
-export function Toc({ entries, chaptersRef, minutes }: TocProps) {
+// Not sayfadan hazir gelir, burada yalnizca gosterilir.
+export function Toc({ entries, chaptersRef, note }: TocProps) {
   const { study } = useDict()
   const ids = useMemo(() => entries.map((entry) => entry.id), [entries])
   const { current, progress } = useReadingProgress(ids, chaptersRef)
@@ -91,9 +92,7 @@ export function Toc({ entries, chaptersRef, minutes }: TocProps) {
           </li>
         ))}
       </ol>
-      <p className={styles.time}>
-        {study.toc.readingTime.before} {minutes} {study.toc.readingTime.after}
-      </p>
+      <p className={styles.time}>{note}</p>
     </nav>
   )
 }

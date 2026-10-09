@@ -2,12 +2,12 @@
 file: Chapter.tsx
 importable: Chapter
 
-Detay sayfasinin numarali bir bolumunun cercevesi: numara kutusu, kisa
+Calisma sayfalarinin numarali bir bolumunun cercevesi: numara kutusu, kisa
 etiket, baslik ve giris paragrafi. Altina ne konacagini disaridan alir.
 Icerik bolumlerinde calismanin parcalari, veri dili bolumunde dil secicisi
 gelir, ikisi de ayni gorunusle durur.
 
-description: Calisma detay sayfasindaki bir bolumu numarasi, basligi ve girisiyle cizen cerceve.
+description: Calisma sayfalarindaki bir bolumu numarasi, basligi ve girisiyle cizen cerceve.
 */
 
 import type { ReactNode } from 'react'

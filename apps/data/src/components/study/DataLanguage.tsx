@@ -14,10 +14,10 @@ description: Detay sayfasindaki tablolarin dilini secen 00 numarali bolum.
 import { useLanguage } from '@paktlabs/brand/i18n/language'
 
 import { useDict } from '@/i18n'
-import { useStudyData } from '@/routes/Study/studyData'
 
 import { Chapter } from './Chapter'
 import styles from './DataLanguage.module.css'
+import { useStudyData } from './studyData'
 
 export const DATA_LANGUAGE_ID = 'veri-dili'
 

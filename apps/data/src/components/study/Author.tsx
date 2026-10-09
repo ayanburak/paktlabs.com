@@ -6,7 +6,7 @@ Calismayi hazirlayan kisinin kutusu: adi, e-postasi ve profil fotografinin
 yeri. Kutunun tamami ana sitedeki profil sayfasina baglanir. Fotograf gelene
 kadar yerinde kesikli bir cerceve durur.
 
-description: Detay sayfasinda calismanin yazarini gosteren ve profiline baglanan kutu.
+description: Calisma sayfalarinda calismanin yazarini gosteren ve profiline baglanan kutu.
 */
 
 import { mainSiteUrl } from '@paktlabs/brand/content/site'
