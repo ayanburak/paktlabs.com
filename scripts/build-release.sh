@@ -34,7 +34,10 @@ cp -a "$work/apps/$app/dist" "$work/$name/site"
 
 # gzip_static bu kopyalari hazir sunar, nginx her istekte yeniden sikistirmaz.
 # -n dosya adini ve zamani gz basligina yazmaz, ayni build ayni .gz'yi uretir.
-find "$work/$name/site" -type f \( -name '*.html' -o -name '*.js' -o -name '*.css' -o -name '*.svg' \) \
+# csv, py, sql ve txt data'daki calisma dosyalaridir. gzip_static dosya turune
+# bakmaz, .gz kopyasi varsa onu sunar, bu yuzden nginx'te ayar gerekmez.
+find "$work/$name/site" -type f \( -name '*.html' -o -name '*.js' -o -name '*.css' -o -name '*.svg' \
+  -o -name '*.csv' -o -name '*.py' -o -name '*.sql' -o -name '*.txt' \) \
   -exec gzip -9 -n -k {} \;
 
 (cd "$work/$name/site" && find . -type f -print0 | sort -z | xargs -0 sha256sum) > "$work/$name/SHA256SUMS"
