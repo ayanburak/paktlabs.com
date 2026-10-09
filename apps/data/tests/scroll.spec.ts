@@ -1,12 +1,14 @@
 /*
 file: scroll.spec.ts
 
-Site ici gecislerde kaydirma konumunu kontrol eder. Gecisler sayfayi yeniden
-yuklemedigi icin ileri gidilen sayfayi en uste ScrollToTop alir, geri donuste
-kalinan yeri tarayici kendisi kurar. Ileri gidilen sayfa en ustten acilmali,
-geri donulen sayfa kalinan yere donmeli, ayni sayfadaki bolum baglantilari ise
-bolume gitmeli. Geri donus testi ScrollToTop'taki XXX notunun bekcisidir,
-sayfalar icerigini sonradan yuklemeye baslarsa ilk o kirilir.
+Site ici gecislerde kaydirma konumunu kontrol eder. Konumu React Router'in
+ScrollRestoration'i kurar. Calisma sayfalarinin dosyalari rota
+yukleyicisinde indirildigi icin konum ancak sayfa tam boyuyla cizildikten
+sonra kurulmalidir. Ileri gidilen sayfa en ustten acilmali, geri donulen
+sayfa kalinan yere donmeli, bolum baglantilari ister ayni sayfada ister
+dogrudan acilan bir adreste olsun bolume gitmeli. Dosyalar sayfa cizildikten
+sonra gelmeye baslarsa ilk kirilacak olanlar geri donus ve dogrudan bolum
+testleridir.
 
 description: data sitesinde sayfa gecislerindeki kaydirma konumu testleri.
 */
@@ -43,4 +45,30 @@ test('a contents link still moves to its chapter on the same page', async ({ pag
   await expect
     .poll(() => page.evaluate((target) => Math.round(document.getElementById(target)!.getBoundingClientRect().top), id))
     .toBeLessThan(100)
+})
+
+test('a study address with a chapter opens at that chapter', async ({ page }) => {
+  await openPage(page, '/work/demo-veri#kararlar', 'tr')
+  await expect
+    .poll(() => page.evaluate(() => Math.round(document.getElementById('kararlar')!.getBoundingClientRect().top)))
+    .toBeLessThan(100)
+})
+
+// Calisma sayfasinin ortasindan kod sayfasina gecilir ve geri donulur. Iki
+// sayfa da dosyalarini yukleyicide aldigi icin geri donuste sayfa yeniden
+// yuklenir, konum ancak sayfa tam boyuna ulastiginda dogru kurulabilir.
+test('back from the source page returns to the same place on the study page', async ({ page }) => {
+  await openPage(page, '/work/demo-veri', 'tr')
+  const card = page.locator('a[href="/work/demo-veri/source"]')
+  await card.scrollIntoViewIfNeeded()
+  const before = await page.evaluate(() => window.scrollY)
+  expect(before).toBeGreaterThan(2000)
+
+  await card.click()
+  await expect(page).toHaveURL('/work/demo-veri/source')
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
+
+  await page.goBack()
+  await expect(page).toHaveURL('/work/demo-veri')
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(before)
 })

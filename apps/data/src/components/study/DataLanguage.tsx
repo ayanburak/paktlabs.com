@@ -17,7 +17,7 @@ import { useDict } from '@/i18n'
 
 import { Chapter } from './Chapter'
 import styles from './DataLanguage.module.css'
-import { useStudyData } from './studyData'
+import { useDataLanguage } from './dataLanguageContext'
 
 export const DATA_LANGUAGE_ID = 'veri-dili'
 
@@ -28,7 +28,7 @@ export const DATA_LANGUAGE_ID = 'veri-dili'
 export function DataLanguage() {
   const { language: site } = useLanguage()
   const { study } = useDict()
-  const data = useStudyData()
+  const data = useDataLanguage()
   const text = study.dataLanguage
   const options = [
     { language: site, label: `${text.translated} · ${text.languages[site]}` },

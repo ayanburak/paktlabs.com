@@ -21,7 +21,8 @@ import type { SheetBlock } from '@/content/studies/blocks'
 import { parseCsv } from '@/content/studies/csv'
 import { useDict } from '@/i18n'
 
-import { useStudyData } from '../studyData'
+import { useDataLanguage } from '../dataLanguageContext'
+import { useStudyFile } from '../studyFiles'
 import styles from './Sheet.module.css'
 
 interface SheetProps {
@@ -45,8 +46,8 @@ function columnLetter(index: number): string {
 export function Sheet({ block }: SheetProps) {
   const { language: site } = useLanguage()
   const { study } = useDict()
-  const data = useStudyData()
-  const rows = parseCsv(data.csv[data.language][block.csv] ?? '')
+  const data = useDataLanguage()
+  const rows = parseCsv(useStudyFile('data', `${block.csv}.csv`).text)
   const width = Math.max(0, ...rows.map((row) => row.length))
   const letters = Array.from({ length: width }, (_, index) => columnLetter(index))
   const selected = block.cell.match(/^([A-Z]+)(\d+)$/)

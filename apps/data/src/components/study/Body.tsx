@@ -22,7 +22,7 @@ import { sequenceNumber } from './blocks/format'
 import styles from './Body.module.css'
 import { Chapter } from './Chapter'
 import { DATA_LANGUAGE_ID, DataLanguage } from './DataLanguage'
-import { useStudyData } from './studyData'
+import { useDataLanguage } from './dataLanguageContext'
 import { Toc, type TocEntry } from './Toc'
 
 interface BodyProps {
@@ -40,7 +40,7 @@ interface BodyProps {
 export function Body({ chapters, tocNote, afterChapters }: BodyProps) {
   const { language } = useLanguage()
   const { study } = useDict()
-  const data = useStudyData()
+  const data = useDataLanguage()
   const chaptersRef = useRef<HTMLDivElement>(null)
   const showDataLanguage = language !== data.original
 
