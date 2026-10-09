@@ -71,13 +71,15 @@ for (const study of realStudies) {
   // Icindekiler bolume adresteki parcayla atlar, ayni parcayi tasiyan iki
   // bolum olursa yanlis bolume gidilir. 00 veri dili bolumunun adresi de
   // bir icerik bolumuyle cakismamali.
-  test(`${slug}: chapter addresses are unique`, () => {
-    const ids = ['veri-dili', ...study.page.chapters.map((chapter) => chapter.id)]
+  test(`${slug}: chapter addresses are unique`, async () => {
+    const page = await study.page()
+    const ids = ['veri-dili', ...page.chapters.map((chapter) => chapter.id)]
     expect(new Set(ids).size).toBe(ids.length)
   })
 
-  test(`${slug}: every sheet points to a data file`, () => {
-    const ids = study.page.chapters.flatMap((chapter) => sheetIds(chapter.blocks))
+  test(`${slug}: every sheet points to a data file`, async () => {
+    const page = await study.page()
+    const ids = page.chapters.flatMap((chapter) => sheetIds(chapter.blocks))
     for (const id of ids) {
       expect(csvIds(slug, 'tr'), id).toContain(id)
       expect(csvIds(slug, 'en'), id).toContain(id)

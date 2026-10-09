@@ -14,12 +14,12 @@ description: data sitesindeki calisma detay sayfasinin davranis testleri.
 
 import { expect, test } from '@playwright/test'
 
-import { demoVeri } from '../src/content/studies/demo-veri'
+import { page as demoPage } from '../src/content/studies/demo-veri/page'
 
 import { dict, languages, openPage } from './support'
 
 const path = '/work/demo-veri'
-const chapters = demoVeri.page.chapters
+const chapters = demoPage.chapters
 
 for (const lang of languages) {
   test(`${lang}: chapters and contents follow the page order`, async ({ page }) => {

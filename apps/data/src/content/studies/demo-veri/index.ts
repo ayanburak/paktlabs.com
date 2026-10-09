@@ -3,8 +3,8 @@ file: index.ts
 importable: demoVeri
 
 Demo Veri calismasinin kunye dosyasi. Listede gorunen bilgileri, verinin
-orijinal dilini ve kodun yerini tasir, detay sayfasini ve kod sayfasini kendi
-dosyalarindan alip tek bir calismada birlestirir.
+orijinal dilini ve kodun yerini tasir. Detay sayfasini ve kod sayfasini kendi
+dosyalarindan yalnizca sayfa acilirken yukler, metinleri ana pakete girmez.
 
 description: Demo Veri calismasini veri sayfasindaki listeye ve detay sayfasina veren modul.
 */
@@ -14,9 +14,6 @@ description: Demo Veri calismasini veri sayfasindaki listeye ve detay sayfasina 
 // icin iki dilde ayni metin yazili.
 
 import type { Study } from '../types'
-
-import { page } from './page'
-import { source } from './source'
 
 export const demoVeri: Study = {
   slug: 'demo-veri',
@@ -45,6 +42,6 @@ export const demoVeri: Study = {
   },
   author: 'ayanburak',
   dataLanguage: 'tr',
-  code: { kind: 'page', page: source },
-  page,
+  code: { kind: 'page', page: () => import('./source').then((module) => module.source) },
+  page: () => import('./page').then((module) => module.page),
 }

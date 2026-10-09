@@ -13,6 +13,7 @@ description: data sitesinin rota ve bulunamadi sayfasi testleri.
 import { expect, test } from '@playwright/test'
 
 import { demoVeri } from '../src/content/studies/demo-veri'
+import { page as demoPage } from '../src/content/studies/demo-veri/page'
 import { source as demoSource } from '../src/content/studies/demo-veri/source'
 
 import { dict, languages, openPage } from './support'
@@ -50,7 +51,7 @@ for (const lang of languages) {
 
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(demoVeri.title[lang])
     await expect(page).toHaveTitle(`${demoVeri.title[lang]} · ${dict[lang].home.meta.title}`)
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', demoVeri.page.lede[lang])
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', demoPage.lede[lang])
   })
 }
 

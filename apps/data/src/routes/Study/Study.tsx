@@ -8,8 +8,6 @@ gelmiyorsa bulunamadi sayfasi gosterilir.
 description: Adresteki slug'a ait calismanin detay sayfasini olusturan bilesen.
 */
 
-import { useParams } from 'react-router-dom'
-
 import { useLanguage } from '@paktlabs/brand/i18n/language'
 
 import { Page } from '@/components/Page'
@@ -19,12 +17,9 @@ import { Cover } from '@/components/study/Cover'
 import { DataLanguageProvider } from '@/components/study/DataLanguageProvider'
 import { StudyFilesContext } from '@/components/study/studyFiles'
 import { useStudyTags } from '@/components/useStudyTags'
-import { findStudy } from '@/content/studies'
-import type { StudyFileSet } from '@/content/studies/files'
-import type { Study as StudyContent } from '@/content/studies/types'
 import { useDict } from '@/i18n'
 import { NotFound } from '@/routes/NotFound/NotFound'
-import { useStudyFileSet } from '@/routes/studyLoader'
+import { type StudyRoute, useStudyRoute } from '@/routes/studyLoader'
 
 import { Closing } from './sections/Closing'
 import { Curious } from './sections/Curious'
@@ -35,47 +30,40 @@ import { Summary } from './sections/Summary'
 // "baslik · Veri · PaktLabs" bicimi. Sitenin basligi veri sayfasinin kendi
 // basligidir, ayrica bir anahtar tutulmaz. Kapak, govde ve yazar kutusu kod
 // sayfasiyla ortak, ozet bandi, Meraklisina karti ve kapanis bu sayfaya ozel.
-// Calismanin dosyalari rota yukleyicisinden hazir gelir, calisma yoksa
-// yukleyici bir sey yuklemez.
+// Calismanin metni ve dosyalari rota yukleyicisinden hazir gelir, calisma
+// yoksa yukleyici bir sey yuklemez.
 export function Study() {
-  const { slug = '' } = useParams()
-  const study = findStudy(slug)
-  const files = useStudyFileSet()
+  const route = useStudyRoute()
 
-  if (!study || !files) return <NotFound />
-  return <StudyView study={study} files={files} />
-}
-
-interface StudyViewProps {
-  study: StudyContent
-  files: StudyFileSet
+  if (!route) return <NotFound />
+  return <StudyView {...route} />
 }
 
 // Calisma bulunduktan sonraki kisim ayri bir bilesen, cunku etiketlerin
 // metni bir hook'la kuruluyor ve hook'lar bulunamadi kontrolunden once
 // kosulsuz cagrilmali. Donus baglantisi veri sayfasindaki listeye gider,
 // bulunamadi sayfasindaki donus dugmesiyle ayni adres.
-function StudyView({ study, files }: StudyViewProps) {
+function StudyView({ study, page, files }: StudyRoute) {
   const { language } = useLanguage()
   const { home, study: dict } = useDict()
   const tags = useStudyTags(study)
   const title = study.title[language]
-  const minutes = readingMinutes(study.page, language)
+  const minutes = readingMinutes(page, language)
 
   return (
-    <Page title={`${title} · ${home.meta.title}`} description={study.page.lede[language]}>
+    <Page title={`${title} · ${home.meta.title}`} description={page.lede[language]}>
       <DataLanguageProvider key={study.slug} original={study.dataLanguage}>
         <StudyFilesContext.Provider value={files}>
           <Cover
             crumb={{ href: '/#calismalar', back: dict.cover.back, current: study.number }}
             tags={tags}
             title={title}
-            lede={study.page.lede[language]}
-            kunye={study.page.kunye}
+            lede={page.lede[language]}
+            kunye={page.kunye}
           />
-          <Summary summary={study.page.summary} />
+          <Summary summary={page.summary} />
           <Body
-            chapters={study.page.chapters}
+            chapters={page.chapters}
             tocNote={`${dict.toc.readingTime.before} ${minutes} ${dict.toc.readingTime.after}`}
             afterChapters={
               <>
@@ -86,7 +74,7 @@ function StudyView({ study, files }: StudyViewProps) {
           />
         </StudyFilesContext.Provider>
       </DataLanguageProvider>
-      <Closing study={study} />
+      <Closing study={study} closing={page.closing} />
     </Page>
   )
 }

@@ -1,6 +1,6 @@
 /*
 file: types.ts
-importable: Localized, Study, StudyListing, PlaceholderStudy, StudyPage, Chapter, CodeLocation, StudyCard, SourcePage, StudyFeature, StudyTag, KunyeRow
+importable: Localized, Lazy, Study, StudyListing, PlaceholderStudy, StudyPage, Chapter, CodeLocation, StudyCard, SourcePage, StudyFeature, StudyTag, KunyeRow
 
 Bir calisma iki kattan olusur. StudyListing veri sayfasindaki listede gorunen
 kisimdir: adresteki slug, numara, yil, etiketler, baslik ve kart metni. Study
@@ -117,9 +117,15 @@ export interface StudyFeature {
   tools: TechName[]
 }
 
+// Ancak gerektiginde yuklenen bir icerik. Detay ve kod sayfalarinin metni
+// ana pakete girmez, sayfa acilirken rota yukleyicisi bu fonksiyonu cagirir.
+// Calismanin kunye dosyasinda import('./page') ile yazilir, boylece Vite
+// metni ayri bir parcaya ayirir ve derleyici yine icerigin tipini denetler.
+export type Lazy<T> = () => Promise<T>
+
 // Kodun yeri. kind alani hangisi oldugunu soyler, depo adresi ile kod sayfasi
 // ayni anda yazilamaz.
-export type CodeLocation = { kind: 'repo'; url: string } | { kind: 'page'; page: SourcePage }
+export type CodeLocation = { kind: 'repo'; url: string } | { kind: 'page'; page: Lazy<SourcePage> }
 
 // Gercek calismanin da yer tutucunun da listede gosterdigi kisim. Baslik
 // kartta, detay sayfasinda ve sekme basliginda ayni oldugu icin sayfanin
@@ -137,12 +143,13 @@ export interface StudyListing {
 // dataLanguage verinin orijinal dilidir. Sayfa acildiginda hesap tablolari
 // sitenin dilinde gosterilir, bu dil ondan farkliysa ilk bolumden once veri
 // dili bolumu cikar. author calismayi hazirlayan kisinin kimligidir, yazar
-// kutusu her detay sayfasinda bulunur.
+// kutusu her detay sayfasinda bulunur. Detay sayfasinin metni page ile
+// ancak sayfa acilirken yuklenir, liste yalnizca bu dosyadaki kunyeyi okur.
 export interface Study extends StudyListing {
   author: AuthorId
   dataLanguage: Language
   code: CodeLocation
-  page: StudyPage
+  page: Lazy<StudyPage>
 }
 
 // Mockup'taki lorem kartlari canliya tasimak icin var. Detay ve kod sayfalari

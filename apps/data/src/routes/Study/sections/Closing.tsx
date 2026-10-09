@@ -18,13 +18,14 @@ import { cx } from '@paktlabs/brand/lib/cx'
 
 import { ArtSlot } from '@/components/ArtSlot'
 import { studies } from '@/content/studies'
-import type { Study } from '@/content/studies/types'
+import type { Study, StudyPage } from '@/content/studies/types'
 import { useDict } from '@/i18n'
 
 import styles from './Closing.module.css'
 
 interface ClosingProps {
   study: Study
+  closing: StudyPage['closing']
 }
 
 // Sonraki calisma listede bu calismadan sonra gelen ilk gercek calismadir,
@@ -36,7 +37,7 @@ function nextStudy(current: Study): Study | undefined {
   return real[(real.indexOf(current) + 1) % real.length]
 }
 
-export function Closing({ study }: ClosingProps) {
+export function Closing({ study, closing }: ClosingProps) {
   const { language } = useLanguage()
   const { home, study: dict } = useDict()
   const copy = useReveal<HTMLDivElement>()
@@ -47,7 +48,7 @@ export function Closing({ study }: ClosingProps) {
       <div className={styles.inner}>
         <div ref={copy.ref} className={cx('reveal', copy.visible && 'in', styles.copy)}>
           <span className="eyebrow">{dict.closing.label}</span>
-          <h2>{study.page.closing.title[language]}</h2>
+          <h2>{closing.title[language]}</h2>
           <nav className={styles.next} aria-label={dict.closing.nav}>
             <a href="/#calismalar" className={styles.back}>
               <span className={cx(styles.box, styles.head)}>
@@ -79,7 +80,7 @@ export function Closing({ study }: ClosingProps) {
           </a>
         </div>
         <figure className={styles.art}>
-          <ArtSlot label={study.page.closing.art.label[language]} note={study.page.closing.art.note[language]} />
+          <ArtSlot label={closing.art.label[language]} note={closing.art.note[language]} />
         </figure>
       </div>
     </section>
