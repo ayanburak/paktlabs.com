@@ -5,6 +5,7 @@ importable: Hero
 description: Açılış bölümündeki sloganı, iletişim bağlantısını ve ekrana uygun illüstrasyonu gösterir.
 */
 
+import { contactPageUrl } from '@paktlabs/brand/content/contact'
 import { useReveal } from '@paktlabs/brand/hooks/useReveal'
 import { cx } from '@paktlabs/brand/lib/cx'
 import layout from '@paktlabs/brand/styles/HeroLayout.module.css'
@@ -42,7 +43,7 @@ export function Hero() {
             </span>
           ))}
         </h1>
-        <a className={`cta rise ${styles.cta}`} href="#iletisim">
+        <a className={`cta rise ${styles.cta}`} href={contactPageUrl}>
           {hero.cta}
         </a>
       </div>

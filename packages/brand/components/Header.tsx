@@ -21,6 +21,7 @@ description: Sayfanin ustunde duran, logo, disiplin baglantilari ve dil degistir
 import { useEffect, useId, useRef, useState } from 'react'
 
 import logoUrl from '../assets/logo.svg'
+import { contactPageUrl } from '../content/contact'
 import { disciplineUrls } from '../content/disciplines'
 import type { Discipline } from '../content/disciplines'
 import { useLanguage } from '../i18n/language'
@@ -59,7 +60,7 @@ export function Header({ current, homeHref = '/' }: HeaderProps) {
     { href: disciplineUrls.web, label: nav.web, current: current === 'web' },
     { href: disciplineUrls.automation, label: nav.automation, current: current === 'automation' },
     { href: disciplineUrls.data, label: nav.data, current: current === 'data' },
-    { href: '#iletisim', label: nav.contact, current: false },
+    { href: contactPageUrl, label: nav.contact, current: false },
   ]
 
   // Iki nav ayni anda hic gorunmuyor, biri hep display:none. O yuzden ikisi de

@@ -23,5 +23,11 @@
     "title": "This road is closed for now",
     "lead": "The address may be mistyped, the page may have moved, or it may not be ready yet.",
     "back": "Go back"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Let's talk",
+    "lead": "Wherever your project stands right now — with a finished brief and business plan, or just an idea — get in touch. We'll get back to you shortly!",
+    "action": "Contact"
   }
 }

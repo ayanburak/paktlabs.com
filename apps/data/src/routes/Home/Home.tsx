@@ -5,10 +5,11 @@ importable: Home
 description: data.paktlabs.com'un giris sayfasi olan veri sayfasini olusturan bilesen.
 */
 
+import { Contact } from '@paktlabs/brand/components/Contact'
+
 import { Page } from '@/components/Page'
 import { useDict } from '@/i18n'
 
-import { Contact } from './sections/Contact'
 import { Hero } from './sections/Hero'
 import { TechRail } from './sections/TechRail'
 import { Works } from './sections/Works/Works'

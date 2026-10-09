@@ -76,16 +76,5 @@
         ]
       }
     }
-  },
-  "contact": {
-    "eyebrow": "İletişim",
-    "title": "Konuşalım",
-    "lead": "Projeniz hangi aşamada olursa olsun; ister hazır bir çalışma ve iş planıyla, ister yalnızca bir iş fikriyle bizimle iletişime geçin. En kısa sürede size ulaşacağız!",
-    "form": {
-      "name": "Ad",
-      "email": "E-posta",
-      "message": "Mesaj",
-      "send": "Gönder →"
-    }
   }
 }

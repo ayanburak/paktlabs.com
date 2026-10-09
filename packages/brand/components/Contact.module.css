@@ -1,3 +1,6 @@
+/* Ust cizgiyi bolum kendisi cizer, ustteki bolum alt cizgi cizmez, yoksa iki
+   kat kalin bir cizgi cikar. Figur alanin altina yaslanir, ayaklari alt
+   bilginin ust cizgisine oturur. */
 .contact {
   margin-top: 0;
   padding: clamp(48px, 6vw, 88px) var(--gutter) 0;
@@ -32,64 +35,20 @@
   max-width: 46ch;
 }
 
-.form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  margin: 36px 0 0;
-  max-width: 620px;
-}
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-.fieldWide {
-  grid-column: 1 / -1;
-}
-.field label {
-  font: 700 11px/1 var(--font-mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--faint);
-}
-.field input,
-.field textarea {
-  font-family: inherit;
-  font-size: 15px;
-  color: var(--ink);
-  background: var(--surface);
-  border: 2px solid var(--ink);
-  border-radius: 0;
-  padding: 12px 14px;
-}
-.field textarea {
-  min-height: 128px;
-  resize: vertical;
-}
-
-.sendRow {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  justify-self: start;
-}
-
-.send {
-  margin-top: 4px;
+.action {
+  display: inline-block;
+  margin-top: 36px;
   padding: 12px 22px;
   font: 700 12px/1 var(--font-mono);
   letter-spacing: 0.04em;
   color: var(--on-ink);
   background: var(--ink);
   border: 2px solid var(--ink);
-  cursor: pointer;
   transition:
     background 0.15s ease,
     color 0.15s ease;
 }
-.send:hover {
+.action:hover {
   background: var(--panel);
   color: var(--ink);
 }
@@ -111,7 +70,7 @@
   text-underline-offset: 3px;
 }
 
-/* +1px ince ayar ayaklari forma en yakin satira oturtur.
+/* +1px ince ayar ayaklari alt cizgiye oturtur.
    Cerceve yerlesimi, icindeki img belirme hareketini tasir. */
 .art {
   display: block;
@@ -136,11 +95,5 @@
   }
   .art {
     display: none;
-  }
-  /* Ad/E-posta yan yana iki sutunda kaliyordu, input'un tarayici
-     varsayilan min-genisligi (~205px) iki sutunu sigdiramayip tum
-     sayfayi yatay tasiriyordu (bkz. Footer'daki kirpilma) */
-  .form {
-    grid-template-columns: 1fr;
   }
 }

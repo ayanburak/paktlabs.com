@@ -76,16 +76,5 @@
         ]
       }
     }
-  },
-  "contact": {
-    "eyebrow": "Contact",
-    "title": "Let's talk",
-    "lead": "Wherever your project stands right now — with a finished brief and business plan, or just an idea — get in touch. We'll get back to you shortly!",
-    "form": {
-      "name": "Name",
-      "email": "Email",
-      "message": "Message",
-      "send": "Send →"
-    }
   }
 }

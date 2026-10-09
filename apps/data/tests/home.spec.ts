@@ -140,15 +140,19 @@ test.describe('work filter', () => {
   })
 })
 
+// Iletisim bolumu brand'de ortak, landing'dekiyle ayni. Adresler bilerek elle
+// yazili, uygulamanin adres dosyasindan okunmaz.
 for (const lang of languages) {
-  test(`${lang}: contact section offers the email and keeps the drawing slot`, async ({ page }) => {
+  test(`${lang}: contact section leads to the contact page and offers the email`, async ({ page }) => {
     await openPage(page, '/', lang)
 
     const contact = page.locator('#iletisim')
-    await expect(contact.getByRole('heading', { level: 2 })).toHaveText(dict[lang].home.contact.title)
+    await expect(contact.getByRole('heading', { level: 2 })).toHaveText(dict[lang].contact.title)
+    await expect(contact.getByRole('link', { name: dict[lang].contact.action, exact: true })).toHaveAttribute(
+      'href',
+      'https://paktlabs.com/contact',
+    )
     await expect(contact.getByRole('link', { name: 'info@paktlabs.com' })).toHaveAttribute('href', 'mailto:info@paktlabs.com')
-    await expect(contact.getByText(dict[lang].home.contact.slot.label)).toBeVisible()
-    // mockup'taki landing formuna giden dugme bilerek yok
-    await expect(contact.getByRole('link')).toHaveCount(1)
+    await expect(contact.getByRole('link')).toHaveCount(2)
   })
 }

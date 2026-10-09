@@ -16,7 +16,7 @@ Landing alan bağımsızdır. Disiplin bağlantıları ayrı subdomain'lere gide
 
 Bu adresler `packages/brand/content/disciplines.ts` içinde tek yerde tutulur. Landing'in üst menüsü, mobil menüsü, disiplin kartları, iş kapsamı bantları ve alt menüsü ile disiplin sitelerinin üst barı aynı kaynağı kullanır. Adres değiştiğinde yalnızca bu dosya güncellenir. Subdomain'lerin DNS ve sertifika kurulumu bu reponun işi değildir, sunucu tarafında belgelenir. `web` ve `automation` subdomain'lerinin henüz sitesi ve DNS kaydı yoktur.
 
-Landing içinde `/web`, `/automation` veya `/data` gibi alt sayfalar tanımlanmaz. Uygulamada tek bir rota vardır. Bunun dışında kalan her adreste sunucu, derlemenin ayrı bir girişi olan `404.html` dosyasını gerçek 404 koduyla döndürür. Bu dosya brand paketindeki ortak bulunamadı sayfasını landing'in üst barı ve alt bilgisiyle gösterir, böylece ziyaretçi sunucunun kendi hata sayfasını görmez. Derleme iki giriş taşıdığı halde CSS tek dosya olarak üretilir, çünkü Vite ortak stilleri ayrı bir parçaya ayırdığında global stiller bileşen stillerinden önce yüklenir ve brand'in istediği sıra bozulur. İletişim formu bir backend'e bağlı değildir, gönder düğmesi bilinçli olarak işlem yapmaz. Doğrudan iletişim için sayfadaki e-posta bağlantısı kullanılır.
+Landing içinde `/web`, `/automation` veya `/data` gibi alt sayfalar tanımlanmaz. Uygulamada tek bir rota vardır. Bunun dışında kalan her adreste sunucu, derlemenin ayrı bir girişi olan `404.html` dosyasını gerçek 404 koduyla döndürür. Bu dosya brand paketindeki ortak bulunamadı sayfasını landing'in üst barı ve alt bilgisiyle gösterir, böylece ziyaretçi sunucunun kendi hata sayfasını görmez. Derleme iki giriş taşıdığı halde CSS tek dosya olarak üretilir, çünkü Vite ortak stilleri ayrı bir parçaya ayırdığında global stiller bileşen stillerinden önce yüklenir ve brand'in istediği sıra bozulur. Sayfa, bütün PaktLabs sitelerinde ortak olan iletişim bölümüyle kapanır. Bölümde form bulunmaz, tek düğme ana sitenin `/contact` adresindeki iletişim sayfasına gider, altında e-posta adresi durur. Hero'daki ve üst bardaki İletişim bağlantıları da aynı adrese gider. İletişim sayfası henüz yazılmadığı için bu adres şimdilik bulunamadı sayfasını açar.
 
 ## Dil
 
@@ -68,7 +68,7 @@ npm run test:visual
 
 Test koşulları, toleranslar ve testlerin neyi kanıtlamadığı `apps/landing/tests/README.md` içinde anlatılır.
 
-GitHub Actions her push ve pull request'te üç iş çalıştırır: bütün repo için lint, ortak paketin tip kontrolü ve landing'in tip kontrolü ile davranış testleri. Görsel testler CI'da çalıştırılmaz, çünkü referans görüntüler yerel font çizimiyle alınmıştır ve farklı bir runner'da yanlış alarm üretir.
+GitHub Actions her push ve pull request'te dört iş çalıştırır: bütün repo için lint, ortak paketin tip kontrolü, landing'in ve data'nın kendi tip kontrolü ile davranış testleri. Görsel testler CI'da çalıştırılmaz, çünkü referans görüntüler yerel font çizimiyle alınmıştır ve farklı bir runner'da yanlış alarm üretir.
 
 `docs/visual-baseline/` klasörü, responsive düzeltmelerden önceki durumun `257ed79` commit'inden alınmış arşiv kaydıdır. Güncel referanslar `apps/landing/tests/visual.spec.ts-snapshots/` altında durur. Arşiv yeni görüntülerle değiştirilmez.
 

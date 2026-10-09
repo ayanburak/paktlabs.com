@@ -14,6 +14,7 @@ import type { Locator } from '@playwright/test'
 import { dict, disciplineUrls, languages, openHome } from './support'
 
 const { web, automation, data } = disciplineUrls
+const contactPage = 'https://paktlabs.com/contact'
 
 async function hrefs(links: Locator) {
   return links.evaluateAll((els) => els.map((el) => el.getAttribute('href')))
@@ -27,9 +28,10 @@ for (const lang of languages) {
     await openHome(page, lang)
 
     const headerLinks = page.locator('header nav').first().locator('a')
-    expect(await hrefs(headerLinks)).toEqual([web, automation, data, '#iletisim'])
+    expect(await hrefs(headerLinks)).toEqual([web, automation, data, contactPage])
     await expect(headerLinks).toHaveText([nav.web, nav.automation, nav.data, nav.contact])
 
+    await expect(page.locator('main section').first().locator('a.cta')).toHaveAttribute('href', contactPage)
     expect(await hrefs(page.locator('#disiplinler a'))).toEqual([data, automation, web])
     expect(await hrefs(page.locator('#isler a'))).toEqual([data, automation, web])
 
@@ -43,7 +45,7 @@ for (const lang of languages) {
     await openHome(page, lang)
     await page.locator('header button[aria-expanded]').click()
     const panelLinks = page.locator('header > nav a')
-    expect(await hrefs(panelLinks)).toEqual([web, automation, data, '#iletisim'])
+    expect(await hrefs(panelLinks)).toEqual([web, automation, data, contactPage])
     await expect(panelLinks).toHaveText([nav.web, nav.automation, nav.data, nav.contact])
   })
 }

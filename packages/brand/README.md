@@ -6,11 +6,11 @@ Bu paket PaktLabs'ın bütün vitrin sitelerinin ortak katmanıdır. Landing ve 
 
 `styles/` altında üç dosya durur. `tokens.css` renk, boşluk, font ve ölçü değişkenlerini, `global.css` reset'i, tipografiyi ve `.wrap`, `.eyebrow`, `.cta`, `.reveal`, `.rise` gibi paylaşılan sınıfları taşır. `HeroLayout.module.css` sitelerin hero'larında ortak olan masaüstü yerleşimidir. Global değildir, bir bileşen onu import edip sınıflarını verdiğinde devreye girer. Bir site renk ya da font sabitini kendi stillerinde tekrar yazmaz, her zaman bu değişkenleri kullanır.
 
-`components/` altında `Header`, `Footer`, `NotFound` ve `RevealImg` bileşenleri durur. Header bulunulan disiplini `current` ile, logonun gideceği adresi `homeHref` ile alır. Footer'a `homeHref` verildiğinde ana siteye dönen bir bağlantı eklenir. Landing ikisine de prop vermez.
+`components/` altında `Header`, `Footer`, `Contact`, `NotFound` ve `RevealImg` bileşenleri durur. Header bulunulan disiplini `current` ile, logonun gideceği adresi `homeHref` ile alır. Footer'a `homeHref` verildiğinde ana siteye dönen bir bağlantı eklenir. Landing ikisine de prop vermez.
 
 `i18n/` altında dil katmanı durur. `LanguageProvider` aktif dili tutar ve `pl_lang` anahtarıyla saklar. `useDocumentMeta` sayfanın başlığını ve açıklamasını günceller, bu iş provider'da değil sayfada yapılır çünkü bir sitenin her rotası kendi başlığını taşır. `createDictHook` bir sitenin iki sözlüğünden `useDict` hook'unu üretir ve en sözlüğünde eksik kalan bir anahtarı derleme hatasına çevirir. `useBrandDict` menü, alt bilgi ve erişilebilirlik etiketleri gibi bütün sitelerde aynı kalan metinleri döndürür.
 
-`hooks/useReveal.ts`, `lib/cx.ts`, `content/disciplines.ts`, `content/contact.ts`, `content/site.ts`, `assets/logo.svg` ve bulunamadı sayfasının çizimi `assets/barrier.svg` küçük ortak parçalardır. Disiplin adresleri yalnızca `disciplines.ts` içinde, iletişim adresi yalnızca `contact.ts` içinde, disiplin sitelerinin logoda ve alt bilgide döndüğü ana site adresi yalnızca `site.ts` içinde tutulur. Bir adres değiştiğinde bütün siteler aynı anda doğru yere gider.
+`hooks/useReveal.ts`, `lib/cx.ts`, `content/disciplines.ts`, `content/contact.ts`, `content/site.ts`, `assets/logo.svg`, bulunamadı sayfasının çizimi `assets/barrier.svg` ve iletişim bölümünün çizimi `assets/phone.svg` küçük ortak parçalardır. Disiplin adresleri yalnızca `disciplines.ts` içinde, e-posta adresi ve iletişim sayfasının adresi yalnızca `contact.ts` içinde, disiplin sitelerinin logoda ve alt bilgide döndüğü ana site adresi yalnızca `site.ts` içinde tutulur. Bir adres değiştiğinde bütün siteler aynı anda doğru yere gider.
 
 ## Kullanım
 
@@ -76,6 +76,10 @@ Ortak kurallar derlenen CSS'te sitenin kendi kurallarından önce gelir, çünk�
 Bütün sitelerin bulunamadı sayfası `components/NotFound.tsx`'tir. Metni solda, bariyere yaslanmış bir karakter çizimini sağda gösterir ve masaüstünde hero'ların yerleşimini kullanır. Ziyaretçi hangi sitede yanlış bir adrese düşerse düşsün aynı sayfayı görür, sunucunun kendi hata sayfasını görmez. Bileşen yalnızca sayfanın içeriğini çizer, üst bar, alt bilgi ve sekme başlığı sitenin kendi sayfa çerçevesinden gelir. Metinleri ortak sözlükte `notFound` altında durur.
 
 Geri dön düğmesi ziyaretçiyi aynı sitede geldiği sayfaya götürür. Ziyaretçi adrese başka bir siteden ya da adres çubuğuna yazarak geldiyse sitenin ana sayfasına gider, böylece düğme ziyaretçiyi hiçbir zaman PaktLabs'ın dışına çıkarmaz. Önceki sayfanın aynı siteden olup olmadığı tarayıcının Navigation API'siyle, bu API'yi desteklemeyen tarayıcılarda ise önceki sayfanın adresiyle anlaşılır.
+
+### İletişim bölümü
+
+Bütün sitelerin ana sayfası `components/Contact.tsx` ile kapanır. Bölüm prop almaz, metinleri ortak sözlükte `contact` altında, adresleri `content/contact.ts` içinde durur, bu yüzden her sitede birebir aynı görünür. Bölümde form yoktur. Tek düğme ziyaretçiyi ana sitenin iletişim sayfasına götürür, doğrudan yazmak isteyen için altında e-posta adresi durur. İletişim sayfası yalnızca ana sitede olacağı için adresi tam adres olarak yazılır, disiplin sitelerinden de ana siteye gider. Üst bardaki İletişim bağlantısı da aynı adresi kullanır. Telefon çizimi masaüstünde gösterilir, dar ekranda hiç indirilmez. Bölüm üst çizgisini kendisi çizer, bu yüzden hemen üstündeki bölüm alt çizgi çizmez.
 
 ## Değişiklik yaparken
 

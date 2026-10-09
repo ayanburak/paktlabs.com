@@ -23,5 +23,11 @@
     "title": "Bu yol şimdilik kapalı",
     "lead": "Adres yanlış yazılmış, sayfa taşınmış ya da henüz hazır olmayabilir.",
     "back": "Geri dön"
+  },
+  "contact": {
+    "eyebrow": "İletişim",
+    "title": "Konuşalım",
+    "lead": "Projeniz hangi aşamada olursa olsun; ister hazır bir çalışma ve iş planıyla, ister yalnızca bir iş fikriyle bizimle iletişime geçin. En kısa sürede size ulaşacağız!",
+    "action": "İletişim"
   }
 }

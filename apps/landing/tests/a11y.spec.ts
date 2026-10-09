@@ -68,8 +68,12 @@ for (const lang of languages) {
     await page.keyboard.press('Escape')
     await expect(burger).toHaveAttribute('aria-expanded', 'false')
 
+    // Paneldeki butun baglantilar artik sayfanin disina gidiyor. Tarayicinin
+    // gitmesi durdurulur, React'in tiklama isleyicisi yine calisir ve panelin
+    // kapandigi gorulur.
     await burger.click()
-    await panel.locator('a[href="#iletisim"]').click()
+    await panel.evaluate((el) => el.addEventListener('click', (event) => event.preventDefault()))
+    await panel.locator('a[href="https://paktlabs.com/contact"]').click()
     await expect(burger).toHaveAttribute('aria-expanded', 'false')
   })
 }
