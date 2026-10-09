@@ -13,7 +13,7 @@ testleridir.
 description: data sitesinde sayfa gecislerindeki kaydirma konumu testleri.
 */
 
-import { expect, test } from '@playwright/test'
+import { expect, type Page, test } from '@playwright/test'
 
 import { openPage } from './support'
 
@@ -47,11 +47,39 @@ test('a contents link still moves to its chapter on the same page', async ({ pag
     .toBeLessThan(100)
 })
 
-test('a study address with a chapter opens at that chapter', async ({ page }) => {
+// Fontlar bilerek geciktirilir. Bolume ilk kaydirma fontlar gelmeden olur,
+// fontlar gelince ustteki metinler yeniden dizilir. Root'taki hizalama
+// olmasa baslik ekranin ustune tasar.
+async function slowFonts(page: Page) {
+  await page.route(/fonts\.(googleapis|gstatic)\.com/, async (route) => {
+    await new Promise((resolve) => setTimeout(resolve, 800))
+    await route.continue()
+  })
+}
+
+function chapterTop(page: Page, id: string) {
+  return page.evaluate((target) => Math.round(document.getElementById(target)!.getBoundingClientRect().top), id)
+}
+
+test('a study address with a chapter opens at that chapter, even when the fonts arrive late', async ({ page }) => {
+  await slowFonts(page)
   await openPage(page, '/work/demo-veri#kararlar', 'tr')
-  await expect
-    .poll(() => page.evaluate(() => Math.round(document.getElementById('kararlar')!.getBoundingClientRect().top)))
-    .toBeLessThan(100)
+  await page.evaluate(() => document.fonts.ready)
+  await expect.poll(() => chapterTop(page, 'kararlar')).toBeGreaterThanOrEqual(0)
+  await expect.poll(() => chapterTop(page, 'kararlar')).toBeLessThan(100)
+})
+
+// Okur fontlar gelmeden kendisi kaydirirsa sayfa onu bolume geri cekmemeli.
+test('the chapter alignment stops once the reader scrolls', async ({ page }) => {
+  await slowFonts(page)
+  await page.addInitScript(() => localStorage.setItem('pl_lang', 'tr'))
+  await page.goto('/work/demo-veri#kararlar', { waitUntil: 'domcontentloaded' })
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(1000)
+  await page.mouse.move(600, 400)
+  await page.mouse.wheel(0, -1500)
+  await page.waitForLoadState('networkidle')
+  await page.evaluate(() => document.fonts.ready)
+  await expect.poll(() => chapterTop(page, 'kararlar')).toBeGreaterThan(800)
 })
 
 // Calisma sayfasinin ortasindan kod sayfasina gecilir ve geri donulur. Iki
