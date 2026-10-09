@@ -148,5 +148,23 @@
         "kind": "Terminal çıktısı"
       }
     }
+  },
+  "source": {
+    "crumb": {
+      "back": "← Çalışmaya dön",
+      "current": "Kod ve veri"
+    },
+    "toc": {
+      "note": "Kod ve veri açık durur. Her dosyanın üstünde yolu ve satır sayısı yazar."
+    },
+    "dataLanguage": {
+      "lede": "Bu sayfadaki kod dosyaları ve veri dosyaları çevrilmiş haliyle gösteriliyor, kodun yorumları da çevrildi. İstediğiniz an orijinal haline geçebilirsiniz, sayfanın geri kalanı değişmez.",
+      "group": "Kodun ve verinin dili"
+    },
+    "back": {
+      "label": "Geri",
+      "text": "Bu kodun ne işe yaradığını, sonuçlarını ve sınırlarını anlatan çalışma sayfasına dön.",
+      "go": "← Çalışmaya dön"
+    }
   }
 }

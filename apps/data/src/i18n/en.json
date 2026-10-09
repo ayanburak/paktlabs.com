@@ -148,5 +148,23 @@
         "kind": "Terminal output"
       }
     }
+  },
+  "source": {
+    "crumb": {
+      "back": "← Back to the study",
+      "current": "Code and data"
+    },
+    "toc": {
+      "note": "Code and data stay open. The path and line count are written above every file."
+    },
+    "dataLanguage": {
+      "lede": "The code files and data files on this page are shown translated, including the comments in the code. You can switch to the original at any time, the rest of the page does not change.",
+      "group": "Language of the code and data"
+    },
+    "back": {
+      "label": "Back",
+      "text": "Return to the study page that explains what this code does, its results and its limits.",
+      "go": "← Back to the study"
+    }
   }
 }

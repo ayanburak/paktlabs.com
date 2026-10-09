@@ -21,13 +21,14 @@ import { BlockView } from './blocks/BlockView'
 import { sequenceNumber } from './blocks/format'
 import styles from './Body.module.css'
 import { Chapter } from './Chapter'
-import { DATA_LANGUAGE_ID, DataLanguage } from './DataLanguage'
+import { DATA_LANGUAGE_ID, DataLanguage, type DataLanguageText } from './DataLanguage'
 import { useDataLanguage } from './dataLanguageContext'
 import { Toc, type TocEntry } from './Toc'
 
 interface BodyProps {
   chapters: ChapterContent[]
   tocNote: string
+  dataLanguage: DataLanguageText
   afterChapters: ReactNode
 }
 
@@ -36,8 +37,9 @@ interface BodyProps {
 // icerik bolumlerinin numaralari kaymaz. Bolumun id'si sayfada tekil oldugu
 // icin anahtar olarak kullaniliyor. afterChapters son bolumun govdesine, parcalarin
 // ardina konur, ornegin detay sayfasinda Meraklisina karti ve yazar kutusu
-// orada bolumun hizasinda durur. tocNote icindekilerin altindaki nottur.
-export function Body({ chapters, tocNote, afterChapters }: BodyProps) {
+// orada bolumun hizasinda durur. tocNote icindekilerin altindaki nottur,
+// dataLanguage veri dili bolumunun sayfaya gore degisen metinleri.
+export function Body({ chapters, tocNote, dataLanguage, afterChapters }: BodyProps) {
   const { language } = useLanguage()
   const { study } = useDict()
   const data = useDataLanguage()
@@ -59,7 +61,7 @@ export function Body({ chapters, tocNote, afterChapters }: BodyProps) {
     <div className={styles.body}>
       <Toc entries={entries} chaptersRef={chaptersRef} note={tocNote} />
       <div ref={chaptersRef} className={styles.chapters}>
-        {showDataLanguage && <DataLanguage />}
+        {showDataLanguage && <DataLanguage text={dataLanguage} />}
         {chapters.map((chapter, index) => (
           <Chapter
             key={chapter.id}

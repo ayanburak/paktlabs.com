@@ -65,6 +65,7 @@ function StudyView({ study, page, files }: StudyRoute) {
           <Body
             chapters={page.chapters}
             tocNote={`${dict.toc.readingTime.before} ${minutes} ${dict.toc.readingTime.after}`}
+            dataLanguage={dict.dataLanguage}
             afterChapters={
               <>
                 <Curious study={study} />
