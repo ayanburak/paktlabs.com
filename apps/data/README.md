@@ -34,7 +34,7 @@ Bölümler bittikten sonra bir "Meraklısına" kartı bulunur. Firma kodun açı
 
 Detay sayfasındaki "Meraklısına" kartının açtığı sayfadır. Detay sayfası kodu göstermez, çünkü kod okumak zordur ve sayfanın asıl okuru her zaman kod okumak istemez. Kodu ve ham veriyi görmek isteyen okur bu sayfaya kendi isteğiyle gelir. Bu yüzden burada kod ve veri açık durur, açılır kutu kullanılmaz.
 
-Sayfa detay sayfasıyla aynı iskeleti kullanır: tam ekran kapak, sağda künye, solda içindekiler. Künye dili, kütüphaneleri, veritabanını ve paylaşılan dosya sayısını gösterir. Bölümler detay sayfasındaki adımlarla aynı sırayı izler. İlk bölümde deponun dosya ağacı bulunur ve bu sayfada paylaşılan dosyalar işaretlidir. Sonraki bölümlerde her adımın kod dosyası satır numaralarıyla, dosya yoluyla ve sade bir renklendirmeyle gösterilir. Bir değerlendirme komutu varsa çıktısı da verilir ve bu çıktıdaki sayılar detay sayfasındaki sayılarla birebir aynıdır. Son bölümde veri örnekleri bulunur. Her dosyanın tam önizlemesi ve çalışan bir indirme bağlantısı vardır, dosyaların içeriği detay sayfasındaki tabloların ham halidir.
+Sayfa detay sayfasıyla aynı iskeleti ve aynı bileşenleri kullanır: tam ekran kapak, sağda künye, solda içindekiler, numaralı bölümler ve yazar kutusu. Özet bandı ve kapanış bölümü yoktur, sayfa çalışmaya dönüş kartıyla biter. Kapaktaki etiketler çalışmanın konu etiketleri değil, kodun yazıldığı araçlardır. Künye dili, kütüphaneleri, veritabanını ve paylaşılan dosya sayısını gösterir. Kod ve veri açık durduğu için içindekilerin altında okuma süresi yerine bunu söyleyen bir not bulunur. Bölümler detay sayfasındaki adımlarla aynı sırayı izler. İlk bölümde deponun dosya ağacı bulunur, paylaşılan dosyalar altınla, paylaşılmayanlar soluk işaretlidir. Sonraki bölümlerde her adımın kod dosyası satır numaralarıyla, dosya yoluyla ve sade bir renklendirmeyle gösterilir. Bir değerlendirme komutu varsa çıktısı da verilir ve bu çıktıdaki sayılar detay sayfasındaki sayılarla birebir aynıdır. Son bölümde veri örnekleri bulunur. Her dosyanın tam önizlemesi ve çalışan bir indirme bağlantısı vardır, dosyaların içeriği detay sayfasındaki tabloların ham halidir. Satır sayısı, sütun sayısı, dosya boyutu ve kodun dili elle yazılmaz, dosyanın kendisinden ve uzantısından hesaplanır.
 
 Bu sayfadaki kod da PaktLabs'ın kod yazım stiliyle yazılır: tanımlayıcılar İngilizce, yorumlar Türkçe, modülün başında kullanım açıklaması, altında geliştirici notları. Paylaşılan kod okunabilsin diye kısaltılabilir, bu durum sayfanın girişinde belirtilir.
 
@@ -161,11 +161,11 @@ Veri sayfasındaki listede gerçek çalışmalarla birlikte mockup'tan taşınan
 
 ### Verinin dili
 
-Bir çalışmanın ham verisi Türkçe ya da İngilizce olabilir ve her çalışmanın verisi iki dilde de hazırlanır. Sayfada iki ayrı dil vardır. Sitenin dili metni, başlıkları, menüleri, şekilleri ve düz tabloları belirler, sayfadaki TR ve EN değiştiricisi onu değiştirir. Verinin dili yalnızca veri sayılan parçaları, yani hesap tablolarını ve indirilen dosyaları belirler. Böylece okur her zaman okuyabildiği metni görür, ama isterse verinin orijinal halini de inceleyebilir.
+Bir çalışmanın ham verisi Türkçe ya da İngilizce olabilir ve her çalışmanın verisi iki dilde de hazırlanır. Sayfada iki ayrı dil vardır. Sitenin dili metni, başlıkları, menüleri, şekilleri ve düz tabloları belirler, sayfadaki TR ve EN değiştiricisi onu değiştirir. Verinin dili çalışmanın kendi dosyalarını belirler: hesap tablolarını, indirilen veri dosyalarını, kod sayfasındaki kod dosyalarını ve terminal çıktılarını. Kod dosyaları da iki dilde yazılır. Yollar ve tanımlayıcılar iki dilde aynıdır, yalnızca yorumlar, docstring'ler ve çıktıdaki yazılar çevrilir, böylece İngilizce okur kodu İngilizce yorumlarıyla görür. Satır numaralarının dil değişince kaymaması için çeviri satır satır yapılır, ama bu zorunlu değildir. Böylece okur her zaman okuyabildiği metni görür, ama isterse çalışmanın orijinal halini de inceleyebilir.
 
-Künye dosyasındaki `dataLanguage` verinin orijinal dilidir. Sayfa açıldığında verinin dili sitenin diline eşittir. İkisi farklıysa birinci bölümden önce 00 numaralı "Verinin dili" bölümü çıkar. Bu bölüm verinin aslen hangi dilde olduğunu söyler ve tabloları çeviri ile orijinal arasında değiştiren iki seçenekli bir seçici taşır. Seçici sitenin dilini değiştirmez. Numarası 00 olduğu için eklendiğinde içerik bölümlerinin numaraları kaymaz, içindekilerde de yer alır, böylece okur bu seçimi sayfanın başında görür. Diller aynıysa bölüm hiç çıkmaz. Seçim hiçbir yere kaydedilmez, sayfa yenilendiğinde, başka bir çalışmaya geçildiğinde ya da sitenin dili değiştiğinde veri dili yeniden sitenin diline döner. Bölümün metni çalışmaya değil sitenin sözlüğüne aittir.
+Künye dosyasındaki `dataLanguage` verinin orijinal dilidir. Sayfa açıldığında verinin dili sitenin diline eşittir. İkisi farklıysa birinci bölümden önce 00 numaralı "Verinin dili" bölümü çıkar. Bu bölüm verinin aslen hangi dilde olduğunu söyler ve tabloları çeviri ile orijinal arasında değiştiren iki seçenekli bir seçici taşır. Seçici sitenin dilini değiştirmez. Numarası 00 olduğu için eklendiğinde içerik bölümlerinin numaraları kaymaz, içindekilerde de yer alır, böylece okur bu seçimi sayfanın başında görür. Diller aynıysa bölüm hiç çıkmaz. Seçim hiçbir yere kaydedilmez, sayfa yenilendiğinde, başka bir çalışmaya geçildiğinde ya da sitenin dili değiştiğinde veri dili yeniden sitenin diline döner. Bölümün metni çalışmaya değil sitenin sözlüğüne aittir. Giriş paragrafı ve seçicinin adı sayfaya göre değişir, detay sayfası tabloları, kod sayfası kod ve veri dosyalarını anar.
 
-Veri dosyaları çalışmanın klasöründe `data/tr/` ve `data/en/` altında durur. İki klasörde aynı kimlikle adlandırılmış CSV'ler bulunur, örneğin `data/tr/raw-records.csv` ve `data/en/raw-records.csv`. Kimlik dilden bağımsızdır, ekranda görünen dosya adı ise hesap tablosunun ayarlarından gelir ve çevrilebilir. Dosyalar Türkçe Excel dışa aktarımları gibi noktalı virgülle ayrılır, çünkü Türkçe sayılarda virgül ondalık ayıracıdır. Kaynak kusurları, örneğin bozuk Türkçe harfler ya da farklı ondalık ayıraçları, CSV'de olduğu gibi bırakılır. Çalışmanın dosyaları ana pakete gömülmez, derlemede her biri ayrı bir statik dosya olur ve yalnızca o çalışmanın sayfası açılırken indirilir. Böylece her yeni çalışma, veri sayfasını açan herkesin indirdiği paketi büyütmez, indirme bağlantıları da aynı dosyayı gösterir. Dosyaların nereden geldiğini `src/content/studies/files.ts` içindeki `StudyFiles` soyut sınıfı saklar, bugünkü somut hali `assetFiles.ts`'tir ve bütün çalışmaların dosyalarını kendiliğinden bulur. Dosyalar ileride başka bir kaynaktan gelirse yalnızca bu somut hal değişir. Sayfalar dosyaları `src/routes/studyLoader.ts` ile sayfa çizilmeden önce alır, parçalar dosyayı `useStudyFile` ile o an seçili veri dilinde ister. `tests/data.spec.ts` iki dilin dosyalarının aynı kimliklerde, aynı satır ve hücre sayısında olduğunu ve her hesap tablosunun çağırdığı dosyanın var olduğunu denetler.
+Veri dosyaları çalışmanın klasöründe `data/tr/` ve `data/en/` altında, kod dosyaları ve terminal çıktıları `code/tr/` ve `code/en/` altında, deponun kendi klasör düzeniyle durur, örneğin `code/en/rules/catalog.py`. İki klasörde aynı kimlikle adlandırılmış CSV'ler bulunur, örneğin `data/tr/raw-records.csv` ve `data/en/raw-records.csv`. Kimlik dilden bağımsızdır, ekranda görünen dosya adı ise hesap tablosunun ayarlarından gelir ve çevrilebilir. Dosyalar Türkçe Excel dışa aktarımları gibi noktalı virgülle ayrılır, çünkü Türkçe sayılarda virgül ondalık ayıracıdır. Kaynak kusurları, örneğin bozuk Türkçe harfler ya da farklı ondalık ayıraçları, CSV'de olduğu gibi bırakılır. Çalışmanın dosyaları ana pakete gömülmez, derlemede her biri ayrı bir statik dosya olur ve yalnızca o çalışmanın sayfası açılırken indirilir. Böylece her yeni çalışma, veri sayfasını açan herkesin indirdiği paketi büyütmez, indirme bağlantıları da aynı dosyayı gösterir. Dosyaların nereden geldiğini `src/content/studies/files.ts` içindeki `StudyFiles` soyut sınıfı saklar, bugünkü somut hali `assetFiles.ts`'tir ve bütün çalışmaların dosyalarını kendiliğinden bulur. Dosyalar ileride başka bir kaynaktan gelirse yalnızca bu somut hal değişir. Sayfalar dosyaları `src/routes/studyLoader.ts` ile sayfa çizilmeden önce alır, parçalar dosyayı `useStudyFile` ile o an seçili veri dilinde ister. `tests/data.spec.ts` iki dilin CSV'lerinin aynı kimliklerde, aynı satır ve hücre sayısında, kod dosyalarının aynı yollarda olduğunu ve iki sayfadaki her parçanın çağırdığı dosyanın iki dilde de var olduğunu denetler.
 
 ### Komutlar
 
@@ -182,7 +182,7 @@ npx playwright install chromium   # yalnızca ilk kurulumda
 npm test
 ```
 
-Testler landing'deki gibi üretim derlemesine karşı çalışır. Üst bar ve alt bilginin data'ya doğru bağlandığını, sayfa başlıklarını iki dilde, rotaları ve bulunamadı davranışını, veri sayfasındaki hero'nun yerleşimini kontrol eder. `study.spec.ts` detay sayfasının davranışını Demo Veri üzerinden denetler: bölümlerin ve içindekilerin sırası, veri dili bölümünün yalnızca diller farklıyken çıkması, seçicinin tabloları orijinal dile çevirmesi ve site dili değişince geri dönmesi, açılır kutular, içindekilerden bölüme geçiş, Meraklısına kartının, yazar kutusunun ve kapanış kartlarının adresleri, eşiklerin iki yanında yatay taşma. `data.spec.ts` tarayıcı açmadan iki dilin CSV'lerini, hesap tablolarının çağırdığı dosyaları ve bölüm adreslerinin tekilliğini denetler. Görsel karşılaştırma testleri henüz yoktur.
+Testler landing'deki gibi üretim derlemesine karşı çalışır. Üst bar ve alt bilginin data'ya doğru bağlandığını, sayfa başlıklarını iki dilde, rotaları ve bulunamadı davranışını, veri sayfasındaki hero'nun yerleşimini kontrol eder. `study.spec.ts` detay sayfasının davranışını Demo Veri üzerinden denetler: bölümlerin ve içindekilerin sırası, veri dili bölümünün yalnızca diller farklıyken çıkması, seçicinin tabloları orijinal dile çevirmesi ve site dili değişince geri dönmesi, açılır kutular, içindekilerden bölüme geçiş, Meraklısına kartının, yazar kutusunun ve kapanış kartlarının adresleri, eşiklerin iki yanında yatay taşma. `source.spec.ts` kod sayfasını aynı çalışma üzerinden denetler: bölümlerin ve içindekilerin sırası, kapak, kod ve veri dosyalarının verinin dilini izlemesi, kopyalanan metnin dosyanın kendisiyle birebir aynı olması ve satır numarası taşımaması, indirilen dosyanın adının ve içeriğinin seçili veri dilinde olması, yazar kutusu, dönüş kartı ve yatay taşma. `data.spec.ts` tarayıcı açmadan iki dilin CSV'lerini ve kod dosyalarını, iki sayfadaki parçaların çağırdığı dosyaları, her kod dosyasının dilinin kayıtlı olduğunu ve bölüm adreslerinin tekilliğini denetler. `highlight.spec.ts` kod renklendiricisinin kurallarını küçük örneklerle ve renklendirmenin hiçbir kod dosyasının metnini değiştirmediğini denetler. Görsel karşılaştırma testleri henüz yoktur.
 
 ### İletişim formu
 
@@ -343,13 +343,13 @@ Bir işin takvimini gösterir. `periods` dönem sayısı, `periodLabel` dönemle
 
 ### Dosya ağacı
 
-Teslim edilen bir deponun ya da veritabanının yapısını kod görünümünde gösterir. Her kolun bir kök adı ve altında öğeleri vardır. Öğe adları dosya ya da tablo adı olduğu için iki dilde aynı yazılır, yanındaki açıklama sitenin dilini izler. Ağaç çizgileri ve açıklamaların hizası kendiliğinden kurulur, boşlukla elle hizalama yapılmaz. `label` ekran okuyucunun ağacı tanıttığı addır.
+Teslim edilen bir deponun ya da veritabanının yapısını kod görünümünde gösterir. Her kolun bir kök adı ve altında öğeleri vardır. Öğe adları dosya ya da tablo adı olduğu için iki dilde aynı yazılır, yanındaki açıklama sitenin dilini izler. Bir öğeye `items` verilirse klasör olur ve altındaki öğeler bir kademe içeride çizilir. `highlight` öğeyi altınla, `muted` soluk çizer, kod sayfası paylaşılan ve paylaşılmayan dosyaları böyle ayırır. Ağaç çizgileri ve açıklamaların hizası kendiliğinden kurulur, boşlukla elle hizalama yapılmaz. `label` ekran okuyucunun ağacı tanıttığı addır.
 
 ```ts
 {
   type: 'tree',
   label: { tr: 'Teslim edilen depo yapısı', en: 'Structure of the delivered repository' },
-  groups: [{ root: 'matcher/', items: [{ name: 'rules/', note: { tr: '31 doğrulama kuralı', en: '31 validation rules' } }] }],
+  groups: [{ root: 'matcher/', items: [{ name: 'rules/', items: [{ name: 'catalog.py', highlight: true }] }] }],
 }
 ```
 
@@ -370,6 +370,49 @@ Akışın dışında kalan ama okurun bilmesi gereken kısa bir not içindir, ö
 
 ```ts
 { type: 'note', label: { tr: 'Erişim', en: 'Access' }, text: { tr: '…', en: '…' } }
+```
+
+### Kod sayfası
+
+Kodu sitede paylaşılan bir çalışmanın kod sayfası `source.ts` dosyasında yazılır. Künye dosyası onu `code: { kind: 'page', page: () => import('./source') }` biçiminde anar. Sayfa detay sayfasıyla aynı bölüm yapısını kullanır, bölümlere detay sayfasındaki bütün parçalar da konabilir. `tags` kapakta görünen araç adlarıdır ve iki dilde aynıdır. Kod sayfasında açılır kutu kullanılmaz, kod ve veri açık durur.
+
+```ts
+export const source: SourcePage = {
+  title: { tr: '…', en: '…' },
+  lede: { tr: '…', en: '…' },
+  tags: ['Python', 'SQL', 'CSV'],
+  kunye: [{ label: { tr: 'Dil', en: 'Language' }, value: { tr: 'Python 3.12', en: 'Python 3.12' } }],
+  chapters: [],
+}
+```
+
+### Kod dosyası
+
+Çalışmanın `code` klasöründeki bir dosyayı satır numaralarıyla, yoluyla ve kopyalama düğmesiyle gösterir. `path` dosyanın `code/tr/` ve `code/en/` altındaki yoludur, başlıkta da bu yol yazar. Satır sayısı dosyadan, dilin adı ve renklendirme kuralları uzantıdan gelir. Dil `src/components/study/blocks/languages.ts` kaydından seçilir. Yeni bir dil gerektiğinde oraya bir kayıt eklenir, renklendirici ve kod bileşeni değişmez. Kayıtlı olmayan bir uzantı hata verir.
+
+```ts
+{ type: 'code', path: 'rules/catalog.py' }
+```
+
+### Terminal çıktısı
+
+Bir komutun çıktısını kod dosyalarından biraz daha koyu bir zeminde, satır numarasız ve renksiz gösterir. Metni `code` klasöründeki bir dosyadadır ve kod gibi verinin dilini izler. Çıktıdaki sayılar sayfadaki tablolar ve şekillerle aynı olmalıdır.
+
+```ts
+{ type: 'output', path: 'out/evaluate.txt' }
+```
+
+### Veri dosyası
+
+İndirilebilir bir veri dosyasını tam önizlemesiyle, indirme bağlantısıyla ve altındaki notla gösterir. `csv` dosyanın `data` klasöründeki kimliğidir, hesap tablosundaki gibi. `name` indirilen ve başlıkta görünen dosya adıdır, verinin dilini izler. `note` sitenin dilini izler. Satır, sütun ve boyut dosyadan hesaplanır.
+
+```ts
+{
+  type: 'datafile',
+  csv: 'raw-sample',
+  name: { tr: 'ham_kayitlar_ornek.csv', en: 'raw_records_sample.csv' },
+  note: { tr: '…', en: '…' },
+}
 ```
 
 Okuma süresi elle yazılmaz. İçindekilerin altında görünen süre, sayfadaki düz metnin kelime sayısından dakikada yaklaşık iki yüz kelimeyle hesaplanır. Tablo hücreleri sayılmaz, okur onları okumaz, göz atar.
