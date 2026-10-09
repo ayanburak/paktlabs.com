@@ -16,8 +16,8 @@ import { useLanguage } from '@paktlabs/brand/i18n/language'
 import { cx } from '@paktlabs/brand/lib/cx'
 
 import { TagList } from '@/components/TagList'
+import { TechLogo } from '@/components/TechLogo'
 import type { StudyListing } from '@/content/studies/types'
-import { techLogos } from '@/content/techStack'
 import { useDict } from '@/i18n'
 
 import styles from './StudyCard.module.css'
@@ -75,7 +75,9 @@ export function StudyCard({ study }: StudyCardProps) {
             <span className={styles.label}>{home.works.tools}</span>
             <span className={styles.mini}>
               {feature.tools.map((name) => (
-                <img key={name} src={techLogos[name]} alt={name} />
+                <span key={name} className={styles.tool}>
+                  <TechLogo name={name} className={styles.toolLogo} />
+                </span>
               ))}
             </span>
           </div>

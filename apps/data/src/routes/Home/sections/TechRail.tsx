@@ -7,14 +7,17 @@ description: Kullanilan araclarin logolarinin soldan saga aktigi, uzerine geline
 
 import { cx } from '@paktlabs/brand/lib/cx'
 
-import { techStack } from '@/content/techStack'
+import { TechLogo } from '@/components/TechLogo'
+import { techNames } from '@/content/techNames'
 import { useDict } from '@/i18n'
 
 import styles from './TechRail.module.css'
 
 // Bolumun basligi ekran okuyucu icin ayri bir h2, gorunen etiket ise ekran
 // okuyucudan gizli, ayni metin iki kez okunmasin diye. Aracin adi ekran
-// okuyucuya img'nin alt metninden ulasir, isim kutusu yalnizca gorseldir.
+// okuyucuya TechLogo'nun etiketinden ulasir, isim kutusu yalnizca gorseldir.
+// Logo normalde komur rengindedir, kare uzerine gelinince koyulasir ve
+// logo altina doner, renkler TechRail.module.css'te.
 //
 // Liste kesintisiz tur icin iki kez yazilir. Ikinci kopyanin her seyi ekran
 // okuyucudan gizlenir, boylece her arac bir kez okunur.
@@ -32,15 +35,15 @@ export function TechRail() {
       <div className={styles.rail}>
         <ul className={styles.track}>
           {[false, true].map((copy) =>
-            techStack.map((tech) => (
+            techNames.map((name) => (
               <li
-                key={`${copy}-${tech.name}`}
+                key={`${copy}-${name}`}
                 className={cx(styles.tile, copy && styles.copy)}
                 aria-hidden={copy || undefined}
               >
-                <img src={tech.logo} alt={copy ? '' : tech.name} />
+                <TechLogo name={name} decorative={copy} className={styles.logo} />
                 <span className={styles.tip} lang="en" aria-hidden="true">
-                  {tech.name}
+                  {name}
                 </span>
               </li>
             )),

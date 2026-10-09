@@ -1,0 +1,13 @@
+/* logo dosyasi kalip olarak kullanilir, gorunen renk zemin rengidir ve o da
+   yazi rengini izler. Maske yalnizca icerik kutusuna uygulanir, boylece
+   kullanan yer padding ile logonun etrafinda bosluk birakabilir. Eski Safari
+   maskeyi yalnizca -webkit- onekiyle taniyor */
+.logo {
+  display: block;
+  background-color: currentColor;
+  -webkit-mask: var(--logo) center / contain no-repeat content-box;
+  mask: var(--logo) center / contain no-repeat content-box;
+  /* yuksek karsitlik modunda tarayici zemin rengini kendi rengiyle degistirir,
+     logo zeminle ayni renge donup kaybolurdu */
+  forced-color-adjust: none;
+}

@@ -1,11 +1,16 @@
 /*
 file: techStack.ts
-importable: techStack, techLogos, Tech
+importable: techLogos
 
-Teknoloji seridinde akan araclarin adi ve logosu. Adlar ve sira techNames.ts'ten
-gelir, bu dosya yalnizca her ada logosunu baglar.
+Her aracin logo dosyasi. Adlar ve sira techNames.ts'ten gelir, bu dosya
+yalnizca her ada logosunu baglar. Logolar ekrana dogrudan degil TechLogo ile
+cizilir, dosya yalnizca seklin kalibidir.
 
-description: Teknoloji seridinde gosterilen araclarin adini ve logosunu tutan liste.
+Yeni bir logo tek renkli bir sekil olmali ve zemini bos olmali. Hangi renkte
+cizildigi onemli degil, gorunen rengi site verir. Cok renkli bir logo bu
+yolla boyanamaz, tek renge cevrilip eklenir.
+
+description: Her araci logo dosyasina baglayan sozluk.
 */
 
 import dockerLogo from '@/assets/stack/docker.svg'
@@ -27,17 +32,10 @@ import sqliteLogo from '@/assets/stack/sqlite.svg'
 import typescriptLogo from '@/assets/stack/typescript.svg'
 import ubuntuLogo from '@/assets/stack/ubuntu.svg'
 
-import { techNames } from './techNames'
 import type { TechName } from './techNames'
 
-export interface Tech {
-  name: TechName
-  logo: string
-}
-
 // Record her adin bir logosu olmasini zorunlu tutar, listeye yeni bir ad
-// eklenip logosu unutulursa derleme hata verir. Calisma kartlari araclarin
-// logosunu da buradan adla alir.
+// eklenip logosu unutulursa derleme hata verir.
 export const techLogos: Record<TechName, string> = {
   Python: pythonLogo,
   PostgreSQL: postgresqlLogo,
@@ -58,5 +56,3 @@ export const techLogos: Record<TechName, string> = {
   Pytest: pytestLogo,
   'scikit-learn': scikitLearnLogo,
 }
-
-export const techStack: Tech[] = techNames.map((name) => ({ name, logo: techLogos[name] }))

@@ -3,15 +3,17 @@ file: home.spec.ts
 
 Veri sayfasinin bolumlerini kontrol eder. Teknoloji seridi kesintisiz tur icin
 listeyi iki kez yazar, ekran okuyucunun her araci yalnizca bir kez duymasi ve
-hareket azaltma tercihinde akisin durmasi burada olculur. Arac listesi
-uygulamadan import edilmez, cunku logolari Vite'in anladigi SVG import'lariyla
-gelir ve testler duz Node ortaminda calisir. Beklenen degerler sayfanin
-kendisinden olculur.
+hareket azaltma tercihinde akisin durmasi burada olculur. Arac adlari ve
+sirasi techNames.ts'ten okunur, o dosya logolardan ayri durdugu icin duz Node
+ortaminda da yuklenir. Logolarin dosyalari techStack.ts'te SVG import'u
+oldugu icin testlere alinmaz.
 
 description: Veri sayfasinin hero, teknoloji seridi, calisma listesi ve iletisim testleri.
 */
 
 import { expect, test } from '@playwright/test'
+
+import { techNames } from '../src/content/techNames'
 
 import { dict, languages, openPage } from './support'
 
@@ -30,14 +32,27 @@ test('tech rail exposes every tool once to screen readers', async ({ page }) => 
   await openPage(page, '/', 'tr')
 
   const rail = page.getByRole('region', { name: dict.tr.home.stack.title })
-  const names = await rail.getByRole('img').evaluateAll((imgs) => imgs.map((img) => img.getAttribute('alt') ?? ''))
-  const tips = await rail.locator('li:not([aria-hidden]) span').allTextContents()
+  const names = await rail.getByRole('img').evaluateAll((logos) => logos.map((logo) => logo.getAttribute('aria-label') ?? ''))
+  const tips = await rail.locator('li:not([aria-hidden]) span[aria-hidden="true"]').allTextContents()
 
   expect(names.length).toBeGreaterThan(0)
   expect(names.every((name) => name.trim() !== '')).toBe(true)
   expect(new Set(names).size).toBe(names.length)
   expect(names).toEqual(tips)
+  expect(names).toEqual([...techNames])
   await expect(rail.locator('li[aria-hidden="true"]')).toHaveCount(names.length)
+})
+
+// Kartlardaki kucuk logolar da adlariyla okunur ve yalnizca bilinen araclari
+// gosterir.
+test('work cards name their tool logos', async ({ page }) => {
+  await openPage(page, '/', 'tr')
+
+  const logos = page.locator('#calismalar ~ * [role="img"], a[href^="/work/"] [role="img"]')
+  const names = await logos.evaluateAll((items) => items.map((item) => item.getAttribute('aria-label') ?? ''))
+
+  expect(names.length).toBeGreaterThan(0)
+  expect(names.every((name) => (techNames as readonly string[]).includes(name))).toBe(true)
 })
 
 test('tech rail scrolls on its own with normal motion', async ({ page }) => {

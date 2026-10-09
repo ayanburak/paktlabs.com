@@ -48,17 +48,26 @@
   border: 2px solid var(--charcoal);
   transition:
     transform 0.16s ease,
-    box-shadow 0.16s ease;
+    box-shadow 0.16s ease,
+    background 0.16s ease;
 }
+
+/* uzerine gelinen kare kalkar ve ters doner: zemin komur, logo altin. Logonun
+   rengi TechLogo'da yazi rengidir, burada yalnizca color degisir */
 .tile:hover {
   transform: translateY(-3px);
   box-shadow: 0 3px 0 var(--charcoal);
+  background: var(--charcoal);
 }
-.tile img {
+.logo {
   width: 100%;
   height: 100%;
   padding: 19%;
-  object-fit: contain;
+  color: var(--charcoal);
+  transition: color 0.16s ease;
+}
+.tile:hover .logo {
+  color: var(--gold);
 }
 
 /* isim kutusu karta bagli bir baslik kutusu gibi acilir: kareyle arasinda
