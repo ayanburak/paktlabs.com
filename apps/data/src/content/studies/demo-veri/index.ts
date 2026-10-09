@@ -9,10 +9,6 @@ dosyalarindan yalnizca sayfa acilirken yukler, metinleri ana pakete girmez.
 description: Demo Veri calismasini veri sayfasindaki listeye ve detay sayfasina veren modul.
 */
 
-// NOTE: Kart metni mockup'taki 01 numarali kartin lorem metni, veri sayfasinin
-// tasarimi canlida sinanirken yerinde duruyor. Lorem'in cevirisi olmadigi
-// icin iki dilde ayni metin yazili.
-
 import type { Study } from '../types'
 
 export const demoVeri: Study = {
@@ -26,17 +22,17 @@ export const demoVeri: Study = {
   },
   card: {
     lead: {
-      tr: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      en: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      tr: 'ERP ile üç tedarikçinin fiyat listesinde aynı ürünü bulup tek bir ürün kartında topladık.',
+      en: 'We found the same product across the ERP and three supplier price lists and gathered it into a single product card.',
     },
     body: [
       {
-        tr: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.',
-        en: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.',
+        tr: 'Listelerde ortak bir ürün kodu yoktu, aynı vida her kaynakta başka bir adla ve başka bir birimle geçiyordu. Kayıtları ortak bir biçime çeviren ve olası eşleşmeleri bir makine öğrenmesi modeliyle puanlayan bir hat kurduk.',
+        en: 'The lists shared no product code, and the same screw appeared in every source under a different name and unit. We built a pipeline that brings the records into a common format and scores possible matches with a machine learning model.',
       },
       {
-        tr: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',
-        en: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',
+        tr: 'Yaklaşık 184 bin kayıt 86 bin ürüne indi. Modelin emin olmadığı çiftleri satın alma ekibi onayladı, hat yeni kayıtları her gece kendiliğinden eşleştiriyor.',
+        en: 'About 184 thousand records came down to 86 thousand products. The purchasing team approved the pairs the model was unsure about, and the pipeline now matches new records on its own every night.',
       },
     ],
   },
