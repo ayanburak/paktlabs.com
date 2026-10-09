@@ -1,0 +1,6 @@
+product_id;kind;d1;d2;finish;pack_qty;sources;cheapest;unit_price
+P-48213;chipboard screw;4.0;40;yellow zinc;1000;ERP|SUP-A|SUP-B|SUP-C;SUP-C;0.27990
+P-48214;chipboard screw;4.0;45;yellow zinc;1000;ERP|SUP-A|SUP-B;SUP-A;0.30200
+P-48219;chipboard screw;4.0;40;white zinc;1000;SUP-B;SUP-B;0.29850
+P-51007;plastic wall plug;8;;grey;100;ERP|SUP-A|SUP-C;SUP-C;0.29750
+P-60321;silicone;310;;clear;1;ERP|SUP-B;SUP-B;84.20000

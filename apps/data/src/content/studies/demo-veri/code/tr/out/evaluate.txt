@@ -1,0 +1,10 @@
+$ python -m pipeline.model --evaluate data/test_pairs.parquet
+test çiftleri: 1600  aynı: 640  farklı: 960
+eşikler: alt 0.55  üst 0.92
+otomatik kesinlik: 0.9931  [0.9824, 0.9973]
+pr_auc: 0.987
+label       0    1
+decision          
+reject    900   18
+review     56   45
+auto        4  577

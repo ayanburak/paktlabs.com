@@ -1,0 +1,6 @@
+product_id;kind;d1;d2;finish;pack_qty;sources;cheapest;unit_price
+P-48213;sunta vidası;4.0;40;sarı çinko;1000;ERP|TED-A|TED-B|TED-C;TED-C;0.27990
+P-48214;sunta vidası;4.0;45;sarı çinko;1000;ERP|TED-A|TED-B;TED-A;0.30200
+P-48219;sunta vidası;4.0;40;beyaz çinko;1000;TED-B;TED-B;0.29850
+P-51007;plastik dübel;8;;gri;100;ERP|TED-A|TED-C;TED-C;0.29750
+P-60321;silikon;310;;şeffaf;1;ERP|TED-B;TED-B;84.20000
