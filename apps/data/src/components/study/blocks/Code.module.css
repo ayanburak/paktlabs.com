@@ -1,0 +1,16 @@
+/* renklendirmenin dort rengi, sinif adlari highlight.ts'teki parca turleridir.
+   Anahtar kelimeler altin, yorumlar soluk ve egik, docstring'ler ve metin
+   sabitleri yesile calan iki acik ton */
+.keyword {
+  color: var(--gold);
+}
+.string {
+  color: var(--code-string);
+}
+.comment {
+  font-style: italic;
+  color: var(--code-comment);
+}
+.doc {
+  color: var(--code-doc);
+}

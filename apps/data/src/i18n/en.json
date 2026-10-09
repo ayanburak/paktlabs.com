@@ -135,6 +135,18 @@
         "label": "Next",
         "go": "View →"
       }
+    },
+    "files": {
+      "lines": "lines",
+      "columns": "columns",
+      "copy": "Copy",
+      "copied": "Copied",
+      "download": "Download",
+      "bytes": "bytes",
+      "output": {
+        "path": "output",
+        "kind": "Terminal output"
+      }
     }
   }
 }

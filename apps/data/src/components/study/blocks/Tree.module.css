@@ -14,5 +14,13 @@
   color: var(--gold);
 }
 .note {
-  color: #9a9ca3;
+  color: var(--code-comment);
+}
+/* kod sayfasinda paylasilan dosyalar altin, paylasilmayanlar soluk */
+.highlight {
+  font-weight: 700;
+  color: var(--gold);
+}
+.muted {
+  color: var(--code-muted);
 }

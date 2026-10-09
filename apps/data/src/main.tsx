@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 
 import { App } from './App.tsx'
 import '@paktlabs/brand/styles/global.css'
+import './styles/tokens.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

@@ -135,6 +135,18 @@
         "label": "Sonraki",
         "go": "İncele →"
       }
+    },
+    "files": {
+      "lines": "satır",
+      "columns": "sütun",
+      "copy": "Kopyala",
+      "copied": "Kopyalandı",
+      "download": "İndir",
+      "bytes": "bayt",
+      "output": {
+        "path": "çıktı",
+        "kind": "Terminal çıktısı"
+      }
     }
   }
 }

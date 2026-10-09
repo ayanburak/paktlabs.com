@@ -1,0 +1,38 @@
+/*
+file: tokens.css
+importable: bu dosyadaki --degiskenlerin hepsi
+
+data sitesine ozel renk degiskenleri. Ortak marka paleti brand'deki
+tokens.css'tedir, burada yalnizca bugun yalnizca data'nin kullandigi
+tonlar durur: kod bloklarinin, terminal ciktisinin ve dosya agacinin koyu
+zemini uzerindeki ikincil renkler. Degerler kod ve veri sayfasinin
+mockup'indan alindi.
+
+description: data sitesinin koyu kod zemini icin kullandigi renk degiskenleri.
+*/
+
+/* NOTE: web ya da automation sitesi de kod gostermeye baslarsa bu degiskenler
+   brand'in tokens.css'ine tasinir, boylece iki site ayni kod gorunusunu
+   paylasir. */
+
+/* zemin --ink, ana metin --on-ink, vurgu --gold, bunlar brand'den gelir.
+   Buradakiler o zeminde okunan ara tonlar */
+:root {
+  /* bolme cizgileri: baslik satirinin alti, satir numaralarinin sagi */
+  --code-rule: #484b52;
+  /* satir numaralari, agac cizgileri ve dugme cercevesi */
+  --code-faint: #6b6e76;
+  /* baslik satirindaki satir sayisi ve dil gibi bilgiler */
+  --code-meta: #a9aab0;
+  /* yorumlar ve agactaki aciklamalar */
+  --code-comment: #9a9ca3;
+  /* docstring'ler */
+  --code-doc: #b7c0aa;
+  /* metin sabitleri */
+  --code-string: #c9d3c0;
+  /* agacta paylasilmayan, soluk dosyalar */
+  --code-muted: #8f9198;
+  /* terminal ciktisinin biraz daha koyu zemini ve metni */
+  --code-output: #1f2126;
+  --code-output-text: #d9dacf;
+}

@@ -270,3 +270,6 @@ export type Block =
   | TreeBlock
   | CompareBlock
   | NoteBlock
+  | CodeBlock
+  | OutputBlock
+  | DataFileBlock

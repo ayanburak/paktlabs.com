@@ -1,0 +1,56 @@
+/* koyu zeminli dosya cercevesi. Kod sayfanin asil icerigi oldugu icin kapali
+   gelmez. Cerceveler arasindaki bosluk bolum cercevesinden gelir */
+.frame {
+  margin: 0;
+  background: var(--ink);
+  border: 2px solid var(--ink);
+}
+.output {
+  background: var(--code-output);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 14px;
+  font: 500 12.5px/1.3 var(--font-mono);
+  color: var(--code-meta);
+  border-bottom: 1px solid var(--code-rule);
+}
+.path {
+  font-weight: 700;
+  color: var(--on-ink);
+}
+.meta {
+  margin-left: auto;
+}
+
+/* satir numaralari ve metin yan yana iki ayri pre. Numaralar ayri durur,
+   kopyalanan metne karismasin diye. Cerceve yalnizca ust ve alt boslugu
+   verir, yatay bosluk govdenin kendi sutunlarindan gelir */
+.body {
+  display: flex;
+}
+.body pre {
+  margin: 0;
+  padding-top: 14px;
+  padding-bottom: 16px;
+  font: 400 13px/1.7 var(--font-mono);
+  tab-size: 4;
+}
+
+@media (max-width: 768px) {
+  .head {
+    flex-wrap: wrap;
+    gap: 6px 12px;
+  }
+  .meta {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+  }
+  .body pre {
+    font-size: 12px;
+  }
+}

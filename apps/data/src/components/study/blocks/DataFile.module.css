@@ -1,0 +1,12 @@
+.header {
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.note {
+  max-width: 64ch;
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--muted);
+}

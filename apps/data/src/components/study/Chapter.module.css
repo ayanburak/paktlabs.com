@@ -71,6 +71,15 @@
 .body > figure + figure {
   margin-top: 64px;
 }
+/* kod sayfasinda art arda gelen dosyalar bir grup gibi daha yakin durur.
+   Veri dosyalarinin altinda birer not oldugu icin aralari biraz daha genis.
+   Isaretler FileFrame ve DataFile'in kok ogesinde */
+.body > [data-file] + [data-file] {
+  margin-top: 28px;
+}
+.body > [data-datafile] + [data-datafile] {
+  margin-top: 36px;
+}
 
 /* icindekiler ustte bara donustugunde giris ve parcalar sol kenardan baslar */
 @media (max-width: 1100px) {

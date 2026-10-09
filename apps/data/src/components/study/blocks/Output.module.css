@@ -1,0 +1,10 @@
+/* satir numarasi olmadigi icin metin cercevenin kenarindan baslar, uzun
+   satirlar dar ekranda yatay kayar */
+.text {
+  flex: 1;
+  min-width: 0;
+  padding-right: 16px;
+  padding-left: 16px;
+  overflow-x: auto;
+  color: var(--code-output-text);
+}

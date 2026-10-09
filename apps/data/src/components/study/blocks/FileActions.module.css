@@ -1,0 +1,22 @@
+/* kucuk cerceveli mono dugme. Indirme altin dolu durur, sayfadaki asil
+   eylem o oldugu icin */
+.action {
+  flex: none;
+  padding: 5px 9px;
+  font: 700 11px/1 var(--font-mono);
+  letter-spacing: 0.06em;
+  color: var(--on-ink);
+  background: none;
+  border: 1.5px solid var(--code-faint);
+  cursor: pointer;
+}
+.action:hover {
+  border-color: var(--on-ink);
+}
+
+.download {
+  color: var(--ink);
+  background: var(--gold);
+  border-color: var(--gold);
+  text-decoration: none;
+}
