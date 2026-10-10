@@ -8,7 +8,9 @@ Komutlar `apps/data` klasöründe çalıştırılır, bağımlılıklar önce re
 
 ```bash
 npx playwright install chromium   # yalnızca ilk kurulumda
-npm test
+npm test                    # davranış testleri
+npm run test:visual         # tam sayfa görsel karşılaştırma
+npm run test:visual:update  # onaylı bir tasarım değişikliğinden sonra referansları yeniler
 ```
 
 Playwright önce `vite build` ile derleme alır ve onu `vite preview` ile 4174 portunda sunar. Landing 4173'ü kullandığı için iki sitenin testleri aynı anda çalışabilir. 4174'te başka bir sunucu açıksa eski bir derlemenin test edilmemesi için çalıştırma başlamaz, açık kalan önizleme kapatılıp komut tekrar çalıştırılır. CI her push'ta bu testleri çalıştırır.
@@ -25,10 +27,12 @@ Playwright önce `vite build` ile derleme alır ve onu `vite preview` ile 4174 p
 
 `a11y.spec.ts` dört sayfa türünde tek bir h1 olduğunu, başlık seviyelerinin atlanmadığını, üst bar, ana içerik ve alt bilgi bölgelerinin birer kez bulunduğunu, üst bardaki adreslerin doğru yere gittiğini ve sayfada boş ya da yeni sekmede açılan bağlantı kalmadığını denetler. Otomatik bir erişilebilirlik tarayıcısı değildir, ekran okuyucuyla yapılan gerçek bir testin yerine geçmez.
 
+`visual.spec.ts` dört sayfa türünün onaylı görünümünü Türkçe ve İngilizce tam sayfa referanslarla karşılaştırır. Veri sayfası ve bulunamadı sayfası landing'deki gibi 390×844, 1024×1366, 1366×1024 ve 1920×1080 ölçülerinde çekilir. Detay ve kod sayfaları on iki ile on sekiz bin piksel boyunda olduğu için yalnızca 390×844 ve 1366×1024'te çekilir. Bu iki ölçü iki sayfanın telefon ve masaüstü düzenini kapsar, öteki ölçüler aynı düzenleri tekrar edip repoyu büyütüyordu. Detay sayfasındaki açılır kutular kapalı çekilir, tabloların içeriğini davranış testleri denetler. Referanslar `visual.spec.ts-snapshots/` altında commit'lenir, CI bu testleri çalıştırmaz.
+
 `support.ts` sayfayı istenen dil tercihiyle açan ve fontların yüklenmesini bekleyen yardımcıları ve iki sitenin sözlüklerini birleştiren `dict`'i taşır. Beklenen adresler testlerde elle yazılıdır, uygulamanın kendi adres dosyasından okunmaz, böylece yanlış yazılmış bir adres testi de geçirmez.
 
 ## Kapsam dışında kalanlar
 
-Görsel karşılaştırma testleri yoktur. Veri sayfasındaki öne çıkan kartın bölgesi koşudan koşuya birkaç yüz piksellik çizim farkı verir, logo maskesi de üst bar yazılarında gözle görünmeyen kenar yumuşatma farkları yaratır. Sıfır toleranslı bir görsel test bu yüzden yanlış alarm üretir, önce bu farkın sebebi bulunmalıdır. Görünüm değişikliklerinde şimdilik önce ve sonra görüntüleri elle karşılaştırılır.
+Veri sayfasındaki öne çıkan kartın teknik ayrıntılar listesi, tarayıcı her yeni açıldığında yaklaşık yirmide bir ihtimalle birkaç tonluk farkla çizilir. Logolar, bekleme süresi, giriş animasyonu, yazı kalınlığı ve satır hizası denendi, hiçbiri sebep çıkmadı, kesin sebep Chromium'un yazı çiziminde kalır. Fark ham bayt karşılaştırmasında görünür, Playwright'ın varsayılan renk eşiği ise onu sayfa farkı saymaz. Görsel testler bu yüzden landing'deki gibi sıfır farklı piksel oranıyla çalışabilir. Eşik düşürülürse bu testler ara ara sebepsiz kırılır.
 
 Landing'deki depolama hatalarıyla ilgili dil testleri burada tekrarlanmaz, çünkü dil katmanı iki sitede ortaktır ve landing'de denetlenir. Firefox, WebKit ve gerçek cihaz testi yoktur.
