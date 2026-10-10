@@ -2,8 +2,9 @@
 file: LanguageProvider.tsx
 importable: LanguageProvider
 
-Aktif dili tutar, tercihi localStorage'a yazar ve html lang ozniteligini
-gunceller. Sekme basligi ve aciklama buradan degil, her sayfanin kendi
+Aktif dili tutar, tercihi butun paktlabs.com sitelerinin okudugu pl_lang
+cerezine ve localStorage'a yazar, html lang ozniteligini gunceller. Landing'de
+secilen dil disiplin sitelerinde de gecerli olur. Sekme basligi ve aciklama buradan degil, her sayfanin kendi
 useDocumentMeta cagrisindan gelir, cunku bir sitede birden fazla rota olabilir.
 Bu dosya sadece bilesen export eder, dil tipi ve context language.ts'te durur.
 
@@ -14,8 +15,10 @@ description: Aktif dili ve dil degistirme fonksiyonunu bilesen agacina dagitan p
 // ziyarette varsayilan tr cunku tasarim tr uzerinden yapildi. Gercek rota
 // altyapisi gelirse varsayilan dil sunucudan gelen bilgiyle degismeli.
 //
-// NOTE: tercih localStorage'da tutuldugu icin origin'e bagli. Landing'de
-// secilen dil disiplin subdomainlerine gecmez, her site kendi kaydini tutar.
+// NOTE: asil kayit cerez. localStorage 2026-10-11'e kadar tek kayitti, o
+// gunden once dil secmis ziyaretcinin tercihi kaybolmasin diye cerez yoksa
+// hala okunuyor ve yazilmaya devam ediyor. Uzun vadeli dil planindaki nginx
+// yonlendirmesi de ayni pl_lang cerezine bakacak, adi bu yuzden degismemeli.
 
 import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
@@ -25,15 +28,57 @@ import type { Language } from './language'
 
 const STORAGE_KEY = 'pl_lang'
 const DEFAULT_LANGUAGE: Language = 'tr'
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 365 // bir yil, saniye
 
-// Tarayici depolamayi engellese de ilk render devam etmeli.
-// Tercih okunamadiginda mevcut varsayilan dil kullanilir.
+function isLanguage(value: string | null | undefined): value is Language {
+  return value === 'tr' || value === 'en'
+}
+
+// Cerez butun paktlabs.com alt alan adlarina Domain ile acilir. Yerelde ve
+// testlerde adres localhost oldugu icin Domain verilmez, cerez o adreste
+// kalir. Secure yalnizca https'te eklenir, yerel http sunucusunda da yazilabilsin.
+function cookieAttributes(): string {
+  const { hostname, protocol } = location
+  const shared = hostname === 'paktlabs.com' || hostname.endsWith('.paktlabs.com')
+  return [
+    `Max-Age=${COOKIE_MAX_AGE}`,
+    'Path=/',
+    'SameSite=Lax',
+    shared && 'Domain=paktlabs.com',
+    protocol === 'https:' && 'Secure',
+  ]
+    .filter(Boolean)
+    .join('; ')
+}
+
+function readCookie(): string | undefined {
+  return document.cookie
+    .split('; ')
+    .find((part) => part.startsWith(`${STORAGE_KEY}=`))
+    ?.slice(STORAGE_KEY.length + 1)
+}
+
+// Once cerez, yoksa eski localStorage kaydi, o da yoksa varsayilan. Tarayici
+// depolamayi engellese de ilk render devam etmeli. Cerez engellendiginde
+// tarayici hata vermez, okuma bos doner, bu yuzden onun icin try yok.
 function readStoredLanguage(): Language {
+  const fromCookie = readCookie()
+  if (isLanguage(fromCookie)) return fromCookie
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
-    return stored === 'tr' || stored === 'en' ? stored : DEFAULT_LANGUAGE
+    return isLanguage(stored) ? stored : DEFAULT_LANGUAGE
   } catch {
     return DEFAULT_LANGUAGE
+  }
+}
+
+// Ikisine birden yazar. localStorage yazilamazsa cerez yine de tercihi tasir.
+function storeLanguage(next: Language) {
+  document.cookie = `${STORAGE_KEY}=${next}; ${cookieAttributes()}`
+  try {
+    localStorage.setItem(STORAGE_KEY, next)
+  } catch {
+    // Cerez yazildiysa secim yine kalicidir, yazilamadiysa bellekte kalir.
   }
 }
 
@@ -44,11 +89,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   // Depolama engellendiginde de kullanici bu oturumda dil degistirebilir.
   function setLanguage(next: Language) {
     setLanguageState(next)
-    try {
-      localStorage.setItem(STORAGE_KEY, next)
-    } catch {
-      // Secim bellekte kalir. Sonraki ziyarette eski kayit veya varsayilan kullanilir.
-    }
+    storeLanguage(next)
   }
 
   // html lang aktif dile uymali, ekran okuyucular telaffuzu buna gore secer.

@@ -23,7 +23,7 @@ npx playwright show-trace test-results/<test-klasörü>/trace.zip
 
 ## Dosyalar
 
-`language.spec.ts` dil tercihinin okunmasını ve yazılmasını kontrol eder. Kayıt yokken, geçerli ve geçersiz kayıtta, `getItem` hata verdiğinde ve `localStorage` hiç erişilemediğinde sayfanın doğru dilde açıldığına bakar. Depolama dolu veya engelliyken dil değiştirmenin yine çalıştığı, yenilemede eski kaydın veya varsayılan dilin geldiği ölçülür. Başlık, açıklama ve `html lang` her durumda aktif dille birlikte kontrol edilir.
+`language.spec.ts` dil tercihinin okunmasını ve yazılmasını kontrol eder. Kayıt yokken, geçerli ve geçersiz kayıtta, `getItem` hata verdiğinde ve `localStorage` hiç erişilemediğinde sayfanın doğru dilde açıldığına bakar. Çerezin `localStorage`'daki eski kayda üstün geldiği, geçersiz bir çerezde eski kayda dönüldüğü ve seçimin bir yıllık `pl_lang` çerezine yazıldığı ölçülür. Depolama dolu, çerez engelli ya da ikisi birden engelliyken dil değiştirmenin yine çalıştığı, yenilemede hangi kaydın geldiği ölçülür. Çerez testlerde `localhost`'a yazıldığı için siteler arası geçiş burada değil canlıda doğrulanır. Başlık, açıklama ve `html lang` her durumda aktif dille birlikte kontrol edilir.
 
 `links.spec.ts` disiplin bağlantılarının üst menü, mobil panel, kartlar, bantlar ve alt menüde doğru subdomain'e gittiğini iki dilde kontrol eder. Beklenen adresler test içinde elle yazılıdır, uygulamanın kendi adres dosyasından okunmaz. Böylece yanlış yazılmış bir adres testi de geçirmez. Uzak adreslerin gerçekten yanıt verdiği, DNS ve sertifikaların hazır olduğu bu testin kapsamında değildir.
 

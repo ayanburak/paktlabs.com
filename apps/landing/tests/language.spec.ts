@@ -1,11 +1,13 @@
 /*
 file: language.spec.ts
 
-Dil tercihinin okunmasi ve yazilmasi. Tarayici depolamayi engellediginde veya
-depolama doldugunda sayfa acilmali ve dil degistirici calismaya devam etmeli.
-Sayfa basligi, aciklama ve html lang da aktif dili izlemeli.
+Dil tercihinin okunmasi ve yazilmasi. Tercih pl_lang cerezinde, eski
+ziyaretciler icin localStorage'da da durur, cerez once okunur. Tarayici
+depolamayi ya da cerezi engellediginde veya depolama doldugunda sayfa acilmali
+ve dil degistirici calismaya devam etmeli. Sayfa basligi, aciklama ve html
+lang da aktif dili izlemeli.
 
-description: Dil secimi, localStorage hata durumlari ve sayfa bilgileri testleri.
+description: Dil secimi, cerez ve localStorage hata durumlari ve sayfa bilgileri testleri.
 */
 
 import { expect, test } from '@playwright/test'
@@ -22,6 +24,22 @@ async function expectLanguage(page: Page, lang: Language) {
   await expect(page).toHaveTitle(dict[lang].meta.title)
   await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', dict[lang].meta.description)
   await expect(page.locator('meta[name="description"]')).toHaveCount(1)
+}
+
+// Testler localhost'ta calistigi icin cerez Domain'siz, yalnizca bu adrese yazilir.
+async function storedCookie(page: Page) {
+  return (await page.context().cookies()).find((cookie) => cookie.name === 'pl_lang')
+}
+
+// Cerezi engellenmis bir tarayici gibi davranir: okuma bos doner, yazma sessizce yok sayilir.
+async function blockCookies(page: Page) {
+  await page.addInitScript(() => {
+    Object.defineProperty(Document.prototype, 'cookie', {
+      configurable: true,
+      get: () => '',
+      set: () => {},
+    })
+  })
 }
 
 async function switchTo(page: Page, lang: Language) {
@@ -45,6 +63,18 @@ test.describe('reading the stored language', () => {
     await page.addInitScript(() => localStorage.setItem('pl_lang', 'de'))
     await openHome(page)
     await expectLanguage(page, 'tr')
+  })
+
+  test('prefers the cookie over the older localStorage value', async ({ page, baseURL }) => {
+    await page.context().addCookies([{ name: 'pl_lang', value: 'en', url: baseURL! }])
+    await openHome(page, 'tr')
+    await expectLanguage(page, 'en')
+  })
+
+  test('falls back to localStorage when the cookie is invalid', async ({ page, baseURL }) => {
+    await page.context().addCookies([{ name: 'pl_lang', value: 'de', url: baseURL! }])
+    await openHome(page, 'en')
+    await expectLanguage(page, 'en')
   })
 
   test('opens in tr when getItem throws', async ({ page }) => {
@@ -77,6 +107,12 @@ test.describe('writing the language choice', () => {
     await switchTo(page, 'en')
     await expectLanguage(page, 'en')
     expect(await page.evaluate(() => localStorage.getItem('pl_lang'))).toBe('en')
+    const cookie = await storedCookie(page)
+    expect(cookie?.value).toBe('en')
+    expect(cookie?.domain).toBe('localhost')
+    expect(cookie?.sameSite).toBe('Lax')
+    // bir yil, birkac saniyelik pay ile
+    expect(cookie!.expires - Date.now() / 1000).toBeGreaterThan(365 * 24 * 3600 - 60)
     await page.reload()
     await expectLanguage(page, 'en')
   })
@@ -89,7 +125,7 @@ test.describe('writing the language choice', () => {
     }
   })
 
-  test('still switches when storage is full, choice is lost on reload', async ({ page }) => {
+  test('keeps the choice in the cookie when localStorage is full', async ({ page }) => {
     await page.addInitScript(() => {
       Storage.prototype.setItem = () => {
         throw new DOMException('full', 'QuotaExceededError')
@@ -99,7 +135,16 @@ test.describe('writing the language choice', () => {
     await switchTo(page, 'en')
     await expectLanguage(page, 'en')
     await page.reload()
-    await expectLanguage(page, 'tr')
+    await expectLanguage(page, 'en')
+  })
+
+  test('still switches when cookies are blocked and keeps the choice in localStorage', async ({ page }) => {
+    await blockCookies(page)
+    await openHome(page)
+    await switchTo(page, 'en')
+    await expectLanguage(page, 'en')
+    await page.reload()
+    await expectLanguage(page, 'en')
   })
 
   test('still switches when all storage access is blocked', async ({ page }) => {
@@ -116,7 +161,8 @@ test.describe('writing the language choice', () => {
     await expectLanguage(page, 'en')
   })
 
-  test('keeps the older stored value when a new write is blocked', async ({ page }) => {
+  test('keeps the older stored value when cookies and new writes are blocked', async ({ page }) => {
+    await blockCookies(page)
     await openHome(page)
     await page.evaluate(() => localStorage.setItem('pl_lang', 'en'))
     await page.addInitScript(() => {
