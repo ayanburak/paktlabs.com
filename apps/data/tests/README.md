@@ -31,8 +31,22 @@ Playwright önce `vite build` ile derleme alır ve onu `vite preview` ile 4174 p
 
 `support.ts` sayfayı istenen dil tercihiyle açan ve fontların yüklenmesini bekleyen yardımcıları ve iki sitenin sözlüklerini birleştiren `dict`'i taşır. Beklenen adresler testlerde elle yazılıdır, uygulamanın kendi adres dosyasından okunmaz, böylece yanlış yazılmış bir adres testi de geçirmez.
 
-## Kapsam dışında kalanlar
+## Koşullar ve toleranslar
 
-Veri sayfasındaki öne çıkan kartın teknik ayrıntılar listesi, tarayıcı her yeni açıldığında yaklaşık yirmide bir ihtimalle birkaç tonluk farkla çizilir. Logolar, bekleme süresi, giriş animasyonu, yazı kalınlığı ve satır hizası denendi, hiçbiri sebep çıkmadı, kesin sebep Chromium'un yazı çiziminde kalır. Fark ham bayt karşılaştırmasında görünür, Playwright'ın varsayılan renk eşiği ise onu sayfa farkı saymaz. Görsel testler bu yüzden landing'deki gibi sıfır farklı piksel oranıyla çalışabilir. Eşik düşürülürse bu testler ara ara sebepsiz kırılır.
+Bütün testlerde cihaz piksel oranı 1'dir. Ölçüler tarayıcının içerik alanıdır, belirli bir telefonun veya tabletin emülasyonu değildir. Retina ekranlar, mobil tarayıcı araç çubukları ve sayfa yakınlaştırması bu testlerin kapsamına girmez.
+
+Yerleşim ve görsel testleri ile süzgeç ve kaydırma testlerinin bir kısmı hareket azaltma tercihiyle çalışır. Bu tercihte belirme animasyonları baştan açık gelir ve sayfa kaydırması anlık olur, ölçüm animasyon zamanlamasına bağlı kalmaz. Klavye odağı testi bunun tersine normal hareketle çalışır, çünkü okurun Tab ile bir kutuya geldiğinde kutunun belirdiğini görmesi ölçülen davranışın kendisidir. Bu testte sayfa kayarak ilerlediği için elemanın ekranda olduğu kayma bitene kadar tekrar ölçülür.
+
+Hero yerleşiminde metnin ve çizimin dikey ortası için 1 CSS pikseli tolerans, başlıkla çizim arası için en az 24 piksel kullanılır. Header payı ve alt çizgi kalınlığı testte sayı olarak yazılmaz, hesaplanmış stilden okunur. Metin bloğu eleman kutularıyla ölçülür, Range kutusuyla değil, çünkü başlığın satır yüksekliği fontun yazı alanından küçüktür. Kaydırma testi geç gelen fontların bölümü kaydırmasını sınamak için fontları 800 milisaniye geciktirir.
+
+Görsel karşılaştırmada piksel başına Playwright'ın varsayılan renk eşiği kullanılır, farklı piksel oranı sıfırdır, landing'le aynı. Veri sayfasındaki öne çıkan kartın teknik ayrıntılar listesi, tarayıcı her yeni açıldığında yaklaşık yirmide bir ihtimalle birkaç tonluk farkla çizilir. Logolar, bekleme süresi, giriş animasyonu, yazı kalınlığı ve satır hizası denendi, hiçbiri sebep çıkmadı, kesin sebep Chromium'un yazı çiziminde kalır. Fark ham bayt karşılaştırmasında görünür, varsayılan renk eşiği ise onu sayfa farkı saymaz. Eşik düşürülürse bu testler ara ara sebepsiz kırılır.
+
+Fontlar Google Fonts üzerinden ağdan yüklenir, görsel testler fontların ve görsellerin yüklenmesini bekler. Font sürümü, işletim sistemi veya font çizimi değiştiğinde çıkan fark önce görüntüden incelenir, doğrudan uygulama hatası sayılmaz. Referanslar Linux üzerinde Chromium 153 ile alınmıştır.
+
+## Referansların yenilenmesi
+
+Onaylı bir görsel değişiklikten sonra referanslar `npm run test:visual:update` ile yenilenir. Yenilenen görüntüler commit'lenmeden önce eski halleriyle yan yana incelenir. Açıklanamayan konum, boyut veya satır kırılımı farkı varsa referans güncellenmez, değişikliğin kendisi incelenir. Brand paketindeki bir değişiklik iki sitenin görünümünü birlikte değiştirebileceği için o durumda landing'in görsel testleri de çalıştırılır.
+
+## Kapsam dışında kalanlar
 
 Landing'deki depolama hatalarıyla ilgili dil testleri burada tekrarlanmaz, çünkü dil katmanı iki sitede ortaktır ve landing'de denetlenir. Firefox, WebKit ve gerçek cihaz testi yoktur.
