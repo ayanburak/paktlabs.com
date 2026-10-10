@@ -14,7 +14,7 @@ gosterir.
 description: Sayfanin en altindaki telif hakki satiri ve disiplin baglantilarini tasiyan alt bilgi bandi.
 */
 
-import { disciplineUrls } from '../content/disciplines'
+import { disciplineOrder, disciplineUrls } from '../content/disciplines'
 import { useBrandDict } from '../i18n/useBrandDict'
 
 import styles from './Footer.module.css'
@@ -34,9 +34,11 @@ export function Footer({ homeHref }: FooterProps) {
       <div className={`wrap ${styles.inner}`}>
         <span>{footer.copy}</span>
         <nav aria-label={a11y.footerMenu}>
-          <a href={disciplineUrls.web}>{nav.web}</a>
-          <a href={disciplineUrls.automation}>{nav.automation}</a>
-          <a href={disciplineUrls.data}>{nav.data}</a>
+          {disciplineOrder.map((key) => (
+            <a key={key} href={disciplineUrls[key]}>
+              {nav[key]}
+            </a>
+          ))}
           {homeHref && <a href={homeHref}>paktlabs.com</a>}
         </nav>
       </div>

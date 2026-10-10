@@ -6,7 +6,7 @@ description: Gold bant icinde figur ve uc disiplin kartini bir arada gosteren bo
 */
 
 import { RevealImg } from '@paktlabs/brand/components/RevealImg'
-import { disciplineUrls } from '@paktlabs/brand/content/disciplines'
+import { disciplineOrder, disciplineUrls } from '@paktlabs/brand/content/disciplines'
 import { useLanguage } from '@paktlabs/brand/i18n/language'
 import type { Language } from '@paktlabs/brand/i18n/language'
 import { cx } from '@paktlabs/brand/lib/cx'
@@ -28,11 +28,6 @@ export function Disciplines() {
   const { disciplines } = useDict()
   const { language } = useLanguage()
   const illustration = illustrations[language]
-  const cards = [
-    { key: 'data', ...disciplines.items.data },
-    { key: 'automation', ...disciplines.items.automation },
-    { key: 'web', ...disciplines.items.web },
-  ] as const
 
   return (
     <section id="disiplinler" className={cx('full-bleed', styles.disciplines)}>
@@ -46,13 +41,14 @@ export function Disciplines() {
           <RevealImg src={illustration.desktop} alt={disciplines.artAlt} />
         </picture>
         <div className={styles.grid}>
-          {cards.map((item) => (
+          {/* Kartlarin sirasi ust bar ve alt bilgiyle ayni listeden gelir. */}
+          {disciplineOrder.map((key) => (
             <DisciplineCard
-              key={item.key}
-              title={item.title}
-              description={item.desc}
+              key={key}
+              title={disciplines.items[key].title}
+              description={disciplines.items[key].desc}
               go={disciplines.go}
-              href={disciplineUrls[item.key]}
+              href={disciplineUrls[key]}
             />
           ))}
         </div>

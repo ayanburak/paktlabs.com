@@ -134,5 +134,5 @@ test('keyboard focus is visible on every focusable element', async ({ page }) =>
     focused.push(info.label)
   }
   // dongu erken kirilmadi, sayfanin sonundaki footer linkine kadar gelindi
-  expect(focused.at(-1)).toBe(dict.tr.nav.data)
+  expect(focused.at(-1)).toBe(dict.tr.nav.web)
 })

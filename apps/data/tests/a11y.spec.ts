@@ -20,9 +20,9 @@ import { dict, languages, openPage } from './support'
 const pages = ['/', '/work/demo-veri', '/work/demo-veri/source', '/yok']
 
 const headerLinks = [
-  'https://web.paktlabs.com',
-  'https://automation.paktlabs.com',
   'https://data.paktlabs.com',
+  'https://automation.paktlabs.com',
+  'https://web.paktlabs.com',
   'https://paktlabs.com/contact',
 ]
 

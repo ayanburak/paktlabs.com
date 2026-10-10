@@ -22,7 +22,7 @@ import { useEffect, useId, useRef, useState } from 'react'
 
 import logoUrl from '../assets/logo.svg'
 import { contactPageUrl } from '../content/contact'
-import { disciplineUrls } from '../content/disciplines'
+import { disciplineOrder, disciplineUrls } from '../content/disciplines'
 import type { Discipline } from '../content/disciplines'
 import { useLanguage } from '../i18n/language'
 import { useBrandDict } from '../i18n/useBrandDict'
@@ -57,9 +57,7 @@ export function Header({ current, homeHref = '/' }: HeaderProps) {
   // Bulunulan disiplin hem masaustu barda hem mobil panelde aria-current
   // tasir, ekran okuyucu iki menude de hangi sitede olundugunu soyler.
   const navLinks = [
-    { href: disciplineUrls.web, label: nav.web, current: current === 'web' },
-    { href: disciplineUrls.automation, label: nav.automation, current: current === 'automation' },
-    { href: disciplineUrls.data, label: nav.data, current: current === 'data' },
+    ...disciplineOrder.map((key) => ({ href: disciplineUrls[key], label: nav[key], current: current === key })),
     { href: contactPageUrl, label: nav.contact, current: false },
   ]
 

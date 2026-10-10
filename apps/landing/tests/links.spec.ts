@@ -28,16 +28,16 @@ for (const lang of languages) {
     await openHome(page, lang)
 
     const headerLinks = page.locator('header nav').first().locator('a')
-    expect(await hrefs(headerLinks)).toEqual([web, automation, data, contactPage])
-    await expect(headerLinks).toHaveText([nav.web, nav.automation, nav.data, nav.contact])
+    expect(await hrefs(headerLinks)).toEqual([data, automation, web, contactPage])
+    await expect(headerLinks).toHaveText([nav.data, nav.automation, nav.web, nav.contact])
 
     await expect(page.locator('main section').first().locator('a.cta')).toHaveAttribute('href', contactPage)
     expect(await hrefs(page.locator('#disiplinler a'))).toEqual([data, automation, web])
     expect(await hrefs(page.locator('#isler a'))).toEqual([data, automation, web])
 
     const footerLinks = page.locator('footer nav a')
-    expect(await hrefs(footerLinks)).toEqual([web, automation, data])
-    await expect(footerLinks).toHaveText([nav.web, nav.automation, nav.data])
+    expect(await hrefs(footerLinks)).toEqual([data, automation, web])
+    await expect(footerLinks).toHaveText([nav.data, nav.automation, nav.web])
   })
 
   test(`${lang}: mobile panel links point at discipline subdomains`, async ({ page }) => {
@@ -45,8 +45,8 @@ for (const lang of languages) {
     await openHome(page, lang)
     await page.locator('header button[aria-expanded]').click()
     const panelLinks = page.locator('header > nav a')
-    expect(await hrefs(panelLinks)).toEqual([web, automation, data, contactPage])
-    await expect(panelLinks).toHaveText([nav.web, nav.automation, nav.data, nav.contact])
+    expect(await hrefs(panelLinks)).toEqual([data, automation, web, contactPage])
+    await expect(panelLinks).toHaveText([nav.data, nav.automation, nav.web, nav.contact])
   })
 }
 
