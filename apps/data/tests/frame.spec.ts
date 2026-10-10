@@ -1,9 +1,10 @@
 /*
 file: frame.spec.ts
 
-Ust bar ve alt bilginin data sitesine dogru baglandigini kontrol eder. Header
-ve Footer brand paketinden gelir, landing onlara prop vermedigi icin current
-ve homeHref davranisi yalnizca burada olculur. Adresler bilerek elle yazili,
+Ust bar ve alt bilginin data sitesine dogru baglandigini ve sekme basligiyla
+aciklamanin her sayfa turunde dile gore degistigini kontrol eder. Header ve
+Footer brand paketinden gelir, landing onlara prop vermedigi icin current ve
+homeHref davranisi yalnizca burada olculur. Adresler bilerek elle yazili,
 uygulamanin kendi adres dosyasindan okunsaydi yanlis bir adres testi de
 gecirirdi.
 
@@ -11,6 +12,10 @@ description: data sayfalarinin ust bar, alt bilgi ve sayfa basligi testleri.
 */
 
 import { expect, test } from '@playwright/test'
+
+import { demoVeri } from '../src/content/studies/demo-veri'
+import { page as demoPage } from '../src/content/studies/demo-veri/page'
+import { source as demoSource } from '../src/content/studies/demo-veri/source'
 
 import { dict, languages, openPage } from './support'
 
@@ -42,6 +47,28 @@ for (const lang of languages) {
     await expect(page).toHaveTitle(dict[lang].home.meta.title)
     await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', dict[lang].home.meta.description)
     await expect(page.locator('html')).toHaveAttribute('lang', lang)
+  })
+}
+
+// Calisma sayfalari basligi ve aciklamayi sozlukten degil calismanin kendi
+// dosyalarindan kurar. Dil sayfa acikken degistirilir, cunku asil risk
+// basligin ilk acilista dogru gelip dil degisince eski dilde kalmasi.
+const studyPages = [
+  ['/work/demo-veri', demoVeri.title, demoPage.lede],
+  ['/work/demo-veri/source', demoSource.title, demoSource.lede],
+] as const
+
+for (const [path, title, lede] of studyPages) {
+  test(`${path}: title and description follow a language switch`, async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await openPage(page, path, 'tr')
+    await expect(page).toHaveTitle(`${title.tr} · ${dict.tr.home.meta.title}`)
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', lede.tr)
+
+    await page.locator('header nav').first().getByRole('button', { name: 'EN' }).click()
+    await expect(page).toHaveTitle(`${title.en} · ${dict.en.home.meta.title}`)
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', lede.en)
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en')
   })
 }
 

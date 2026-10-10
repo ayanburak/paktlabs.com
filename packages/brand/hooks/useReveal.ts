@@ -29,17 +29,31 @@ export function useReveal<T extends HTMLElement>() {
       return
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' },
-    )
+    const show = () => {
+      setVisible(true)
+      observer.disconnect()
+    }
+    const observer = new IntersectionObserver(([entry]) => entry.isIntersecting && show(), {
+      threshold: 0.15,
+      rootMargin: '0px 0px -8% 0px',
+    })
     observer.observe(el)
-    return () => observer.disconnect()
+
+    // Tab ile icerideki bir dugmeye gelindiginde tarayici yalnizca o dugmeyi
+    // ekrana getirir. Eleman uzunsa, ornegin data'daki bin dokuz yuz piksellik
+    // kod kutusu, yuzde on besi ekrana girmez ve odaklanan dugme gorunmez bir
+    // kutunun icinde kalirdi. Odak iceri girince esige bakmadan gosterilir.
+    // Yalnizca klavye odagi sayilir. Fareyle tiklamada da dugme odak alir ve
+    // eleman o anda gosterilirse yirmi iki piksel yukari kayar, fare
+    // birakildiginda dugme imlecin altinda olmaz ve tiklama kaybolur.
+    const onFocus = (event: FocusEvent) => {
+      if ((event.target as Element).matches(':focus-visible')) show()
+    }
+    el.addEventListener('focusin', onFocus)
+    return () => {
+      observer.disconnect()
+      el.removeEventListener('focusin', onFocus)
+    }
   }, [])
 
   return { ref, visible }

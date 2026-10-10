@@ -1,6 +1,9 @@
 /* koyu zeminli dosya cercevesi. Kod sayfanin asil icerigi oldugu icin kapali
-   gelmez. Cerceveler arasindaki bosluk bolum cercevesinden gelir */
+   gelmez. Cerceveler arasindaki bosluk bolum cercevesinden gelir. Icindeki
+   Kopyala ve Indir dugmeleri ile yana kayan metin koyu zeminde durur, brand'in
+   murekkep renkli odak cercevesi orada gorunmez, bu yuzden altina doner */
 .frame {
+  --focus-ring: var(--gold);
   margin: 0;
   background: var(--ink);
   border: 2px solid var(--ink);

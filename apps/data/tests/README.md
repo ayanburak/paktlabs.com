@@ -17,7 +17,7 @@ Playwright önce `vite build` ile derleme alır ve onu `vite preview` ile 4174 p
 
 ## Dosyalar
 
-`frame.spec.ts` üst barın Veri bağlantısını işaretlediğini, alt bilginin ana siteye döndüğünü, sekme başlığının ve açıklamanın iki dilde doğru geldiğini ve `index.html`'in JS çalışmadan önce Türkçe başlık taşıdığını denetler.
+`frame.spec.ts` üst barın Veri bağlantısını işaretlediğini, alt bilginin ana siteye döndüğünü, sekme başlığının ve açıklamanın iki dilde doğru geldiğini, detay ve kod sayfasında dil değiştirilince başlığın, açıklamanın ve sayfa dilinin yeni dile geçtiğini ve `index.html`'in JS çalışmadan önce Türkçe başlık taşıdığını denetler.
 
 `home.spec.ts` veri sayfasının hero'sunu, teknoloji şeridini, çalışma kartlarını, süzgeci ve ortak iletişim bölümünü denetler. `layout.spec.ts` hero'nun yerleşimini, yani metnin ve çizimin üst barın altındaki alanın dikey ortasında durmasını, başlıkla çizim arasındaki boşluğu ve yatay taşmayı eşiklerin iki yanında ve iki dilde ölçer.
 
@@ -25,7 +25,7 @@ Playwright önce `vite build` ile derleme alır ve onu `vite preview` ile 4174 p
 
 `study.spec.ts` çalışma detay sayfasını, `source.spec.ts` kod ve veri sayfasını Demo Veri üzerinden denetler: bölüm sırası, veri dili seçimi, açılır kutular, kopyalama, indirme ve bağlantılar. `data.spec.ts` tarayıcı açmadan iki dilin CSV'lerini ve kod dosyalarını karşılaştırır, `highlight.spec.ts` kod renklendiricisini küçük örneklerle denetler.
 
-`a11y.spec.ts` dört sayfa türünde tek bir h1 olduğunu, başlık seviyelerinin atlanmadığını, üst bar, ana içerik ve alt bilgi bölgelerinin birer kez bulunduğunu, üst bardaki adreslerin doğru yere gittiğini ve sayfada boş ya da yeni sekmede açılan bağlantı kalmadığını denetler. Otomatik bir erişilebilirlik tarayıcısı değildir, ekran okuyucuyla yapılan gerçek bir testin yerine geçmez.
+`a11y.spec.ts` dört sayfa türünde tek bir h1 olduğunu, başlık seviyelerinin atlanmadığını, üst bar, ana içerik ve alt bilgi bölgelerinin birer kez bulunduğunu, üst bardaki adreslerin doğru yere gittiğini ve sayfada boş ya da yeni sekmede açılan bağlantı kalmadığını denetler. Ayrıca mobil menünün iki dilde klavyeyle açılıp Escape ile kapandığını ve dört sayfa türünde Tab ile gezilen her elemanda odak çerçevesinin görünüp elemanın ekrana geldiğini ölçer. Sayfa kaydırması yumuşak olduğu için elemanın konumu kayma bitene kadar tekrar ölçülür. Otomatik bir erişilebilirlik tarayıcısı değildir, ekran okuyucuyla yapılan gerçek bir testin yerine geçmez.
 
 `visual.spec.ts` dört sayfa türünün onaylı görünümünü Türkçe ve İngilizce tam sayfa referanslarla karşılaştırır. Veri sayfası ve bulunamadı sayfası landing'deki gibi 390×844, 1024×1366, 1366×1024 ve 1920×1080 ölçülerinde çekilir. Detay ve kod sayfaları on iki ile on sekiz bin piksel boyunda olduğu için yalnızca 390×844 ve 1366×1024'te çekilir. Bu iki ölçü iki sayfanın telefon ve masaüstü düzenini kapsar, öteki ölçüler aynı düzenleri tekrar edip repoyu büyütüyordu. Detay sayfasındaki açılır kutular kapalı çekilir, tabloların içeriğini davranış testleri denetler. Referanslar `visual.spec.ts-snapshots/` altında commit'lenir, CI bu testleri çalıştırmaz.
 

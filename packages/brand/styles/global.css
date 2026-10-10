@@ -56,11 +56,13 @@ h3 {
   margin: 0;
 }
 
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid var(--ink);
+/* klavyeyle gelinen her eleman ayni cerceveyi alir. Yalnizca baglanti ve dugme
+   yetmiyor, acilir kutu basliklari ve tarayicinin Tab sirasina kendisi aldigi
+   yana kayan kutular da var, onlar yoksa tarayicinin ince halkasinda kalir.
+   Fareyle tiklamada :focus-visible devreye girmez, cerceve yalnizca klavyede
+   gorunur */
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
