@@ -30,7 +30,7 @@ interface StudyCardProps {
 // Site ici gecis oldugu icin duz a yerine Link kullaniliyor, sayfa yeniden
 // yuklenmeden detay sayfasina gecilir. One cikan kartta etiket satiri yok,
 // mockup'ta da yok, yerini teknik detaylar aliyor. Kart yalnizca liste katini
-// okur, boylece gercek calismayi da yer tutucuyu da ayni sekilde gosterir.
+// okur, detay sayfasinin icerigine ihtiyaci yok.
 export function StudyCard({ study }: StudyCardProps) {
   const { language } = useLanguage()
   const { home } = useDict()

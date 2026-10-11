@@ -80,11 +80,7 @@ async function pages(study: Study): Promise<[string, Chapter[]][]> {
   return list
 }
 
-// Yer tutucularin veri dosyasi ve detay sayfasi yok, yalnizca gercek
-// calismalar denetlenir.
-const realStudies = studies.filter((study): study is Study => !('placeholder' in study))
-
-for (const study of realStudies) {
+for (const study of studies) {
   const { slug } = study
 
   test(`${slug}: both languages have the same data files`, () => {

@@ -28,13 +28,11 @@ interface ClosingProps {
   closing: StudyPage['closing']
 }
 
-// Sonraki calisma listede bu calismadan sonra gelen ilk gercek calismadir,
-// liste bitince basa doner. Yer tutucularin detay sayfasi olmadigi icin
-// atlanir. Baska gercek calisma yoksa yalnizca donus karti kalir.
+// Sonraki calisma listede bu calismadan sonra gelen calismadir, liste bitince
+// basa doner. Baska calisma yoksa yalnizca donus karti kalir.
 function nextStudy(current: Study): Study | undefined {
-  const real = studies.filter((study): study is Study => !('placeholder' in study))
-  if (real.length < 2) return undefined
-  return real[(real.indexOf(current) + 1) % real.length]
+  if (studies.length < 2) return undefined
+  return studies[(studies.indexOf(current) + 1) % studies.length]
 }
 
 export function Closing({ study, closing }: ClosingProps) {

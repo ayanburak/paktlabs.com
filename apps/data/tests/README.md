@@ -19,7 +19,7 @@ Playwright önce `vite build` ile derleme alır ve onu `vite preview` ile 4174 p
 
 `frame.spec.ts` üst barın Veri bağlantısını işaretlediğini, alt bilginin ana siteye döndüğünü, sekme başlığının ve açıklamanın iki dilde doğru geldiğini, detay ve kod sayfasında dil değiştirilince başlığın, açıklamanın ve sayfa dilinin yeni dile geçtiğini ve `index.html`'in JS çalışmadan önce Türkçe başlık taşıdığını denetler.
 
-`home.spec.ts` veri sayfasının hero'sunu, teknoloji şeridini, çalışma kartlarını, süzgeci ve ortak iletişim bölümünü denetler. `layout.spec.ts` hero'nun yerleşimini, yani metnin ve çizimin üst barın altındaki alanın dikey ortasında durmasını, başlıkla çizim arasındaki boşluğu ve yatay taşmayı eşiklerin iki yanında ve iki dilde ölçer.
+`home.spec.ts` veri sayfasının hero'sunu, teknoloji şeridini, çalışma kartlarını, süzgeci ve ortak iletişim bölümünü denetler. İki testi listedeki çalışmalara bağlıdır ve koşulu yoksa kendiliğinden atlanır. Kart logolarının adlarıyla okunduğunu ölçen test yalnızca öne çıkan kartta logo olduğu için öne çıkan bir çalışma ister. Aynı satırdaki kartların metin kutularının aynı hizadan başladığını ölçen test en az üç normal kart ister. 2026-10-11'den beri listede yalnızca Demo Veri durduğu için ikisi de atlanır. Bu süre boyunca öne çıkan kartın tasarımı hiçbir testte, görsel referanslar dahil, ölçülmez. `layout.spec.ts` hero'nun yerleşimini, yani metnin ve çizimin üst barın altındaki alanın dikey ortasında durmasını, başlıkla çizim arasındaki boşluğu ve yatay taşmayı eşiklerin iki yanında ve iki dilde ölçer.
 
 `routes.spec.ts` adresleri ve bulunamadı sayfasını, `scroll.spec.ts` site içi geçişlerde ve bölüm adresleri doğrudan açıldığında kaydırma konumunu denetler. Bu test fontları bilerek geciktirir.
 

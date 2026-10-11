@@ -28,7 +28,7 @@ Kapağın altında üç sütunlu bir özet bandı yer alır: Sorun, Yaklaşım v
 
 Gövde solda sabit duran içindekiler ve sağda numaralı bölümlerden oluşur. İçindekiler okurun hangi bölümde olduğunu gösterir, soldaki dikey çizgi okuma ilerledikçe altınla dolar. Dar ekranda içindekiler sayfanın üstüne yapışan ince bir bara dönüşür. Bölümler genellikle şu sırayı izler: sorun, eldeki veri, çözüm hattı, sonuçların şekillerle gösterildiği bölüm, verilen kararlar, teslim ve takvim, sonuç ve sınırlar. Bir işin doğası farklı bir sıra gerektiriyorsa sıra değişebilir.
 
-Bölümler bittikten sonra bir "Meraklısına" kartı bulunur. Firma kodun açık kaynak olarak yayınlanmasına izin verdiyse kart yalnızca GitHub'daki depoya, vermediyse sitedeki kod ve veri sayfasına bağlanır. Altında sayfayı hazırlayan kişinin adını, e-posta adresini ve profil fotoğrafını taşıyan siyah zeminli bir yazar kutusu bulunur, kutu ana sitedeki profil sayfasına bağlanır. Sayfa, tüm çalışmalara ve varsa sonraki çalışmaya geçişin bulunduğu bir kapanış bölümüyle biter. Sonraki çalışma listede bu çalışmadan sonra gelen ilk gerçek çalışmadır, yer tutucular atlanır, başka gerçek çalışma yoksa yalnızca tüm çalışmalara dönüş kartı görünür.
+Bölümler bittikten sonra bir "Meraklısına" kartı bulunur. Firma kodun açık kaynak olarak yayınlanmasına izin verdiyse kart yalnızca GitHub'daki depoya, vermediyse sitedeki kod ve veri sayfasına bağlanır. Altında sayfayı hazırlayan kişinin adını, e-posta adresini ve profil fotoğrafını taşıyan siyah zeminli bir yazar kutusu bulunur, kutu ana sitedeki profil sayfasına bağlanır. Sayfa, tüm çalışmalara ve varsa sonraki çalışmaya geçişin bulunduğu bir kapanış bölümüyle biter. Sonraki çalışma listede bu çalışmadan sonra gelen çalışmadır, başka çalışma yoksa yalnızca tüm çalışmalara dönüş kartı görünür.
 
 ### Kod ve veri sayfası
 
@@ -157,7 +157,9 @@ Metinler dil başına ayrı dosyalarda değil, aynı yerde iki dili yan yana yaz
 
 Kodun yeri iki seçenekten biridir. Firma kodun paylaşılmasına izin verdiyse künye dosyasına GitHub deposunun adresi yazılır, detay sayfasındaki Meraklısına kartı yalnızca depoya bağlanır ve sitede ayrıca kod sayfası bulunmaz. İzin vermediyse paylaşılan kısım sitedeki kod sayfasında gösterilir. İkisinden birinin yazılması zorunludur, ikisi birden yazılamaz. Kodu GitHub'da olan bir çalışmanın kod sayfası adresi bulunamadı sayfasına düşer.
 
-Veri sayfasındaki listede gerçek çalışmalarla birlikte mockup'tan taşınan lorem yer tutucular da durur. Yer tutucular yalnızca listede görünen alanları taşır, detay ve kod sayfaları yoktur. Gerçek bir çalışma geldiğinde aynı numaralı yer tutucu `placeholders.ts`'ten silinir. Yeni bir çalışma kendi klasöründe yazılır ve `src/content/studies/index.ts` içindeki listeye eklenir, liste numara sırasıyla dizilir.
+Veri sayfasındaki listede yalnızca gerçek çalışmalar durur. Mockup'tan taşınan lorem yer tutucular 2026-10-11'de kaldırıldı, gerçek bir çalışma gelene kadar listedeki tek çalışma Demo Veri'dir. Yeni bir çalışma kendi klasöründe yazılır ve `src/content/studies/index.ts` içindeki listeye eklenir, liste numara sırasıyla dizilir.
+
+Bir çalışma listede normal kart ya da tam satır kaplayan öne çıkan kart olarak görünür. Öne çıkan kart, künye dosyasına `feature` alanı yazılan çalışmadır: teknik detaylar ve kullanılan araçların logoları bu alandan gelir, numaranın yanında Öne çıkan yazar. Bugün hiçbir çalışmada bu alan yok, bu yüzden öne çıkan kart görünmüyor. Tasarımı `StudyCard.tsx` ve stil dosyasında duruyor, bir çalışmaya `feature` yazıldığında yeniden görünür. 00 numarası öne çıkan çalışma için ayrılmıştı.
 
 ### Verinin dili
 

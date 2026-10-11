@@ -1,13 +1,12 @@
 /*
 file: types.ts
-importable: Localized, Lazy, Study, StudyListing, PlaceholderStudy, StudyPage, Chapter, CodeLocation, StudyCard, SourcePage, StudyFeature, StudyTag, KunyeRow
+importable: Localized, Lazy, Study, StudyListing, StudyPage, Chapter, CodeLocation, StudyCard, SourcePage, StudyFeature, StudyTag, KunyeRow
 
 Bir calisma iki kattan olusur. StudyListing veri sayfasindaki listede gorunen
 kisimdir: adresteki slug, numara, yil, etiketler, baslik ve kart metni. Study
 bunun ustune detay sayfasini, verinin orijinal dilini ve kodun yerini ekler.
-Yer tutucular yalnizca liste katindan olusur, bu yuzden detay sayfasi
-olmayan bir gercek calisma derlenmez, yer tutucu da bos alan doldurmak
-zorunda kalmaz.
+Detay sayfasi olmayan bir calisma derlenmez. Listedeki kart yalnizca liste
+katini okur.
 
 Her metin Localized ile iki dili yan yana tasir. Bir dilde eksik kalan metin
 derleme hatasi verir.
@@ -127,7 +126,7 @@ export type Lazy<T> = () => Promise<T>
 // ayni anda yazilamaz.
 export type CodeLocation = { kind: 'repo'; url: string } | { kind: 'page'; page: Lazy<SourcePage> }
 
-// Gercek calismanin da yer tutucunun da listede gosterdigi kisim. Baslik
+// Calismanin listede gosterdigi kisim. Baslik
 // kartta, detay sayfasinda ve sekme basliginda ayni oldugu icin sayfanin
 // dosyasinda degil burada durur.
 export interface StudyListing {
@@ -150,11 +149,4 @@ export interface Study extends StudyListing {
   dataLanguage: Language
   code: CodeLocation
   page: Lazy<StudyPage>
-}
-
-// Mockup'taki lorem kartlari canliya tasimak icin var. Detay ve kod sayfalari
-// yoktur, adresleri bulunamadi sayfasina duser. Gercek calismalar geldikce
-// placeholders.ts'ten silinirler.
-export interface PlaceholderStudy extends StudyListing {
-  placeholder: true
 }
