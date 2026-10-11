@@ -55,6 +55,7 @@ def settings(tmp_path: Path) -> Settings:
         db_path=tmp_path / "messages.sqlite3",
         mail_to="info@paktlabs.com",
         keep_days=730,
+        mailer="console",
         smtp_host=None,
         smtp_port=465,
         smtp_user=None,

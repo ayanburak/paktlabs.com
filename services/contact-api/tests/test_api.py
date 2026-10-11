@@ -63,6 +63,8 @@ def test_company_is_optional(client: TestClient) -> None:
         {"name": ""},
         {"name": "   "},
         {"name": "Ayse\nBcc: biri@ornek.com"},
+        {"name": "Ayse\u2028Bcc: biri@ornek.com"},
+        {"name": "Ayse\x85Bcc: biri@ornek.com"},
         {"name": "a" * 101},
         {"email": "ayse"},
         {"email": "ayse@ornek"},

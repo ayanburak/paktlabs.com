@@ -16,17 +16,17 @@ Formda insanın göremediği bir tuzak alan, `website`, bulunur. Formları otoma
 
 Geçerli mesaj önce veritabanına yazılır, sonra cevap döner, bildirim cevaptan sonra arka planda gönderilir. Böylece ziyaretçi posta sunucusunu beklemez. Bildirim gönderilemezse mesaj kayıtta işaretsiz kalır ve gece bakımında yeniden denenir, hiçbir mesaj posta sunucusunun bir anlık sorunu yüzünden kaybolmaz.
 
-Bildirimi gönderen parça `app/mailer.py` içindeki `Mailer` soyut sınıfıdır. Sunucuda `SmtpMailer` Hostinger'ın posta sunucusuna 465 portundan SSL ile bağlanır ve info@paktlabs.com hesabıyla gönderir. Bildirimin Reply-To adresi ziyaretçinin e-postasıdır, gelen bildirimde Yanıtla'ya basmak doğrudan ziyaretçiye yazar. SMTP ayarı verilmediğinde `ConsoleMailer` bildirimi yalnızca kayda yazar, yerelde ve testlerde bu kullanılır. Seçimler bildirimde kimlik olarak yazılır, Türkçe adlarının ikinci bir kopyası serviste tutulmaz.
+Bildirimi gönderen parça `app/mailer.py` içindeki `Mailer` soyut sınıfıdır. Sunucuda `SmtpMailer` Hostinger'ın posta sunucusuna 465 portundan SSL ile bağlanır ve info@paktlabs.com hesabıyla gönderir. Bildirimin Reply-To adresi ziyaretçinin e-postasıdır, gelen bildirimde Yanıtla'ya basmak doğrudan ziyaretçiye yazar. Hangisinin kullanılacağını `CONTACT_MAILER` belirler: `smtp` varsayılandır ve `SMTP_HOST`, `SMTP_USER`, `SMTP_PASSWORD` üçünü de ister, biri eksikse servis açılışta hata verir ve yayın script'inin sağlık kontrolü bunu yakalayıp önceki sürüme döner. `console` verilirse `ConsoleMailer` bildirimi yalnızca kayda yazar, yerelde kullanılır. Böylece sunucuda SMTP ayarı kaybolursa bildirimler sessizce yutulmaz. Seçimler bildirimde kimlik olarak yazılır, Türkçe adlarının ikinci bir kopyası serviste tutulmaz.
 
 Ziyaretçinin IP adresi kaydedilmez. Gönderim sınırını nginx tutar, servisin IP'ye ihtiyacı yoktur ve saklanan kişisel veri azalır. Ziyaretçiye otomatik bir yanıt e-postası gönderilmez, çünkü forma başkasının adresini yazan biri o adrese istenmeyen posta yollatabilirdi.
 
 ## Gece bakımı
 
-`app/maintenance.py` her gece 03:30'da çalışır. Önce bildirimi gönderilememiş mesajları yeniden dener, sonra saklama süresini geçen mesajları siler, en son veritabanının tutarlı bir kopyasını `data/backups` altına yazar. Saklama süresi iki yıldır, formun altındaki bilgilendirme metni bu süreyi söyler. Yedeklerin son on dördü kalır, böylece silinen bir mesaj en fazla iki hafta daha bir yedekte durur.
+`app/maintenance.py` her gece 03:30'da çalışır. Önce saklama süresini geçen mesajları siler, sonra veritabanının tutarlı bir kopyasını `data/backups` altına yazar, en son bildirimi gönderilememiş mesajları yeniden dener. İlk iki iş yereldir ve ağa bağlı değildir, posta sorunu silmeyi ve yedeği engellemesin diye öne alındı. Gönderici kurulamaz ya da yeniden deneme çökerse silme ve yedek yine yapılmış olur, bakım sıfırdan farklı kodla çıkar ve systemd servisi başarısız görünür. Doğrulamadan geçemeyen bir kayıt yeniden denemede atlanır ve yalnızca kimliği loglanır. Saklama süresi iki yıldır, formun altındaki bilgilendirme metni bu süreyi söyler. Yedeklerin son on dördü kalır, böylece silinen bir mesaj en fazla iki hafta daha bir yedekte durur.
 
 ## Ayarlar
 
-Ayarlar ortam değişkenlerinden okunur, hangi değişkenlerin olduğu `.env.example` içinde görülür. Sunucuda systemd bunları `/opt/paktlabs-api/.env` dosyasından yükler. Bu dosya e-posta şifresini taşır, repoya girmez ve yalnızca root ile servisin kullanıcısı okuyabilir. Yerelde hiçbir ayar verilmeden de çalışılır: veritabanı `data/messages.sqlite3` olur, bildirim terminale yazılır.
+Ayarlar ortam değişkenlerinden okunur, hangi değişkenlerin olduğu `.env.example` içinde görülür. Sunucuda systemd bunları `/opt/paktlabs-api/.env` dosyasından yükler. Bu dosya e-posta şifresini taşır, repoya girmez ve yalnızca root ile servisin kullanıcısı okuyabilir. Yerelde `CONTACT_MAILER=console` vermek yeter: veritabanı `data/messages.sqlite3` olur, bildirim terminale yazılır. Sunucudaki `.env` dosyasında `CONTACT_MAILER` yoktur, varsayılan `smtp` geçerlidir.
 
 ## Yerelde çalıştırma
 
@@ -36,7 +36,7 @@ Python ortamı servisin klasöründe kurulur. Sunucuda Python 3.10 vardır, kod 
 cd services/contact-api
 python3 -m venv .venv
 .venv/bin/pip install -r requirements-dev.txt
-.venv/bin/uvicorn app.main:create_app --factory --reload --port 8001
+CONTACT_MAILER=console .venv/bin/uvicorn app.main:create_app --factory --reload --port 8001
 ```
 
 Landing'in geliştirme sunucusu `/api` isteklerini 8001 portuna aktarır. İki terminalde servis ve `apps/landing` içinde `npm run dev` çalıştırıldığında form yerelde baştan sona denenir, gelen mesajın bildirimi servisin terminalinde görünür.

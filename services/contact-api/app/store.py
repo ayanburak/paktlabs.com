@@ -19,13 +19,18 @@ description: Iletisim mesajlarini SQLite dosyasina yazan, okuyan ve silen modul.
 # arasinda paylasilamaz. Trafik dusuk oldugu icin baglanti acmanin maliyeti
 # onemsiz.
 
+import logging
 import sqlite3
 from contextlib import closing
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+from pydantic import ValidationError
+
 from .schema import Answers, ContactIn
+
+log = logging.getLogger("contact")
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS messages (
@@ -112,30 +117,35 @@ class MessageStore:
             db.execute("UPDATE messages SET mailed_at = ? WHERE id = ?", (_now(), message_id))
 
     # Gece bakimi bunlari yeniden gondermeyi dener. Satir ContactIn'e geri
-    # cevrilirken ayni denetimlerden gecer, kayitli veri zaten bunlardan
-    # gecmis oldugu icin hata beklenmez.
+    # cevrilirken ayni denetimlerden gecer. Sema sonradan sikilasirsa eski
+    # bir kayit gecemeyebilir, bu satir atlanir ve yalnizca kimligi loglanir
+    # ki tek bozuk kayit digerlerinin bildirimini engellemesin.
     def unmailed(self) -> list[StoredMessage]:
-        """Bildirimi henuz gonderilmemis mesajlari eskiden yeniye dondurur."""
+        """Bildirimi henuz gonderilmemis mesajlari eskiden yeniye dondurur.
+
+        Denetimden gecemeyen satirlar listeye girmez.
+        """
         with closing(self._connect()) as db:
             rows = db.execute(
                 "SELECT id, received_at, area, stage, timing, name, email, company, message, language"
                 " FROM messages WHERE mailed_at IS NULL ORDER BY id"
             ).fetchall()
-        return [
-            StoredMessage(
-                id=row[0],
-                received_at=row[1],
-                contact=ContactIn(
+        messages = []
+        for row in rows:
+            try:
+                contact = ContactIn(
                     answers=Answers(area=row[2], stage=row[3], timing=row[4]),
                     name=row[5],
                     email=row[6],
                     company=row[7],
                     message=row[8],
                     language=row[9],
-                ),
-            )
-            for row in rows
-        ]
+                )
+            except ValidationError:
+                log.error("mesaj %s denetimden gecemedi, atlandi", row[0])
+                continue
+            messages.append(StoredMessage(id=row[0], received_at=row[1], contact=contact))
+        return messages
 
     # Silinen mesaj geri gelmez, yedekler de ayni sureyle doner.
     def purge(self, keep_days: int) -> int:

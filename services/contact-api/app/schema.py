@@ -59,13 +59,15 @@ class ContactIn(BaseModel):
     language: Literal["tr", "en"]
     website: str = Field(default="", max_length=200)
 
-    # Ad ve e-posta bildirim e-postasinin basliklarina girer. Satir sonu
-    # tasiyan bir deger basliga yeni bir satir ekleyebilirdi, bu yuzden
-    # tek satir olmayan deger reddedilir.
+    # Ad ve e-posta bildirim e-postasinin basliklarina girer. Email modulu
+    # str.splitlines metodunun tanidigi her ayiriciyi basliklarda reddeder,
+    # satir sonunun yani sira U+2028, U+2029 ve \x85 gibi ayiricilar da buna
+    # dahildir. Bu yuzden ayni olcut kullanilir. Bos deger gecer, sonda
+    # ayirici tasiyan deger tek satirlik sayilmaz.
     @field_validator("name", "email", "company")
     @classmethod
     def single_line(cls, value: str) -> str:
-        if "\r" in value or "\n" in value:
+        if value and value.splitlines() != [value]:
             raise ValueError("tek satir olmali")
         return value
 

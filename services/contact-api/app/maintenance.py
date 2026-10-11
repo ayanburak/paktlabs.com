@@ -6,13 +6,18 @@ Gece bakimi. Sunucuda systemd zamanlayicisi her gece calistirir:
 
     python -m app.maintenance
 
-Sirasiyla bildirimi gonderilememis mesajlari yeniden dener, saklama suresini
-gecen mesajlari siler ve veritabaninin bir kopyasini data/backups altina
-yazar. Son on dort gunun kopyalari kalir.
+Sirasiyla saklama suresini gecen mesajlari siler, veritabaninin bir kopyasini
+data/backups altina yazar ve en son bildirimi gonderilememis mesajlari
+yeniden dener. Son on dort gunun kopyalari kalir.
 
 description: Iletisim mesajlarinin gece bakimini yapan komut.
 """
 
+# NOTE: Ilk iki is yereldir, ag gerektirmez. Posta tarafinin cokmesi silmeyi
+# ve yedegi engellemesin diye yeniden deneme en sona konur. Silme iki yillik
+# saklama sozunun kendisidir. Yeniden deneme basarisiz olursa bakim bitince
+# hata firlatilir, boylece systemd servisi basarisiz gorunur.
+#
 # NOTE: Yedekler de kisisel veri tasir. Silinen bir mesaj en fazla on dort
 # gun daha eski bir yedekte kalir, sonra o yedek de silinir.
 
@@ -59,15 +64,26 @@ def backup(store: MessageStore, folder: Path, today: date) -> None:
         old.unlink()
 
 
-# main.py ile ayni ayarlari ve ayni gondericiyi kullanir.
+# main.py ile ayni ayarlari ve ayni gondericiyi kullanir. Gonderici kurulumu ve
+# yeniden deneme kendi icinde yakalanip loglanir, silme ve yedek her durumda
+# calisir.
 def run(settings: Settings | None = None, mailer: Mailer | None = None, today: date | None = None) -> None:
-    """Gece bakiminin uc isini sirayla yapar."""
+    """Gece bakiminin uc isini sirayla yapar.
+
+    Raises:
+        RuntimeError: Gonderici kurulamadiysa ya da yeniden deneme coktuyse,
+            silme ve yedek yine de yapilmis olarak.
+    """
     settings = settings or load_settings()
     store = MessageStore(settings.db_path)
-    sent = retry(store, mailer or build_mailer(settings))
     purged = store.purge(settings.keep_days)
     backup(store, settings.db_path.parent / "backups", today or date.today())
-    log.info("bakim bitti: %s bildirim gonderildi, %s mesaj silindi", sent, purged)
+    try:
+        sent = retry(store, mailer or build_mailer(settings))
+    except Exception as error:
+        log.exception("bildirimler yeniden denenemedi")
+        raise RuntimeError("bakimin yeniden deneme adimi basarisiz oldu") from error
+    log.info("bakim bitti: %s mesaj silindi, %s bildirim gonderildi", purged, sent)
 
 
 if __name__ == "__main__":

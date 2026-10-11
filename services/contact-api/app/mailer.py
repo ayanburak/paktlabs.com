@@ -5,8 +5,8 @@ importable: Mailer, SmtpMailer, ConsoleMailer, compose, build_mailer
 Yeni bir mesaj geldiginde bildirimi ileten parca. Servis Mailer soyut
 sinifina baglidir, sunucuda SmtpMailer gercek e-posta gonderir, lokalde ve
 testlerde ConsoleMailer bildirimi yalnizca kayda yazar. Hangisinin
-kullanilacagi ayarlardaki SMTP_HOST'a gore build_mailer ile secilir, servis
-ve gece bakimi ayni secimi kullanir.
+kullanilacagi ayarlardaki CONTACT_MAILER'a gore build_mailer ile secilir,
+servis ve gece bakimi ayni secimi kullanir.
 
 description: Iletisim mesajinin bildirim e-postasini kuran ve ileten modul.
 """
@@ -100,7 +100,7 @@ class SmtpMailer(Mailer):
             smtp.send_message(mail)
 
 
-# Lokalde e-posta ayari verilmediginde bildirim terminalde gorunur. Gercek
+# Lokalde CONTACT_MAILER=console verildiginde bildirim terminalde gorunur. Gercek
 # e-postanin govdesi kodlanmis gider, burada okunabilsin diye basliklar ve
 # govde duz metin olarak yazilir.
 class ConsoleMailer(Mailer):
@@ -112,20 +112,29 @@ class ConsoleMailer(Mailer):
     def send(self, contact: ContactIn, message_id: int) -> None:
         mail = compose(contact, message_id, "contact-api@localhost", self.recipient)
         headers = "\n".join(f"{key}: {mail[key]}" for key in ("To", "Reply-To", "Subject"))
-        log.info("bildirim gonderilmedi, SMTP ayari yok:\n%s\n\n%s", headers, mail.get_content())
+        log.info("bildirim gonderilmedi, gonderici console:\n%s\n\n%s", headers, mail.get_content())
 
 
-# Ayarlarda SMTP sunucusu yoksa bildirim terminale yazilir. Sunucu varsa
-# kullanici ve sifre de olmali, eksikse servis acilirken hata verir ki eksik
-# ayar canlida sessizce kalmasin.
+# Console yalnizca ayarda acikca istenirse secilir. smtp iken uc SMTP ayari
+# da zorunludur, biri eksikse servis acilirken hata verir ki eksik ayar
+# canlida bildirimleri sessizce yutmasin.
 def build_mailer(settings: Settings) -> Mailer:
     """Ayarlara gore gondericiyi secer.
 
     Raises:
-        ValueError: SMTP sunucusu verilmis ama kullanici ya da sifre eksikse.
+        ValueError: Gonderici smtp iken SMTP_HOST, SMTP_USER ya da SMTP_PASSWORD eksikse.
     """
-    if not settings.smtp_host:
+    if settings.mailer == "console":
         return ConsoleMailer(settings.mail_to)
-    if not settings.smtp_user or not settings.smtp_password:
-        raise ValueError("SMTP_HOST verilmis ama SMTP_USER ya da SMTP_PASSWORD eksik")
+    missing = [
+        name
+        for name, value in (
+            ("SMTP_HOST", settings.smtp_host),
+            ("SMTP_USER", settings.smtp_user),
+            ("SMTP_PASSWORD", settings.smtp_password),
+        )
+        if not value
+    ]
+    if missing:
+        raise ValueError(f"CONTACT_MAILER smtp iken eksik ayar: {', '.join(missing)}")
     return SmtpMailer(settings.smtp_host, settings.smtp_port, settings.smtp_user, settings.smtp_password, settings.mail_to)

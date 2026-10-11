@@ -10,8 +10,11 @@ description: Iletisim servisinin gece bakimini sinayan testler.
 
 import sqlite3
 from contextlib import closing
+from dataclasses import replace
 from datetime import date, timedelta
 from pathlib import Path
+
+import pytest
 
 from app import maintenance
 from app.schema import ContactIn
@@ -74,3 +77,29 @@ def test_run_does_all_three(settings: Settings, store: MessageStore) -> None:
 
     assert len(mailer.sent) == 1
     assert (settings.db_path.parent / "backups" / "messages-2026-10-11.sqlite3").exists()
+
+
+# Gonderici kurulamazsa bakim hata verir ama silme ve yedek once yapilmistir.
+def test_run_purges_and_backs_up_when_mailer_cannot_be_built(settings: Settings, store: MessageStore) -> None:
+    old = store.add(contact())
+    with closing(sqlite3.connect(store.path)) as db, db:
+        db.execute("UPDATE messages SET received_at = '2020-01-01T00:00:00+00:00' WHERE id = ?", (old,))
+    broken = replace(settings, mailer="smtp", smtp_host=None)
+
+    with pytest.raises(RuntimeError):
+        maintenance.run(broken, None, date(2026, 10, 11))
+
+    assert store.unmailed() == []
+    assert (settings.db_path.parent / "backups" / "messages-2026-10-11.sqlite3").exists()
+
+
+# Dogrulamadan gecemeyen eski bir kayit listeyi cokertmez, digerleri gonderilir.
+def test_unmailed_skips_row_that_no_longer_validates(store: MessageStore) -> None:
+    first = store.add(contact())
+    with closing(sqlite3.connect(store.path)) as db, db:
+        db.execute("UPDATE messages SET name = ? WHERE id = ?", ("Ayse Yilmaz", first))
+    second = store.add(contact())
+    mailer = FakeMailer()
+
+    assert [item.id for item in store.unmailed()] == [second]
+    assert maintenance.retry(store, mailer) == 1
