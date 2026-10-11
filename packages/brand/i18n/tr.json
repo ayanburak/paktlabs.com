@@ -29,5 +29,13 @@
     "title": "Konuşalım",
     "lead": "Projeniz hangi aşamada olursa olsun; ister hazır bir çalışma ve iş planıyla, ister yalnızca bir iş fikriyle bizimle iletişime geçin. En kısa sürede size ulaşacağız!",
     "action": "İletişim"
+  },
+  "dataTags": {
+    "preparation": "Veri Hazırlama",
+    "database": "Veritabanı",
+    "quality": "Veri Kalitesi",
+    "analysis": "Analiz",
+    "visualization": "Görselleştirme",
+    "machineLearning": "Makine Öğrenmesi"
   }
 }

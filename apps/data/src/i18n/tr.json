@@ -20,14 +20,6 @@
       "go": "Çalışmayı incele →",
       "details": "Teknik detaylar",
       "tools": "Araçlar",
-      "tags": {
-        "preparation": "Veri Hazırlama",
-        "database": "Veritabanı",
-        "quality": "Veri Kalitesi",
-        "analysis": "Analiz",
-        "visualization": "Görselleştirme",
-        "machineLearning": "Makine Öğrenmesi"
-      },
       "filter": {
         "all": "Tümü",
         "toggle": "Filtrele",

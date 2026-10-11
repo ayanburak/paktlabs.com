@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 import { contactEmail } from '@paktlabs/brand/content/contact'
 import { useReveal } from '@paktlabs/brand/hooks/useReveal'
 import { useLanguage } from '@paktlabs/brand/i18n/language'
+import { useBrandDict } from '@paktlabs/brand/i18n/useBrandDict'
 import { cx } from '@paktlabs/brand/lib/cx'
 
 import { ArtSlot } from '@/components/ArtSlot'
@@ -37,7 +38,8 @@ function nextStudy(current: Study): Study | undefined {
 
 export function Closing({ study, closing }: ClosingProps) {
   const { language } = useLanguage()
-  const { home, study: dict } = useDict()
+  const { study: dict } = useDict()
+  const { dataTags } = useBrandDict()
   const copy = useReveal<HTMLDivElement>()
   const next = nextStudy(study)
 
@@ -67,7 +69,7 @@ export function Closing({ study, closing }: ClosingProps) {
                   <h3>{next.title[language]}</h3>
                 </span>
                 <span className={cx(styles.box, styles.panel)}>
-                  <span>{next.tags.map((tag) => home.works.tags[tag]).join(', ')}</span>
+                  <span>{next.tags.map((tag) => dataTags[tag]).join(', ')}</span>
                   <span className={styles.go}>{dict.closing.next.go}</span>
                 </span>
               </Link>

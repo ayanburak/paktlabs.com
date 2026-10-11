@@ -25,7 +25,7 @@ npx playwright show-trace test-results/<test-klasörü>/trace.zip
 
 `language.spec.ts` dil tercihinin okunmasını ve yazılmasını kontrol eder. Kayıt yokken, geçerli ve geçersiz kayıtta, `getItem` hata verdiğinde ve `localStorage` hiç erişilemediğinde sayfanın doğru dilde açıldığına bakar. Çerezin `localStorage`'daki eski kayda üstün geldiği, geçersiz bir çerezde eski kayda dönüldüğü ve seçimin bir yıllık `pl_lang` çerezine yazıldığı ölçülür. Depolama dolu, çerez engelli ya da ikisi birden engelliyken dil değiştirmenin yine çalıştığı, yenilemede hangi kaydın geldiği ölçülür. Çerez testlerde `localhost`'a yazıldığı için siteler arası geçiş burada değil canlıda doğrulanır. Başlık, açıklama ve `html lang` her durumda aktif dille birlikte kontrol edilir.
 
-`links.spec.ts` disiplin bağlantılarının üst menü, mobil panel, kartlar, bantlar ve alt menüde doğru subdomain'e gittiğini iki dilde kontrol eder. Beklenen adresler test içinde elle yazılıdır, uygulamanın kendi adres dosyasından okunmaz. Böylece yanlış yazılmış bir adres testi de geçirmez. Uzak adreslerin gerçekten yanıt verdiği, DNS ve sertifikaların hazır olduğu bu testin kapsamında değildir.
+`links.spec.ts` disiplin bağlantılarının üst menü, mobil panel, kartlar, bantlar ve alt menüde doğru subdomain'e gittiğini iki dilde kontrol eder. Beklenen adresler test içinde elle yazılıdır, uygulamanın kendi adres dosyasından okunmaz. Böylece yanlış yazılmış bir adres testi de geçirmez. Veri bandının altı satırının data'nın süzgecine doğru kategoriyle gittiği, adlarının ok işareti olmadan okunduğu ve Otomasyon ile Web bantlarında bağlantılı satır olmadığı da burada denetlenir. Kategori kimlikleri ve adresin biçimi testte elle yazılıdır. Uzak adreslerin gerçekten yanıt verdiği, DNS ve sertifikaların hazır olduğu bu testin kapsamında değildir.
 
 `a11y.spec.ts` menü etiketlerini, dil düğmelerinin seçili durumunu, mobil menünün klavyeyle açılıp Escape ile kapanmasını, başlık sırasını, landmark yapısını ve Tab ile gezilen her elemanda odak çerçevesinin görünmesini kontrol eder. Otomatik bir erişilebilirlik tarayıcısı değildir, ekran okuyucuyla yapılan gerçek bir testin yerine geçmez.
 
@@ -56,6 +56,8 @@ Görsel karşılaştırmada piksel başına Playwright'ın varsayılan renk eşi
 ## Referansların yenilenmesi
 
 Onaylı bir görsel değişiklikten sonra referanslar `npm run test:visual:update` ile yenilenir. Yenilenen görüntüler commit'lenmeden önce eski halleriyle yan yana incelenir. Açıklanamayan konum, boyut veya satır kırılımı farkı varsa referans güncellenmez, değişikliğin kendisi incelenir.
+
+Bir listeye yeni bir metin girdiğinde aynı fontla yazılmış başka yazılarda da gözle görülmeyen bir ton farkı çıkabilir. 2026-10-11'de Veri bandının satırları değiştiğinde İngilizce 1366 görüntüsünde Otomasyon ve Web listelerinin yazıları 255 üzerinden en fazla 47 tonluk farkla, bazı satırların sağ kenarı bir piksel kısa çizildi. Değişiklik parça parça geri alınarak denendi, bağlantı ve CSS değil Veri listesinin yeni metni farkı üretiyordu, eski metinle fark kayboldu. Yazıların yeri ve satır kırılımı değişmedi. Böyle bir fark ortaya çıktığında önce bu yolla sebebi ayrılır, sonra referans yenilenir.
 
 ## Kapsam dışında kalanlar
 

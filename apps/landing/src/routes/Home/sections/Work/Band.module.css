@@ -60,6 +60,8 @@
 }
 
 .list {
+  /* satir dolgusu baglantili satirda li yerine a'ya gecer, deger tek yerde */
+  --row-pad: clamp(16px, 2vw, 26px) 0 clamp(16px, 2vw, 26px) 22px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -69,7 +71,7 @@
   display: flex;
   align-items: baseline;
   gap: 20px;
-  padding: clamp(16px, 2vw, 26px) 0 clamp(16px, 2vw, 26px) 22px;
+  padding: var(--row-pad);
   font-family: var(--font-display);
   font-size: clamp(18px, 2vw, 24px);
   font-weight: 500;
@@ -95,6 +97,25 @@
 }
 .list li:hover::before {
   width: 6px;
+}
+.list li.linked {
+  padding: 0;
+}
+.row {
+  display: flex;
+  flex: 1;
+  align-items: baseline;
+  gap: 20px;
+  padding: var(--row-pad);
+  color: inherit;
+  text-decoration: none;
+}
+/* ok satirin sag ucuna yaslanir, satirin baglanti oldugunu gosterir */
+.arrow {
+  margin-left: auto;
+  padding-right: 4px;
+  font: 500 0.75em/1 var(--font-mono);
+  color: var(--muted);
 }
 .ix {
   flex: none;

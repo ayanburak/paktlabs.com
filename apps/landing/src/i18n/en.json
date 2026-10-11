@@ -39,15 +39,7 @@
       "data": {
         "index": "01 / 03",
         "title": "Data",
-        "desc": "Every data project starts from the question. We prepare the records around it and deliver a result that can be measured.",
-        "list": [
-          "Cleaning and merging",
-          "Data auditing",
-          "Metric definitions and glossary",
-          "Reporting and analysis",
-          "Anomaly detection",
-          "Data set delivery"
-        ]
+        "desc": "Every data project starts from the question. We prepare the records around it and deliver a result that can be measured."
       },
       "automation": {
         "index": "02 / 03",

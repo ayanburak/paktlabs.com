@@ -1,6 +1,6 @@
 /*
 file: types.ts
-importable: Localized, Lazy, Study, StudyListing, StudyPage, Chapter, CodeLocation, StudyCard, SourcePage, StudyFeature, StudyTag, KunyeRow
+importable: Localized, Lazy, Study, StudyListing, StudyPage, Chapter, CodeLocation, StudyCard, SourcePage, StudyFeature, KunyeRow
 
 Bir calisma iki kattan olusur. StudyListing veri sayfasindaki listede gorunen
 kisimdir: adresteki slug, numara, yil, etiketler, baslik ve kart metni. Study
@@ -25,23 +25,18 @@ blocks.ts'te durur ve her parcanin bileseniyle birlikte eklenir.
 description: data sitesindeki calismalarin icerik tiplerini tanimlayan modul.
 */
 
+import type { DataTag } from '@paktlabs/brand/content/dataTags'
 import type { Language } from '@paktlabs/brand/i18n/language'
 
 import type { AuthorId } from '../authors'
 import type { TechName } from '../techNames'
 import type { Block } from './blocks'
-import type { studyTags } from './tags'
 
 // Bir icerigin her dildeki hali. Calisma dosyalarinda her metin iki dili yan
 // yana yazilir, boylece bir paragrafin cevirisi ondan ayri bir dosyada
 // unutulamaz. Bir dil eksik kalirsa derleme hata verir. Varsayilan tip duz
 // metin, ama paragraf listesi gibi baska bir sey de verilebilir.
 export type Localized<T = string> = Record<Language, T>
-
-// Filtrede ve kartlarda gorunen etiketlerin kimlikleri. Liste ve sira
-// tags.ts'te, tip oradan turetilir ki filtre ile tip birbirinden ayrilamasin.
-// Ekranda gorunen adlari sozlukte durur.
-export type StudyTag = (typeof studyTags)[number]
 
 // Kunye satirlari calismadan calismaya ve sayfadan sayfaya degisir. Detay
 // sayfasi sektor, sure, girdi ve teslimi, kod sayfasi dil ve kutuphaneleri
@@ -128,12 +123,13 @@ export type CodeLocation = { kind: 'repo'; url: string } | { kind: 'page'; page:
 
 // Calismanin listede gosterdigi kisim. Baslik
 // kartta, detay sayfasinda ve sekme basliginda ayni oldugu icin sayfanin
-// dosyasinda degil burada durur.
+// dosyasinda degil burada durur. Etiketler landing'in Veri bandiyla ortak
+// oldugu icin kimlikleri brand'deki dataTags.ts'ten gelir.
 export interface StudyListing {
   slug: string
   number: string
   year: number
-  tags: StudyTag[]
+  tags: DataTag[]
   title: Localized
   card: StudyCard
   feature?: StudyFeature

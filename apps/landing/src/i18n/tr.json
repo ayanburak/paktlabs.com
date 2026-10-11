@@ -39,15 +39,7 @@
       "data": {
         "index": "01 / 03",
         "title": "Veri",
-        "desc": "Bir veri işine önce sorudan başlarız. Kayıtları o soruya göre hazırlar, sonucu ölçülebilir biçimde teslim ederiz.",
-        "list": [
-          "Temizleme ve birleştirme",
-          "Veri denetimi",
-          "Metrik tanımı ve sözlük",
-          "Rapor ve analiz",
-          "Anomali tespiti",
-          "Veri seti teslimi"
-        ]
+        "desc": "Bir veri işine önce sorudan başlarız. Kayıtları o soruya göre hazırlar, sonucu ölçülebilir biçimde teslim ederiz."
       },
       "automation": {
         "index": "02 / 03",

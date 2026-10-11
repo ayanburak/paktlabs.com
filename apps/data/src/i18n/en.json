@@ -20,14 +20,6 @@
       "go": "Read the study →",
       "details": "Technical details",
       "tools": "Tools",
-      "tags": {
-        "preparation": "Data Preparation",
-        "database": "Databases",
-        "quality": "Data Quality",
-        "analysis": "Analysis",
-        "visualization": "Visualization",
-        "machineLearning": "Machine Learning"
-      },
       "filter": {
         "all": "All",
         "toggle": "Filter",

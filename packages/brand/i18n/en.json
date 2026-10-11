@@ -29,5 +29,13 @@
     "title": "Let's talk",
     "lead": "Wherever your project stands right now — with a finished brief and business plan, or just an idea — get in touch. We'll get back to you shortly!",
     "action": "Contact"
+  },
+  "dataTags": {
+    "preparation": "Data Preparation",
+    "database": "Databases",
+    "quality": "Data Quality",
+    "analysis": "Analysis",
+    "visualization": "Visualization",
+    "machineLearning": "Machine Learning"
   }
 }
