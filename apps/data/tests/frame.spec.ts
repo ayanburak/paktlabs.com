@@ -12,6 +12,7 @@ description: data sayfalarinin ust bar, alt bilgi ve sayfa basligi testleri.
 */
 
 import { expect, test } from '@playwright/test'
+import { disciplineUrls, mainSite } from '@paktlabs/config/testing/expected'
 
 import { demoData } from '../src/content/studies/demo-data'
 import { page as demoPage } from '../src/content/studies/demo-data/page'
@@ -19,8 +20,6 @@ import { source as demoSource } from '../src/content/studies/demo-data/source'
 
 import { dict, languages, openPage } from './support'
 
-const mainSite = 'https://paktlabs.com'
-const dataSite = 'https://data.paktlabs.com'
 
 for (const lang of languages) {
   test(`${lang}: header marks the data discipline as current`, async ({ page }) => {
@@ -38,7 +37,7 @@ for (const lang of languages) {
 
     const footer = page.getByRole('navigation', { name: dict[lang].a11y.footerMenu })
     await expect(footer.getByRole('link', { name: 'paktlabs.com' })).toHaveAttribute('href', mainSite)
-    await expect(footer.getByRole('link', { name: dict[lang].nav.data })).toHaveAttribute('href', dataSite)
+    await expect(footer.getByRole('link', { name: dict[lang].nav.data })).toHaveAttribute('href', disciplineUrls.data)
   })
 
   test(`${lang}: page title and description follow the language`, async ({ page }) => {

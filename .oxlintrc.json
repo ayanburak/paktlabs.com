@@ -4,11 +4,32 @@
   "rules": {
     "react/rules-of-hooks": "error",
     "react/only-export-components": ["warn", { "allowConstantExport": true }],
-    // useReveal (packages/brand/hooks/useReveal.ts) hem bir ref hem de IntersectionObserver'dan
-    // gelen setState'i disariya "ref"/"visible" olarak dondurur, bu iki kural
-    // bu meshur ama guvenli deseni yanlislikla render icinde ref okuma sanip
-    // isaretliyor, .current'a sadece useEffect icinde erisiliyor
-    "react/refs": "off",
-    "react/set-state-in-effect": "off"
-  }
+    "typescript/no-explicit-any": "error",
+    "typescript/no-non-null-assertion": "error"
+  },
+  "overrides": [
+    {
+      // useReveal (packages/brand/hooks/useReveal.ts) bir ref ve bir IntersectionObserver'dan
+      // gelen state dondurur. Cagiran bilesenler ref'i bir JSX ozniteligine verir, kural bunu
+      // render icinde ref.current okumak sanip isaretliyor, oysa .current'a yalnizca
+      // useEffect icinde erisiliyor. Bu yedi dosya hook'un sonucunu kullanan bilesenlerdir.
+      "files": [
+        "packages/brand/components/Contact.tsx",
+        "apps/landing/src/routes/Home/sections/Hero.tsx",
+        "apps/landing/src/routes/Home/sections/Work/Work.tsx",
+        "apps/landing/src/routes/Home/sections/Work/Band.tsx",
+        "apps/data/src/routes/Home/sections/Works/Works.tsx",
+        "apps/data/src/routes/Study/sections/Closing.tsx",
+        "apps/data/src/components/study/Chapter.tsx"
+      ],
+      "rules": { "react/refs": "off" }
+    },
+    {
+      // useReveal gorunurlugu azaltilmis harekette efekt icinde acar, DataLanguageProvider
+      // site dili degisince veri dili secimini efektte sifirlar. Ikisi de dis bir
+      // degisikligi (tarayici tercihi, dil degistirici) state'e esler.
+      "files": ["packages/brand/hooks/useReveal.ts", "apps/data/src/components/study/DataLanguageProvider.tsx"],
+      "rules": { "react/set-state-in-effect": "off" }
+    }
+  ]
 }

@@ -3,11 +3,12 @@ file: test_contract.py
 
 Formun gonderdigi secimlerle servisin kabul ettigi secimlerin ayni kaldigini
 denetler. Secimler landing'de questions.ts'te, metin uzunluk sinirlari
-limits.ts'te, serviste ikisi de schema.py'de durur, iki dil farkli oldugu icin
+limits.ts'te, dil listesi brand'in language.ts dosyasinda, serviste hepsi
+schema.py'de durur, iki dil farkli oldugu icin
 ortak tek bir dosya yok. Birine eklenen bir secenek ya da degisen bir sinir
 otekinde yoksa bu test kirilir.
 
-description: Landing'deki form secimleriyle servisin secimlerini karsilastiran test.
+description: Landing'deki form secimleri ve brand'deki dil listesiyle servisin secimlerini karsilastiran test.
 """
 
 import re
@@ -21,6 +22,7 @@ from app.schema import Area, ContactIn, Stage, Timing
 CONTACT = Path(__file__).resolve().parents[3] / "apps/landing/src/routes/Contact"
 QUESTIONS = CONTACT / "questions.ts"
 LIMITS = CONTACT / "limits.ts"
+LANGUAGES = Path(__file__).resolve().parents[3] / "packages/brand/i18n/language.ts"
 
 
 # questions.ts'teki her satir { id: 'area', options: [...] } biciminde.
@@ -53,3 +55,18 @@ def test_limits_match_the_form() -> None:
     for name, expected in limits.items():
         (max_len,) = [m for m in ContactIn.model_fields[name].metadata if isinstance(m, MaxLen)]
         assert max_len.max_length == expected, name
+
+
+# language.ts'teki liste export const languages = ['tr', 'en'] as const
+# biciminde. Bicim degisirse okuma bos doner ve test dil listesi bulunamadi
+# diye kirilir.
+def read_languages() -> list[str]:
+    text = LANGUAGES.read_text(encoding="utf-8")
+    found = re.search(r"export const languages = \[([^\]]*)\] as const", text)
+    assert found, "language.ts icinde languages listesi bulunamadi"
+    return re.findall(r"'(\w+)'", found.group(1))
+
+
+def test_languages_match_the_sites() -> None:
+    language = ContactIn.model_fields["language"].annotation
+    assert read_languages() == list(get_args(language))

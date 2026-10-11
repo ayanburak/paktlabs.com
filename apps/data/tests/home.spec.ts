@@ -12,6 +12,8 @@ description: Veri sayfasinin hero, hizmetler panosu, calisma listesi, suzgec ve 
 
 import { expect, test } from '@playwright/test'
 import type { Page } from '@playwright/test'
+import { required } from '@paktlabs/config/testing/support'
+import { contactEmail, contactMailto, contactPage, services } from '@paktlabs/config/testing/expected'
 
 import { lastPublished } from '../src/content/lastPublished'
 import { studies } from '../src/content/studies'
@@ -43,11 +45,10 @@ for (const lang of languages) {
 
     const board = page.getByRole('region', { name: dict[lang].home.services.title })
     const notes = board.getByRole('link')
-    const order = ['preparation', 'database', 'quality', 'analysis', 'visualization', 'machineLearning'] as const
-    const paths = order.map((tag) => `/services/${tag === 'machineLearning' ? 'machine-learning' : tag}`)
+    const paths = services.map(({ slug }) => `/services/${slug}`)
 
     expect(await notes.evaluateAll((links) => links.map((link) => link.getAttribute('href')))).toEqual(paths)
-    for (const [i, tag] of order.entries()) {
+    for (const [i, { tag }] of services.entries()) {
       await expect(notes.nth(i).getByRole('heading', { level: 3 })).toHaveText(dict[lang].dataTags[tag])
     }
   })
@@ -78,7 +79,9 @@ test('cards in a row start their text boxes at the same height', async ({ page }
   await openPage(page, '/', 'tr')
 
   const cards = page.locator('#works a')
-  const tops = await Promise.all([1, 2, 3].map(async (i) => (await cards.nth(i).locator(':scope > div').nth(1).boundingBox())!.y))
+  const tops = await Promise.all(
+    [1, 2, 3].map(async (i) => required(await cards.nth(i).locator(':scope > div').nth(1).boundingBox(), `${i}. kartin kutusu`).y),
+  )
   expect(Math.max(...tops) - Math.min(...tops)).toBeLessThanOrEqual(1)
 })
 
@@ -101,7 +104,7 @@ test.describe('work filter', () => {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     const toggle = page.getByRole('button', { name: dict.tr.home.works.filter.toggle })
     const panel = page.locator(`#${await toggle.getAttribute('aria-controls')}`)
-    const height = async () => (await panel.boundingBox())!.height
+    const height = async () => required(await panel.boundingBox(), 'suzgec paneli').height
 
     await expect(toggle).toHaveAttribute('aria-expanded', 'false')
     await expect(panel).toHaveAttribute('inert', '')
@@ -147,15 +150,19 @@ test.describe('work filter', () => {
     const tags = dict.tr.dataTags
     const used = new Set(studies.flatMap((study) => study.tags))
     const empty = (Object.keys(tags) as (keyof typeof tags)[]).find((tag) => !used.has(tag))
-    test.skip(!empty, 'her etiketin en az bir calismasi var')
-    const full = studies[0].tags[0]
+    if (!empty) {
+      test.skip(true, 'her etiketin en az bir calismasi var')
+      return
+    }
+    const full = studies[0]?.tags[0]
+    if (!full) throw new Error('ilk calismanin etiketi yok')
     const status = page.locator('#works [role="status"]')
 
     await openPage(page, '/', 'tr')
     await expect(status).toBeEmpty()
     await page.getByRole('button', { name: dict.tr.home.works.filter.toggle }).click()
 
-    await pickTag(page, tags[empty!])
+    await pickTag(page, tags[empty])
     await expect(page.locator('#works a')).toHaveCount(0)
     await expect(status).toHaveText(dict.tr.home.works.filter.empty)
 
@@ -168,7 +175,7 @@ test.describe('work filter', () => {
   // adresin bicimi bilerek elle yazili, brand'deki dataTags.ts'ten okunmaz,
   // boylece orada degisen bir kimlik ya da anahtar adi bu testi de bozar.
   // Calismasi olan kategoride kartlar, olmayanda uyari gorunur.
-  const linkedTags = ['preparation', 'database', 'quality', 'analysis', 'visualization', 'machineLearning'] as const
+  const linkedTags = services.map(({ tag }) => tag)
   for (const tag of linkedTags) {
     test(`?tag=${tag} opens the list with that tag picked`, async ({ page }) => {
       const tags = dict.tr.dataTags
@@ -237,9 +244,9 @@ for (const lang of languages) {
     await expect(contact.getByRole('heading', { level: 2 })).toHaveText(dict[lang].contact.title)
     await expect(contact.getByRole('link', { name: dict[lang].contact.action, exact: true })).toHaveAttribute(
       'href',
-      'https://paktlabs.com/contact',
+      contactPage,
     )
-    await expect(contact.getByRole('link', { name: 'info@paktlabs.com' })).toHaveAttribute('href', 'mailto:info@paktlabs.com')
+    await expect(contact.getByRole('link', { name: contactEmail })).toHaveAttribute('href', contactMailto)
     await expect(contact.getByRole('link')).toHaveCount(2)
   })
 }

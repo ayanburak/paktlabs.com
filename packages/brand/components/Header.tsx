@@ -18,13 +18,13 @@ description: Sayfanin ustunde duran, logo, disiplin baglantilari ve dil degistir
 // yani masaustu bar ve mobil panelde ayni seyi tekrar yazmamak icin var, gercek
 // ikinci kullanim oldugu icin erken soyutlama sayilmiyor.
 
-import { useEffect, useId, useRef, useState } from 'react'
+import { Fragment, useEffect, useId, useRef, useState } from 'react'
 
 import logoUrl from '../assets/logo.svg'
 import { contactPageUrl } from '../content/contact'
 import { disciplineOrder, disciplineUrls } from '../content/disciplines'
 import type { Discipline } from '../content/disciplines'
-import { useLanguage } from '../i18n/language'
+import { languages, useLanguage } from '../i18n/language'
 import { useBrandDict } from '../i18n/useBrandDict'
 import { cx } from '../lib/cx'
 
@@ -118,28 +118,25 @@ export function Header({ current, homeHref = '/' }: HeaderProps) {
 // ekran okuyucuya da soyluyor. Gorunen TR/EN metni ayrica Turkce/English diye
 // etiketlenmedi cunku okunan ad gorunen metni icermeli, yoksa sesli komutla
 // TR'ye bas diyen kullanici dugmeyi bulamaz. Ayrac da sesli okunmasin diye gizli.
+// Dugmeler languages listesinden uretilir, etiket kodun buyuk harfli halidir.
 function LanguageSwitch({ className }: { className?: string }) {
   const { language, setLanguage } = useLanguage()
 
   return (
     <span className={className}>
-      <button
-        type="button"
-        className={cx(styles.langButton, language === 'tr' && styles.langActive)}
-        aria-pressed={language === 'tr'}
-        onClick={() => setLanguage('tr')}
-      >
-        TR
-      </button>
-      <span aria-hidden="true"> / </span>
-      <button
-        type="button"
-        className={cx(styles.langButton, language === 'en' && styles.langActive)}
-        aria-pressed={language === 'en'}
-        onClick={() => setLanguage('en')}
-      >
-        EN
-      </button>
+      {languages.map((code, index) => (
+        <Fragment key={code}>
+          {index > 0 && <span aria-hidden="true"> / </span>}
+          <button
+            type="button"
+            className={cx(styles.langButton, language === code && styles.langActive)}
+            aria-pressed={language === code}
+            onClick={() => setLanguage(code)}
+          >
+            {code.toUpperCase()}
+          </button>
+        </Fragment>
+      ))}
     </span>
   )
 }

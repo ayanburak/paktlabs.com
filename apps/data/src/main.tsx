@@ -5,7 +5,11 @@ import { App } from './App.tsx'
 import '@paktlabs/brand/styles/global.css'
 import './styles/tokens.css'
 
-createRoot(document.getElementById('root')!).render(
+// Root elemani yoksa sessizce bos sayfa yerine neyin eksik oldugunu soyler.
+const root = document.getElementById('root')
+if (!root) throw new Error('main: #root elemani bulunamadi')
+
+createRoot(root).render(
   <StrictMode>
     <App />
   </StrictMode>,

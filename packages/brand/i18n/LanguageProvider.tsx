@@ -24,15 +24,16 @@ import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 
 import { mainSiteHost } from '../content/site'
-import { LanguageContext } from './language'
+import { LanguageContext, languages } from './language'
 import type { Language } from './language'
 
 const STORAGE_KEY = 'pl_lang'
 const DEFAULT_LANGUAGE: Language = 'tr'
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365 // bir yil, saniye
 
+// Desteklenen dil listesinden turer, listeye eklenen dil burada da gecerli olur.
 function isLanguage(value: string | null | undefined): value is Language {
-  return value === 'tr' || value === 'en'
+  return languages.some((language) => language === value)
 }
 
 // Cerez butun paktlabs.com alt alan adlarina Domain ile acilir. Yerelde ve

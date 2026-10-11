@@ -11,20 +11,12 @@ description: Veri hizmetlerinin sayfalarini olcen testler.
 */
 
 import { expect, test } from '@playwright/test'
+import { contactPage, services } from '@paktlabs/config/testing/expected'
 
 import { dict, languages, openPage } from './support'
 
-const services = [
-  ['preparation', 'preparation'],
-  ['database', 'database'],
-  ['quality', 'quality'],
-  ['analysis', 'analysis'],
-  ['visualization', 'visualization'],
-  ['machineLearning', 'machine-learning'],
-] as const
-
 for (const lang of languages) {
-  for (const [i, [tag, slug]] of services.entries()) {
+  for (const [i, { tag, slug }] of services.entries()) {
     test(`${lang}: /services/${slug} tells the service and leads on`, async ({ page }) => {
       const t = dict[lang]
       await openPage(page, `/services/${slug}`, lang)
@@ -47,7 +39,7 @@ for (const lang of languages) {
       const next = page.getByRole('navigation', { name: t.service.closing.nav })
       await expect(next.getByRole('link')).toHaveCount(2)
       await expect(next.getByRole('link').first()).toHaveAttribute('href', `/?tag=${tag}#works`)
-      await expect(next.getByRole('link').last()).toHaveAttribute('href', 'https://paktlabs.com/contact')
+      await expect(next.getByRole('link').last()).toHaveAttribute('href', contactPage)
     })
   }
 }

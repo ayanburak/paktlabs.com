@@ -15,6 +15,14 @@ import type { Page } from '@playwright/test'
 
 import { languages, openPage } from './support'
 
+// CSS'teki sayilar, her biri anlamini soyleyen adla burada toplanir.
+// Bu genislik ve altinda mobil duzen gecerli, CSS max-width: 768px
+const MOBILE_MAX_WIDTH = 768
+// Hero basligi ile cizimi arasinda masaustunde en az bu kadar bosluk kalir
+const HERO_MIN_GAP = 24
+// Piksel yuvarlamasindan gelen kabul edilen sapma
+const PIXEL_TOLERANCE = 1
+
 // 768/769 CSS'teki tek mobil esigin iki yani, digerleri yaygin tablet ve
 // masaustu olculeri
 const sizes = [
@@ -36,11 +44,16 @@ async function measure(page: Page) {
     const box = (el: Element): Box => el.getBoundingClientRect()
     const overlaps = (a: Box, b: Box) => a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom
     const centerOf = (b: Box) => (b.top + b.bottom) / 2
+    // Beklenen eleman yoksa sessizce NaN olcmek yerine neyin eksik oldugunu soyler.
+    const need = <T,>(value: T | null | undefined, what: string): T => {
+      if (value == null) throw new Error(`olcum icin ${what} bulunamadi`)
+      return value
+    }
 
-    const hero = document.querySelector('main > section')!
-    const title = hero.querySelector('h1')!
-    const cta = hero.querySelector('.cta')!
-    const art = box(hero.querySelector('figure img')!)
+    const hero = need(document.querySelector('main > section'), 'hero')
+    const title = need(hero.querySelector('h1'), 'hero basligi')
+    const cta = need(hero.querySelector('.cta'), 'hero dugmesi')
+    const art = box(need(hero.querySelector('figure img'), 'hero cizimi'))
 
     // ortalama alani header payindan sonra baslar, alt cizgiden once biter.
     // Iki deger de sayi olarak yazilmaz, hero'nun hesaplanmis stilinden
@@ -82,11 +95,11 @@ test.describe('responsive layout', () => {
 
         // mobilde cizim metnin altina iner ve ortalama yoktur, bu iliskiler
         // yalniz masaustu duzeninde aranir
-        if (width > 768) {
-          expect(m.gap, 'hero basligi ile cizim arasi').toBeGreaterThanOrEqual(24)
+        if (width > MOBILE_MAX_WIDTH) {
+          expect(m.gap, 'hero basligi ile cizim arasi').toBeGreaterThanOrEqual(HERO_MIN_GAP)
           expect(m.ctaHit, 'hero dugmesi cizimle cakisiyor').toBe(false)
-          expect(Math.abs(m.artCenter), 'hero cizimi alanin dikey ortasinda').toBeLessThanOrEqual(1)
-          expect(Math.abs(m.textCenter), 'hero metni alanin dikey ortasinda').toBeLessThanOrEqual(1)
+          expect(Math.abs(m.artCenter), 'hero cizimi alanin dikey ortasinda').toBeLessThanOrEqual(PIXEL_TOLERANCE)
+          expect(Math.abs(m.textCenter), 'hero metni alanin dikey ortasinda').toBeLessThanOrEqual(PIXEL_TOLERANCE)
         }
       })
     }

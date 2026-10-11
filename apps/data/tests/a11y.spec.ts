@@ -1,11 +1,11 @@
 /*
 file: a11y.spec.ts
 
-data'nin dort sayfa turunde, yani veri sayfasi, calisma detay sayfasi, kod
-sayfasi ve bulunamadi sayfasinda, ekran okuyucunun dayandigi yapiyi ve
+data'nin bes sayfa turunde, yani veri sayfasi, hizmet sayfasi, calisma detay
+sayfasi, kod sayfasi ve bulunamadi sayfasinda, ekran okuyucunun dayandigi yapiyi ve
 baglantilari denetler. Tek bir h1, atlanmayan baslik seviyeleri, tek main,
 ust bar ve alt bilgi, ust bardaki adreslerin dogru yere gitmesi ve sayfada bos
-ya da yeni sekmede acilan baglanti kalmamasi. Adresler bilerek elle yazili.
+ya da yeni sekmede acilan baglanti kalmamasi. Adresler bilerek elle yazili, ortak expected.ts dosyasindan gelir.
 Ayrica mobil menunun klavyeyle acilip Escape ile kapanmasini ve Tab ile
 gezilen her elemanda odak cercevesinin gorunmesini olcer. Otomatik bir kural
 tarayicisi degil, ekran okuyucuyla gercek test yerine gecmez.
@@ -14,17 +14,13 @@ description: data sitesinin baslik sirasi, sayfa bolgeleri, baglanti ve klavye t
 */
 
 import { expect, test } from '@playwright/test'
+import { contactPage, disciplineUrls } from '@paktlabs/config/testing/expected'
 
 import { dict, languages, openPage } from './support'
 
 const pages = ['/', '/work/demo-data', '/work/demo-data/source', '/services/preparation', '/yok']
 
-const headerLinks = [
-  'https://data.paktlabs.com',
-  'https://automation.paktlabs.com',
-  'https://web.paktlabs.com',
-  'https://paktlabs.com/contact',
-]
+const headerLinks = [disciplineUrls.data, disciplineUrls.automation, disciplineUrls.web, contactPage]
 
 for (const path of pages) {
   test(`${path}: headings, landmarks and links`, async ({ page }) => {
@@ -124,7 +120,7 @@ for (const path of pages) {
         const el = document.activeElement as HTMLElement
         const style = getComputedStyle(el)
         return {
-          label: (el.innerText || el.getAttribute('aria-label') || el.tagName).trim().split('\n')[0],
+          label: (el.innerText || el.getAttribute('aria-label') || el.tagName).trim().split('\n')[0] ?? '',
           outline: style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) >= 2,
           inFooter: !!el.closest('footer'),
         }
@@ -138,8 +134,8 @@ for (const path of pages) {
         .poll(
           () =>
             page.evaluate(() => {
-              const rect = document.activeElement!.getBoundingClientRect()
-              return rect.bottom > 0 && rect.top < innerHeight && rect.right > 0 && rect.left < innerWidth
+              const rect = document.activeElement?.getBoundingClientRect()
+              return !!rect && rect.bottom > 0 && rect.top < innerHeight && rect.right > 0 && rect.left < innerWidth
             }),
           { message: `${info.label} ekranda` },
         )

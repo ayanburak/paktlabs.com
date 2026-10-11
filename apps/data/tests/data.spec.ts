@@ -1,7 +1,8 @@
 /*
 file: data.spec.ts
 
-Calismalarin dosyalarini denetler. Her calismanin data/tr ve data/en
+Calismalarin dosyalarini denetler. Dosya desenlerinin desteklenen dillerle
+ayni kaldigini da burada olcer. Her calismanin data/tr ve data/en
 klasorlerinde ayni kimlikli CSV'ler bulunmali, ayni kimlikli iki dosya ayni
 sayida satir ve her satirda ayni sayida hucre tasimali, yoksa okur veri
 dilini degistirdiginde tablo kayar. code/tr ve code/en klasorlerinde de ayni
@@ -19,6 +20,7 @@ import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 import { expect, test } from '@playwright/test'
+import { languages } from '@paktlabs/brand/i18n/language'
 
 import { codeLanguage } from '../src/components/study/blocks/file/languages'
 import { type Block, flattenBlocks } from '../src/content/studies/blocks'
@@ -27,6 +29,19 @@ import { studies } from '../src/content/studies'
 import type { Chapter, Study } from '../src/content/studies/types'
 
 const root = join(import.meta.dirname, '../src/content/studies')
+
+// assetFiles.ts'teki glob deseni ve yol ifadesi Vite icin statik yazilmak
+// zorunda, dil listesinden uretilemez. Ikisindeki dil kodlari brand'deki
+// languages listesiyle ayni degilse yeni bir dilin dosyalari sessizce yuklenmez.
+test('the asset file patterns list exactly the supported languages', () => {
+  const source = readFileSync(join(root, 'assetFiles.ts'), 'utf8')
+  const glob = source.match(/import\.meta\.glob<string>\('[^']*\{(?:data,code|code,data)\}\/\{([^}]*)\}/)
+  const path = source.match(/const PATH = [^\n]*\(([a-z|]+)\)\\\/\(\.\+\)/)
+  expect(glob, 'glob deseni bulunamadi').not.toBeNull()
+  expect(path, 'PATH ifadesi bulunamadi').not.toBeNull()
+  expect(glob?.[1]?.split(',')).toEqual([...languages])
+  expect(path?.[1]?.split('|')).toEqual([...languages])
+})
 
 function csvIds(slug: string, language: string): string[] {
   try {

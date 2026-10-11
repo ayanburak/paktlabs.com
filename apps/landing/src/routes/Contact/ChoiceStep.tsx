@@ -40,6 +40,13 @@ export function ChoiceStep({ question, titleId, value, onChange, onNext, onBack 
   // secenekleri hepsinin ortak anahtariyla indekslemeye yarar.
   const all: OptionTexts = dict.questions
   const texts: Record<string, OptionText> = all[question.id].options
+  // Tip her secenegin metnini garanti eder, eksikse sozluk bozuktur ve ilk
+  // render'da acik bir hata gorulur.
+  const options = question.options.map((option) => {
+    const text = texts[option]
+    if (!text) throw new Error(`${question.id}.${option} icin metin yok`)
+    return { option, ...text }
+  })
 
   return (
     <form
@@ -50,7 +57,7 @@ export function ChoiceStep({ question, titleId, value, onChange, onNext, onBack 
     >
       <fieldset className={styles.fieldset} aria-labelledby={titleId}>
         <ul className={styles.options} data-count={question.options.length}>
-          {question.options.map((option, i) => (
+          {options.map(({ option, label, hint }, i) => (
             <li key={option} style={{ '--i': i } as CSSProperties}>
               <label className={styles.option}>
                 <input
@@ -65,10 +72,10 @@ export function ChoiceStep({ question, titleId, value, onChange, onNext, onBack 
                 />
                 <span className={styles.face}>
                   <span id={`${id}-${option}`} className={styles.label}>
-                    {texts[option].label}
+                    {label}
                   </span>
                   <span id={`${id}-${option}-hint`} className={styles.hint}>
-                    {texts[option].hint}
+                    {hint}
                   </span>
                 </span>
               </label>

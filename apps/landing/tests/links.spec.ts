@@ -12,19 +12,15 @@ description: Landing sayfasindaki subdomain baglantilari ve eski alt sayfa hedef
 
 import { expect, test } from '@playwright/test'
 import type { Locator } from '@playwright/test'
+import { contactMailto, contactPage, disciplineUrls, services } from '@paktlabs/config/testing/expected'
 
-import { dict, disciplineUrls, languages, openHome } from './support'
+import { dict, languages, openHome } from './support'
 
 const { web, automation, data } = disciplineUrls
-const contactPage = 'https://paktlabs.com/contact'
 
 // Veri bandinin satirlari, sirasiyla. Her satir data'daki hizmet sayfasina
-// gider, adresler data'nin service.spec.ts'teki adresleriyle ayni, ikisi de
-// bilerek elle yazili.
-const dataTagOrder = ['preparation', 'database', 'quality', 'analysis', 'visualization', 'machineLearning'] as const
-const dataTagLinks = ['preparation', 'database', 'quality', 'analysis', 'visualization', 'machine-learning'].map(
-  (slug) => `${data}/services/${slug}`,
-)
+// gider, sira ve adresler iki sitenin ortak expected.ts dosyasindan gelir.
+const dataTagLinks = services.map(({ slug }) => `${data}/services/${slug}`)
 
 async function hrefs(links: Locator) {
   return links.evaluateAll((els) => els.map((el) => el.getAttribute('href')))
@@ -57,7 +53,7 @@ for (const lang of languages) {
 
     const rows = page.locator('#work ol').first().locator('a')
     expect(await hrefs(rows)).toEqual(dataTagLinks)
-    for (const [i, tag] of dataTagOrder.entries()) {
+    for (const [i, { tag }] of services.entries()) {
       await expect(rows.nth(i)).toHaveAccessibleName(dict[lang].dataTags[tag])
     }
     await expect(page.locator('#work ol').nth(1).locator('a')).toHaveCount(0)
@@ -86,5 +82,5 @@ test('no empty, old sub page or new tab links remain', async ({ page }) => {
   }
   // kok adrese giden tek link logo
   expect(all.filter(({ href }) => href?.startsWith('/'))).toEqual([{ href: '/', target: null }])
-  await expect(page.locator('a[href^="mailto:"]')).toHaveAttribute('href', 'mailto:info@paktlabs.com')
+  await expect(page.locator('a[href^="mailto:"]')).toHaveAttribute('href', contactMailto)
 })

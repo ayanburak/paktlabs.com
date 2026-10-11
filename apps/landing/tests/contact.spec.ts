@@ -12,6 +12,8 @@ description: Landing'in iletisim sayfasindaki adim adim formu ve gonderimini olc
 
 import { expect, test } from '@playwright/test'
 import type { Page, Route } from '@playwright/test'
+import { required } from '@paktlabs/config/testing/support'
+import { contactMailto } from '@paktlabs/config/testing/expected'
 
 import { contactPath, dict, languages, openContact } from './support'
 
@@ -138,7 +140,7 @@ test('a failed send keeps the answers and offers the email address', async ({ pa
   await page.getByRole('button', { name: new RegExp(t.actions.send) }).click()
 
   await expect(page.getByRole('alert')).toContainText(t.error)
-  await expect(page.getByRole('alert').getByRole('link')).toHaveAttribute('href', 'mailto:info@paktlabs.com')
+  await expect(page.getByRole('alert').getByRole('link')).toHaveAttribute('href', contactMailto)
   await expect(page.getByLabel(t.details.message)).toHaveValue('Merhaba')
   await expect(page.getByRole('heading', { level: 2 })).toHaveText(t.details.title)
 })
@@ -186,8 +188,8 @@ test('the trap field stays out of reach', async ({ page }) => {
   const trap = page.locator('input[name="website"]')
 
   await expect(trap).toHaveAttribute('tabindex', '-1')
-  const box = await trap.boundingBox()
-  expect(box!.x + box!.width).toBeLessThan(0)
+  const box = required(await trap.boundingBox(), 'tuzak alani')
+  expect(box.x + box.width).toBeLessThan(0)
   await expect(page.getByRole('textbox')).toHaveCount(4)
 })
 
@@ -218,7 +220,9 @@ test('the form works with the keyboard', async ({ page }) => {
   await page.keyboard.press('Space')
   await expect(first).toBeChecked()
   const outline = await first.evaluate((el) => {
-    const face = getComputedStyle(el.nextElementSibling!)
+    const sibling = el.nextElementSibling
+    if (!sibling) throw new Error('secenegin yuzu yok')
+    const face = getComputedStyle(sibling)
     return face.outlineStyle !== 'none' && parseFloat(face.outlineWidth) >= 2
   })
   expect(outline).toBe(true)

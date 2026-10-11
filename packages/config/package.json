@@ -9,6 +9,7 @@
   "exports": {
     "./vite": "./vite.ts",
     "./playwright": "./playwright.ts",
+    "./testing/*": "./testing/*.ts",
     "./tsconfig.app.json": "./tsconfig.app.json",
     "./tsconfig.node.json": "./tsconfig.node.json",
     "./tsconfig.tests.json": "./tsconfig.tests.json"

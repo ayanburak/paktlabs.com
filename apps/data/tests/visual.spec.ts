@@ -1,19 +1,20 @@
 /*
 file: visual.spec.ts
 
-data'nin dort sayfa turunun, yani veri sayfasi, Demo Veri'nin detay sayfasi,
-kod ve veri sayfasi ve bulunamadi sayfasinin onayli gorunumunu tam sayfa
-referanslarla karsilastirir. Dil, DPR 1, hareket azaltma tercihi ve tolerans
+data'nin bes sayfa turunun, yani veri sayfasi, hizmet sayfasi, Demo Veri'nin
+detay sayfasi, kod ve veri sayfasi ve bulunamadi sayfasinin onayli gorunumunu
+tam sayfa referanslarla karsilastirir. Dil, DPR 1, hareket azaltma tercihi ve tolerans
 landing'in visual.spec.ts dosyasiyla ayni. Veri ve bulunamadi sayfalari
-landing'in dort olcusunde, uzun detay ve kod sayfalari yalnizca 390 ve 1366'da
-cekilir. Detay sayfasinda acilir kutular kapali cekilir, okurun ilk gordugu
+landing'in dort olcusunde, uzun hizmet, detay ve kod sayfalari yalnizca 390 ve
+1366'da cekilir. openPage fontlari ve gorselleri bekledigi icin goruntu
+yedek fontla cizilmez. Detay sayfasinda acilir kutular kapali cekilir, okurun ilk gordugu
 hal budur, tablolarin icerigini davranis testleri denetler. CI bu dosyayi
 calistirmaz.
 
 Onayli bir tasarim degisikliginden sonra referanslar
 npm run test:visual:update ile yenilenir.
 
-description: Onayli TR ve EN gorunumun dort sayfa turunde tam sayfa piksel karsilastirmasi.
+description: Onayli TR ve EN gorunumun bes sayfa turunde tam sayfa piksel karsilastirmasi.
 */
 
 // NOTE: Veri sayfasindaki one cikan kartin teknik ayrintilar listesi, tarayici
@@ -24,7 +25,7 @@ description: Onayli TR ve EN gorunumun dort sayfa turunde tam sayfa piksel karsi
 // bu farki sayfa farki saymaz. Bu esik kapatilirsa ya da dusurulurse bu test
 // ara ara sebepsiz kirilir.
 
-import { expect, test, type Page } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 import { languages, openPage } from './support'
 
@@ -54,15 +55,6 @@ const pages = [
   ['notfound', '/yok', sizes],
 ] as const
 
-// Fontlar Google Fonts'tan ve cizimler ayri dosyalardan geldigi icin networkidle
-// tek basina yetmez, font yuklenmeden alinan goruntu yedek fontla cizilir.
-async function settle(page: Page) {
-  await page.evaluate(async () => {
-    await document.fonts.ready
-    await Promise.all([...document.images].map((img) => img.decode().catch(() => {})))
-  })
-}
-
 test.describe('full page @visual', () => {
   test.use({ reducedMotion: 'reduce' })
 
@@ -72,7 +64,6 @@ test.describe('full page @visual', () => {
         test(`${name} ${lang} ${width}x${height}`, async ({ page }) => {
           await page.setViewportSize({ width, height })
           await openPage(page, path, lang)
-          await settle(page)
           await expect(page).toHaveScreenshot(`${name}-${lang}-${width}x${height}.png`, { fullPage: true })
         })
       }

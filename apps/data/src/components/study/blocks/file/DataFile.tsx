@@ -41,7 +41,7 @@ export function DataFile({ block }: DataFileProps) {
   const data = useDataLanguage()
   const file = useStudyFile('data', `${block.csv}.csv`)
   const text = fileText(file.text)
-  const [header, ...records] = text.split('\n')
+  const [header = '', ...records] = text.split('\n')
   const columns = parseCsv(header)[0]?.length ?? 0
   const size = formatSize(new TextEncoder().encode(file.text).length, site, study.files.bytes)
   const name = block.name[data.language]

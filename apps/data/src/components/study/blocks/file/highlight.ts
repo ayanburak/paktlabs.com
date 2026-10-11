@@ -52,6 +52,7 @@ export function highlight(code: string, language: CodeLanguage): Token[] {
   let i = 0
   while (i < code.length) {
     const rest = code.slice(i, i + 3)
+    const char = code.charAt(i)
 
     if (language.docStrings && (rest === '"""' || rest === "'''")) {
       const end = code.indexOf(rest, i + 3)
@@ -69,14 +70,14 @@ export function highlight(code: string, language: CodeLanguage): Token[] {
       continue
     }
 
-    if (code[i] === '"' || code[i] === "'") {
-      const stop = readString(code, i, code[i])
+    if (char === '"' || char === "'") {
+      const stop = readString(code, i, char)
       push('string', code.slice(i, stop))
       i = stop
       continue
     }
 
-    if (language.decorators && code[i] === '@') {
+    if (language.decorators && char === '@') {
       const name = code.slice(i + 1).match(IDENTIFIER)
       if (name) {
         push('keyword', `@${name[0]}`)
@@ -101,7 +102,7 @@ export function highlight(code: string, language: CodeLanguage): Token[] {
       continue
     }
 
-    push('plain', code[i])
+    push('plain', char)
     i += 1
   }
   return tokens

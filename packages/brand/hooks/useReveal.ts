@@ -33,7 +33,7 @@ export function useReveal<T extends HTMLElement>() {
       setVisible(true)
       observer.disconnect()
     }
-    const observer = new IntersectionObserver(([entry]) => entry.isIntersecting && show(), {
+    const observer = new IntersectionObserver(([entry]) => entry?.isIntersecting && show(), {
       threshold: 0.15,
       rootMargin: '0px 0px -8% 0px',
     })

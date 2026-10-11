@@ -56,7 +56,7 @@ test('back button opens the home page when the address was opened directly', asy
   await expect(page).toHaveURL('/')
 })
 
-for (const [width, height] of [[390, 844], [768, 1024], [769, 1024], [1366, 1024]]) {
+for (const [width, height] of [[390, 844], [768, 1024], [769, 1024], [1366, 1024]] as const) {
   test(`${width}x${height}: the not found page does not overflow sideways`, async ({ page }) => {
     await page.setViewportSize({ width, height })
     await page.goto(notFoundPath, { waitUntil: 'networkidle' })

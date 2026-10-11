@@ -57,6 +57,10 @@ export function Toc({ entries, chaptersRef, note }: TocProps) {
     return () => document.removeEventListener('keydown', onKey)
   }, [open])
 
+  // Sayfa en az bir bolumle gelir, bos liste cizilecek bir sey tasimaz.
+  const active = entries[current]
+  if (!active) return null
+
   return (
     <nav
       className={cx(styles.toc, open && styles.open)}
@@ -71,8 +75,8 @@ export function Toc({ entries, chaptersRef, note }: TocProps) {
         aria-controls="toc-list"
         onClick={() => setOpen(!open)}
       >
-        <span className={styles.number}>{entries[current].number}</span>
-        <span>{entries[current].label}</span>
+        <span className={styles.number}>{active.number}</span>
+        <span>{active.label}</span>
         <span className={styles.caret} aria-hidden="true">
           ↓
         </span>

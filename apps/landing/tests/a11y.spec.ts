@@ -10,6 +10,7 @@ description: Header, mobil menu, sayfa yapisi ve klavye odagi erisilebilirlik te
 */
 
 import { expect, test } from '@playwright/test'
+import { contactPage } from '@paktlabs/config/testing/expected'
 
 import { dict, languages, openHome } from './support'
 
@@ -73,7 +74,7 @@ for (const lang of languages) {
     // kapandigi gorulur.
     await burger.click()
     await panel.evaluate((el) => el.addEventListener('click', (event) => event.preventDefault()))
-    await panel.locator('a[href="https://paktlabs.com/contact"]').click()
+    await panel.locator(`a[href="${contactPage}"]`).click()
     await expect(burger).toHaveAttribute('aria-expanded', 'false')
   })
 }
@@ -123,7 +124,7 @@ test('keyboard focus is visible on every focusable element', async ({ page }) =>
       const el = document.activeElement as HTMLElement
       const style = getComputedStyle(el)
       return {
-        label: (el.innerText || el.getAttribute('aria-label') || el.tagName).trim().split('\n')[0],
+        label: (el.innerText || el.getAttribute('aria-label') || el.tagName).trim().split('\n')[0] ?? '',
         outline: style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) >= 2,
       }
     })

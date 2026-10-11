@@ -13,6 +13,7 @@ description: data sitesindeki calisma detay sayfasinin davranis testleri.
 */
 
 import { expect, test } from '@playwright/test'
+import { authorProfile } from '@paktlabs/config/testing/expected'
 
 import { page as demoPage } from '../src/content/studies/demo-data/page'
 
@@ -104,13 +105,15 @@ test('details boxes and station strips open and close', async ({ page }) => {
 })
 
 test('a contents link moves to its chapter and marks it as read', async ({ page }) => {
+  const chapter = chapters[3]
+  if (!chapter) throw new Error('Demo Veri en az dort bolum tasimali')
   await openPage(page, path, 'tr')
 
   const contents = page.getByRole('navigation', { name: dict.tr.study.toc.title })
-  const link = contents.getByRole('link', { name: chapters[3].label.tr })
+  const link = contents.getByRole('link', { name: chapter.label.tr })
   await link.click()
 
-  await expect(page).toHaveURL(new RegExp(`#${chapters[3].id}$`))
+  await expect(page).toHaveURL(new RegExp(`#${chapter.id}$`))
   await expect(link).toHaveAttribute('aria-current', 'location')
 })
 
@@ -123,7 +126,7 @@ test('the curious card, the author box and the closing cards point to the right 
   )
   await expect(page.getByRole('link', { name: /Burak Ayan/ })).toHaveAttribute(
     'href',
-    'https://paktlabs.com/profiles/ayanburak',
+    authorProfile,
   )
 
   // Demo Veri tek gercek calisma, sonraki calisma karti cikmaz.

@@ -1,7 +1,8 @@
 {
   "extends": "./tsconfig.node.json",
   "compilerOptions": {
-    "types": ["node"]
+    "types": ["node"],
+    "lib": ["ES2023", "DOM"]
   },
-  "include": ["vite.ts", "playwright.ts"]
+  "include": ["vite.ts", "playwright.ts", "testing"]
 }

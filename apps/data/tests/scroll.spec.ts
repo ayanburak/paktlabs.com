@@ -14,8 +14,13 @@ description: data sitesinde sayfa gecislerindeki kaydirma konumu testleri.
 */
 
 import { expect, type Page, test } from '@playwright/test'
+import { required } from '@paktlabs/config/testing/support'
 
 import { openPage } from './support'
+
+// Atlanan bolumun ust kenari, ust bar payi dahil, ekranin ustunden en fazla
+// bu kadar piksel asagida durmali.
+const CHAPTER_TOP_MAX = 100
 
 test.use({ reducedMotion: 'reduce' })
 
@@ -38,13 +43,13 @@ test('a study opened from a card starts at the top and back returns to the card'
 test('a contents link still moves to its chapter on the same page', async ({ page }) => {
   await openPage(page, '/work/demo-data', 'tr')
   const link = page.locator('nav a[href^="#"]').nth(2)
-  const id = (await link.getAttribute('href'))!.slice(1)
+  const id = required(await link.getAttribute('href'), 'icindekiler linkinin href i').slice(1)
 
   await link.click()
   await expect(page).toHaveURL(`/work/demo-data#${id}`)
   await expect
-    .poll(() => page.evaluate((target) => Math.round(document.getElementById(target)!.getBoundingClientRect().top), id))
-    .toBeLessThan(100)
+    .poll(() => chapterTop(page, id))
+    .toBeLessThan(CHAPTER_TOP_MAX)
 })
 
 // Fontlar bilerek geciktirilir. Bolume ilk kaydirma fontlar gelmeden olur,
@@ -58,7 +63,11 @@ async function slowFonts(page: Page) {
 }
 
 function chapterTop(page: Page, id: string) {
-  return page.evaluate((target) => Math.round(document.getElementById(target)!.getBoundingClientRect().top), id)
+  return page.evaluate((target) => {
+    const chapter = document.getElementById(target)
+    if (!chapter) throw new Error(`${target} bolumu bulunamadi`)
+    return Math.round(chapter.getBoundingClientRect().top)
+  }, id)
 }
 
 test('a study address with a chapter opens at that chapter, even when the fonts arrive late', async ({ page }) => {
@@ -66,7 +75,7 @@ test('a study address with a chapter opens at that chapter, even when the fonts 
   await openPage(page, '/work/demo-data#decisions', 'tr')
   await page.evaluate(() => document.fonts.ready)
   await expect.poll(() => chapterTop(page, 'decisions')).toBeGreaterThanOrEqual(0)
-  await expect.poll(() => chapterTop(page, 'decisions')).toBeLessThan(100)
+  await expect.poll(() => chapterTop(page, 'decisions')).toBeLessThan(CHAPTER_TOP_MAX)
 })
 
 // Okur fontlar gelmeden kendisi kaydirirsa sayfa onu bolume geri cekmemeli.

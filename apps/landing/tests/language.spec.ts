@@ -12,6 +12,7 @@ description: Dil secimi, cerez ve localStorage hata durumlari ve sayfa bilgileri
 
 import { expect, test } from '@playwright/test'
 import type { Page } from '@playwright/test'
+import { required } from '@paktlabs/config/testing/support'
 
 import { dict, languages, openHome } from './support'
 import type { Language } from './support'
@@ -20,7 +21,9 @@ import type { Language } from './support'
 // ayni dile uydugunu birlikte kontrol eder.
 async function expectLanguage(page: Page, lang: Language) {
   await expect(page.locator('html')).toHaveAttribute('lang', lang)
-  await expect(page.locator('h1')).toContainText(dict[lang].hero.lines[0])
+  const [firstLine] = dict[lang].hero.lines
+  if (!firstLine) throw new Error(`${lang} hero basligi bos`)
+  await expect(page.locator('h1')).toContainText(firstLine)
   await expect(page).toHaveTitle(dict[lang].meta.title)
   await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', dict[lang].meta.description)
   await expect(page.locator('meta[name="description"]')).toHaveCount(1)
@@ -66,13 +69,13 @@ test.describe('reading the stored language', () => {
   })
 
   test('prefers the cookie over the older localStorage value', async ({ page, baseURL }) => {
-    await page.context().addCookies([{ name: 'pl_lang', value: 'en', url: baseURL! }])
+    await page.context().addCookies([{ name: 'pl_lang', value: 'en', url: required(baseURL, 'baseURL') }])
     await openHome(page, 'tr')
     await expectLanguage(page, 'en')
   })
 
   test('falls back to localStorage when the cookie is invalid', async ({ page, baseURL }) => {
-    await page.context().addCookies([{ name: 'pl_lang', value: 'de', url: baseURL! }])
+    await page.context().addCookies([{ name: 'pl_lang', value: 'de', url: required(baseURL, 'baseURL') }])
     await openHome(page, 'en')
     await expectLanguage(page, 'en')
   })
@@ -110,11 +113,11 @@ test.describe('writing the language choice', () => {
     const cookie = await storedCookie(page)
     expect(cookie?.value).toBe('en')
     // Yerelde cerez yalnizca localhost'a, canlida butun paktlabs.com alt alan adlarina yazilir.
-    const host = new URL(baseURL!).hostname
+    const host = new URL(required(baseURL, 'baseURL')).hostname
     expect(cookie?.domain).toBe(host.endsWith('paktlabs.com') ? '.paktlabs.com' : host)
     expect(cookie?.sameSite).toBe('Lax')
     // bir yil, birkac saniyelik pay ile
-    expect(cookie!.expires - Date.now() / 1000).toBeGreaterThan(365 * 24 * 3600 - 60)
+    expect(required(cookie, 'pl_lang cerezi').expires - Date.now() / 1000).toBeGreaterThan(365 * 24 * 3600 - 60)
     await page.reload()
     await expectLanguage(page, 'en')
   })

@@ -15,6 +15,19 @@ import type { Page } from '@playwright/test'
 
 import { languages, openHome } from './support'
 
+// CSS'teki sayilar. Bunlar degisirse testin korudugu yer de degisir, o yuzden
+// her biri anlamini soyleyen adla burada toplanir.
+// Bu genislik ve altinda mobil duzen gecerli, CSS max-width: 768px
+const MOBILE_MAX_WIDTH = 768
+// Hero basligi ile cizimi arasinda masaustunde en az bu kadar bosluk kalir
+const HERO_MIN_GAP = 24
+// Disiplin figuru kartlarin bu kadar ustunde durur, bu genisligin ustunde
+// sayfa --maxw ile sinirli oldugu icin bu iliski aranmaz
+const DISCIPLINE_ART_GAP = 28
+const DISCIPLINE_ART_GAP_MAX_WIDTH = 1680
+// Piksel yuvarlamasindan gelen kabul edilen sapma
+const PIXEL_TOLERANCE = 1
+
 // 768/769, 1680/1681 ve 1900/1901 CSS'teki esiklerin iki yani
 const sizes = [
   [390, 844],
@@ -42,8 +55,16 @@ async function measure(page: Page) {
     }
     const overlaps = (a: Box, b: Box) => a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom
 
-    const hero = document.querySelector('main > section')!
-    const heroFrame = hero.querySelector('picture')!
+    // Beklenen eleman yoksa sessizce NaN olcmek yerine neyin eksik oldugunu soyler.
+    const need = <T,>(value: T | null | undefined, what: string): T => {
+      if (value == null) throw new Error(`olcum icin ${what} bulunamadi`)
+      return value
+    }
+
+    const hero = need(document.querySelector('main > section'), 'hero')
+    const heroFrame = need(hero.querySelector('picture'), 'hero cizimi')
+    const heroTitle = need(hero.querySelector('h1'), 'hero basligi')
+    const heroCta = need(hero.querySelector('.cta'), 'hero dugmesi')
     // hero'nun ortalama alani header payindan sonra baslar, alt cizgiden once biter.
     // Iki deger de sayi olarak yazilmaz, hero'nun hesaplanmis stilinden okunur
     const heroStyle = getComputedStyle(hero)
@@ -51,35 +72,35 @@ async function measure(page: Page) {
     const heroAreaCenter =
       (heroBox.top + parseFloat(heroStyle.paddingTop) + heroBox.bottom - parseFloat(heroStyle.borderBottomWidth)) / 2
     const centerOf = (b: Box) => (b.top + b.bottom) / 2
-    const discArt = document.querySelector('#disciplines picture img')!
-    const cards = document.querySelector('#disciplines a')!.parentElement!
+    const discArt = need(document.querySelector('#disciplines picture img'), 'disiplin cizimi')
+    const cards = need(need(document.querySelector('#disciplines a'), 'disiplin karti').parentElement, 'kart listesi')
 
     const bands = [...document.querySelectorAll('#work h3')].map((title) => {
-      const band = title.closest('#work > div')!
-      const art = band.querySelector(':scope > img')!
-      const word = title.parentElement!
+      const band = need(title.closest('#work > div'), 'bant')
+      const art = need(band.querySelector(':scope > img'), 'bant cizimi')
+      const word = need(title.parentElement, 'bant basligi kutusu')
       const artBox = box(art)
       const groundOffset = parseFloat(getComputedStyle(art).getPropertyValue('--ground-offset')) / 100
-      const texts = [title, word.querySelector('p')!, ...band.querySelectorAll('li')].map(textBox)
+      const texts = [title, need(word.querySelector('p'), 'bant aciklamasi'), ...band.querySelectorAll('li')].map(textBox)
       return {
         title: title.textContent,
         // gorselin zemin cizgisi ile bandin alt kenari arasindaki fark
         ground: artBox.bottom - (artBox.bottom - artBox.top) * groundOffset - box(band).bottom,
         hitsText: texts.some((t) => overlaps(artBox, t)),
-        hitsButton: overlaps(artBox, box(word.querySelector('a')!)),
+        hitsButton: overlaps(artBox, box(need(word.querySelector('a'), 'bant dugmesi'))),
         insideX: artBox.left >= 0 && artBox.right <= innerWidth,
       }
     })
 
     return {
       overflowX: document.documentElement.scrollWidth - innerWidth,
-      heroGap: box(heroFrame).left - textBox(hero.querySelector('h1')!).right,
-      heroCtaHit: overlaps(box(heroFrame), box(hero.querySelector('.cta')!)),
+      heroGap: box(heroFrame).left - textBox(heroTitle).right,
+      heroCtaHit: overlaps(box(heroFrame), box(heroCta)),
       heroArtCenter: centerOf(box(heroFrame)) - heroAreaCenter,
       // metin blogu eleman kutulariyla olculur. Baslik satir yuksekligi fontun
       // yazi alanindan kucuk oldugu icin Range kutusu eleman kutusunun disina
       // tasar, ortalamayi ise CSS eleman kutularina gore yapar
-      heroTextCenter: (box(hero.querySelector('h1')!).top + box(hero.querySelector('.cta')!).bottom) / 2 - heroAreaCenter,
+      heroTextCenter: (box(heroTitle).top + box(heroCta).bottom) / 2 - heroAreaCenter,
       discArt: {
         opacity: getComputedStyle(discArt).opacity,
         left: box(discArt).left,
@@ -104,20 +125,25 @@ test.describe('responsive layout', () => {
         expect(m.overflowX, 'yatay tasma').toBeLessThanOrEqual(0)
 
         // mobilde hero cizimi bilerek metnin arkasinda durur, bu iliski yalniz masaustu duzeninde aranir
-        if (width > 768) {
-          expect(m.heroGap, 'hero basligi ile cizim arasi').toBeGreaterThanOrEqual(24)
+        if (width > MOBILE_MAX_WIDTH) {
+          expect(m.heroGap, 'hero basligi ile cizim arasi').toBeGreaterThanOrEqual(HERO_MIN_GAP)
           expect(m.heroCtaHit, 'hero dugmesi cizimle cakisiyor').toBe(false)
-          expect(Math.abs(m.heroArtCenter), 'hero cizimi alanin dikey ortasinda').toBeLessThanOrEqual(1)
-          expect(Math.abs(m.heroTextCenter), 'hero metni alanin dikey ortasinda').toBeLessThanOrEqual(1)
+          expect(Math.abs(m.heroArtCenter), 'hero cizimi alanin dikey ortasinda').toBeLessThanOrEqual(PIXEL_TOLERANCE)
+          expect(Math.abs(m.heroTextCenter), 'hero metni alanin dikey ortasinda').toBeLessThanOrEqual(PIXEL_TOLERANCE)
         }
 
         expect(m.discArt.opacity).toBe('1')
         expect(m.discArt.left).toBeGreaterThanOrEqual(0)
         expect(m.discArt.right).toBeLessThanOrEqual(width)
-        if (width <= 1680) expect(Math.abs(m.discArt.gapToCards - 28), 'figur kartlarin 28px ustunde').toBeLessThanOrEqual(1)
+        if (width <= DISCIPLINE_ART_GAP_MAX_WIDTH) {
+          expect(
+            Math.abs(m.discArt.gapToCards - DISCIPLINE_ART_GAP),
+            `figur kartlarin ${DISCIPLINE_ART_GAP}px ustunde`,
+          ).toBeLessThanOrEqual(PIXEL_TOLERANCE)
+        }
 
         for (const band of m.bands) {
-          expect(Math.abs(band.ground), `${band.title} zemin`).toBeLessThanOrEqual(1)
+          expect(Math.abs(band.ground), `${band.title} zemin`).toBeLessThanOrEqual(PIXEL_TOLERANCE)
           expect(band.hitsText, `${band.title} cizimi metne degiyor`).toBe(false)
           expect(band.hitsButton, `${band.title} cizimi dugmeye degiyor`).toBe(false)
           expect(band.insideX, `${band.title} cizimi ekran disinda`).toBe(true)

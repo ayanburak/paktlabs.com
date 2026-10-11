@@ -17,7 +17,7 @@ function recordSvgRequests(page: Page) {
   const names = new Set<string>()
   page.on('request', (request) => {
     const match = new URL(request.url()).pathname.match(/\/assets\/(.+)-[\w-]{8}\.svg$/)
-    if (match) names.add(match[1])
+    if (match?.[1]) names.add(match[1])
   })
   return names
 }

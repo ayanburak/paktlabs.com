@@ -5,12 +5,14 @@ importable: localeFor, formatValue
 description: Sekil ve tablolardaki sayilari yazan ve dile gore yerel ayari secen yardimcilar.
 */
 
+import { locales } from '@paktlabs/brand/i18n/language'
 import type { Language } from '@paktlabs/brand/i18n/language'
 
 // Intl'in bekledigi yerel ayar kodu. Sayi bicimi bunu kullanan her yerde
-// ayni kalsin diye dilden yerel ayara gecis burada tek yerde durur.
+// ayni kalsin diye dilden yerel ayara gecis brand'deki locales tablosunda
+// tek yerde durur.
 export function localeFor(language: Language): string {
-  return language === 'tr' ? 'tr-TR' : 'en-US'
+  return locales[language]
 }
 
 // Turkcede yuzde isareti sayidan once gelir ve ondalik ayrac virguldur,

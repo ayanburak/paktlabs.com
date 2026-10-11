@@ -14,7 +14,14 @@ description: Calisma dosyalarini derlemeyle yayinlanan statik dosyalardan indire
 // NOTE: import.meta.glob yalnizca Vite derlemesinde calisir. Testler calisma
 // dosyalarini Node'da diskten okur, bu modulu kullanmaz.
 
+import type { Language } from '@paktlabs/brand/i18n/language'
+
 import { fileKey, type FileKind, type StudyFileSet, type StudyFiles } from './files'
+
+// NOTE: Vite glob deseni ve asagidaki PATH ifadesi statik olmak zorunda, dil
+// listesinden uretilemez. Desendeki {tr,en} ve ifadedeki (tr|en) brand'deki
+// languages listesiyle ayni kalmali. Yeni bir dil eklenirse ikisi de
+// guncellenir, tests/data.spec.ts bu uyumu denetler.
 
 // Anahtar dosyanin yolu, ornegin ./demo-data/code/en/rules/catalog.py, deger
 // derlenen sitedeki adresi. no-inline olmadan Vite kucuk dosyalari adres
@@ -48,7 +55,7 @@ async function loadStudy(slug: string): Promise<StudyFileSet> {
     Object.entries(urls).map(async ([path, url]) => {
       const match = path.match(PATH)
       if (!match || match[1] !== slug) return
-      const [, , kind, language, rest] = match as unknown as [string, string, FileKind, 'tr' | 'en', string]
+      const [, , kind, language, rest] = match as unknown as [string, string, FileKind, Language, string]
       set[language][fileKey(kind, rest)] = { text: await fetchText(url), url }
     }),
   )

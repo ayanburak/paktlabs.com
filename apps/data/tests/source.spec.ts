@@ -16,6 +16,8 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 import { expect, test } from '@playwright/test'
+import { required } from '@paktlabs/config/testing/support'
+import { authorProfile } from '@paktlabs/config/testing/expected'
 
 import { source } from '../src/content/studies/demo-data/source'
 
@@ -109,7 +111,7 @@ test('the download link gives the previewed file in the chosen data language', a
 
   async function expectFile(name: string, language: Language) {
     await expect(link).toHaveAttribute('download', name)
-    const response = await page.request.get((await link.getAttribute('href'))!)
+    const response = await page.request.get(required(await link.getAttribute('href'), 'indirme linkinin href i'))
     expect(response.ok()).toBe(true)
     expect((await response.text()).replace(/\n$/, '')).toBe(file('data', language, 'raw-sample.csv'))
   }
@@ -124,7 +126,7 @@ test('the author box and the back card point to the right places', async ({ page
 
   await expect(page.getByRole('link', { name: /Burak Ayan/ })).toHaveAttribute(
     'href',
-    'https://paktlabs.com/profiles/ayanburak',
+    authorProfile,
   )
   await expect(page.getByRole('link', { name: new RegExp(dict.tr.source.back.text) })).toHaveAttribute(
     'href',
