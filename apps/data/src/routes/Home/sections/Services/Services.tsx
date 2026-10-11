@@ -19,6 +19,7 @@ import { useBrandDict } from '@paktlabs/brand/i18n/useBrandDict'
 
 import { services } from '@/content/services'
 import { useDict } from '@/i18n'
+import { servicesAnchor } from '@/routes/links'
 
 import { ServiceNote } from './ServiceNote'
 import styles from './Services.module.css'
@@ -31,7 +32,7 @@ export function Services() {
   const { language } = useLanguage()
 
   return (
-    <section id="hizmetler" className={styles.services} aria-labelledby="services-title">
+    <section id={servicesAnchor} className={styles.services} aria-labelledby="services-title">
       <div className={styles.head}>
         <div>
           <span className="eyebrow">{home.services.eyebrow}</span>

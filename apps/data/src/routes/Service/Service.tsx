@@ -14,7 +14,7 @@ description: Bir veri hizmetini kapsam, surec ve teslim bolumleriyle anlatan say
 import { useParams } from 'react-router-dom'
 
 import { contactPageUrl } from '@paktlabs/brand/content/contact'
-import { dataTagFromSlug, dataTagPath, dataTags, type DataTag } from '@paktlabs/brand/content/dataTags'
+import { dataTags, type DataTag } from '@paktlabs/brand/content/dataTags'
 import { useLanguage } from '@paktlabs/brand/i18n/language'
 import { useBrandDict } from '@paktlabs/brand/i18n/useBrandDict'
 
@@ -27,6 +27,7 @@ import { LinkCard } from '@/components/study/LinkCard'
 import { services } from '@/content/services'
 import type { Block } from '@/content/studies/blocks'
 import { useDict } from '@/i18n'
+import { dataTagFromSlug, servicesPath, worksPath } from '@/routes/links'
 import { NotFound } from '@/routes/NotFound/NotFound'
 
 import styles from './Service.module.css'
@@ -73,7 +74,7 @@ function ServiceView({ tag }: { tag: DataTag }) {
   return (
     <Page title={`${title} · ${home.meta.title}`} description={service.lede[language]}>
       <Cover
-        crumb={{ href: '/#hizmetler', back: dict.back, current: sequenceNumber(dataTags.indexOf(tag)) }}
+        crumb={{ href: servicesPath, back: dict.back, current: sequenceNumber(dataTags.indexOf(tag)) }}
         tags={[dict.tag]}
         title={title}
         lede={service.lede[language]}
@@ -102,7 +103,7 @@ function ServiceView({ tag }: { tag: DataTag }) {
           <span className="eyebrow">{dict.closing.label}</span>
           <h2>{dict.closing.title}</h2>
           <nav className={styles.next} aria-label={dict.closing.nav}>
-            <LinkCard to={dataTagPath(tag)} {...dict.closing.works} />
+            <LinkCard to={worksPath(tag)} {...dict.closing.works} />
             <LinkCard href={contactPageUrl} {...dict.closing.contact} />
           </nav>
         </div>

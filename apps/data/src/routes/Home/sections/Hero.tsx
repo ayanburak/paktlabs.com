@@ -12,6 +12,7 @@ import layout from '@paktlabs/brand/styles/HeroLayout.module.css'
 import heroSvg from '@/assets/illustrations/hero.svg'
 import { lastPublished } from '@/content/lastPublished'
 import { useDict } from '@/i18n'
+import { worksAnchor } from '@/routes/links'
 
 import styles from './Hero.module.css'
 
@@ -46,7 +47,7 @@ export function Hero() {
             </dd>
           </div>
         </dl>
-        <a className={cx('cta primary rise', styles.cta)} href="#calismalar">
+        <a className={cx('cta primary rise', styles.cta)} href={`#${worksAnchor}`}>
           {home.hero.cta}
         </a>
       </div>

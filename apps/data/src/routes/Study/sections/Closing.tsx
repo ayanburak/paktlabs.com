@@ -21,6 +21,7 @@ import { ArtSlot } from '@/components/ArtSlot'
 import { studies } from '@/content/studies'
 import type { Study, StudyPage } from '@/content/studies/types'
 import { useDict } from '@/i18n'
+import { worksPath } from '@/routes/links'
 
 import styles from './Closing.module.css'
 
@@ -50,7 +51,7 @@ export function Closing({ study, closing }: ClosingProps) {
           <span className="eyebrow">{dict.closing.label}</span>
           <h2>{closing.title[language]}</h2>
           <nav className={styles.next} aria-label={dict.closing.nav}>
-            <a href="/#calismalar" className={styles.back}>
+            <a href={worksPath()} className={styles.back}>
               <span className={cx(styles.box, styles.head)}>
                 <span className="eyebrow">{dict.closing.all.label}</span>
                 <h3>{dict.closing.all.title}</h3>

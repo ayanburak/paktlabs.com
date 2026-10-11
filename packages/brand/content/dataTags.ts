@@ -1,6 +1,6 @@
 /*
 file: dataTags.ts
-importable: dataTags, DataTag, isDataTag, dataTagParam, dataTagPath, dataTagSlugs, dataTagFromSlug, dataServicePath, dataServiceUrl
+importable: dataTags, DataTag, dataTagSlugs, dataServicePath, dataServiceUrl
 
 Veri disiplininin calisma kategorileri ve sirasi. data sitesinin suzgeci ve
 kartlari ile landing'deki Veri bandi ayni listeyi kullanir. Kategorilerin
@@ -14,12 +14,7 @@ dataServicePath kullanilir, adresteki adi dataTagSlugs tutar:
 
     dataServiceUrl('machineLearning')  // https://data.paktlabs.com/services/machine-learning
 
-Hizmet sayfasi okuru o kategorideki calismalara dataTagPath ile gonderir, yol
-data'nin calismalar bolumunu o kategori secili olarak acar:
-
-    dataTagPath('quality')  // /?tag=quality#calismalar
-
-description: Veri calismalarinin kategori kimliklerini, sitelerde goruldukleri sirayi ve kategoriye giden adresi tutan modul.
+description: Veri calismalarinin kategori kimliklerini, sitelerde goruldukleri sirayi ve hizmet sayfalarinin adresini tutan modul.
 */
 
 import { disciplineUrls } from './disciplines'
@@ -40,24 +35,6 @@ export const dataTags = [
 
 export type DataTag = (typeof dataTags)[number]
 
-// Adresten gelen deger disaridan gelen bir metin, listede olmayan ya da
-// yanlis yazilmis bir deger burada elenir.
-export function isDataTag(value: string): value is DataTag {
-  return (dataTags as readonly string[]).includes(value)
-}
-
-// Adresteki anahtarin adi. Landing bu adla yazar, data bu adla okur, ikisi
-// ayri yerlerde yazilsaydi biri degisince baglantilar sessizce bozulurdu.
-export const dataTagParam = 'tag'
-
-// data sitesinin icinden calisma listesine o kategori secili olarak giden
-// yol, hizmet sayfasinin kapanisi kullanir. calismalar data'nin calisma
-// bolumunun kimligi, Works.tsx'te duruyor. Bolum adi orada degisirse buradaki
-// de degismeli, yoksa sayfa en ustten acilir ama suzgec yine secili gelir.
-export function dataTagPath(tag: DataTag): string {
-  return `/?${dataTagParam}=${tag}#calismalar`
-}
-
 // Hizmet sayfasinin adresindeki kategori adi. Kimlik kodda camelCase, adres
 // kucuk harf ve tireli yazilir. Record oldugu icin yeni bir kategori
 // eklendiginde adi yazilmazsa derleme hata verir. Adresler disaridan
@@ -72,14 +49,10 @@ export const dataTagSlugs: Record<DataTag, string> = {
   machineLearning: 'machine-learning',
 }
 
-// Adresteki addan kategoriyi bulur, data'nin hizmet sayfasi kullanir.
-// Bilinmeyen bir ad undefined doner, sayfa o zaman bulunamadi sayfasini gosterir.
-export function dataTagFromSlug(slug: string): DataTag | undefined {
-  return dataTags.find((tag) => dataTagSlugs[tag] === slug)
-}
-
 // data sitesinin icinden hizmet sayfasina giden yol. Landing tam adresi
-// disciplineUrls.data ile birlestirerek kurar.
+// disciplineUrls.data ile birlestirerek kurar. Yol data sitesinin panosunda, tam
+// adres landing sitesinde kullanilir, ikisi de adres semasinin parcasi oldugu icin
+// bu modulde kalir.
 export function dataServicePath(tag: DataTag): string {
   return `/services/${dataTagSlugs[tag]}`
 }

@@ -17,12 +17,13 @@ description: Veri sayfasindaki calisma listesini baslik satiri, suzgec ve altin 
 import { useId, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { dataTagParam, dataTags, isDataTag, type DataTag } from '@paktlabs/brand/content/dataTags'
+import { dataTags, type DataTag } from '@paktlabs/brand/content/dataTags'
 import { useReveal } from '@paktlabs/brand/hooks/useReveal'
 import { cx } from '@paktlabs/brand/lib/cx'
 
 import { studies } from '@/content/studies'
 import { useDict } from '@/i18n'
+import { isDataTag, tagParam, worksAnchor } from '@/routes/links'
 
 import { FilterPanel } from './FilterPanel'
 import { StudyCard } from './StudyCard'
@@ -34,8 +35,8 @@ const counts = Object.fromEntries(
   dataTags.map((tag) => [tag, studies.filter((study) => study.tags.includes(tag)).length]),
 ) as Record<DataTag, number>
 
-// Hero'daki dugme ve bulunamadi sayfasi #calismalar adresine gelir, kimlik
-// bu yuzden bolumun kendisinde durur ve okur baslik satirindan baslar.
+// Hero dugmesi ve geri donus baglantilari bu bolumun kimligine gelir,
+// kimlik links dosyasinda durur ve okur baslik satirindan baslar.
 // Secim Works'te tutulur, cunku hem basliktaki dugmeler hem panel hem de kart
 // izgarasi ayni secimi okur.
 //
@@ -50,7 +51,7 @@ export function Works() {
   const panelId = useId()
   const [params] = useSearchParams()
   const [linked] = useState(() => {
-    const tag = params.get(dataTagParam)
+    const tag = params.get(tagParam)
     return tag !== null && isDataTag(tag) ? tag : undefined
   })
   const [open, setOpen] = useState(linked !== undefined)
@@ -66,7 +67,7 @@ export function Works() {
   const shown = picked.size === 0 ? studies : studies.filter((study) => study.tags.some((tag) => picked.has(tag)))
 
   return (
-    <section id="calismalar" aria-labelledby="works-title">
+    <section id={worksAnchor} aria-labelledby="works-title">
       <div ref={head.ref} className={cx('reveal', head.visible && 'in', styles.head)}>
         <div>
           <span className="eyebrow">{home.works.eyebrow}</span>

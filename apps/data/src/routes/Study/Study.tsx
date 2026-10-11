@@ -18,6 +18,7 @@ import { DataLanguageProvider } from '@/components/study/DataLanguageProvider'
 import { StudyFilesContext } from '@/components/study/studyFiles'
 import { useStudyTags } from '@/components/useStudyTags'
 import { useDict } from '@/i18n'
+import { worksPath } from '@/routes/links'
 import { NotFound } from '@/routes/NotFound/NotFound'
 import { type StudyRoute, useStudyRoute } from '@/routes/studyLoader'
 
@@ -55,7 +56,7 @@ function StudyView({ study, page, files }: StudyRoute) {
       <DataLanguageProvider key={study.slug} original={study.dataLanguage}>
         <StudyFilesContext.Provider value={files}>
           <Cover
-            crumb={{ href: '/#calismalar', back: dict.cover.back, current: study.number }}
+            crumb={{ href: worksPath(), back: dict.cover.back, current: study.number }}
             tags={tags}
             title={title}
             lede={page.lede[language]}
