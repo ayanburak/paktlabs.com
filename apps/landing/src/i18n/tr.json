@@ -160,7 +160,8 @@
     },
     "invalid": {
       "required": "Bu alanı doldurun.",
-      "email": "Geçerli bir e-posta adresi yazın."
+      "email": "Geçerli bir e-posta adresi yazın.",
+      "tooLong": "Mesaj çok uzun, biraz kısaltıp yeniden deneyin."
     },
     "actions": {
       "next": "Devam",

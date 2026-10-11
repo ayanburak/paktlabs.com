@@ -27,9 +27,9 @@ import { useDict } from '@/i18n'
 
 import { ChoiceStep } from './ChoiceStep'
 import styles from './Contact.module.css'
-import { DetailsStep, type Details } from './DetailsStep'
-import { questions, type Answers } from './questions'
-import type { MessageSender } from './sender'
+import { DetailsStep } from './DetailsStep'
+import { isComplete, questions, type Answers, type Question } from './questions'
+import type { Details, MessageSender } from './sender'
 
 interface ContactProps {
   sender: MessageSender
@@ -94,12 +94,12 @@ export function Contact({ sender }: ContactProps) {
   const titleRef = useRef<HTMLHeadingElement>(null)
   const moved = useRef(false)
   const [step, setStep] = useState(0)
-  const [answers, setAnswers] = useState<Answers>({})
+  const [answers, setAnswers] = useState<Partial<Answers>>({})
   const [details, setDetails] = useState(emptyDetails)
   const [status, setStatus] = useState<Status>('editing')
 
   const total = questions.length + 1
-  const question = questions[step] as (typeof questions)[number] | undefined
+  const question: Question | undefined = questions[step]
   const sent = status === 'sent'
 
   useEffect(() => {
@@ -112,11 +112,12 @@ export function Contact({ sender }: ContactProps) {
   }
 
   // Son ekrana yalnizca butun sorular cevaplanarak gelinir, bu yuzden
-  // cevaplar burada eksiksizdir.
+  // koruyucu hep gecer.
   async function submit() {
+    if (!isComplete(answers)) return
     setStatus('sending')
     try {
-      await sender.send({ answers: answers as Required<Answers>, ...details, language })
+      await sender.send({ answers, ...details, language })
       moved.current = true
       setStatus('sent')
     } catch {

@@ -1,6 +1,6 @@
 /*
 file: questions.ts
-importable: questions, QuestionId, Answers
+importable: questions, Question, QuestionId, OptionId, Answers, isComplete
 
 Iletisim formunun secmeli sorulari ve siralari. Her soru bir ekran olur,
 secmeli sorulardan sonra son ekranda ad, e-posta ve kisa aciklama istenir.
@@ -20,7 +20,16 @@ export const questions = [
   { id: 'timing', options: ['days', 'month', 'months', 'flexible'] },
 ] as const
 
-export type QuestionId = (typeof questions)[number]['id']
+export type Question = (typeof questions)[number]
+export type QuestionId = Question['id']
+export type OptionId = Question['options'][number]
 
-// Ziyaretcinin o ana kadar sectigi cevaplar. Cevaplanmamis soru yoktur.
-export type Answers = Partial<Record<QuestionId, string>>
+// Her sorunun cevabi o sorunun seceneklerinden biridir. Gonderilen mesajdaki
+// cevaplar bu sekildedir, eksiksizdir.
+export type Answers = { [Q in Question as Q['id']]: Q['options'][number] }
+
+// Ziyaretci sorulari cevapladikca dolan hal. Son ekrana butun sorular
+// cevaplanmadan gelinmez, bu koruyucu derleyiciye bunu kanitlar.
+export function isComplete(answers: Partial<Answers>): answers is Answers {
+  return questions.every((question) => answers[question.id] !== undefined)
+}

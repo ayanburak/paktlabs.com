@@ -143,6 +143,42 @@ test('a failed send keeps the answers and offers the email address', async ({ pa
   await expect(page.getByRole('heading', { level: 2 })).toHaveText(t.details.title)
 })
 
+// Mesaj alanina maxLength verilmez, yapistirilan uzun metin sessizce kesilmesin.
+// Uzunluk servisteki gibi kod noktasi olarak sayilir, bu yuzden sinirdaki
+// emojili mesaj gider ve bir kod noktasi fazlasi gitmez.
+test('a message over the limit is warned about and not sent', async ({ page }) => {
+  const bodies = await fakeApi(page, 204)
+  await openContact(page, 'tr')
+  const t = step('tr')
+  await answer(page, ['Veri', 'Bir fikir', 'Acelesi yok'], new RegExp(t.actions.next))
+  const send = page.getByRole('button', { name: new RegExp(t.actions.send) })
+  await page.getByLabel(t.details.name).fill('Ayşe')
+  await page.getByLabel(t.details.email).fill('ayse@ornek.com')
+
+  await page.getByLabel(t.details.message).fill('a'.repeat(4001))
+  await send.click()
+  await expect(page.getByText(t.invalid.tooLong)).toBeVisible()
+  await expect(page.getByLabel(t.details.message)).toBeFocused()
+  expect(bodies).toEqual([])
+
+  await page.getByLabel(t.details.message).fill('😀'.repeat(4000))
+  await expect(page.getByText(t.invalid.tooLong)).toBeHidden()
+  await send.click()
+  await expect(page.getByRole('heading', { level: 2 })).toHaveText(t.sent.title)
+  expect(bodies).toHaveLength(1)
+})
+
+// Kisa alanlarda maxLength vardir, yapistirilan fazlalik kesilir.
+test('the name field stops at one hundred characters', async ({ page }) => {
+  await openContact(page, 'tr')
+  const t = step('tr')
+  await answer(page, ['Veri', 'Bir fikir', 'Acelesi yok'], new RegExp(t.actions.next))
+  const name = page.getByLabel(t.details.name)
+
+  await name.fill('a'.repeat(150))
+  await expect(name).toHaveValue('a'.repeat(100))
+})
+
 // Tuzak alan insan ziyaretciye gorunmez ve klavyeyle ona gelinmez.
 test('the trap field stays out of reach', async ({ page }) => {
   await openContact(page, 'tr')

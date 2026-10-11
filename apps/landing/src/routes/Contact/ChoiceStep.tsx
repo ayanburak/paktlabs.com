@@ -15,24 +15,31 @@ import { useId, type CSSProperties } from 'react'
 import { useDict } from '@/i18n'
 
 import styles from './ChoiceStep.module.css'
-import { questions } from './questions'
+import type { OptionId, Question } from './questions'
 import { StepNav } from './StepNav'
 
 interface ChoiceStepProps {
-  question: (typeof questions)[number]
+  question: Question
   titleId: string
-  value?: string
-  onChange: (value: string) => void
+  value?: OptionId
+  onChange: (value: OptionId) => void
   onNext: () => void
   onBack?: () => void
 }
+
+type OptionText = { label: string; hint: string }
+type OptionTexts = { [Q in Question as Q['id']]: { options: Record<Q['options'][number], OptionText> } }
 
 // Ekran okuyucu icin secenegin adi yalnizca etiketidir, kisa aciklama
 // ayrica aciklama olarak okunur.
 export function ChoiceStep({ question, titleId, value, onChange, onNext, onBack }: ChoiceStepProps) {
   const { contactPage: dict } = useDict()
   const id = useId()
-  const texts = dict.questions[question.id].options as Record<string, { label: string; hint: string }>
+  // Sozluk her sorunun her secenegi icin metin tasimiyorsa ilk atama derleme
+  // hatasi verir. Ikinci atama yalnizca tipi genisletir, bu soruya ait
+  // secenekleri hepsinin ortak anahtariyla indekslemeye yarar.
+  const all: OptionTexts = dict.questions
+  const texts: Record<string, OptionText> = all[question.id].options
 
   return (
     <form

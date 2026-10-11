@@ -1,6 +1,6 @@
 /*
 file: DetailsStep.tsx
-importable: DetailsStep, Details
+importable: DetailsStep
 
 Formun son ekrani: ad, e-posta, istege bagli sirket ve kisa aciklama. Alanlar
 Gonder'e basilinca denetlenir, eksik ya da hatali alanin altinda iki dilli
@@ -18,19 +18,12 @@ import { contactEmail } from '@paktlabs/brand/content/contact'
 import { useDict } from '@/i18n'
 
 import styles from './DetailsStep.module.css'
+import { limits } from './limits'
+import type { Details } from './sender'
 import { StepNav } from './StepNav'
 
-// website formda gorunmeyen tuzak alandir, ayrintisi asagida.
-export interface Details {
-  name: string
-  email: string
-  company: string
-  message: string
-  website: string
-}
-
 type Field = keyof Details
-type Problem = 'required' | 'email'
+type Problem = 'required' | 'email' | 'tooLong'
 
 interface DetailsStepProps {
   details: Details
@@ -45,12 +38,18 @@ interface DetailsStepProps {
 // Adresin gercekten var olup olmadigini yalnizca gonderilen e-posta soyler.
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+// Mesajin uzunlugu servisle ayni olculur. Servis once bastaki ve sondaki
+// bosluklari kirpar, sonra Unicode kod noktasi sayar. Spread kod noktasi
+// sayar, length ise UTF-16 birimi sayar ve emojide iki cikar. Mesaj alanina
+// maxLength verilmez, uzun bir metni yapistiran ziyaretcinin metni sessizce
+// kesilirdi, uyari cikar ve ziyaretci kendisi kisaltir.
 function check(details: Details): Partial<Record<Field, Problem>> {
   const problems: Partial<Record<Field, Problem>> = {}
   if (!details.name.trim()) problems.name = 'required'
   if (!details.email.trim()) problems.email = 'required'
   else if (!emailPattern.test(details.email.trim())) problems.email = 'email'
   if (!details.message.trim()) problems.message = 'required'
+  else if ([...details.message.trim()].length > limits.message) problems.message = 'tooLong'
   return problems
 }
 
@@ -100,19 +99,19 @@ export function DetailsStep({ details, sending, failed, onChange, onSubmit, onBa
       <div className={styles.grid}>
         <div className={styles.field}>
           <label htmlFor={`${id}-name`}>{dict.details.name}</label>
-          <input type="text" autoComplete="name" {...field('name')} />
+          <input type="text" autoComplete="name" maxLength={limits.name} {...field('name')} />
           {problem('name')}
         </div>
         <div className={styles.field}>
           <label htmlFor={`${id}-email`}>{dict.details.email}</label>
-          <input type="email" autoComplete="email" {...field('email')} />
+          <input type="email" autoComplete="email" maxLength={limits.email} {...field('email')} />
           {problem('email')}
         </div>
         <div className={styles.field}>
           <label htmlFor={`${id}-company`}>
             {dict.details.company} <span className={styles.optional}>· {dict.details.optional}</span>
           </label>
-          <input type="text" autoComplete="organization" {...field('company')} />
+          <input type="text" autoComplete="organization" maxLength={limits.company} {...field('company')} />
         </div>
         <div className={`${styles.field} ${styles.wide}`}>
           <label htmlFor={`${id}-message`}>{dict.details.message}</label>

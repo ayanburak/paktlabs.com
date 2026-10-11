@@ -2,9 +2,10 @@
 file: test_contract.py
 
 Formun gonderdigi secimlerle servisin kabul ettigi secimlerin ayni kaldigini
-denetler. Secimler landing'de questions.ts'te, serviste schema.py'de durur,
-iki dil farkli oldugu icin ortak tek bir dosya yok. Birine eklenen bir
-secenek otekine eklenmezse bu test kirilir.
+denetler. Secimler landing'de questions.ts'te, metin uzunluk sinirlari
+limits.ts'te, serviste ikisi de schema.py'de durur, iki dil farkli oldugu icin
+ortak tek bir dosya yok. Birine eklenen bir secenek ya da degisen bir sinir
+otekinde yoksa bu test kirilir.
 
 description: Landing'deki form secimleriyle servisin secimlerini karsilastiran test.
 """
@@ -13,9 +14,13 @@ import re
 from pathlib import Path
 from typing import get_args
 
-from app.schema import Area, Stage, Timing
+from annotated_types import MaxLen
 
-QUESTIONS = Path(__file__).resolve().parents[3] / "apps/landing/src/routes/Contact/questions.ts"
+from app.schema import Area, ContactIn, Stage, Timing
+
+CONTACT = Path(__file__).resolve().parents[3] / "apps/landing/src/routes/Contact"
+QUESTIONS = CONTACT / "questions.ts"
+LIMITS = CONTACT / "limits.ts"
 
 
 # questions.ts'teki her satir { id: 'area', options: [...] } biciminde.
@@ -33,3 +38,18 @@ def test_choices_match_the_form() -> None:
         "stage": list(get_args(Stage)),
         "timing": list(get_args(Timing)),
     }
+
+
+# limits.ts'teki her satir name: 100, biciminde. Bicim degisirse okuma
+# bos doner ve test sinir bulunamadi diye kirilir.
+def read_limits() -> dict[str, int]:
+    text = LIMITS.read_text(encoding="utf-8")
+    return {name: int(value) for name, value in re.findall(r"^\s+(\w+): (\d+),$", text, re.MULTILINE)}
+
+
+def test_limits_match_the_form() -> None:
+    limits = read_limits()
+    assert set(limits) == {"name", "email", "company", "message"}
+    for name, expected in limits.items():
+        (max_len,) = [m for m in ContactIn.model_fields[name].metadata if isinstance(m, MaxLen)]
+        assert max_len.max_length == expected, name
