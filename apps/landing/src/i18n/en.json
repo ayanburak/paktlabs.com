@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "PaktLabs",
-    "description": "PaktLabs is an independent software studio. We build web applications, workflow automation and data work by hand, tailored to you."
+    "description": "PaktLabs is a software team delivering web applications, workflow automation and data solutions tailored to you."
   },
   "hero": {
     "lines": ["Locate", "Automate", "Migrate"],
@@ -19,15 +19,15 @@
     "items": {
       "data": {
         "title": "Data",
-        "desc": "We collect scattered records, clean them, and freeze their definitions in writing. Output: one trusted report and orderly data."
+        "desc": "We prepare records, build databases, analyse the data and build machine learning models when the work needs them."
       },
       "automation": {
         "title": "Automation",
-        "desc": "The repetitive work you do by hand every day — reports, syncing, moving files — becomes a workflow that just runs."
+        "desc": "We build applications that run your work on their own, and complete systems that are ready to use."
       },
       "web": {
         "title": "Web",
-        "desc": "From landing pages to full applications, we build the design and the frontend by hand, never a template. Behind it, only as much service as the job needs."
+        "desc": "From a company website to a full application, we design and code it from scratch around your business."
       }
     }
   },
@@ -39,7 +39,7 @@
       "data": {
         "index": "01 / 03",
         "title": "Data",
-        "desc": "We collect scattered records, clean them, and freeze their definitions in writing. Output: one trusted report and an orderly data set.",
+        "desc": "Every data project starts from the question. We prepare the records around it and deliver a result that can be measured.",
         "list": [
           "Cleaning and merging",
           "Data auditing",
@@ -52,26 +52,26 @@
       "automation": {
         "index": "02 / 03",
         "title": "Automation",
-        "desc": "The repetitive work you do by hand every day — reports, syncing, moving files — becomes a workflow that just runs.",
+        "desc": "We turn a manual process into a system that runs it from start to finish. What we deliver is a ready-to-use application.",
         "list": [
-          "Scheduled jobs",
-          "System integration",
-          "Scraping and data collection",
-          "n8n / workflow setup",
-          "Reporting and notifications",
-          "File and document processing"
+          "Admin panels",
+          "Order and stock tracking systems",
+          "Connecting systems",
+          "Document and file processing systems",
+          "Approval and notification flows",
+          "Scheduled jobs that run on their own"
         ]
       },
       "web": {
         "index": "03 / 03",
         "title": "Web",
-        "desc": "From landing pages to full applications, we build the design and the frontend by hand, not a template. Behind it, only as much service as the job needs.",
+        "desc": "We build the design and the interface by hand, around your business. Behind it, only as many services as it needs.",
         "list": [
           "Site design and build",
           "Payments and e-commerce",
-          "Content and form backends",
-          "Multi-language and SEO",
-          "Self-hosted tool setup",
+          "Content management and forms",
+          "Multilingual sites and search visibility",
+          "Tools installed on your own server",
           "Launch and maintenance"
         ]
       }

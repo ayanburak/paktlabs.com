@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "PaktLabs",
-    "description": "PaktLabs bağımsız bir yazılım stüdyosu. Web uygulamaları, iş akışı otomasyonu ve veri işlerini size özel, elle kuruyoruz."
+    "description": "PaktLabs; web uygulamaları, iş akışı otomasyonları ve veri çözümlerini size özel sunan bir yazılım ekibi."
   },
   "hero": {
     "lines": ["Keşfet", "Hızlandır", "Yayınla"],
@@ -19,15 +19,15 @@
     "items": {
       "data": {
         "title": "Veri",
-        "desc": "Dağınık kayıtları toplar, temizler, tanımları yazılı olarak dondururuz. Çıktı güvenilen tek rapor ve düzenli veri."
+        "desc": "Kayıtları hazırlar, veritabanını kurar, veriyi analiz eder ve gerektiğinde makine öğrenmesi modelleri geliştiririz."
       },
       "automation": {
         "title": "Otomasyon",
-        "desc": "Her gün elle yapılan tekrar işleri — rapor, eşitleme, dosya taşıma — güvenilir çalışan bir akışa çeviririz."
+        "desc": "İşinizi kendi başına yürüten uygulamalar ve baştan sona kurulmuş, kullanıma hazır sistemler geliştiririz."
       },
       "web": {
         "title": "Web",
-        "desc": "Landing'den tam uygulamaya, tasarımı ve önyüzü elle kurarız — hazır şablon değil. Arkasında yalnızca ihtiyaç kadar servis."
+        "desc": "Tanıtım sitesinden kapsamlı bir uygulamaya kadar tasarımı ve kodu işinize göre baştan yazarız."
       }
     }
   },
@@ -39,7 +39,7 @@
       "data": {
         "index": "01 / 03",
         "title": "Veri",
-        "desc": "Dağınık kayıtları toplar, temizler, tanımları yazılı olarak dondururuz. Çıktı: güvenilen tek rapor ve düzenli bir veri seti.",
+        "desc": "Bir veri işine önce sorudan başlarız. Kayıtları o soruya göre hazırlar, sonucu ölçülebilir biçimde teslim ederiz.",
         "list": [
           "Temizleme ve birleştirme",
           "Veri denetimi",
@@ -52,26 +52,26 @@
       "automation": {
         "index": "02 / 03",
         "title": "Otomasyon",
-        "desc": "Her gün elle yapılan tekrar işleri — rapor, eşitleme, dosya taşıma — güvenilir çalışan bir akışa çeviririz.",
+        "desc": "Elle yürüyen bir süreci baştan sona yöneten bir sisteme çeviririz. Teslim ettiğimiz şey kullanıma hazır bir uygulamadır.",
         "list": [
-          "Zamanlanmış işler",
-          "Sistem entegrasyonu",
-          "Scraping ve veri toplama",
-          "n8n / workflow kurulumu",
-          "Rapor ve bildirim",
-          "Dosya ve belge işleme"
+          "Yönetim panelleri",
+          "Sipariş ve stok takip sistemleri",
+          "Sistemler arası bağlantı",
+          "Belge ve dosya işleme sistemleri",
+          "Onay ve bildirim akışları",
+          "Kendiliğinden çalışan zamanlanmış işler"
         ]
       },
       "web": {
         "index": "03 / 03",
         "title": "Web",
-        "desc": "Landing'den tam uygulamaya; tasarımı ve önyüzü elle kurarız, hazır şablon değil. Arkasında yalnızca ihtiyaç kadar servis.",
+        "desc": "Tasarımı ve arayüzü elle, işinize göre kurarız. Arkasında yalnızca gereken kadar servis çalışır.",
         "list": [
           "Site tasarımı ve yapımı",
           "Ödeme ve e-ticaret",
-          "İçerik ve form backend'i",
-          "Çok dil ve SEO",
-          "Self-hosted araç kurulumu",
+          "İçerik yönetimi ve formlar",
+          "Çok dilli siteler ve arama görünürlüğü",
+          "Kendi sunucunuza araç kurulumu",
           "Yayına alma ve bakım"
         ]
       }
