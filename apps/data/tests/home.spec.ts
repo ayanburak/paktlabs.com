@@ -13,6 +13,7 @@ description: Veri sayfasinin hero, teknoloji seridi, calisma listesi ve iletisim
 
 import { expect, test } from '@playwright/test'
 
+import { lastPublished } from '../src/content/lastPublished'
 import { studies } from '../src/content/studies'
 import { techNames } from '../src/content/techNames'
 
@@ -24,8 +25,12 @@ for (const lang of languages) {
 
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(dict[lang].home.hero.title)
     await expect(page.getByRole('link', { name: dict[lang].home.hero.cta })).toHaveAttribute('href', '#calismalar')
-    const counts = page.locator('section').first().locator('dl dd')
-    await expect(counts).toHaveText(dict[lang].home.hero.counts.map((count) => count.value))
+    // son yayin tarihi gun, ay, yil sirasiyla gorunur, time etiketi tarihi makine icin tasir
+    const [year, month, day] = lastPublished.split('-')
+    const latest = page.locator('section').first().locator('dl')
+    await expect(latest.locator('dt')).toHaveText(dict[lang].home.hero.latest)
+    await expect(latest.locator('time')).toHaveAttribute('datetime', lastPublished)
+    await expect(latest.locator('time')).toHaveText(`${day} / ${month} / ${year}`)
   })
 }
 
@@ -141,6 +146,30 @@ test.describe('work filter', () => {
     await page.getByRole('button', { name: dict.tr.home.works.filter.all }).click()
     await expectCount([])
     await expect(page.getByRole('button', { name: tags.database })).toHaveAttribute('aria-pressed', 'false')
+  })
+
+  // Calismasi olmayan bir etikette izgara bosalir ve yerine uyari cikar. Uyari
+  // durum alaninin icinde oldugu icin ekran okuyucu onu kendiliginden okur.
+  // Etiketler listeden secilir, icerik degisince test kendiliginden uyar.
+  test('an empty selection shows a notice instead of an empty band', async ({ page }) => {
+    const tags = dict.tr.home.works.tags
+    const used = new Set(studies.flatMap((study) => study.tags))
+    const empty = (Object.keys(tags) as (keyof typeof tags)[]).find((tag) => !used.has(tag))
+    test.skip(!empty, 'her etiketin en az bir calismasi var')
+    const full = studies[0].tags[0]
+    const status = page.locator('#calismalar [role="status"]')
+
+    await openPage(page, '/', 'tr')
+    await expect(status).toBeEmpty()
+    await page.getByRole('button', { name: dict.tr.home.works.filter.toggle }).click()
+
+    await page.getByRole('button', { name: tags[empty!] }).click()
+    await expect(page.locator('#calismalar a')).toHaveCount(0)
+    await expect(status).toHaveText(dict.tr.home.works.filter.empty)
+
+    await page.getByRole('button', { name: tags[full] }).click()
+    await expect(status).toBeEmpty()
+    await expect(page.locator('#calismalar a').first()).toBeVisible()
   })
 })
 

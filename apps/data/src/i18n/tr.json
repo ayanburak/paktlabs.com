@@ -2,25 +2,12 @@
   "home": {
     "meta": {
       "title": "Veri · PaktLabs",
-      "description": "PaktLabs'ın veri çalışmaları. Dağınık kayıtları nasıl temizleyip birleştirdiğimizi ve sonuçlarını tamamlanmış işler üzerinden anlatıyoruz."
+      "description": "PaktLabs'ın tamamladığı veri çalışmaları ve her birinin geliştirici notları."
     },
     "hero": {
       "title": "Veri",
-      "lead": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "counts": [
-        {
-          "value": "07",
-          "label": "Lorem"
-        },
-        {
-          "value": "03",
-          "label": "Ipsum"
-        },
-        {
-          "value": "2026",
-          "label": "Dolor"
-        }
-      ],
+      "lead": "Tamamladığımız veri çalışmalarını, her birinin nasıl yapıldığını anlatan geliştirici notlarıyla birlikte yayınlıyoruz.",
+      "latest": "Son yayınlanan çalışma",
       "cta": "Çalışmalara git ↓"
     },
     "stack": {
@@ -28,7 +15,7 @@
     },
     "works": {
       "eyebrow": "Çalışmalar",
-      "title": "Tamamladığımız veri çalışmaları ve her birinin geliştirici notları",
+      "title": "Tamamlanan İşler",
       "featured": "Öne çıkan",
       "go": "Çalışmayı incele →",
       "details": "Teknik detaylar",
@@ -44,7 +31,8 @@
       "filter": {
         "all": "Tümü",
         "toggle": "Filtrele",
-        "tagsLabel": "Çalışma etiketleri"
+        "tagsLabel": "Çalışma etiketleri",
+        "empty": "Bu alanda yayınlanmış çalışma henüz yok, filtreleme ayarlarını değiştirmeyi deneyin."
       }
     }
   },

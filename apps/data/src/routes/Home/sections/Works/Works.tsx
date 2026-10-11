@@ -5,6 +5,7 @@ importable: Works
 Calisma listesi ve suzgeci. Filtrele dugmesi etiket panelini acar, birden
 fazla etiket secilebilir. Secili etiketlerden herhangi birini tasiyan calisma
 gorunur, hic etiket secili degilse hepsi gorunur. Tumu secimi sifirlar.
+Secimde hic calisma kalmazsa izgaranin yerine kisa bir uyari cikar.
 
 description: Veri sayfasindaki calisma listesini baslik satiri, suzgec ve altin bant icindeki kartlarla gosteren bolum.
 */
@@ -81,6 +82,13 @@ export function Works() {
           {shown.map((study) => (
             <StudyCard key={study.slug} study={study} />
           ))}
+        </div>
+        {/* Secili etiketlerde calisma yoksa izgara bos kalir, yerine kisa bir
+            uyari cikar. Durum alani her zaman DOM'da durur, ekran okuyucu
+            yalnizca var olan bir alanin icerigi degisince okur. Ikinci bir
+            dugme yok, basliktaki Tumu secimi zaten sifirliyor. */}
+        <div role="status" className={styles.status}>
+          {shown.length === 0 && <p className={styles.empty}>{home.works.filter.empty}</p>}
         </div>
       </div>
     </section>

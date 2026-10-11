@@ -24,7 +24,8 @@
   color: var(--muted);
 }
 
-/* uc kisa olcu, ustlerinde kalin bir cizgiyle aciklamadan ayrilir */
+/* son yayin tarihi, ustunde kalin bir cizgiyle aciklamadan ayrilir. Gun, ay
+   ve yil aralarinda soluk egik cizgilerle tek satir durur, etiket ustte */
 .counts {
   --rise-delay: 0.36s;
   display: flex;
@@ -40,7 +41,6 @@
   gap: 6px;
 }
 .counts dt {
-  order: 2;
   font: 700 11px/1 var(--font-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -50,6 +50,10 @@
   margin: 0;
   font: 700 28px/1 var(--font-display);
   letter-spacing: -0.03em;
+}
+.counts .sep {
+  color: var(--faint);
+  font-weight: 500;
 }
 
 /* dugme landing'deki gibi yukselmez, yalnizca belirir. Metin blogu dikey

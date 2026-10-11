@@ -2,25 +2,12 @@
   "home": {
     "meta": {
       "title": "Data · PaktLabs",
-      "description": "PaktLabs data work. How we clean and merge scattered records, and what came out of it, shown through finished projects."
+      "description": "Data studies completed by PaktLabs, each with its developer notes."
     },
     "hero": {
       "title": "Data",
-      "lead": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "counts": [
-        {
-          "value": "07",
-          "label": "Lorem"
-        },
-        {
-          "value": "03",
-          "label": "Ipsum"
-        },
-        {
-          "value": "2026",
-          "label": "Dolor"
-        }
-      ],
+      "lead": "We publish the data studies we have completed, each with developer notes on how it was done.",
+      "latest": "Latest published study",
       "cta": "Go to the work ↓"
     },
     "stack": {
@@ -28,7 +15,7 @@
     },
     "works": {
       "eyebrow": "Work",
-      "title": "Data studies we have completed, each with its developer notes",
+      "title": "Completed Work",
       "featured": "Featured",
       "go": "Read the study →",
       "details": "Technical details",
@@ -44,7 +31,8 @@
       "filter": {
         "all": "All",
         "toggle": "Filter",
-        "tagsLabel": "Study tags"
+        "tagsLabel": "Study tags",
+        "empty": "There are no published studies in this area yet, try changing the filter."
       }
     }
   },
