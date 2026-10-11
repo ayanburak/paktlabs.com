@@ -11,6 +11,16 @@ description: Rotalari saran ve sayfa gecislerinde kaydirma konumunu yoneten cerc
 import { useEffect } from 'react'
 import { Outlet, ScrollRestoration } from 'react-router-dom'
 
+// Bozuk yuzde kodlu bir adres (ornegin /#%) cozulemez, ham deger kullanilir.
+function readHashId() {
+  const raw = window.location.hash.slice(1)
+  try {
+    return decodeURIComponent(raw)
+  } catch {
+    return raw
+  }
+}
+
 // Okurun kendisinin kaydirmaya basladigini gosteren olaylar. scroll bunlardan
 // biri degil, cunku hizalamanin kendisi de scroll olayi uretir.
 const USER_EVENTS = ['wheel', 'touchstart', 'pointerdown', 'keydown'] as const
@@ -25,7 +35,7 @@ const USER_EVENTS = ['wheel', 'touchstart', 'pointerdown', 'keydown'] as const
 // sonraki gecislerde fontlar zaten yuklu.
 function useHashAfterFonts() {
   useEffect(() => {
-    const id = decodeURIComponent(window.location.hash.slice(1))
+    const id = readHashId()
     if (!id) return
     const align = () => document.getElementById(id)?.scrollIntoView({ behavior: 'instant' })
     const stop = () => {

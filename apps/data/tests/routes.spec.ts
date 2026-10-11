@@ -28,6 +28,14 @@ for (const lang of languages) {
   })
 }
 
+// Cozulemeyen yuzde kodlu bir bolum adresi sayfayi dusurmemeli.
+test('a malformed hash still opens the page', async ({ page }) => {
+  await openPage(page, '/#%', 'tr')
+
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(dict.tr.home.hero.title)
+  await expect(page.getByText(dict.tr.notFound.title)).toHaveCount(0)
+})
+
 // Geri don dugmesi sitenin icinden gelen ziyaretciyi geldigi sayfaya,
 // adresi dogrudan acan ziyaretciyi ana sayfaya goturur.
 test('back button returns to the previous page of the site', async ({ page }) => {

@@ -9,10 +9,21 @@
   color: var(--on-ink);
   background: var(--ink);
   border: 2px solid var(--ink);
-  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+/* kutu brand paketindeki reveal sinifiyla belirir, reveal gecisleri yalnizca
+   opacity ve transform icindir. Kalkis transform yerine translate ile yapilir
+   ki belirme onu ezmesin. Iki sinifli secici reveal gecis listesini ezdigi
+   icin liste burada kalkis ve golgeyle birlikte yeniden yazilir */
+.author:global(.reveal) {
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease,
+    translate 0.16s ease,
+    box-shadow 0.16s ease;
 }
 .author:hover {
-  transform: translateY(-3px);
+  translate: 0 -3px;
   box-shadow: 0 3px 0 var(--gold);
 }
 .author :global(.eyebrow) {
