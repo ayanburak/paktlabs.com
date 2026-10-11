@@ -15,7 +15,7 @@ description: Onayli TR ve EN gorunumun dort ekran olcusunde piksel karsilastirma
 
 import { expect, test } from '@playwright/test'
 
-import { languages, openHome } from './support'
+import { languages, openContact, openHome } from './support'
 
 const sizes = [
   [390, 844],
@@ -33,6 +33,22 @@ test.describe('full page @visual', () => {
         await page.setViewportSize({ width, height })
         await openHome(page, lang)
         await expect(page).toHaveScreenshot(`${lang}-${width}x${height}.png`, { fullPage: true })
+      })
+    }
+  }
+})
+
+// Iletisim sayfasinin ilk ekrani. Sonraki adimlar ayni kutulari ve ayni
+// cizim kalibini kullanir, davranislari contact.spec.ts'te olculur.
+test.describe('contact page @visual', () => {
+  test.use({ reducedMotion: 'reduce' })
+
+  for (const lang of languages) {
+    for (const [width, height] of sizes) {
+      test(`${lang} ${width}x${height}`, async ({ page }) => {
+        await page.setViewportSize({ width, height })
+        await openContact(page, lang)
+        await expect(page).toHaveScreenshot(`contact-${lang}-${width}x${height}.png`, { fullPage: true })
       })
     }
   }

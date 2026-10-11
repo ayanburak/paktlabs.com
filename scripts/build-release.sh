@@ -7,10 +7,14 @@
 # Uygulama scripts/apps.sh'taki adlardan biridir. Commit verilmezse HEAD
 # kullanilir. Cikti release/<onek>-<zaman>-<commit>.tar.gz olur.
 #
-# Paketin icinde:
+# Bir sitenin paketinde:
 #   <ad>/site/        nginx'in sunacagi dosyalar ve hazir .gz kopyalari
 #   <ad>/SHA256SUMS   site altindaki her dosyanin ozeti, sunucuda dogrulama icin
 #   <ad>/RELEASE      kaynak commit ve paketleme zamani
+#
+# Bir servisin paketinde site yerine service/ durur: servisin kodu ve
+# requirements.txt. Testler ve kurulum dosyalari pakete girmez. Sanal ortam
+# pakette yoktur, sunucuda deploy-release.sh kurar.
 set -euo pipefail
 
 source "$(dirname "$0")/apps.sh"
@@ -22,6 +26,24 @@ commit=$(git -C "$repo" rev-parse --verify "${2:-HEAD}^{commit}")
 name="$prefix-$(date -u +%Y%m%d-%H%M%S)-${commit:0:7}"
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
+
+# Paket klasorunun ozetlerini ve kaynagini yazip arsivler. Site ve servis ayni
+# sekilde paketlenir, yalnizca klasorun adi farklidir.
+pack() {
+  (cd "$work/$name/$1" && find . -type f -print0 | sort -z | xargs -0 sha256sum) > "$work/$name/SHA256SUMS"
+  printf 'commit %s\npackaged %s\n' "$commit" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$work/$name/RELEASE"
+  mkdir -p "$repo/release"
+  tar -C "$work" -czf "$repo/release/$name.tar.gz" "$name"
+  echo "$repo/release/$name.tar.gz"
+}
+
+if [ "$kind" = service ]; then
+  mkdir -p "$work/$name/service"
+  git -C "$repo" archive "$commit" "$source/app" "$source/requirements.txt" | tar -x -C "$work"
+  cp -a "$work/$source/app" "$work/$source/requirements.txt" "$work/$name/service/"
+  pack service
+  exit 0
+fi
 
 # bagimliliklar workspaces kokunde kilitli ve kilit dosyasi butun uygulamalari
 # listeler. npm ci kilitle klasorler uyussun diye butun apps klasoru arsive girer,
@@ -40,9 +62,4 @@ find "$work/$name/site" -type f \( -name '*.html' -o -name '*.js' -o -name '*.cs
   -o -name '*.csv' -o -name '*.py' -o -name '*.sql' -o -name '*.txt' \) \
   -exec gzip -9 -n -k {} \;
 
-(cd "$work/$name/site" && find . -type f -print0 | sort -z | xargs -0 sha256sum) > "$work/$name/SHA256SUMS"
-printf 'commit %s\npackaged %s\n' "$commit" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$work/$name/RELEASE"
-
-mkdir -p "$repo/release"
-tar -C "$work" -czf "$repo/release/$name.tar.gz" "$name"
-echo "$repo/release/$name.tar.gz"
+pack site

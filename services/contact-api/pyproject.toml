@@ -1,0 +1,4 @@
+# Yalnizca pytest ayari. Servis paket olarak kurulmaz, klasorden calisir.
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

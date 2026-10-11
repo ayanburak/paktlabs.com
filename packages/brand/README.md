@@ -85,7 +85,7 @@ Geri dön düğmesi ziyaretçiyi aynı sitede geldiği sayfaya götürür. Ziyar
 
 ### İletişim bölümü
 
-Bütün sitelerin ana sayfası `components/Contact.tsx` ile kapanır. Bölüm prop almaz, metinleri ortak sözlükte `contact` altında, adresleri `content/contact.ts` içinde durur, bu yüzden her sitede birebir aynı görünür. Bölümde form yoktur. Tek düğme ziyaretçiyi ana sitenin iletişim sayfasına götürür, doğrudan yazmak isteyen için altında e-posta adresi durur. İletişim sayfası yalnızca ana sitede olacağı için adresi tam adres olarak yazılır, disiplin sitelerinden de ana siteye gider. Üst bardaki İletişim bağlantısı da aynı adresi kullanır. Telefon çizimi masaüstünde gösterilir, dar ekranda hiç indirilmez. Bölüm üst çizgisini kendisi çizer, bu yüzden hemen üstündeki bölüm alt çizgi çizmez.
+Bütün sitelerin ana sayfası `components/Contact.tsx` ile kapanır. Bölüm prop almaz, metinleri ortak sözlükte `contact` altında, adresleri `content/contact.ts` içinde durur, bu yüzden her sitede birebir aynı görünür. Bölümde form yoktur. Tek düğme ziyaretçiyi ana sitenin iletişim sayfasına götürür, form o sayfadadır, doğrudan yazmak isteyen için altında e-posta adresi durur. İletişim sayfası yalnızca ana sitede olduğu için adresi tam adres olarak yazılır, disiplin sitelerinden de ana siteye gider. Üst bardaki İletişim bağlantısı da aynı adresi kullanır. Telefon çizimi masaüstünde gösterilir, dar ekranda hiç indirilmez. Bölüm üst çizgisini kendisi çizer, bu yüzden hemen üstündeki bölüm alt çizgi çizmez.
 
 ## Değişiklik yaparken
 

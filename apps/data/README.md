@@ -188,7 +188,7 @@ Testler landing'deki gibi üretim derlemesine karşı çalışır. Üst bar ve a
 
 ### İletişim
 
-Bu sitenin kendine ait bir backend'i ve iletişim formu yoktur. İletişim bölümü ve üst bardaki İletişim bağlantısı ziyaretçiyi ana sitenin iletişim sayfasına götürür. Bu sayfa gerektiğinde bütün PaktLabs sitelerinin paylaşacağı tek yerdir, bir siteye özel iletişim sayfası ya da servisi yazılmaz.
+Bu sitenin kendine ait bir backend'i ve iletişim formu yoktur. İletişim bölümü ve üst bardaki İletişim bağlantısı ziyaretçiyi ana sitenin iletişim sayfasına götürür, form ve onu alan servis oradadır. Bu sayfa bütün PaktLabs sitelerinin paylaştığı tek yerdir, bir siteye özel iletişim sayfası ya da servisi yazılmaz.
 
 Veri işlerini gösteren çalışan bir uygulama bu repoya girmez. Uygulama kendi reposunda yazılır, sunucuda kendi servisi olarak çalışır ve bu siteden yalnızca bağlantıyla açılır.
 

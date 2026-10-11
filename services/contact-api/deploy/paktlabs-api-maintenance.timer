@@ -1,0 +1,12 @@
+# /etc/systemd/system/paktlabs-api-maintenance.timer
+# Her gece 03:30'da, sunucu o saatte kapaliysa acildiginda bir kez.
+
+[Unit]
+Description=PaktLabs iletisim servisi gece bakimi zamanlayicisi
+
+[Timer]
+OnCalendar=*-*-* 03:30:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

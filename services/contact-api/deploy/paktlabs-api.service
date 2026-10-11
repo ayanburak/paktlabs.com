@@ -1,0 +1,32 @@
+# /etc/systemd/system/paktlabs-api.service
+# Iletisim servisi. Yalnizca 127.0.0.1:8001'i dinler, disaridan nginx'in
+# /api/contact bolumu uzerinden ulasilir. Kod /opt/paktlabs-api/current'tan,
+# ayarlar ve e-posta sifresi /opt/paktlabs-api/.env'den gelir. Servis
+# yalnizca data klasorune yazabilir, gerisi salt okunur.
+
+[Unit]
+Description=PaktLabs iletisim servisi
+After=network.target
+
+[Service]
+User=paktlabs-api
+Group=paktlabs-api
+WorkingDirectory=/opt/paktlabs-api/current
+EnvironmentFile=/opt/paktlabs-api/.env
+ExecStart=/opt/paktlabs-api/current/.venv/bin/uvicorn app.main:create_app --factory --host 127.0.0.1 --port 8001 --no-server-header
+Restart=on-failure
+RestartSec=3
+
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+ReadWritePaths=/opt/paktlabs-api/data
+
+[Install]
+WantedBy=multi-user.target

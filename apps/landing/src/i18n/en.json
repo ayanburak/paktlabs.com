@@ -68,5 +68,111 @@
         ]
       }
     }
+  },
+  "contactPage": {
+    "meta": {
+      "title": "Contact · PaktLabs",
+      "description": "Tell us about your project in four short questions and we'll get back to you."
+    },
+    "eyebrow": "Contact",
+    "title": "Tell us about it",
+    "lead": "Four short questions. Your answers help us understand the work before our first call.",
+    "step": "Step",
+    "questions": {
+      "area": {
+        "short": "Area",
+        "title": "What area is the work in?",
+        "options": {
+          "data": {
+            "label": "Data",
+            "hint": "Cleaning, analysis, reporting"
+          },
+          "automation": {
+            "label": "Automation",
+            "hint": "Turning manual work into a system"
+          },
+          "web": {
+            "label": "Web",
+            "hint": "A site, a dashboard or a web app"
+          },
+          "unsure": {
+            "label": "Not sure yet",
+            "hint": "We can decide together"
+          }
+        }
+      },
+      "stage": {
+        "short": "Stage",
+        "title": "What do you have so far?",
+        "options": {
+          "idea": {
+            "label": "An idea",
+            "hint": "Not written down yet"
+          },
+          "plan": {
+            "label": "A ready plan",
+            "hint": "We know what we want"
+          },
+          "unfinished": {
+            "label": "Unfinished work",
+            "hint": "Started but not done"
+          },
+          "running": {
+            "label": "A running system",
+            "hint": "It needs work or fixes"
+          }
+        }
+      },
+      "timing": {
+        "short": "Timing",
+        "title": "When do you need it?",
+        "options": {
+          "days": {
+            "label": "In a few days",
+            "hint": "We need to start right away"
+          },
+          "month": {
+            "label": "This month",
+            "hint": "Let's start before the month ends"
+          },
+          "months": {
+            "label": "In a few months",
+            "hint": "Let's plan it together"
+          },
+          "flexible": {
+            "label": "No rush",
+            "hint": "We can wait for the right time"
+          }
+        }
+      }
+    },
+    "details": {
+      "short": "You",
+      "title": "How can we reach you?",
+      "name": "Your name",
+      "email": "Your email",
+      "company": "Company",
+      "optional": "optional",
+      "message": "In a few words",
+      "messageHint": "What do you want to build, where are you stuck?",
+      "privacy": "We only use these details to get back to you and delete them after two years.",
+      "trap": "Your website"
+    },
+    "invalid": {
+      "required": "Please fill in this field.",
+      "email": "Please enter a valid email address."
+    },
+    "actions": {
+      "next": "Next",
+      "back": "Back",
+      "send": "Send",
+      "sending": "Sending"
+    },
+    "sent": {
+      "stamp": "Received",
+      "title": "Your message reached us",
+      "text": "We'll reply by email within two working days."
+    },
+    "error": "The message could not be sent. Try again in a moment or email us directly:"
   }
 }

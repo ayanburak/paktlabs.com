@@ -1,10 +1,14 @@
 # workspaces bagimliliklari kokte tek node_modules altinda toplanir
 node_modules/
 
-# backend .venv (ileride eklenecek)
+# iletisim servisinin Python ortami ve lokal veritabani. Lokalde gelen
+# deneme mesajlari kisisel veri gibi davranilir, repoya girmez
 .venv/
 __pycache__/
 *.pyc
+.pytest_cache/
+/services/contact-api/data/
+/services/contact-api/.env
 
 # scripts/build-release.sh ciktisi, paketler repoya girmez
 /release/

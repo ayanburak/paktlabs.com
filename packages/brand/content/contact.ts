@@ -14,5 +14,5 @@ export const contactEmail = 'info@paktlabs.com'
 
 // Iletisim sayfasi yalnizca ana sitede var, bu yuzden adres her sitede tam
 // adres olarak yaziliyor, disiplin sitesinden de ana siteye gider. Sayfa
-// henuz yazilmadi, o gelene kadar bu adres bulunamadi sayfasini acar.
+// landing'de contact/index.html'dir, formu iletisim servisine gonderir.
 export const contactPageUrl = `${mainSiteUrl}/contact`

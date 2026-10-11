@@ -1,4 +1,5 @@
-# PaktLabs sitelerinin lint, tip kontrolu ve Playwright davranis testleri.
+# PaktLabs sitelerinin lint, tip kontrolu ve Playwright davranis testleri,
+# iletisim servisinin pytest testleri.
 # Bagimliliklar npm workspaces ile kokte kurulur. Lint butun repoyu tek seferde
 # tarar, her uygulama kendi job'unda tip kontrolu ve testlerini calistirir.
 # Gorsel snapshot testleri burada calismaz: referanslar yerel Linux/Chromium
@@ -96,3 +97,21 @@ jobs:
             apps/data/playwright-report
             apps/data/test-results
           retention-days: 7
+
+  # Servis sunucuda Python 3.10 ile calisir, testler de o surumle kosar ki
+  # sunucuda calismayacak bir kod buradan gecmesin. test_contract.py landing'in
+  # questions.ts dosyasini okur, bu yuzden butun repo checkout edilir.
+  contact-api:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: services/contact-api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: pip
+          cache-dependency-path: services/contact-api/requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - run: python -m pytest -q

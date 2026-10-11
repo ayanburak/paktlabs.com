@@ -68,5 +68,111 @@
         ]
       }
     }
+  },
+  "contactPage": {
+    "meta": {
+      "title": "İletişim · PaktLabs",
+      "description": "İşinizi dört kısa soruyla anlatın, size dönüş yapalım."
+    },
+    "eyebrow": "İletişim",
+    "title": "İşinizi anlatın",
+    "lead": "Dört kısa soru. Cevaplarınız ilk görüşmeden önce işinizi anlamamıza yardım eder.",
+    "step": "Adım",
+    "questions": {
+      "area": {
+        "short": "Alan",
+        "title": "Hangi alanda bir işiniz var?",
+        "options": {
+          "data": {
+            "label": "Veri",
+            "hint": "Düzenleme, analiz, raporlama"
+          },
+          "automation": {
+            "label": "Otomasyon",
+            "hint": "Elle yapılan işleri sisteme bağlama"
+          },
+          "web": {
+            "label": "Web",
+            "hint": "Site, panel ya da web uygulaması"
+          },
+          "unsure": {
+            "label": "Henüz bilmiyorum",
+            "hint": "Birlikte karar verelim"
+          }
+        }
+      },
+      "stage": {
+        "short": "Durum",
+        "title": "Elinizde ne var?",
+        "options": {
+          "idea": {
+            "label": "Bir fikir",
+            "hint": "Henüz yazıya dökülmedi"
+          },
+          "plan": {
+            "label": "Hazır bir plan",
+            "hint": "Ne istediğimiz belli"
+          },
+          "unfinished": {
+            "label": "Yarım kalmış bir iş",
+            "hint": "Başlandı ama bitmedi"
+          },
+          "running": {
+            "label": "Çalışan bir sistem",
+            "hint": "Geliştirilmesi ya da düzeltilmesi gerekiyor"
+          }
+        }
+      },
+      "timing": {
+        "short": "Zaman",
+        "title": "Ne zamana lazım?",
+        "options": {
+          "days": {
+            "label": "Birkaç gün içinde",
+            "hint": "Hemen başlamamız gerekiyor"
+          },
+          "month": {
+            "label": "Bu ay",
+            "hint": "Ay bitmeden başlayalım"
+          },
+          "months": {
+            "label": "Birkaç ay içinde",
+            "hint": "Takvimi birlikte çıkaralım"
+          },
+          "flexible": {
+            "label": "Acelesi yok",
+            "hint": "Doğru zamanı bekleyebiliriz"
+          }
+        }
+      }
+    },
+    "details": {
+      "short": "Siz",
+      "title": "Size nasıl ulaşalım?",
+      "name": "Adınız",
+      "email": "E-posta adresiniz",
+      "company": "Şirket",
+      "optional": "isteğe bağlı",
+      "message": "Kısaca anlatın",
+      "messageHint": "Ne yapmak istiyorsunuz, nerede takıldınız?",
+      "privacy": "Bu bilgileri yalnızca size dönüş yapmak için kullanırız ve iki yıl sonra sileriz.",
+      "trap": "Web siteniz"
+    },
+    "invalid": {
+      "required": "Bu alanı doldurun.",
+      "email": "Geçerli bir e-posta adresi yazın."
+    },
+    "actions": {
+      "next": "Devam",
+      "back": "Geri",
+      "send": "Gönder",
+      "sending": "Gönderiliyor"
+    },
+    "sent": {
+      "stamp": "Alındı",
+      "title": "Mesajınız bize ulaştı",
+      "text": "İki iş günü içinde size e-postayla dönüyoruz."
+    },
+    "error": "Mesaj gönderilemedi. Biraz sonra tekrar deneyin ya da doğrudan e-posta gönderin:"
   }
 }

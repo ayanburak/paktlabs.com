@@ -1,0 +1,175 @@
+/* ustte baslik, altinda cizim ve form yan yana. Blok ekranin ortasinda
+   durur, hero'lardaki gibi ust bar saydam olarak ustunde kalir ve bolum
+   onun payini birakir, blok ust barin altinda kalan alanin dikey
+   ortasindadir. Cizimle formun alt kenarlari ayni cizgide, baslik cizimin
+   sol kenarindan baslar */
+.contact {
+  display: grid;
+  grid-template-columns: auto minmax(0, 880px);
+  justify-content: center;
+  align-content: center;
+  align-items: end;
+  column-gap: clamp(40px, 4vw, 72px);
+  min-height: 100svh;
+  padding: var(--header-height) var(--gutter) clamp(24px, 4vh, 48px);
+  border-bottom: 2px solid var(--ink);
+}
+
+.intro {
+  grid-column: 1 / -1;
+  margin-bottom: clamp(24px, 5vh, 56px);
+}
+.intro :global(.eyebrow) {
+  --rise-delay: 0.05s;
+}
+/* baslik kisa ekranlarda ekranin boyuna gore de kuculur, son adimin uzun
+   formu baslikla birlikte ekrana sigsin diye */
+.title {
+  margin-top: 18px;
+  font-size: min(5.6vw, 9svh, 84px);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  --rise-delay: 0.12s;
+}
+.lead {
+  max-width: 44ch;
+  margin: 18px 0 0;
+  font-size: clamp(15px, 1.3vw, 17px);
+  line-height: 1.62;
+  color: var(--muted);
+  --rise-delay: 0.24s;
+}
+
+/* adimin cizimi. Dort cizim de dikey ve ayni yukseklikte, genislikleri
+   farkli. Yukseklik sabit tutulur, genislik cizimden gelir, boylece adim
+   degisince Ada ayni boyda kalir. Cizimin altindaki golge elipsi, cizim
+   yuksekliginin yaklasik yuzde yedisi, translate ile yarisi kadar asagi
+   kayar ve ortasi formun alt kenarina oturur */
+.art {
+  height: min(50svh, 500px);
+  width: auto;
+  translate: 0 3.5%;
+  animation: appear 0.35s ease backwards;
+}
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+}
+
+/* form kutusu data'daki kartlarin dili: ustte baslik kutusu, alti piksel
+   bosluk, altta icerik kutusu. Kutular sayfadan bir ton acik surface
+   zeminde durur, icindeki secenekler ve alanlar sayfanin paper zemininde
+   kalir, boylece ikisi de kutudan ayrilir */
+.card {
+  display: grid;
+  gap: 6px;
+}
+.box {
+  background: var(--surface);
+  border: 2px solid var(--charcoal);
+}
+
+.head {
+  padding: 20px 24px 24px;
+}
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.progress {
+  display: flex;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.progress li {
+  width: 30px;
+  height: 8px;
+  border: 1.5px solid var(--ink);
+  transition: background 0.2s ease;
+}
+.progress .done {
+  background: var(--ink);
+}
+.progress .current {
+  background: var(--gold);
+}
+.question {
+  margin-top: 20px;
+  font-size: clamp(26px, 2.7vw, 38px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+/* baslik yalnizca ekran degisince programla odaklanir, Tab sirasinda yok */
+.question:focus {
+  outline: none;
+}
+
+.body {
+  padding: 24px;
+}
+.sentText {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* dar ekranda baslik ustte, form altta. Cizim gosterilmez, form ilk ekranda
+   gorunsun diye */
+@media (max-width: 900px) {
+  .contact {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    min-height: 0;
+    padding-bottom: clamp(48px, 8vw, 80px);
+  }
+  .title {
+    font-size: clamp(40px, 9vw, 64px);
+  }
+  .art {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  /* dar ekranda ust bar akista yer kapliyor, payi ayrica birakilmaz */
+  .contact {
+    padding-top: 32px;
+  }
+  .head,
+  .body {
+    padding: 18px 16px;
+  }
+}
+
+/* kisa masaustu ekranlarda, ornegin 1440x900 ve 1366x768, baslik ve form ekrana sigsin
+   diye bosluklar ve kutular sikisir. Genis ekranda ve mobilde gecmez */
+@media (min-width: 901px) and (max-height: 920px) {
+  .intro {
+    margin-bottom: clamp(16px, 3vh, 28px);
+  }
+  .head {
+    padding: 14px 20px 18px;
+  }
+  .question {
+    margin-top: 14px;
+    font-size: clamp(24px, 4.4svh, 34px);
+  }
+  .body {
+    padding: 18px 20px;
+  }
+}
+/* 1280x720 gibi daha da kisa ekranlarda baslik ve aciklama biraz daha
+   sikisir */
+@media (min-width: 901px) and (max-height: 760px) {
+  .title {
+    margin-top: 12px;
+    font-size: min(5.6vw, 8svh, 84px);
+  }
+  .lead {
+    margin-top: 10px;
+  }
+}

@@ -1,0 +1,22 @@
+# /etc/systemd/system/paktlabs-api-maintenance.service
+# Gece bakimi: bildirimi gonderilememis mesajlari yeniden dener, iki yildan
+# eski mesajlari siler, data/backups altina gunun yedegini alir. Zamanlayici
+# paktlabs-api-maintenance.timer'dir, elle calistirmak icin:
+#   systemctl start paktlabs-api-maintenance
+
+[Unit]
+Description=PaktLabs iletisim servisi gece bakimi
+
+[Service]
+Type=oneshot
+User=paktlabs-api
+Group=paktlabs-api
+WorkingDirectory=/opt/paktlabs-api/current
+EnvironmentFile=/opt/paktlabs-api/.env
+ExecStart=/opt/paktlabs-api/current/.venv/bin/python -m app.maintenance
+
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/opt/paktlabs-api/data

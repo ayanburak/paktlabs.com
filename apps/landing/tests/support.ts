@@ -1,6 +1,6 @@
 /*
 file: support.ts
-importable: Language, languages, dict, disciplineUrls, openHome, waitForAssets
+importable: Language, languages, dict, disciplineUrls, contactPath, openHome, openContact, waitForAssets
 
 Spec dosyalarinin ortak kullandigi sayfa acma yardimcilari ve beklenen degerler.
 Ekrandaki metinler landing'in ve brand paketinin sozluklerinden okunur, metin
@@ -41,11 +41,23 @@ export async function waitForAssets(page: Page) {
   await page.evaluate(() => Promise.all([...document.images].map((img) => img.decode().catch(() => {}))))
 }
 
+// Iletisim sayfasi contact/index.html'den gelir. vite preview sonda egik
+// cizgi olmadan bu dosyayi bulmaz, canlida nginx iki bicimi de sunar.
+export const contactPath = '/contact/'
+
 // lang verilirse tercih her sayfa yuklemesinden once localStorage'a yazilir.
 // Reload sonrasi kaydin degisip degismedigini olcen testler bu parametreyi
 // kullanmamali, yoksa her yuklemede tercih yeniden yazilir.
 export async function openHome(page: Page, lang?: Language) {
   if (lang) await page.addInitScript((l) => localStorage.setItem('pl_lang', l), lang)
   await page.goto('/', { waitUntil: 'networkidle' })
+  await waitForAssets(page)
+}
+
+// openHome'un iletisim sayfasi icin olani. Form gonderimi testlerde gercek
+// servise gitmez, her test /api/contact'i kendisi taklit eder.
+export async function openContact(page: Page, lang?: Language) {
+  if (lang) await page.addInitScript((l) => localStorage.setItem('pl_lang', l), lang)
+  await page.goto(contactPath, { waitUntil: 'networkidle' })
   await waitForAssets(page)
 }
