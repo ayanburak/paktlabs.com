@@ -11,18 +11,18 @@ import { Page } from '@/components/Page'
 import { useDict } from '@/i18n'
 
 import { Hero } from './sections/Hero'
-import { TechRail } from './sections/TechRail'
+import { Services } from './sections/Services/Services'
 import { Works } from './sections/Works/Works'
 
-// Bolumler mockup'taki sirayla dizilir: hero, teknoloji seridi, calisma
-// listesi ve iletisim.
+// Bolumler sirayla dizilir: hero, hizmetler panosu, calisma listesi ve
+// iletisim.
 export function Home() {
   const { home } = useDict()
 
   return (
     <Page title={home.meta.title} description={home.meta.description}>
       <Hero />
-      <TechRail />
+      <Services />
       <Works />
       <Contact />
     </Page>

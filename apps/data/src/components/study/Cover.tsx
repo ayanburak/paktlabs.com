@@ -1,20 +1,17 @@
 /*
 file: Cover.tsx
-importable: Cover, CoverCrumb
+importable: Cover, CoverCrumb, CoverRow
 
 Calisma sayfalarinin acilis yuzu. Solda bir donus baglantisi, etiketler,
-baslik ve tek cumlelik aciklama, sagda kunye durur. Detay sayfasi ve kod
-sayfasi ayni kapagi kullanir, yalnizca icerigi degisir. Landing ve veri
+baslik ve tek cumlelik aciklama, sagda kunye durur. Detay sayfasi, kod
+sayfasi ve hizmet sayfalari ayni kapagi kullanir, yalnizca icerigi degisir. Landing ve veri
 sayfasindaki hero'lar gibi ekrani kaplar ama ortak hero yerlesimini
 kullanmaz, cunku burada cizim yok, ikinci sutunda kunye var.
 
 description: Calisma sayfalarinin kapagini ve kunyesini gosteren bolum.
 */
 
-import { useLanguage } from '@paktlabs/brand/i18n/language'
-
 import { TagList } from '@/components/TagList'
-import type { KunyeRow } from '@/content/studies/types'
 import { useDict } from '@/i18n'
 
 import styles from './Cover.module.css'
@@ -32,15 +29,20 @@ interface CoverProps {
   tags: string[]
   title: string
   lede: string
-  kunye: KunyeRow[]
+  kunye: CoverRow[]
 }
 
-// Metinler secili dilde hazir gelir, yalnizca kunye iki dilli gelir cunku
-// satirlari dogrudan icerik dosyasindan okunur. Konum satirindaki ad
+// Kunyenin bir satiri, secili dilde.
+export interface CoverRow {
+  label: string
+  value: string
+}
+
+// Butun metinler, kunye dahil, secili dilde hazir gelir, kapak dil bilmez.
+// Kunye satirlarini sayfa kendi icerigine gore kurar. Konum satirindaki ad
 // baglanti degildir. Kunye satirlarinin sayisi ve adlari sayfadan gelir, her
 // satir bir terim ve aciklama cifti oldugu icin dl ile yazilir.
 export function Cover({ crumb, tags, title, lede, kunye }: CoverProps) {
-  const { language } = useLanguage()
   const { study: dict } = useDict()
 
   return (
@@ -58,9 +60,9 @@ export function Cover({ crumb, tags, title, lede, kunye }: CoverProps) {
         </div>
         <dl className={styles.kunye}>
           {kunye.map((row) => (
-            <div key={row.label[language]}>
-              <dt>{row.label[language]}</dt>
-              <dd>{row.value[language]}</dd>
+            <div key={row.label}>
+              <dt>{row.label}</dt>
+              <dd>{row.value}</dd>
             </div>
           ))}
         </dl>

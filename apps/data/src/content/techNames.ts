@@ -2,16 +2,15 @@
 file: techNames.ts
 importable: techNames, TechName
 
-Teknoloji seridindeki araclarin adlari ve sirasi. Adlar logolardan ayri bir
-dosyada durur, cunku calisma icerik dosyalari araclari bu adlarla secer ve o
-dosyalar testlerde de okunur. Logolar SVG import'u oldugu icin yalnizca Vite
+Logosu olan araclarin adlari. One cikan calisma kartindaki arac logolari bu
+adlarla secilir. Adlar logolardan ayri bir dosyada durur, cunku calisma
+icerik dosyalari araclari bu adlarla secer ve o dosyalar testlerde de okunur. Logolar SVG import'u oldugu icin yalnizca Vite
 icinde yuklenebilir, burada hic import yoktur.
 
-description: Teknoloji seridindeki araclarin adlarini ve sirasini tutan liste.
+description: Logosu olan araclarin adlarini tutan liste.
 */
 
-// Sira serideki siradir. Urun adlari iki dilde de ayni kaldigi icin sozlukte
-// degil burada durur.
+// Urun adlari iki dilde de ayni kaldigi icin sozlukte degil burada durur.
 export const techNames = [
   'Python',
   'PostgreSQL',

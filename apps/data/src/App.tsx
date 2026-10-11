@@ -28,6 +28,7 @@ import { assetFiles } from './content/studies/assetFiles'
 import { Home } from './routes/Home/Home'
 import { NotFound } from './routes/NotFound/NotFound'
 import { Root } from './routes/Root'
+import { Service } from './routes/Service/Service'
 import { Study } from './routes/Study/Study'
 import { sourceLoader, studyLoader } from './routes/studyLoader'
 import { StudySource } from './routes/StudySource/StudySource'
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
       { path: '/', element: <Home /> },
       { path: '/work/:slug', element: <Study />, loader: loadStudy },
       { path: '/work/:slug/source', element: <StudySource />, loader: loadSource },
+      { path: '/services/:slug', element: <Service /> },
       { path: '*', element: <NotFound /> },
     ],
   },

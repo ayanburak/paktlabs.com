@@ -10,8 +10,11 @@
       "latest": "Son yayınlanan çalışma",
       "cta": "Çalışmalara git ↓"
     },
-    "stack": {
-      "title": "Kullandığımız teknolojiler"
+    "services": {
+      "eyebrow": "Hizmetler",
+      "title": "Kabul ettiğimiz işler",
+      "lead": "Her hizmet kendi sayfasında anlatılır: ne yaptığımız, nasıl ilerlediğimiz ve elinize ne geçtiği.",
+      "go": "Aç →"
     },
     "works": {
       "eyebrow": "Çalışmalar",
@@ -24,6 +27,10 @@
         "all": "Tümü",
         "toggle": "Filtrele",
         "tagsLabel": "Çalışma etiketleri",
+        "studies": {
+          "one": "çalışma",
+          "other": "çalışma"
+        },
         "empty": "Bu alanda yayınlanmış çalışma henüz yok, filtreleme ayarlarını değiştirmeyi deneyin."
       }
     }
@@ -136,6 +143,46 @@
       "label": "Geri",
       "text": "Bu kodun ne işe yaradığını, sonuçlarını ve sınırlarını anlatan çalışma sayfasına dön.",
       "go": "← Çalışmaya dön"
+    }
+  },
+  "service": {
+    "back": "← Hizmetler",
+    "tag": "Hizmet",
+    "kunye": {
+      "input": "Getirdiğiniz",
+      "output": "Teslim ettiğimiz",
+      "tools": "Araçlar"
+    },
+    "chapters": {
+      "scope": {
+        "label": "Kapsam",
+        "title": "Ne yapıyoruz"
+      },
+      "steps": {
+        "label": "Süreç",
+        "title": "Nasıl ilerliyoruz"
+      },
+      "delivery": {
+        "label": "Teslim",
+        "title": "Elinize ne geçer"
+      }
+    },
+    "closing": {
+      "label": "Sıradaki adım",
+      "title": "Bu alanda nasıl yardımcı olabiliriz?",
+      "nav": "Sıradaki adım",
+      "works": {
+        "label": "Çalışmalar",
+        "title": "Bu alandaki çalışmalarımız",
+        "text": "Bu alanda tamamladığımız çalışmaları ve geliştirici notlarını inceleyin.",
+        "go": "Çalışmaları incele →"
+      },
+      "contact": {
+        "label": "İletişim",
+        "title": "Bu iş için bize yazın",
+        "text": "İşinizi dört kısa soruyla anlatın, size dönüş yapalım.",
+        "go": "İletişime geç →"
+      }
     }
   }
 }

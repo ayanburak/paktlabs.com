@@ -3,13 +3,13 @@ file: Work.tsx
 importable: Work
 
 Veri bandinin listesi sozlukten degil brand'deki dataTags'ten gelir, her
-satir data'nin calismalar bolumune o kategori secili olarak gider. Otomasyon
+satir data'daki o kategorinin hizmet sayfasina gider. Otomasyon
 ve web listeleri landing'in sozlugunde duz yazi olarak durur.
 
 description: Kabul ettigimiz isler basligi ve veri/otomasyon/web seritlerini sirayla dizen bolum.
 */
 
-import { dataTagUrl, dataTags } from '@paktlabs/brand/content/dataTags'
+import { dataServiceUrl, dataTags } from '@paktlabs/brand/content/dataTags'
 import { disciplineUrls } from '@paktlabs/brand/content/disciplines'
 import { useReveal } from '@paktlabs/brand/hooks/useReveal'
 import { useBrandDict } from '@paktlabs/brand/i18n/useBrandDict'
@@ -29,7 +29,7 @@ export function Work() {
   const { work } = useDict()
   const { dataTags: tagNames } = useBrandDict()
   const head = useReveal<HTMLDivElement>()
-  const dataList = dataTags.map((tag) => ({ label: tagNames[tag], href: dataTagUrl(tag) }))
+  const dataList = dataTags.map((tag) => ({ label: tagNames[tag], href: dataServiceUrl(tag) }))
   const plain = (list: readonly string[]) => list.map((label) => ({ label }))
 
   return (

@@ -35,7 +35,8 @@ const sizes = [
   [1920, 1080],
 ] as const
 
-// Detay ve kod sayfalari on iki ile on sekiz bin piksel boyunda, her goruntu
+// Hizmet sayfasi alti hizmette ayni kalibi kullanir, biri yeter. Detay ve
+// kod sayfalari on iki ile on sekiz bin piksel boyunda, her goruntu
 // iki megabayta variyor. Iki sayfa da yalnizca iki duzen tasir, telefonda ustte
 // ince icindekiler bari, masaustunde solda icindekiler. 390 ve 1366 bu iki
 // duzeni kapsar, 1024 ve 1920 ayni duzenleri tekrar edip repoyu buyutuyordu.
@@ -49,6 +50,7 @@ const pages = [
   ['home', '/', sizes],
   ['study', '/work/demo-veri', longPageSizes],
   ['source', '/work/demo-veri/source', longPageSizes],
+  ['service', '/services/preparation', longPageSizes],
   ['notfound', '/yok', sizes],
 ] as const
 

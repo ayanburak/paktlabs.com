@@ -10,8 +10,11 @@
       "latest": "Latest published study",
       "cta": "Go to the work ↓"
     },
-    "stack": {
-      "title": "Technologies we use"
+    "services": {
+      "eyebrow": "Services",
+      "title": "The work we take on",
+      "lead": "Each service has its own page: what we do, how we work and what you get at the end.",
+      "go": "Open →"
     },
     "works": {
       "eyebrow": "Work",
@@ -24,6 +27,10 @@
         "all": "All",
         "toggle": "Filter",
         "tagsLabel": "Study tags",
+        "studies": {
+          "one": "study",
+          "other": "studies"
+        },
         "empty": "There are no published studies in this area yet, try changing the filter."
       }
     }
@@ -136,6 +143,46 @@
       "label": "Back",
       "text": "Return to the study page that explains what this code does, its results and its limits.",
       "go": "← Back to the study"
+    }
+  },
+  "service": {
+    "back": "← Services",
+    "tag": "Service",
+    "kunye": {
+      "input": "You bring",
+      "output": "We deliver",
+      "tools": "Tools"
+    },
+    "chapters": {
+      "scope": {
+        "label": "Scope",
+        "title": "What we do"
+      },
+      "steps": {
+        "label": "Process",
+        "title": "How we work"
+      },
+      "delivery": {
+        "label": "Delivery",
+        "title": "What you get"
+      }
+    },
+    "closing": {
+      "label": "Next step",
+      "title": "How can we help in this area?",
+      "nav": "Next step",
+      "works": {
+        "label": "Studies",
+        "title": "Our studies in this area",
+        "text": "Browse the studies we completed in this area and their developer notes.",
+        "go": "Browse studies →"
+      },
+      "contact": {
+        "label": "Contact",
+        "title": "Write to us about this",
+        "text": "Tell us about your project in four short questions and we will get back to you.",
+        "go": "Get in touch →"
+      }
     }
   }
 }

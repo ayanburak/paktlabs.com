@@ -1,0 +1,77 @@
+/* hero'nun altinda, calismalarin ustunde panel zeminli bir pano. Hero alt
+   cizgisini kendisi cizdigi icin bolum yalnizca altina cizgi ceker */
+.services {
+  padding: clamp(56px, 6vw, 88px) var(--gutter) clamp(72px, 7vw, 104px);
+  background: var(--panel);
+  border-bottom: 2px solid var(--ink);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px 40px;
+  margin-bottom: clamp(40px, 4.5vw, 60px);
+}
+.head :global(.eyebrow) {
+  margin-bottom: 14px;
+}
+.head h2 {
+  font-size: clamp(32px, 3.8vw, 52px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+.lead {
+  max-width: 40ch;
+  margin: 0;
+  font-size: clamp(15px, 1.3vw, 17px);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* kagitlarin egiklikleri sirayla tekrar eder, alti kagitta ayni ritim
+   olusur. Yedinci bir hizmet gelirse dizi bastan doner, ayri bir ayar
+   gerekmez */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 52px 40px;
+  margin: 0;
+  padding: 11px 12px 0;
+  list-style: none;
+}
+.board li:nth-child(6n + 1) {
+  --tilt: -1.6deg;
+}
+.board li:nth-child(6n + 2) {
+  --tilt: 1.1deg;
+}
+.board li:nth-child(6n + 3) {
+  --tilt: -0.6deg;
+}
+.board li:nth-child(6n + 4) {
+  --tilt: 0.9deg;
+}
+.board li:nth-child(6n + 5) {
+  --tilt: -1.2deg;
+}
+.board li:nth-child(6n + 6) {
+  --tilt: 1.5deg;
+}
+
+@media (max-width: 1024px) {
+  .board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 768px) {
+  .head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .board {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    padding: 11px 6px 0;
+  }
+}

@@ -1,17 +1,17 @@
 /*
 file: home.spec.ts
 
-Veri sayfasinin bolumlerini kontrol eder. Teknoloji seridi kesintisiz tur icin
-listeyi iki kez yazar, ekran okuyucunun her araci yalnizca bir kez duymasi ve
-hareket azaltma tercihinde akisin durmasi burada olculur. Arac adlari ve
-sirasi techNames.ts'ten okunur, o dosya logolardan ayri durdugu icin duz Node
+Veri sayfasinin bolumlerini kontrol eder: hero, hizmetler panosu, calisma
+listesi ve suzgeci, iletisim. One cikan kartin logolari techNames.ts'teki
+adlarla karsilastirilir, o dosya logolardan ayri durdugu icin duz Node
 ortaminda da yuklenir. Logolarin dosyalari techStack.ts'te SVG import'u
 oldugu icin testlere alinmaz.
 
-description: Veri sayfasinin hero, teknoloji seridi, calisma listesi ve iletisim testleri.
+description: Veri sayfasinin hero, hizmetler panosu, calisma listesi, suzgec ve iletisim testleri.
 */
 
 import { expect, test } from '@playwright/test'
+import type { Page } from '@playwright/test'
 
 import { lastPublished } from '../src/content/lastPublished'
 import { studies } from '../src/content/studies'
@@ -34,20 +34,24 @@ for (const lang of languages) {
   })
 }
 
-test('tech rail exposes every tool once to screen readers', async ({ page }) => {
-  await openPage(page, '/', 'tr')
+// Pano alti hizmeti brand'deki sirayla gosterir, her kagit hizmetin
+// sayfasina gider. Adresler bilerek elle yazili, brand'deki dataTags.ts'ten
+// okunmaz, boylece orada degisen bir adres bu testi de bozar.
+for (const lang of languages) {
+  test(`${lang}: the services board pins every service and links to its page`, async ({ page }) => {
+    await openPage(page, '/', lang)
 
-  const rail = page.getByRole('region', { name: dict.tr.home.stack.title })
-  const names = await rail.getByRole('img').evaluateAll((logos) => logos.map((logo) => logo.getAttribute('aria-label') ?? ''))
-  const tips = await rail.locator('li:not([aria-hidden]) span[aria-hidden="true"]').allTextContents()
+    const board = page.getByRole('region', { name: dict[lang].home.services.title })
+    const notes = board.getByRole('link')
+    const order = ['preparation', 'database', 'quality', 'analysis', 'visualization', 'machineLearning'] as const
+    const paths = order.map((tag) => `/services/${tag === 'machineLearning' ? 'machine-learning' : tag}`)
 
-  expect(names.length).toBeGreaterThan(0)
-  expect(names.every((name) => name.trim() !== '')).toBe(true)
-  expect(new Set(names).size).toBe(names.length)
-  expect(names).toEqual(tips)
-  expect(names).toEqual([...techNames])
-  await expect(rail.locator('li[aria-hidden="true"]')).toHaveCount(names.length)
-})
+    expect(await notes.evaluateAll((links) => links.map((link) => link.getAttribute('href')))).toEqual(paths)
+    for (const [i, tag] of order.entries()) {
+      await expect(notes.nth(i).getByRole('heading', { level: 3 })).toHaveText(dict[lang].dataTags[tag])
+    }
+  })
+}
 
 // Kartlardaki kucuk logolar da adlariyla okunur ve yalnizca bilinen araclari
 // gosterir. Logolar yalnizca one cikan kartta var. Bugun one cikan calisma
@@ -61,25 +65,6 @@ test('work cards name their tool logos', async ({ page }) => {
 
   expect(names.length).toBeGreaterThan(0)
   expect(names.every((name) => (techNames as readonly string[]).includes(name))).toBe(true)
-})
-
-test('tech rail scrolls on its own with normal motion', async ({ page }) => {
-  await openPage(page, '/', 'tr')
-
-  const track = page.locator('section[aria-labelledby="stack-title"] ul')
-  await expect(track).not.toHaveCSS('animation-name', 'none')
-})
-
-// Hareket azaltma tercihinde akis durur, ikinci kopya gizlenir ve serit elle
-// kaydirilabilir hale gelir.
-test('tech rail stops and hides the loop copy with reduced motion', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' })
-  await openPage(page, '/', 'tr')
-
-  const section = page.locator('section[aria-labelledby="stack-title"]')
-  await expect(section.locator('ul')).toHaveCSS('animation-name', 'none')
-  await expect(section.locator('li[aria-hidden="true"]').first()).toBeHidden()
-  await expect(section.locator('ul').locator('..')).toHaveCSS('overflow-x', 'auto')
 })
 
 // Ayni satirdaki kartlarin baslik kutulari ortak bir yukseklik alir, uzun bir
@@ -96,6 +81,13 @@ test('cards in a row start their text boxes at the same height', async ({ page }
   const tops = await Promise.all([1, 2, 3].map(async (i) => (await cards.nth(i).locator(':scope > div').nth(1).boundingBox())!.y))
   expect(Math.max(...tops) - Math.min(...tops)).toBeLessThanOrEqual(1)
 })
+
+// Gercek onay kutusu gorunmez, ziyaretci onun etiketine tikladigi icin test de
+// etikete tiklar. Playwright etiket yerine oturana kadar bekler, panel acilis
+// animasyonundayken tiklama baska bir yere dusmez.
+async function pickTag(page: Page, name: string) {
+  await page.locator('label').filter({ has: page.getByRole('checkbox', { name }) }).click()
+}
 
 // Beklenen kartlar calisma listesinden hesaplanir, icerik degisince test
 // kendiliginden uyum saglar. Liste SVG import etmedigi icin burada okunabilir.
@@ -133,19 +125,19 @@ test.describe('work filter', () => {
     await expectCount([])
     await page.getByRole('button', { name: dict.tr.home.works.filter.toggle }).click()
 
-    await page.getByRole('button', { name: tags.visualization }).click()
+    await pickTag(page, tags.visualization)
     await expectCount(['visualization'])
     await expect(page.getByRole('button', { name: dict.tr.home.works.filter.all })).toHaveAttribute('aria-pressed', 'false')
 
-    await page.getByRole('button', { name: tags.database }).click()
+    await pickTag(page, tags.database)
     await expectCount(['visualization', 'database'])
 
-    await page.getByRole('button', { name: tags.visualization }).click()
+    await pickTag(page, tags.visualization)
     await expectCount(['database'])
 
     await page.getByRole('button', { name: dict.tr.home.works.filter.all }).click()
     await expectCount([])
-    await expect(page.getByRole('button', { name: tags.database })).toHaveAttribute('aria-pressed', 'false')
+    await expect(page.getByRole('checkbox', { name: tags.database })).not.toBeChecked()
   })
 
   // Calismasi olmayan bir etikette izgara bosalir ve yerine uyari cikar. Uyari
@@ -163,11 +155,11 @@ test.describe('work filter', () => {
     await expect(status).toBeEmpty()
     await page.getByRole('button', { name: dict.tr.home.works.filter.toggle }).click()
 
-    await page.getByRole('button', { name: tags[empty!] }).click()
+    await pickTag(page, tags[empty!])
     await expect(page.locator('#calismalar a')).toHaveCount(0)
     await expect(status).toHaveText(dict.tr.home.works.filter.empty)
 
-    await page.getByRole('button', { name: tags[full] }).click()
+    await pickTag(page, tags[full])
     await expect(status).toBeEmpty()
     await expect(page.locator('#calismalar a').first()).toBeVisible()
   })
@@ -189,10 +181,7 @@ test.describe('work filter', () => {
         'true',
       )
       for (const other of linkedTags) {
-        await expect(page.getByRole('button', { name: tags[other] })).toHaveAttribute(
-          'aria-pressed',
-          String(other === tag),
-        )
+        await expect(page.getByRole('checkbox', { name: tags[other] })).toBeChecked({ checked: other === tag })
       }
       await expect(page.getByRole('button', { name: dict.tr.home.works.filter.all })).toHaveAttribute(
         'aria-pressed',
@@ -202,6 +191,22 @@ test.describe('work filter', () => {
       await expect(page.locator('#calismalar [role="status"]')).toHaveText(
         count === 0 ? dict.tr.home.works.filter.empty : '',
       )
+    })
+  }
+
+  // Her kategorinin yanindaki sayi listedeki calismalardan hesaplanir.
+  // Ekran okuyucu sayiyi kelimesiyle duyar, Ingilizcede tekil ya da cogul.
+  for (const lang of languages) {
+    test(`${lang}: each tag shows how many studies carry it`, async ({ page }) => {
+      const words = dict[lang].home.works.filter.studies
+      await openPage(page, '/', lang)
+      await page.getByRole('button', { name: dict[lang].home.works.filter.toggle }).click()
+
+      for (const tag of linkedTags) {
+        const count = studies.filter((study) => study.tags.includes(tag)).length
+        const word = lang === 'en' && count === 1 ? words.one : words.other
+        await expect(page.getByRole('checkbox', { name: `${dict[lang].dataTags[tag]} ${count} ${word}` })).toHaveCount(1)
+      }
     })
   }
 

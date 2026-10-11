@@ -2,8 +2,9 @@
 file: Works.tsx
 importable: Works
 
-Calisma listesi ve suzgeci. Filtrele dugmesi etiket panelini acar, birden
-fazla etiket secilebilir. Secili etiketlerden herhangi birini tasiyan calisma
+Calisma listesi ve suzgeci. Filtrele dugmesi kategorilerin onay kutulu
+listesini acar, her kategorinin yaninda calisma sayisi durur, birden fazla
+kategori secilebilir. Secili etiketlerden herhangi birini tasiyan calisma
 gorunur, hic etiket secili degilse hepsi gorunur. Tumu secimi sifirlar.
 Secimde hic calisma kalmazsa izgaranin yerine kisa bir uyari cikar.
 
@@ -16,7 +17,7 @@ description: Veri sayfasindaki calisma listesini baslik satiri, suzgec ve altin 
 import { useId, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { dataTagParam, isDataTag, type DataTag } from '@paktlabs/brand/content/dataTags'
+import { dataTagParam, dataTags, isDataTag, type DataTag } from '@paktlabs/brand/content/dataTags'
 import { useReveal } from '@paktlabs/brand/hooks/useReveal'
 import { cx } from '@paktlabs/brand/lib/cx'
 
@@ -26,6 +27,12 @@ import { useDict } from '@/i18n'
 import { FilterPanel } from './FilterPanel'
 import { StudyCard } from './StudyCard'
 import styles from './Works.module.css'
+
+// Her kategorideki calisma sayisi. Liste derlemede sabit oldugu icin bir kez
+// hesaplanir, suzgec paneli kategorilerin yaninda gosterir.
+const counts = Object.fromEntries(
+  dataTags.map((tag) => [tag, studies.filter((study) => study.tags.includes(tag)).length]),
+) as Record<DataTag, number>
 
 // Hero'daki dugme ve bulunamadi sayfasi #calismalar adresine gelir, kimlik
 // bu yuzden bolumun kendisinde durur ve okur baslik satirindan baslar.
@@ -90,7 +97,7 @@ export function Works() {
         </div>
       </div>
 
-      <FilterPanel id={panelId} open={open} picked={picked} onToggle={toggle} />
+      <FilterPanel id={panelId} open={open} picked={picked} counts={counts} onToggle={toggle} />
 
       <div className={styles.band}>
         <div className={styles.grid}>

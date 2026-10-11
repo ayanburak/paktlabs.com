@@ -3,7 +3,7 @@ file: links.spec.ts
 
 Disiplin baglantilarinin bes yerde de dogru subdomain'e gittigini kontrol eder:
 masaustu menu, mobil panel, disiplin kartlari, is bantlari ve footer. Veri
-bandinin alti satirinin data'nin suzgecine dogru kategoriyle gittigi de
+bandinin alti satirinin data'daki dogru hizmet sayfasina gittigi de
 burada olculur. Adreslerin uzakta gercekten hizmet verip vermedigini veya DNS
 ve sertifikayi dogrulamaz.
 
@@ -18,10 +18,13 @@ import { dict, disciplineUrls, languages, openHome } from './support'
 const { web, automation, data } = disciplineUrls
 const contactPage = 'https://paktlabs.com/contact'
 
-// Veri bandinin satirlari, sirasiyla. Adres bicimi data'nin home.spec.ts'te
-// okudugu bicimle ayni, ikisi de bilerek elle yazili.
+// Veri bandinin satirlari, sirasiyla. Her satir data'daki hizmet sayfasina
+// gider, adresler data'nin service.spec.ts'teki adresleriyle ayni, ikisi de
+// bilerek elle yazili.
 const dataTagOrder = ['preparation', 'database', 'quality', 'analysis', 'visualization', 'machineLearning'] as const
-const dataTagLinks = dataTagOrder.map((tag) => `${data}/?tag=${tag}#calismalar`)
+const dataTagLinks = ['preparation', 'database', 'quality', 'analysis', 'visualization', 'machine-learning'].map(
+  (slug) => `${data}/services/${slug}`,
+)
 
 async function hrefs(links: Locator) {
   return links.evaluateAll((els) => els.map((el) => el.getAttribute('href')))
@@ -49,7 +52,7 @@ for (const lang of languages) {
 
   // Satirlarin adi ok isareti olmadan, yalnizca kategori adiyla okunur.
   // Otomasyon ve web bantlarinda baglantili satir yoktur.
-  test(`${lang}: data band rows open the data filter on their tag`, async ({ page }) => {
+  test(`${lang}: data band rows open their service page on data`, async ({ page }) => {
     await openHome(page, lang)
 
     const rows = page.locator('#isler ol').first().locator('a')
