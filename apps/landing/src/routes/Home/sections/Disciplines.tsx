@@ -42,9 +42,10 @@ export function Disciplines() {
         </picture>
         <div className={styles.grid}>
           {/* Kartlarin sirasi ust bar ve alt bilgiyle ayni listeden gelir. */}
-          {disciplineOrder.map((key) => (
+          {disciplineOrder.map((key, i) => (
             <DisciplineCard
               key={key}
+              index={i}
               title={disciplines.items[key].title}
               description={disciplines.items[key].desc}
               go={disciplines.go}

@@ -19,7 +19,7 @@
     "items": {
       "data": {
         "title": "Veri",
-        "desc": "Kayıtları hazırlar, veritabanını kurar, veriyi analiz eder ve gerektiğinde makine öğrenmesi modelleri geliştiririz."
+        "desc": "Kayıtları hazırlar, veritabanını kurar, veriyi analiz eder ve makine öğrenmesi modelleri geliştiririz."
       },
       "automation": {
         "title": "Otomasyon",

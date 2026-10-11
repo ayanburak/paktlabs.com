@@ -122,15 +122,25 @@ test('keyboard focus is visible on every focusable element', async ({ page }) =>
     const info = await page.evaluate(() => {
       const el = document.activeElement as HTMLElement
       const style = getComputedStyle(el)
-      const rect = el.getBoundingClientRect()
       return {
         label: (el.innerText || el.getAttribute('aria-label') || el.tagName).trim().split('\n')[0],
         outline: style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) >= 2,
-        inView: rect.bottom > 0 && rect.top < innerHeight && rect.right > 0 && rect.left < innerWidth,
       }
     })
     expect(info.outline, `${info.label} odak cercevesi`).toBe(true)
-    expect(info.inView, `${info.label} ekranda`).toBe(true)
+    // sayfa odaktaki elemana yumusak kayar, eleman gorunur hale geldiginde
+    // kayma bitmemis olabilir. Konum kayma bitene kadar tekrar olculur, data'nin
+    // ayni testindeki gibi
+    await expect
+      .poll(
+        () =>
+          page.evaluate(() => {
+            const rect = (document.activeElement as HTMLElement).getBoundingClientRect()
+            return rect.bottom > 0 && rect.top < innerHeight && rect.right > 0 && rect.left < innerWidth
+          }),
+        { message: `${info.label} ekranda` },
+      )
+      .toBe(true)
     focused.push(info.label)
   }
   // dongu erken kirilmadi, sayfanin sonundaki footer linkine kadar gelindi

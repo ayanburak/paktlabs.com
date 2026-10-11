@@ -19,7 +19,7 @@
     "items": {
       "data": {
         "title": "Data",
-        "desc": "We prepare records, build databases, analyse the data and build machine learning models when the work needs them."
+        "desc": "We prepare records, build databases, analyse the data and build machine learning models."
       },
       "automation": {
         "title": "Automation",
