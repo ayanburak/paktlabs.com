@@ -39,12 +39,27 @@ unit=$5
 target=$releases/$name
 payload=$target/$kind
 tmp=/tmp/$name.tar.gz
-trap 'rm -f "$tmp"' EXIT
+
+# Surum klasoru acildiktan sonra ozet, pip ya da izin adimi hata verirse
+# yarim klasor kalir ve script ayni paketle bir daha calistirilamazdi.
+# Klasor yalnizca bu calismada acildiysa ve canli henuz ona cevrilmediyse
+# silinir, onceden var olan bir klasore hic dokunulmaz.
+created=0
+switched=0
+cleanup() {
+  rm -f "$tmp"
+  if [ "$created" = 1 ] && [ "$switched" = 0 ]; then
+    rm -rf "$target"
+    echo "yarim kalan $target silindi" >&2
+  fi
+}
+trap cleanup EXIT
 
 # ilk gecis dizini symlink'e cevirmeyi gerektirir, bu script onu yapmaz
 test -L "$live" || { echo "$live symlink degil, durduruldu" >&2; exit 1; }
 test ! -e "$target" || { echo "$target zaten var, durduruldu" >&2; exit 1; }
 
+created=1
 tar -xzf "$tmp" -C "$releases"
 (cd "$payload" && sha256sum --quiet -c ../SHA256SUMS)
 
@@ -64,11 +79,14 @@ fi
 previous=$(readlink "$live")
 ln -sfn "$payload" "$live.next"
 mv -T "$live.next" "$live"
+switched=1
 echo "onceki surum: $previous"
 echo "yeni surum:   $(readlink "$live")"
 
 if [ "$kind" = service ]; then
-  systemctl restart "$unit"
+  # restart'in kendisi hata verse de saglik kontrolune ve geri donuse
+  # dusulur, yoksa set -e script'i bozuk surum canlidayken durdururdu
+  systemctl restart "$unit" || true
   for _ in $(seq 20); do
     if curl -fsS http://127.0.0.1:8001/api/health >/dev/null 2>&1; then
       echo "$unit yeni surumle ayakta"
@@ -88,9 +106,22 @@ REMOTE
 # Canlida yeni surumun sunuldugunu disaridan kontrol eder. Sitede canli
 # index.html'in yeni paketteki giris JS'ini gostermesine, serviste saglik
 # adresinin nginx uzerinden cevap vermesine bakilir.
+# Bos bir giris adi her sayfayla eslesirdi, bu yuzden once o denetlenir.
+# Canli sayfa once degiskene alinir, grep -q ilk eslesmede cikinca curl
+# yarim kalip pipefail altinda yanlis hata vermesin.
 if [ "$kind" = site ]; then
-  entry=$(tar -xzOf "$tarball" "$name/site/index.html" | grep -o '/assets/[^"]*\.js' | head -n 1)
-  curl -fsS "$url/" | grep -q "$entry" && echo "canli index.html yeni build'i gosteriyor: $entry"
+  entry=$(tar -xzOf "$tarball" "$name/site/index.html" | grep -o '/assets/[^"]*\.js' | head -n 1 || true)
+  if [ -z "$entry" ]; then
+    echo "paketteki index.html icinde giris JS'i bulunamadi, canli dogrulanamadi" >&2
+    exit 1
+  fi
+  page=$(curl -fsS "$url/")
+  if grep -qF -- "$entry" <<<"$page"; then
+    echo "canli index.html yeni build'i gosteriyor: $entry"
+  else
+    echo "canli index.html yeni build'i gostermiyor, beklenen: $entry" >&2
+    exit 1
+  fi
 else
   curl -fsS "$url" && echo
 fi

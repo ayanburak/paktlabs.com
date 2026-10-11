@@ -111,7 +111,7 @@ scripts/build-release.sh landing            # HEAD'den release/paktlabs-<zaman>-
 scripts/build-release.sh landing <commit>   # belirli bir commit'ten üretir
 ```
 
-Yayınlama, paketi sunucuda uygulamanın sürüm klasörüne, landing için `/var/www/paktlabs-releases/<sürüm>/` altına açar ve özetleri doğrular. Paketin adı uygulamanın önekiyle başlamıyorsa script durur, böylece bir sitenin paketi yanlışlıkla başka bir sitenin canlı dizinine geçemez. Nginx'in kök dizini olan `/var/www/paktlabs` bir symlink'tir. Yeni sürüme geçiş bu symlink'in tek bir rename işlemiyle çevrilmesidir, ziyaretçi hiçbir anda yarım kopyalanmış bir dizin görmez. Önceki sürümler yerinde kalır. Script son olarak canlı `index.html`'in yeni paketteki dosyaları gösterdiğini kontrol eder.
+Yayınlama, paketi sunucuda uygulamanın sürüm klasörüne, landing için `/var/www/paktlabs-releases/<sürüm>/` altına açar ve özetleri doğrular. Paketin adı uygulamanın önekiyle başlamıyorsa script durur, böylece bir sitenin paketi yanlışlıkla başka bir sitenin canlı dizinine geçemez. Nginx'in kök dizini olan `/var/www/paktlabs` bir symlink'tir. Yeni sürüme geçiş bu symlink'in tek bir rename işlemiyle çevrilmesidir, ziyaretçi hiçbir anda yarım kopyalanmış bir dizin görmez. Önceki sürümler yerinde kalır. Script son olarak canlı `index.html`'in yeni paketteki dosyaları gösterdiğini kontrol eder, göstermiyorsa nedenini yazıp hata verir. Özet doğrulaması ya da kurulum geçişten önce hata verirse yarım açılmış sürüm klasörü silinir, aynı paket düzeltildikten sonra yeniden yüklenebilir.
 
 ```bash
 scripts/deploy-release.sh landing release/paktlabs-<zaman>-<commit>.tar.gz
