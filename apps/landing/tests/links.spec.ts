@@ -42,8 +42,8 @@ for (const lang of languages) {
     await expect(headerLinks).toHaveText([nav.data, nav.automation, nav.web, nav.contact])
 
     await expect(page.locator('main section').first().locator('a.cta')).toHaveAttribute('href', contactPage)
-    expect(await hrefs(page.locator('#disiplinler a'))).toEqual([data, automation, web])
-    expect(await hrefs(page.locator('#isler a'))).toEqual([data, ...dataTagLinks, automation, web])
+    expect(await hrefs(page.locator('#disciplines a'))).toEqual([data, automation, web])
+    expect(await hrefs(page.locator('#work a'))).toEqual([data, ...dataTagLinks, automation, web])
 
     const footerLinks = page.locator('footer nav a')
     expect(await hrefs(footerLinks)).toEqual([data, automation, web])
@@ -55,13 +55,13 @@ for (const lang of languages) {
   test(`${lang}: data band rows open their service page on data`, async ({ page }) => {
     await openHome(page, lang)
 
-    const rows = page.locator('#isler ol').first().locator('a')
+    const rows = page.locator('#work ol').first().locator('a')
     expect(await hrefs(rows)).toEqual(dataTagLinks)
     for (const [i, tag] of dataTagOrder.entries()) {
       await expect(rows.nth(i)).toHaveAccessibleName(dict[lang].dataTags[tag])
     }
-    await expect(page.locator('#isler ol').nth(1).locator('a')).toHaveCount(0)
-    await expect(page.locator('#isler ol').nth(2).locator('a')).toHaveCount(0)
+    await expect(page.locator('#work ol').nth(1).locator('a')).toHaveCount(0)
+    await expect(page.locator('#work ol').nth(2).locator('a')).toHaveCount(0)
   })
 
   test(`${lang}: mobile panel links point at discipline subdomains`, async ({ page }) => {

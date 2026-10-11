@@ -12,7 +12,7 @@ import type { Service } from './types'
 export const visualization: Service = {
   summary: { tr: 'Rakamları bir bakışta okunan grafiklere çeviririz.', en: 'We turn numbers into charts that read at a glance.' },
   lede: { tr: 'Raporlardaki rakamları, kararı verecek kişinin bir bakışta okuyacağı grafiklere ve panolara çeviririz.', en: 'We turn the numbers in your reports into charts and dashboards that the person making the decision can read at a glance.' },
-  kunye: {
+  facts: {
     input: { tr: 'Raporlar, tablolar, kararı verecek kişilerin soruları', en: 'Reports, tables, the questions of the people who decide' },
     output: { tr: 'Grafikler, güncellenen pano, kısa kullanım notu', en: 'Charts, a dashboard that updates, a short guide' },
     tools: 'Python, Matplotlib, React, SQL',

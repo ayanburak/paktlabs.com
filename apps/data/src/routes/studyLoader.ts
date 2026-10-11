@@ -21,7 +21,7 @@ import { findStudy } from '@/content/studies'
 import type { StudyFileSet, StudyFiles } from '@/content/studies/files'
 import type { SourcePage, Study, StudyPage } from '@/content/studies/types'
 
-// Detay sayfasinin ihtiyac duydugu her sey: listede de duran kunye, sayfanin
+// Detay sayfasinin ihtiyac duydugu her sey: listede de duran facts, sayfanin
 // metni ve dosyalar.
 export interface StudyRoute {
   study: Study

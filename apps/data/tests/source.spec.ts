@@ -17,12 +17,12 @@ import { join } from 'node:path'
 
 import { expect, test } from '@playwright/test'
 
-import { source } from '../src/content/studies/demo-veri/source'
+import { source } from '../src/content/studies/demo-data/source'
 
 import { dict, type Language, languages, openPage } from './support'
 
-const path = '/work/demo-veri/source'
-const root = join(import.meta.dirname, '../src/content/studies/demo-veri')
+const path = '/work/demo-data/source'
+const root = join(import.meta.dirname, '../src/content/studies/demo-data')
 
 // Ekranda gosterilen metin dosyanin kendisidir, yalnizca sondaki satir sonu
 // atilir.
@@ -55,7 +55,7 @@ for (const lang of languages) {
     await openPage(page, path, lang)
 
     const crumb = page.getByRole('navigation', { name: dict[lang].study.cover.crumb })
-    await expect(crumb.getByRole('link')).toHaveAttribute('href', '/work/demo-veri')
+    await expect(crumb.getByRole('link')).toHaveAttribute('href', '/work/demo-data')
     await expect(crumb).toContainText(`01 · ${dict[lang].source.crumb.current}`)
     await expect(page.getByRole('list', { name: dict[lang].study.cover.tags }).locator('li')).toHaveText(source.tags)
   })
@@ -64,7 +64,7 @@ for (const lang of languages) {
     await openPage(page, path, lang)
 
     const lines = file('code', lang, 'rules/catalog.py').split('\n').length
-    const frame = page.locator('#dogrulama figure[data-file]')
+    const frame = page.locator('#validation figure[data-file]')
     await expect(frame.locator('figcaption')).toContainText('rules/catalog.py')
     await expect(frame.locator('figcaption')).toContainText(`${lines} ${dict[lang].study.files.lines} · Python`)
   })
@@ -74,9 +74,9 @@ test('en: code and data files follow the data language and the site stays in Eng
   await openPage(page, path, 'en')
 
   const common = dict.en.study.dataLanguage
-  const code = page.locator('#dogrulama figure[data-file] pre').last()
-  const data = page.locator('#veri [data-datafile]').first()
-  await expect(page.locator('#veri-dili')).toContainText(dict.en.source.dataLanguage.lede)
+  const code = page.locator('#validation figure[data-file] pre').last()
+  const data = page.locator('#data [data-datafile]').first()
+  await expect(page.locator('#data-language')).toContainText(dict.en.source.dataLanguage.lede)
   await expect(code).toContainText('Catalog records pass through these rules')
   await expect(data).toContainText('raw_records_sample.csv')
 
@@ -92,7 +92,7 @@ test('the copy button copies the file without line numbers', async ({ page, cont
   await context.grantPermissions(['clipboard-read', 'clipboard-write'])
   await openPage(page, path, 'tr')
 
-  const frame = page.locator('#dogrulama figure[data-file]')
+  const frame = page.locator('#validation figure[data-file]')
   await frame.getByRole('button', { name: dict.tr.study.files.copy }).click()
 
   await expect(frame.getByRole('button', { name: dict.tr.study.files.copied })).toBeVisible()
@@ -105,7 +105,7 @@ test('the download link gives the previewed file in the chosen data language', a
   await openPage(page, path, 'en')
 
   const common = dict.en.study.dataLanguage
-  const link = page.locator('#veri [data-datafile]').first().getByRole('link', { name: dict.en.study.files.download })
+  const link = page.locator('#data [data-datafile]').first().getByRole('link', { name: dict.en.study.files.download })
 
   async function expectFile(name: string, language: Language) {
     await expect(link).toHaveAttribute('download', name)
@@ -128,7 +128,7 @@ test('the author box and the back card point to the right places', async ({ page
   )
   await expect(page.getByRole('link', { name: new RegExp(dict.tr.source.back.text) })).toHaveAttribute(
     'href',
-    '/work/demo-veri',
+    '/work/demo-data',
   )
 })
 

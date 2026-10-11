@@ -24,7 +24,7 @@ for (const lang of languages) {
     await openPage(page, '/', lang)
 
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(dict[lang].home.hero.title)
-    await expect(page.getByRole('link', { name: dict[lang].home.hero.cta })).toHaveAttribute('href', '#calismalar')
+    await expect(page.getByRole('link', { name: dict[lang].home.hero.cta })).toHaveAttribute('href', '#works')
     // son yayin tarihi gun, ay, yil sirasiyla gorunur, time etiketi tarihi makine icin tasir
     const [year, month, day] = lastPublished.split('-')
     const latest = page.locator('section').first().locator('dl')
@@ -60,7 +60,7 @@ test('work cards name their tool logos', async ({ page }) => {
   test.skip(!studies.some((study) => study.feature), 'one cikan calisma yok')
   await openPage(page, '/', 'tr')
 
-  const logos = page.locator('#calismalar ~ * [role="img"], a[href^="/work/"] [role="img"]')
+  const logos = page.locator('#works ~ * [role="img"], a[href^="/work/"] [role="img"]')
   const names = await logos.evaluateAll((items) => items.map((item) => item.getAttribute('aria-label') ?? ''))
 
   expect(names.length).toBeGreaterThan(0)
@@ -77,7 +77,7 @@ test('cards in a row start their text boxes at the same height', async ({ page }
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await openPage(page, '/', 'tr')
 
-  const cards = page.locator('#calismalar a')
+  const cards = page.locator('#works a')
   const tops = await Promise.all([1, 2, 3].map(async (i) => (await cards.nth(i).locator(':scope > div').nth(1).boundingBox())!.y))
   expect(Math.max(...tops) - Math.min(...tops)).toBeLessThanOrEqual(1)
 })
@@ -115,7 +115,7 @@ test.describe('work filter', () => {
 
   test('picked tags show studies carrying any of them', async ({ page }) => {
     const tags = dict.tr.dataTags
-    const cards = page.locator('#calismalar a')
+    const cards = page.locator('#works a')
     const expectCount = async (picked: (keyof typeof tags)[]) => {
       const count = studies.filter((s) => picked.length === 0 || s.tags.some((t) => picked.includes(t))).length
       await expect(cards).toHaveCount(count)
@@ -149,19 +149,19 @@ test.describe('work filter', () => {
     const empty = (Object.keys(tags) as (keyof typeof tags)[]).find((tag) => !used.has(tag))
     test.skip(!empty, 'her etiketin en az bir calismasi var')
     const full = studies[0].tags[0]
-    const status = page.locator('#calismalar [role="status"]')
+    const status = page.locator('#works [role="status"]')
 
     await openPage(page, '/', 'tr')
     await expect(status).toBeEmpty()
     await page.getByRole('button', { name: dict.tr.home.works.filter.toggle }).click()
 
     await pickTag(page, tags[empty!])
-    await expect(page.locator('#calismalar a')).toHaveCount(0)
+    await expect(page.locator('#works a')).toHaveCount(0)
     await expect(status).toHaveText(dict.tr.home.works.filter.empty)
 
     await pickTag(page, tags[full])
     await expect(status).toBeEmpty()
-    await expect(page.locator('#calismalar a').first()).toBeVisible()
+    await expect(page.locator('#works a').first()).toBeVisible()
   })
 
   // Landing'in Veri bandi her kategoriye bu adresle baglanir. Kimlikler ve
@@ -174,7 +174,7 @@ test.describe('work filter', () => {
       const tags = dict.tr.dataTags
       const count = studies.filter((study) => study.tags.includes(tag)).length
 
-      await openPage(page, `/?tag=${tag}#calismalar`, 'tr')
+      await openPage(page, `/?tag=${tag}#works`, 'tr')
 
       await expect(page.getByRole('button', { name: dict.tr.home.works.filter.toggle })).toHaveAttribute(
         'aria-expanded',
@@ -187,8 +187,8 @@ test.describe('work filter', () => {
         'aria-pressed',
         'false',
       )
-      await expect(page.locator('#calismalar a')).toHaveCount(count)
-      await expect(page.locator('#calismalar [role="status"]')).toHaveText(
+      await expect(page.locator('#works a')).toHaveCount(count)
+      await expect(page.locator('#works [role="status"]')).toHaveText(
         count === 0 ? dict.tr.home.works.filter.empty : '',
       )
     })
@@ -213,7 +213,7 @@ test.describe('work filter', () => {
   // Yanlis yazilmis ya da eskimis bir kategori sayfayi bozmaz, liste hic
   // secim yokmus gibi acilir.
   test('an unknown tag in the address is ignored', async ({ page }) => {
-    await openPage(page, '/?tag=nosuchtag#calismalar', 'tr')
+    await openPage(page, '/?tag=nosuchtag#works', 'tr')
 
     await expect(page.getByRole('button', { name: dict.tr.home.works.filter.toggle })).toHaveAttribute(
       'aria-expanded',
@@ -223,7 +223,7 @@ test.describe('work filter', () => {
       'aria-pressed',
       'true',
     )
-    await expect(page.locator('#calismalar a')).toHaveCount(studies.length)
+    await expect(page.locator('#works a')).toHaveCount(studies.length)
   })
 })
 
@@ -233,7 +233,7 @@ for (const lang of languages) {
   test(`${lang}: contact section leads to the contact page and offers the email`, async ({ page }) => {
     await openPage(page, '/', lang)
 
-    const contact = page.locator('#iletisim')
+    const contact = page.locator('#contact')
     await expect(contact.getByRole('heading', { level: 2 })).toHaveText(dict[lang].contact.title)
     await expect(contact.getByRole('link', { name: dict[lang].contact.action, exact: true })).toHaveAttribute(
       'href',

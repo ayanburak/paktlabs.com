@@ -12,7 +12,7 @@ import type { Service } from './types'
 export const database: Service = {
   summary: { tr: 'Verinin duracağı yapıyı kurar, kayıtları içine taşırız.', en: 'We build the structure your data lives in and move the records over.' },
   lede: { tr: 'Excel dosyalarına ya da dağınık sistemlere sığmayan veriniz için düzenli bir veritabanı kurar, eski kayıtları kayıpsız taşırız.', en: 'When your data outgrows spreadsheets and scattered systems, we build an orderly database and move the old records over without loss.' },
-  kunye: {
+  facts: {
     input: { tr: 'Mevcut dosyalar, eski sistemin dışa aktarımı', en: 'Your current files, an export of the old system' },
     output: { tr: 'Kurulu veritabanı, taşıma betikleri, şema belgesi', en: 'A running database, migration scripts, a schema document' },
     tools: 'PostgreSQL, SQLite, SQL Server, Python',

@@ -6,10 +6,10 @@ Yeni görseller `apps/landing/src/assets/illustrations/` altına eklenir. Öneri
 
 | Dosya | Eşleme |
 | --- | --- |
-| `inceleyin-tr.svg` | `tr.desktop` |
-| `inceleyin-en.svg` | `en.desktop` |
-| `inceleyin-mobile-tr.svg` | `tr.mobile` |
-| `inceleyin-mobile-en.svg` | `en.mobile` |
+| `disciplines-tr.svg` | `tr.desktop` |
+| `disciplines-en.svg` | `en.desktop` |
+| `disciplines-mobile-tr.svg` | `tr.mobile` |
+| `disciplines-mobile-en.svg` | `en.mobile` |
 
 Dosyalar bileşene statik olarak import edilir ve eşlemedeki ilgili değerler bu importlarla değiştirilir. Bir sürüm hazır değilse mevcut import o alanda korunur; henüz bulunmayan dosya yolları yazılmaz. Dosya eklemek tek başına eşlemeyi değiştirmez.
 

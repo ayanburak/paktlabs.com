@@ -148,7 +148,7 @@
   "service": {
     "back": "← Services",
     "tag": "Service",
-    "kunye": {
+    "facts": {
       "input": "You bring",
       "output": "We deliver",
       "tools": "Tools"

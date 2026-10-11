@@ -33,7 +33,7 @@ export function Work() {
   const plain = (list: readonly string[]) => list.map((label) => ({ label }))
 
   return (
-    <section id="isler" className={cx('full-bleed', styles.work)}>
+    <section id="work" className={cx('full-bleed', styles.work)}>
       <div ref={head.ref} className={cx('reveal', head.visible && 'in', styles.head)}>
         <span className="eyebrow">{work.eyebrow}</span>
         <h2>{work.title}</h2>

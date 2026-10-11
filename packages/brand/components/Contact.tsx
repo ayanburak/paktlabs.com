@@ -13,7 +13,7 @@ sitede birebir ayni gorunur.
 
 Bolumde form yok, tek dugme ziyaretciyi ana sitenin iletisim sayfasina
 goturur. Dogrudan yazmak isteyen icin e-posta adresi altta durur. Bolumun
-kimligi iletisim, sayfa icinden bu bolume baglanti verilebilir.
+kimligi contact, sayfa icinden bu bolume baglanti verilebilir.
 
 description: Iletisim sayfasina giden dugmeyi, e-posta adresini ve telefon figurunu yan yana gosteren ortak kapanis bolumu.
 */
@@ -36,7 +36,7 @@ export function Contact() {
   const main = useReveal<HTMLDivElement>()
 
   return (
-    <section id="iletisim" className={cx('full-bleed', styles.contact)}>
+    <section id="contact" className={cx('full-bleed', styles.contact)}>
       <div className={styles.inner}>
         <div ref={main.ref} className={cx('reveal', main.visible && 'in', styles.main)}>
           <span className="eyebrow">{contact.eyebrow}</span>

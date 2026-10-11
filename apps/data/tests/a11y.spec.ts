@@ -17,7 +17,7 @@ import { expect, test } from '@playwright/test'
 
 import { dict, languages, openPage } from './support'
 
-const pages = ['/', '/work/demo-veri', '/work/demo-veri/source', '/services/preparation', '/yok']
+const pages = ['/', '/work/demo-data', '/work/demo-data/source', '/services/preparation', '/yok']
 
 const headerLinks = [
   'https://data.paktlabs.com',

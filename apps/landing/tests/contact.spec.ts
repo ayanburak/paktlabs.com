@@ -90,13 +90,13 @@ test('each step shows its own drawing and back keeps the choice', async ({ page 
   const art = page.locator('main img')
   const next = new RegExp(t.actions.next)
 
-  await expect(art).toHaveAttribute('src', /iletisim-alan/)
+  await expect(art).toHaveAttribute('src', /contact-area/)
   await answer(page, [t.questions.area.options.data.label], next)
-  await expect(art).toHaveAttribute('src', /iletisim-durum/)
+  await expect(art).toHaveAttribute('src', /contact-stage/)
   await answer(page, [t.questions.stage.options.plan.label], next)
-  await expect(art).toHaveAttribute('src', /iletisim-zaman/)
+  await expect(art).toHaveAttribute('src', /contact-timing/)
   await answer(page, [t.questions.timing.options.month.label], next)
-  await expect(art).toHaveAttribute('src', /iletisim-siz/)
+  await expect(art).toHaveAttribute('src', /contact-details/)
 
   await page.getByRole('button', { name: new RegExp(t.actions.back) }).click()
   await expect(page.getByRole('radio', { name: t.questions.timing.options.month.label })).toBeChecked()
@@ -246,7 +246,7 @@ test('headings, landmarks and the decorative drawing', async ({ page }) => {
 // bu yuzden ilk adima hizli gecilip onceki cizimin kaldigi da olculur.
 test('slow drawings neither move the form nor leave the slot empty', async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 })
-  await page.route('**/iletisim-*.svg', async (route) => {
+  await page.route('**/contact-*.svg', async (route) => {
     await new Promise((resolve) => setTimeout(resolve, 800))
     await route.continue()
   })
@@ -256,15 +256,15 @@ test('slow drawings neither move the form nor leave the slot empty', async ({ pa
   const art = page.locator('main img')
   const formLeft = () => page.locator('main h2').evaluate((el) => Math.round(el.getBoundingClientRect().left))
 
-  await expect(art).toHaveAttribute('src', /iletisim-alan/)
+  await expect(art).toHaveAttribute('src', /contact-area/)
   const left = await formLeft()
   await answer(page, [t.questions.area.options.data.label], new RegExp(t.actions.next))
 
   // ikinci cizim henuz inmediyse ilki yerinde kalir, alan hic bos kalmaz
   await expect(art).toHaveCount(1)
   expect(await formLeft()).toBe(left)
-  await expect(art).toHaveAttribute('src', /iletisim-durum/)
+  await expect(art).toHaveAttribute('src', /contact-stage/)
   await answer(page, [t.questions.stage.options.plan.label, t.questions.timing.options.month.label], new RegExp(t.actions.next))
-  await expect(art).toHaveAttribute('src', /iletisim-siz/)
+  await expect(art).toHaveAttribute('src', /contact-details/)
   expect(await formLeft()).toBe(left)
 })

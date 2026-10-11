@@ -28,7 +28,7 @@ interface ChapterProps {
 
 // Metinler secili dilde hazir gelir, cerceve dil bilmez. Ekran okuyucu
 // numarayi atlar, bolumu basligiyla tanitir. id adresteki parca oldugu icin
-// icindekiler ve #sorun gibi bir baglanti dogrudan buraya gelir. Baslik satiri
+// icindekiler ve #problem gibi bir baglanti dogrudan buraya gelir. Baslik satiri
 // ve giris ekrana girerken ayri ayri belirir.
 export function Chapter({ id, number, label, title, lede, children }: ChapterProps) {
   const head = useReveal<HTMLElement>()

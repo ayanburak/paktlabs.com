@@ -1,8 +1,8 @@
 /*
 file: index.ts
-importable: demoVeri
+importable: demoData
 
-Demo Veri calismasinin kunye dosyasi. Listede gorunen bilgileri, verinin
+Demo Veri calismasinin tanim dosyasi. Listede gorunen bilgileri, verinin
 orijinal dilini ve kodun yerini tasir. Detay sayfasini ve kod sayfasini kendi
 dosyalarindan yalnizca sayfa acilirken yukler, metinleri ana pakete girmez.
 
@@ -11,8 +11,8 @@ description: Demo Veri calismasini veri sayfasindaki listeye ve detay sayfasina 
 
 import type { Study } from '../types'
 
-export const demoVeri: Study = {
-  slug: 'demo-veri',
+export const demoData: Study = {
+  slug: 'demo-data',
   number: '01',
   year: 2026,
   tags: ['quality', 'machineLearning'],

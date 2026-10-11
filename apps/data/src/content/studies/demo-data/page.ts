@@ -17,7 +17,7 @@ export const page: StudyPage = {
     tr: 'Bir yapı malzemesi distribütörünün ERP kayıtları ile üç tedarikçi kataloğunda aynı ürünü bulan, birleştiren ve her gece kendini güncelleyen bir eşleştirme hattı.',
     en: 'A matching pipeline that finds the same product across a building materials distributor’s ERP records and three supplier catalogs, merges it, and updates itself every night.',
   },
-  kunye: [
+  facts: [
     {
       label: { tr: 'Sektör', en: 'Sector' },
       value: { tr: 'Yapı malzemesi ve hırdavat dağıtımı', en: 'Building materials and hardware distribution' },
@@ -51,7 +51,7 @@ export const page: StudyPage = {
   },
   chapters: [
     {
-      id: 'sorun',
+      id: 'problem',
       label: { tr: 'Sorun', en: 'Problem' },
       title: { tr: 'Aynı vida, dört farklı stok kartı', en: 'One screw, four different stock cards' },
       lede: {
@@ -139,7 +139,7 @@ export const page: StudyPage = {
       ],
     },
     {
-      id: 'veri',
+      id: 'data',
       label: { tr: 'Eldeki veri', en: 'The data' },
       title: { tr: 'Dört kaynak, dört ayrı yazım alışkanlığı', en: 'Four sources, four ways of writing' },
       lede: {
@@ -237,7 +237,7 @@ export const page: StudyPage = {
       ],
     },
     {
-      id: 'hat',
+      id: 'pipeline',
       label: { tr: 'Çözüm hattı', en: 'The pipeline' },
       title: { tr: 'Altı istasyonlu bir eşleştirme hattı', en: 'A matching pipeline with six stations' },
       lede: {
@@ -359,7 +359,7 @@ export const page: StudyPage = {
       ],
     },
     {
-      id: 'esik',
+      id: 'threshold',
       label: { tr: 'Model ve eşik', en: 'Model and thresholds' },
       title: { tr: 'Otomatik karar ve insan incelemesi', en: 'Automatic decisions and human review' },
       lede: {
@@ -529,7 +529,7 @@ export const page: StudyPage = {
       ],
     },
     {
-      id: 'kararlar',
+      id: 'decisions',
       label: { tr: 'Kararlar', en: 'Decisions' },
       title: { tr: 'Neyi seçtik, neyi bilerek seçmedik', en: 'What we chose, and what we chose not to' },
       lede: {
@@ -580,7 +580,7 @@ export const page: StudyPage = {
       ],
     },
     {
-      id: 'teslim',
+      id: 'delivery',
       label: { tr: 'Teslim ve takvim', en: 'Delivery and schedule' },
       title: { tr: 'Yedi haftada ne teslim edildi', en: 'What was delivered in seven weeks' },
       lede: {
@@ -675,7 +675,7 @@ export const page: StudyPage = {
       ],
     },
     {
-      id: 'sonuc',
+      id: 'result',
       label: { tr: 'Sonuç ve sınırlar', en: 'Results and limits' },
       title: { tr: 'Ne değişti, nerede hâlâ dikkat lazım', en: 'What changed, and where care is still needed' },
       lede: {

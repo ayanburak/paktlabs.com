@@ -17,7 +17,7 @@ export function About() {
   const { ref, visible } = useReveal<HTMLDivElement>()
 
   return (
-    <section id="hakkinda" className={cx('full-bleed', styles.about)}>
+    <section id="about" className={cx('full-bleed', styles.about)}>
       <div className={styles.grid}>
         <div ref={ref} className={cx('reveal', visible && 'in', styles.copy)}>
           <span className="eyebrow">{about.eyebrow}</span>

@@ -53,7 +53,7 @@ export function StudySource() {
             tags={source.tags}
             title={title}
             lede={source.lede[language]}
-            kunye={source.kunye.map((row) => ({ label: row.label[language], value: row.value[language] }))}
+            facts={source.facts.map((row) => ({ label: row.label[language], value: row.value[language] }))}
           />
           <Body
             chapters={source.chapters}

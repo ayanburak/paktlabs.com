@@ -13,9 +13,9 @@ description: data sayfalarinin ust bar, alt bilgi ve sayfa basligi testleri.
 
 import { expect, test } from '@playwright/test'
 
-import { demoVeri } from '../src/content/studies/demo-veri'
-import { page as demoPage } from '../src/content/studies/demo-veri/page'
-import { source as demoSource } from '../src/content/studies/demo-veri/source'
+import { demoData } from '../src/content/studies/demo-data'
+import { page as demoPage } from '../src/content/studies/demo-data/page'
+import { source as demoSource } from '../src/content/studies/demo-data/source'
 
 import { dict, languages, openPage } from './support'
 
@@ -54,8 +54,8 @@ for (const lang of languages) {
 // dosyalarindan kurar. Dil sayfa acikken degistirilir, cunku asil risk
 // basligin ilk acilista dogru gelip dil degisince eski dilde kalmasi.
 const studyPages = [
-  ['/work/demo-veri', demoVeri.title, demoPage.lede],
-  ['/work/demo-veri/source', demoSource.title, demoSource.lede],
+  ['/work/demo-data', demoData.title, demoPage.lede],
+  ['/work/demo-data/source', demoSource.title, demoSource.lede],
 ] as const
 
 for (const [path, title, lede] of studyPages) {

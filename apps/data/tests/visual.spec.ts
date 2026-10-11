@@ -48,8 +48,8 @@ const longPageSizes = [
 
 const pages = [
   ['home', '/', sizes],
-  ['study', '/work/demo-veri', longPageSizes],
-  ['source', '/work/demo-veri/source', longPageSizes],
+  ['study', '/work/demo-data', longPageSizes],
+  ['source', '/work/demo-data/source', longPageSizes],
   ['service', '/services/preparation', longPageSizes],
   ['notfound', '/yok', sizes],
 ] as const

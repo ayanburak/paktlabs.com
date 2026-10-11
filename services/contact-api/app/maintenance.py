@@ -33,7 +33,7 @@ log = logging.getLogger("contact")
 
 # Iki haftalik yedek, bir sorun fark edilene kadar gecebilecek sureye yeter
 # ve kisisel verinin yedeklerde uzun kalmasini onler.
-YEDEK_GUNU = 14
+BACKUP_DAYS = 14
 
 
 # Bir mesajin gonderimi basarisiz olursa digerleri yine denenir.
@@ -60,7 +60,7 @@ def retry(store: MessageStore, mailer: Mailer) -> int:
 def backup(store: MessageStore, folder: Path, today: date) -> None:
     """Gunun yedegini alir ve on dort gunden eski yedekleri siler."""
     store.backup(folder / f"messages-{today.isoformat()}.sqlite3")
-    for old in sorted(folder.glob("messages-*.sqlite3"))[:-YEDEK_GUNU]:
+    for old in sorted(folder.glob("messages-*.sqlite3"))[:-BACKUP_DAYS]:
         old.unlink()
 
 

@@ -12,7 +12,7 @@ import type { Service } from './types'
 export const quality: Service = {
   summary: { tr: 'Hataları ölçer, kaynağını bulur ve kurala bağlarız.', en: 'We measure errors, trace them to their source and turn them into rules.' },
   lede: { tr: 'Raporlarınızdaki sayıların neden birbirini tutmadığını bulur, hataları ölçer ve tekrar etmemeleri için denetim kurallarına bağlarız.', en: 'We find out why the numbers in your reports disagree, measure the errors and set up checks so they do not come back.' },
-  kunye: {
+  facts: {
     input: { tr: 'Raporlar, kaynak tablolar, iş kuralları', en: 'Reports, source tables, business rules' },
     output: { tr: 'Kalite raporu, denetim kuralları, düzeltme önerileri', en: 'A quality report, automated checks, suggested fixes' },
     tools: 'Python, SQL, pytest',

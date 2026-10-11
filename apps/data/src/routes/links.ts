@@ -7,8 +7,8 @@ hizmetler bolumlerinin kimligi, kategori anahtarinin adi ve bu parcalardan
 kurulan yollar burada durur. Bolum kimliklerini ve yollari kullanan her yer
 buradan alir:
 
-    worksPath()          // /#calismalar
-    worksPath('quality') // /?tag=quality#calismalar
+    worksPath()          // /#works
+    worksPath('quality') // /?tag=quality#works
 
 description: Veri sitesinin bolum kimliklerini, kategori anahtarini ve bunlardan kurulan sayfa ici yollari tutan modul.
 */
@@ -23,8 +23,8 @@ import { dataTags, dataTagSlugs, type DataTag } from '@paktlabs/brand/content/da
 // Ana sayfadaki iki bolumun kimligi. Bolum kimligi, hero dugmesi ve geri
 // donus baglantilari ayni degeri okur. Deger degisirse eski baglantilar
 // sayfayi en ustten acar.
-export const worksAnchor = 'calismalar'
-export const servicesAnchor = 'hizmetler'
+export const worksAnchor = 'works'
+export const servicesAnchor = 'services'
 
 // Adresteki kategori anahtarinin adi. Calisma listesi bu adla okur, yolu
 // worksPath bu adla kurar, ikisi ayri yerlerde yazilsaydi biri degisince

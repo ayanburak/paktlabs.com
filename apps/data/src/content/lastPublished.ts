@@ -8,7 +8,7 @@ Yeni bir calisma yayinlandiginda Burak bu tarihi elle gunceller.
 description: Son yayinlanan calismanin tarihini YYYY-AA-GG biciminde tutan modul.
 */
 
-// Tarih elle yaziliyor, calismalarin kunyesinden hesaplanmiyor. Kunyelerde
+// Tarih elle yaziliyor, calismalarin facts alanindan hesaplanmiyor. Facts alanlarinda
 // yalnizca yil var, gun ve ay icin her calismaya ayri bir alan acmak bugun
 // tek bir kutu icin fazla olurdu, Burak'in karari boyle. Tarih dilden
 // bagimsiz oldugu icin sozlukte degil burada, degisince tek dosya degisir.

@@ -12,7 +12,7 @@ import type { Service } from './types'
 export const analysis: Service = {
   summary: { tr: 'Sorunuzu veriye sorar, cevabı sınırlarıyla anlatırız.', en: 'We put your question to the data and report the answer with its limits.' },
   lede: { tr: 'İşinizle ilgili somut bir soruyu veriye sorar, cevabı sayılarla ve nerede yanılabileceğiyle birlikte anlatırız.', en: 'We put a concrete business question to your data and report the answer in numbers, together with where it might be wrong.' },
-  kunye: {
+  facts: {
     input: { tr: 'Bir soru, ilgili veri, alan bilgisi', en: 'A question, the related data, domain knowledge' },
     output: { tr: 'Analiz raporu, tekrar çalıştırılabilir defter', en: 'An analysis report, a notebook you can rerun' },
     tools: 'Python, pandas, SQL, Jupyter',

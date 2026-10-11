@@ -9,7 +9,7 @@ klasorunde yazilir ve buradaki listeye eklenir.
 description: Calismalarin listesini ve slug ile calisma bulan fonksiyonu disari acan modul.
 */
 
-import { demoVeri } from './demo-veri'
+import { demoData } from './demo-data'
 import type { Study } from './types'
 
 // Liste numaraya gore siralanir. Kartlar ve sonraki calisma baglantisi bu
@@ -18,9 +18,9 @@ import type { Study } from './types'
 // NOTE: 2026-10-11'e kadar listede mockup'tan tasinan lorem yer tutucular da
 // vardi, Burak'in karariyla kaldirildi. 00 numarasi one cikan calismaya
 // ayrilmisti, bugun hicbir calismada feature alani yok ve one cikan kart
-// gorunmuyor. Kartin tasarimi StudyCard'da duruyor, bir calismanin kunyesine
+// gorunmuyor. Kartin tasarimi StudyCard'da duruyor, bir calismanin facts alanina
 // feature yazilinca yeniden gorunur.
-export const studies: Study[] = [demoVeri].sort((a, b) => a.number.localeCompare(b.number))
+export const studies: Study[] = [demoData].sort((a, b) => a.number.localeCompare(b.number))
 
 // Adresteki slug her zaman bir calismaya karsilik gelmeyebilir, eski ya da
 // yanlis yazilmis bir baglanti olabilir. O durumda undefined doner ve rota

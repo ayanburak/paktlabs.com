@@ -19,10 +19,10 @@ import { Page } from '@paktlabs/brand/components/Page'
 import { useLanguage } from '@paktlabs/brand/i18n/language'
 import { cx } from '@paktlabs/brand/lib/cx'
 
-import alanSvg from '@/assets/illustrations/iletisim-alan.svg'
-import durumSvg from '@/assets/illustrations/iletisim-durum.svg'
-import sizSvg from '@/assets/illustrations/iletisim-siz.svg'
-import zamanSvg from '@/assets/illustrations/iletisim-zaman.svg'
+import areaSvg from '@/assets/illustrations/contact-area.svg'
+import stageSvg from '@/assets/illustrations/contact-stage.svg'
+import detailsSvg from '@/assets/illustrations/contact-details.svg'
+import timingSvg from '@/assets/illustrations/contact-timing.svg'
 import { useDict } from '@/i18n'
 
 import { ChoiceStep } from './ChoiceStep'
@@ -41,10 +41,10 @@ type Status = 'editing' | 'sending' | 'sent' | 'failed'
 // ustunde duruyor, sayfa hepsini ayni yukseklikte ve ayni genislikteki bir
 // alanda gosterir. Gonderildi ekraninda son adimin cizimi kalir.
 const stepArt = {
-  area: alanSvg,
-  stage: durumSvg,
-  timing: zamanSvg,
-  details: sizSvg,
+  area: areaSvg,
+  stage: stageSvg,
+  timing: timingSvg,
+  details: detailsSvg,
 }
 
 // Sayfa acilip ilk cizim geldikten sonra oteki cizimler arka planda indirilir.

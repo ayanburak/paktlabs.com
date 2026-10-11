@@ -1,6 +1,6 @@
 /*
 file: types.ts
-importable: Localized, Lazy, Study, StudyListing, StudyPage, Chapter, CodeLocation, StudyCard, SourcePage, StudyFeature, KunyeRow
+importable: Localized, Lazy, Study, StudyListing, StudyPage, Chapter, CodeLocation, StudyCard, SourcePage, StudyFeature, FactRow
 
 Bir calisma iki kattan olusur. StudyListing veri sayfasindaki listede gorunen
 kisimdir: adresteki slug, numara, yil, etiketler, baslik ve kart metni. Study
@@ -38,10 +38,10 @@ import type { Block } from './blocks'
 // metin, ama paragraf listesi gibi baska bir sey de verilebilir.
 export type Localized<T = string> = Record<Language, T>
 
-// Kunye satirlari calismadan calismaya ve sayfadan sayfaya degisir. Detay
+// Facts satirlari calismadan calismaya ve sayfadan sayfaya degisir. Detay
 // sayfasi sektor, sure, girdi ve teslimi, kod sayfasi dil ve kutuphaneleri
 // gosterir. Bu yuzden sabit alanlar yerine etiket ve deger ciftleri tutuluyor.
-export interface KunyeRow {
+export interface FactRow {
   label: Localized
   value: Localized
 }
@@ -77,7 +77,7 @@ export interface Chapter {
 // istendigi yazar.
 export interface StudyPage {
   lede: Localized
-  kunye: KunyeRow[]
+  facts: FactRow[]
   summary: {
     problem: Localized
     approach: Localized
@@ -91,7 +91,7 @@ export interface StudyPage {
 }
 
 // Kod sayfasinin icerigi, calismanin source.ts dosyasi bu tipe uyar. Detay
-// sayfasiyla ayni iskeleti kullanir: kapak, kunye, icindekiler ve numarali
+// sayfasiyla ayni iskeleti kullanir: kapak, facts, icindekiler ve numarali
 // bolumler. Bolumler detay sayfasindakiyle ayni Chapter tipindedir, icine kod
 // dosyasi, terminal ciktisi ve veri dosyasi gibi parcalar konur. tags kapaktaki
 // arac adlaridir, ornegin Python ve SQL, urun adi olduklari icin iki dilde
@@ -100,20 +100,20 @@ export interface SourcePage {
   title: Localized
   lede: Localized
   tags: string[]
-  kunye: KunyeRow[]
+  facts: FactRow[]
   chapters: Chapter[]
 }
 
 // One cikan kartin sag kutusu. Araclar urun adlari oldugu icin iki dilde
 // ayni kalir, tek bir listede durur.
 export interface StudyFeature {
-  facts: KunyeRow[]
+  facts: FactRow[]
   tools: TechName[]
 }
 
 // Ancak gerektiginde yuklenen bir icerik. Detay ve kod sayfalarinin metni
 // ana pakete girmez, sayfa acilirken rota yukleyicisi bu fonksiyonu cagirir.
-// Calismanin kunye dosyasinda import('./page') ile yazilir, boylece Vite
+// Calismanin tanim dosyasinda import('./page') ile yazilir, boylece Vite
 // metni ayri bir parcaya ayirir ve derleyici yine icerigin tipini denetler.
 export type Lazy<T> = () => Promise<T>
 
@@ -139,7 +139,7 @@ export interface StudyListing {
 // sitenin dilinde gosterilir, bu dil ondan farkliysa ilk bolumden once veri
 // dili bolumu cikar. author calismayi hazirlayan kisinin kimligidir, yazar
 // kutusu her detay sayfasinda bulunur. Detay sayfasinin metni page ile
-// ancak sayfa acilirken yuklenir, liste yalnizca bu dosyadaki kunyeyi okur.
+// ancak sayfa acilirken yuklenir, liste yalnizca bu dosyadaki facts alanini okur.
 export interface Study extends StudyListing {
   author: AuthorId
   dataLanguage: Language

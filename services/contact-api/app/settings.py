@@ -28,7 +28,7 @@ from typing import Literal, get_args
 
 # Iki yil. Formun altindaki bilgilendirme metni bu sureyi soyler, degisirse
 # metin de degismeli.
-VARSAYILAN_SAKLAMA_GUNU = 730
+DEFAULT_KEEP_DAYS = 730
 
 MailerKind = Literal["smtp", "console"]
 
@@ -74,7 +74,7 @@ def load_settings(env: Mapping[str, str] = os.environ) -> Settings:
     return Settings(
         db_path=Path(env.get("CONTACT_DB_PATH", "data/messages.sqlite3")),
         mail_to=env.get("CONTACT_MAIL_TO", "info@paktlabs.com"),
-        keep_days=int(env.get("CONTACT_KEEP_DAYS", VARSAYILAN_SAKLAMA_GUNU)),
+        keep_days=int(env.get("CONTACT_KEEP_DAYS", DEFAULT_KEEP_DAYS)),
         mailer=mailer,
         smtp_host=env.get("SMTP_HOST") or None,
         smtp_port=int(env.get("SMTP_PORT", "465")),

@@ -3,7 +3,7 @@ file: types.ts
 importable: Service
 
 Bir hizmetin icerigi. Hizmet sayfasi her hizmette ayni uc bolumden olusur:
-kapsam, surec ve teslim. Bolumlerin ve kunye satirlarinin adlari alti
+kapsam, surec ve teslim. Bolumlerin ve facts satirlarinin adlari alti
 sayfada ayni oldugu icin sitenin sozlugunde bir kez durur, bu dosya yalnizca
 hizmete ozel metni tasir. Her metin iki dili yan yana tasir, bir dil eksik
 kalirsa derleme hata verir.
@@ -22,7 +22,7 @@ import type { Localized } from '../studies/types'
 export interface Service {
   summary: Localized
   lede: Localized
-  kunye: {
+  facts: {
     input: Localized
     output: Localized
     tools: string

@@ -148,7 +148,7 @@
   "service": {
     "back": "← Hizmetler",
     "tag": "Hizmet",
-    "kunye": {
+    "facts": {
       "input": "Getirdiğiniz",
       "output": "Teslim ettiğimiz",
       "tools": "Araçlar"

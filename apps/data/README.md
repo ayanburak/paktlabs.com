@@ -213,7 +213,7 @@ Her metin iki dili yan yana taşır. Aşağıdaki örneklerde kısalık için ya
 
 ### Sayfa iskeleti
 
-`page.ts` iskeletin içeriğini taşır. `lede` kapaktaki tek cümlelik açıklama ve sekmenin açıklamasıdır. `kunye` kapağın sağındaki satırlardır. `summary` Sorun, Yaklaşım ve Sonuç bandıdır. `chapters` numaralı bölümlerdir. `closing` kapanış bölümünün sorusu ve yanındaki çizimin yeridir, çizim gelene kadar alanın içinde hangi çizimin istendiği yazar. Yazar ise künye dosyasında `author` kimliğiyle anılır, adı ve e-postası `src/content/authors.ts` içinde durur. Meraklısına kartının metni çalışmaya değil sitenin sözlüğüne aittir ve kodun yerine göre seçilir.
+`page.ts` iskeletin içeriğini taşır. `lede` kapaktaki tek cümlelik açıklama ve sekmenin açıklamasıdır. `facts` kapağın sağındaki satırlardır. `summary` Sorun, Yaklaşım ve Sonuç bandıdır. `chapters` numaralı bölümlerdir. `closing` kapanış bölümünün sorusu ve yanındaki çizimin yeridir, çizim gelene kadar alanın içinde hangi çizimin istendiği yazar. Yazar ise künye dosyasında `author` kimliğiyle anılır, adı ve e-postası `src/content/authors.ts` içinde durur. Meraklısına kartının metni çalışmaya değil sitenin sözlüğüne aittir ve kodun yerine göre seçilir.
 
 ```ts
 closing: {
@@ -228,7 +228,7 @@ Bölümün `id`'si adresteki parçadır, içindekiler bölüme onunla atlar. Say
 
 ```ts
 {
-  id: 'sorun',
+  id: 'problem',
   label: { tr: 'Sorun', en: 'Problem' },
   title: { tr: 'Aynı vida, dört farklı stok kartı', en: 'One screw, four different stock cards' },
   lede: { tr: '…', en: '…' },
@@ -396,7 +396,7 @@ export const source: SourcePage = {
   title: { tr: '…', en: '…' },
   lede: { tr: '…', en: '…' },
   tags: ['Python', 'SQL', 'CSV'],
-  kunye: [{ label: { tr: 'Dil', en: 'Language' }, value: { tr: 'Python 3.12', en: 'Python 3.12' } }],
+  facts: [{ label: { tr: 'Dil', en: 'Language' }, value: { tr: 'Python 3.12', en: 'Python 3.12' } }],
   chapters: [],
 }
 ```

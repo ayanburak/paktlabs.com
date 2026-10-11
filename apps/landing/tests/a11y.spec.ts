@@ -89,8 +89,8 @@ test('heading order and landmarks', async ({ page }) => {
   await expect(page.locator('body header, body footer')).toHaveCount(2)
   await expect(page.locator('main header, main footer')).toHaveCount(0)
 
-  await expect(page.locator('#disiplinler picture img')).toHaveAttribute('alt', dict.tr.disciplines.artAlt)
-  for (const img of await page.locator('main img:not(#disiplinler img)').all()) {
+  await expect(page.locator('#disciplines picture img')).toHaveAttribute('alt', dict.tr.disciplines.artAlt)
+  for (const img of await page.locator('main img:not(#disciplines img)').all()) {
     await expect(img).toHaveAttribute('alt', '')
     await expect(img).toHaveAttribute('aria-hidden', 'true')
   }

@@ -23,7 +23,7 @@ export const source: SourcePage = {
     en: 'Code excerpts and data samples from the product catalog deduplication work that were approved for sharing. The code is shortened for reading, the full files in the repository are longer.',
   },
   tags: ['Python', 'SQL', 'CSV'],
-  kunye: [
+  facts: [
     {
       label: { tr: 'Dil', en: 'Language' },
       value: { tr: 'Python 3.12, SQL', en: 'Python 3.12, SQL' },
@@ -43,7 +43,7 @@ export const source: SourcePage = {
   ],
   chapters: [
     {
-      id: 'depo',
+      id: 'repository',
       label: { tr: 'Depo yapısı', en: 'Repository' },
       title: { tr: 'Teslim edilen deponun yapısı', en: 'Structure of the delivered repository' },
       lede: {
@@ -101,7 +101,7 @@ export const source: SourcePage = {
       ],
     },
     {
-      id: 'dogrulama',
+      id: 'validation',
       label: { tr: 'Doğrulama', en: 'Validation' },
       title: { tr: 'Doğrulama kuralları', en: 'Validation rules' },
       lede: {
@@ -111,7 +111,7 @@ export const source: SourcePage = {
       blocks: [{ type: 'code', path: 'rules/catalog.py' }],
     },
     {
-      id: 'normalizasyon',
+      id: 'normalization',
       label: { tr: 'Normalizasyon', en: 'Normalisation' },
       title: { tr: 'Ad, ölçü ve birim ayrıştırma', en: 'Parsing names, sizes and units' },
       lede: {
@@ -121,7 +121,7 @@ export const source: SourcePage = {
       blocks: [{ type: 'code', path: 'pipeline/normalize.py' }],
     },
     {
-      id: 'aday',
+      id: 'candidates',
       label: { tr: 'Aday seçimi', en: 'Candidate selection' },
       title: { tr: 'Aday çiftlerin seçilmesi', en: 'Choosing candidate pairs' },
       lede: {
@@ -145,7 +145,7 @@ export const source: SourcePage = {
       ],
     },
     {
-      id: 'kume',
+      id: 'clusters',
       label: { tr: 'Kümeleme', en: 'Clustering' },
       title: { tr: 'Ürün kümelerinin kurulması', en: 'Building product clusters' },
       lede: {
@@ -155,7 +155,7 @@ export const source: SourcePage = {
       blocks: [{ type: 'code', path: 'pipeline/cluster.py' }],
     },
     {
-      id: 'veritabani',
+      id: 'database',
       label: { tr: 'Veritabanı', en: 'Database' },
       title: { tr: 'Tablolar ve fiyat karşılaştırma sorgusu', en: 'Tables and the price comparison query' },
       lede: {
@@ -168,7 +168,7 @@ export const source: SourcePage = {
       ],
     },
     {
-      id: 'veri',
+      id: 'data',
       label: { tr: 'Veri örnekleri', en: 'Data samples' },
       title: { tr: 'İndirilebilir veri örnekleri', en: 'Downloadable data samples' },
       lede: {

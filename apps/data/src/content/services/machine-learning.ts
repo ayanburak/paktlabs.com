@@ -12,7 +12,7 @@ import type { Service } from './types'
 export const machineLearning: Service = {
   summary: { tr: 'Elle verilen kararları öğrenen ve ölçülen modeller kurarız.', en: 'We build models that learn decisions made by hand, and measure them.' },
   lede: { tr: 'Her gün elle verilen bir kararı geçmiş örneklerden öğrenen bir model kurar, ne kadar doğru çalıştığını ölçer ve işin içine yerleştiririz.', en: 'We build a model that learns a decision made by hand every day from past examples, measure how well it works and fit it into your workflow.' },
-  kunye: {
+  facts: {
     input: { tr: 'Geçmiş kararlar ve örnekler, karar kuralları', en: 'Past decisions and examples, decision rules' },
     output: { tr: 'Eğitilmiş model, değerlendirme raporu, kullanım kodu', en: 'A trained model, an evaluation report, the code to run it' },
     tools: 'Python, scikit-learn, pandas',

@@ -10,7 +10,7 @@ code/en/rules/catalog.py. Iki dilin dosyalari ayni yollarda bulunur.
 Dosyalarin nereden geldigini StudyFiles soyut sinifi saklar. Sayfalar
 dosyalari ondan bir kerede alir, parcalar dosyayi tur ve yoluyla ister:
 
-    const files = await assetFiles.load('demo-veri')
+    const files = await assetFiles.load('demo-data')
     files.tr[fileKey('data', 'raw-records.csv')].text
 
 description: Calisma dosyalarinin tiplerini ve onlari veren soyut sinifi tanimlayan modul.

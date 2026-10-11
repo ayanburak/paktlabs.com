@@ -12,7 +12,7 @@ import type { Service } from './types'
 export const preparation: Service = {
   summary: { tr: 'Dağınık kayıtları birleştirir, tek bir düzene getiririz.', en: 'We merge scattered records and bring them into one shape.' },
   lede: { tr: 'Farklı kaynaklardan gelen dağınık kayıtları birleştirir, temizler ve analiz ile raporlamaya hazır tek bir düzene getiririz.', en: 'We merge, clean and shape scattered records from different sources into one form that is ready for analysis and reporting.' },
-  kunye: {
+  facts: {
     input: { tr: 'Excel dosyaları, dışa aktarımlar, veritabanı kayıtları', en: 'Excel files, exports, database records' },
     output: { tr: 'Temiz veri seti, dönüşüm kodu, kısa rapor', en: 'A clean data set, the transformation code, a short report' },
     tools: 'Python, pandas, SQL',

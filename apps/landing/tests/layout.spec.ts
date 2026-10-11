@@ -51,11 +51,11 @@ async function measure(page: Page) {
     const heroAreaCenter =
       (heroBox.top + parseFloat(heroStyle.paddingTop) + heroBox.bottom - parseFloat(heroStyle.borderBottomWidth)) / 2
     const centerOf = (b: Box) => (b.top + b.bottom) / 2
-    const discArt = document.querySelector('#disiplinler picture img')!
-    const cards = document.querySelector('#disiplinler a')!.parentElement!
+    const discArt = document.querySelector('#disciplines picture img')!
+    const cards = document.querySelector('#disciplines a')!.parentElement!
 
-    const bands = [...document.querySelectorAll('#isler h3')].map((title) => {
-      const band = title.closest('#isler > div')!
+    const bands = [...document.querySelectorAll('#work h3')].map((title) => {
+      const band = title.closest('#work > div')!
       const art = band.querySelector(':scope > img')!
       const word = title.parentElement!
       const artBox = box(art)

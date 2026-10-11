@@ -11,8 +11,8 @@ import { useLanguage } from '@paktlabs/brand/i18n/language'
 import type { Language } from '@paktlabs/brand/i18n/language'
 import { cx } from '@paktlabs/brand/lib/cx'
 
-import inceleyinMobileSvg from '@/assets/illustrations/inceleyin-mobile.svg'
-import inceleyinSvg from '@/assets/illustrations/inceleyin.svg'
+import disciplinesMobileSvg from '@/assets/illustrations/disciplines-mobile.svg'
+import disciplinesSvg from '@/assets/illustrations/disciplines.svg'
 import { DisciplineCard } from '@/components/DisciplineCard'
 import { useDict } from '@/i18n'
 
@@ -20,8 +20,8 @@ import styles from './Disciplines.module.css'
 
 // Dile ozel dosyalar hazir olana kadar iki dil de mevcut gorselleri kullanir.
 const illustrations = {
-  tr: { desktop: inceleyinSvg, mobile: inceleyinMobileSvg },
-  en: { desktop: inceleyinSvg, mobile: inceleyinMobileSvg },
+  tr: { desktop: disciplinesSvg, mobile: disciplinesMobileSvg },
+  en: { desktop: disciplinesSvg, mobile: disciplinesMobileSvg },
 } satisfies Record<Language, { desktop: string; mobile: string }>
 
 export function Disciplines() {
@@ -30,7 +30,7 @@ export function Disciplines() {
   const illustration = illustrations[language]
 
   return (
-    <section id="disiplinler" className={cx('full-bleed', styles.disciplines)}>
+    <section id="disciplines" className={cx('full-bleed', styles.disciplines)}>
       <div className={styles.wrap}>
         {/* Tasarimda bu bandin gorunen basligi yok. Kartlarin h3'leri bir ust
             bolumun basligina bagli kalmasin diye baslik sadece ekran okuyucuya var. */}

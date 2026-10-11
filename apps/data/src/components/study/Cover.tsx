@@ -3,12 +3,12 @@ file: Cover.tsx
 importable: Cover, CoverCrumb, CoverRow
 
 Calisma sayfalarinin acilis yuzu. Solda bir donus baglantisi, etiketler,
-baslik ve tek cumlelik aciklama, sagda kunye durur. Detay sayfasi, kod
+baslik ve tek cumlelik aciklama, sagda facts durur. Detay sayfasi, kod
 sayfasi ve hizmet sayfalari ayni kapagi kullanir, yalnizca icerigi degisir. Landing ve veri
 sayfasindaki hero'lar gibi ekrani kaplar ama ortak hero yerlesimini
-kullanmaz, cunku burada cizim yok, ikinci sutunda kunye var.
+kullanmaz, cunku burada cizim yok, ikinci sutunda facts var.
 
-description: Calisma sayfalarinin kapagini ve kunyesini gosteren bolum.
+description: Calisma sayfalarinin kapagini ve facts alanini gosteren bolum.
 */
 
 import { TagList } from '@/components/TagList'
@@ -29,20 +29,20 @@ interface CoverProps {
   tags: string[]
   title: string
   lede: string
-  kunye: CoverRow[]
+  facts: CoverRow[]
 }
 
-// Kunyenin bir satiri, secili dilde.
+// Facts alaninin bir satiri, secili dilde.
 export interface CoverRow {
   label: string
   value: string
 }
 
-// Butun metinler, kunye dahil, secili dilde hazir gelir, kapak dil bilmez.
-// Kunye satirlarini sayfa kendi icerigine gore kurar. Konum satirindaki ad
-// baglanti degildir. Kunye satirlarinin sayisi ve adlari sayfadan gelir, her
+// Butun metinler, facts dahil, secili dilde hazir gelir, kapak dil bilmez.
+// Facts satirlarini sayfa kendi icerigine gore kurar. Konum satirindaki ad
+// baglanti degildir. Facts satirlarinin sayisi ve adlari sayfadan gelir, her
 // satir bir terim ve aciklama cifti oldugu icin dl ile yazilir.
-export function Cover({ crumb, tags, title, lede, kunye }: CoverProps) {
+export function Cover({ crumb, tags, title, lede, facts }: CoverProps) {
   const { study: dict } = useDict()
 
   return (
@@ -58,8 +58,8 @@ export function Cover({ crumb, tags, title, lede, kunye }: CoverProps) {
           <h1 className={styles.title}>{title}</h1>
           <p className={styles.lede}>{lede}</p>
         </div>
-        <dl className={styles.kunye}>
-          {kunye.map((row) => (
+        <dl className={styles.facts}>
+          {facts.map((row) => (
             <div key={row.label}>
               <dt>{row.label}</dt>
               <dd>{row.value}</dd>

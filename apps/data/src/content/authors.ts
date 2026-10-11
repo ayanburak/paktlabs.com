@@ -2,7 +2,7 @@
 file: authors.ts
 importable: authors, AuthorId
 
-Calismalari hazirlayan kisiler. Bir calismanin kunye dosyasi yazarini
+Calismalari hazirlayan kisiler. Bir calismanin tanim dosyasi yazarini
 kimligiyle anar, detay sayfasindaki yazar kutusu adini, e-postasini ve
 profil adresini buradan alir. Ayni kisi birden fazla calisma yazdiginda
 bilgisi tek yerde durur.

@@ -14,11 +14,11 @@ description: data sitesindeki calisma detay sayfasinin davranis testleri.
 
 import { expect, test } from '@playwright/test'
 
-import { page as demoPage } from '../src/content/studies/demo-veri/page'
+import { page as demoPage } from '../src/content/studies/demo-data/page'
 
 import { dict, languages, openPage } from './support'
 
-const path = '/work/demo-veri'
+const path = '/work/demo-data'
 const chapters = demoPage.chapters
 
 for (const lang of languages) {
@@ -54,7 +54,7 @@ for (const lang of languages) {
 test('tr: the data language chapter is absent when the data is already Turkish', async ({ page }) => {
   await openPage(page, path, 'tr')
 
-  await expect(page.locator('#veri-dili')).toHaveCount(0)
+  await expect(page.locator('#data-language')).toHaveCount(0)
 })
 
 test('en: the data language switch shows the original tables and keeps the site in English', async ({ page }) => {
@@ -63,7 +63,7 @@ test('en: the data language switch shows the original tables and keeps the site 
   const text = dict.en.study.dataLanguage
   const translated = page.getByRole('button', { name: `${text.translated} · ${text.languages.en}` })
   const original = page.getByRole('button', { name: `${text.original} · ${text.languages.tr}` })
-  const firstSheet = page.locator('#sorun details').first()
+  const firstSheet = page.locator('#problem details').first()
 
   await expect(translated).toHaveAttribute('aria-pressed', 'true')
   await expect(firstSheet).toContainText('combined_raw_records.xlsx')
@@ -86,19 +86,19 @@ test('the data language returns to the site language when the site language chan
     'aria-pressed',
     'true',
   )
-  await expect(page.locator('#sorun details').first()).toContainText('combined_raw_records.xlsx')
+  await expect(page.locator('#problem details').first()).toContainText('combined_raw_records.xlsx')
 })
 
 test('details boxes and station strips open and close', async ({ page }) => {
   await openPage(page, path, 'tr')
 
-  const box = page.locator('#sorun details').first()
+  const box = page.locator('#problem details').first()
   await box.locator('summary').click()
   await expect(box).toHaveAttribute('open', '')
   await box.locator('summary').click()
   await expect(box).not.toHaveAttribute('open', '')
 
-  const strip = page.locator('#hat article details').first()
+  const strip = page.locator('#pipeline article details').first()
   await strip.locator('summary').click()
   await expect(strip).toHaveAttribute('open', '')
 })
@@ -119,7 +119,7 @@ test('the curious card, the author box and the closing cards point to the right 
 
   await expect(page.getByRole('link', { name: new RegExp(dict.tr.study.curious.label) })).toHaveAttribute(
     'href',
-    '/work/demo-veri/source',
+    '/work/demo-data/source',
   )
   await expect(page.getByRole('link', { name: /Burak Ayan/ })).toHaveAttribute(
     'href',
@@ -129,7 +129,7 @@ test('the curious card, the author box and the closing cards point to the right 
   // Demo Veri tek gercek calisma, sonraki calisma karti cikmaz.
   const closing = page.getByRole('navigation', { name: dict.tr.study.closing.nav })
   await expect(closing.getByRole('link')).toHaveCount(1)
-  await expect(closing.getByRole('link')).toHaveAttribute('href', '/#calismalar')
+  await expect(closing.getByRole('link')).toHaveAttribute('href', '/#works')
 })
 
 // 768/769 ve 1100/1101 CSS'teki iki esigin iki yani. Genis tablolar kendi

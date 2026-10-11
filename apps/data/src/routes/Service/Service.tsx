@@ -52,19 +52,19 @@ function ServiceView({ tag }: { tag: DataTag }) {
 
   const chapters: { id: string; text: { label: string; title: string }; lede: string; block: Block }[] = [
     {
-      id: 'kapsam',
+      id: 'scope',
       text: dict.chapters.scope,
       lede: service.scope.lede[language],
       block: { type: 'list', view: 'stack', items: service.scope.items },
     },
     {
-      id: 'surec',
+      id: 'steps',
       text: dict.chapters.steps,
       lede: service.steps.lede[language],
       block: { type: 'stations', items: service.steps.items },
     },
     {
-      id: 'teslim',
+      id: 'delivery',
       text: dict.chapters.delivery,
       lede: service.delivery.lede[language],
       block: { type: 'list', view: 'columns', items: service.delivery.items },
@@ -78,10 +78,10 @@ function ServiceView({ tag }: { tag: DataTag }) {
         tags={[dict.tag]}
         title={title}
         lede={service.lede[language]}
-        kunye={[
-          { label: dict.kunye.input, value: service.kunye.input[language] },
-          { label: dict.kunye.output, value: service.kunye.output[language] },
-          { label: dict.kunye.tools, value: service.kunye.tools },
+        facts={[
+          { label: dict.facts.input, value: service.facts.input[language] },
+          { label: dict.facts.output, value: service.facts.output[language] },
+          { label: dict.facts.tools, value: service.facts.tools },
         ]}
       />
       <div className={styles.body}>

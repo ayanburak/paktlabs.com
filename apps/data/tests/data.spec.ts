@@ -104,7 +104,7 @@ for (const study of studies) {
   // bir icerik bolumuyle cakismamali.
   test(`${slug}: chapter addresses are unique on each page`, async () => {
     for (const [name, chapters] of await pages(study)) {
-      const ids = ['veri-dili', ...chapters.map((chapter) => chapter.id)]
+      const ids = ['data-language', ...chapters.map((chapter) => chapter.id)]
       expect(new Set(ids).size, name).toBe(ids.length)
     }
   })

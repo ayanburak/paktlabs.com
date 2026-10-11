@@ -26,26 +26,26 @@ const cases = [
   {
     width: 390,
     height: 844,
-    loads: ['hero-mobile', 'inceleyin-mobile'],
-    skips: ['hero', 'inceleyin', 'phone', 'phone-mobile'],
+    loads: ['hero-mobile', 'disciplines-mobile'],
+    skips: ['hero', 'disciplines', 'phone', 'phone-mobile'],
   },
   {
     width: 1024,
     height: 1366,
-    loads: ['hero', 'inceleyin-mobile', 'phone'],
-    skips: ['hero-mobile', 'inceleyin', 'phone-mobile'],
+    loads: ['hero', 'disciplines-mobile', 'phone'],
+    skips: ['hero-mobile', 'disciplines', 'phone-mobile'],
   },
   {
     width: 1366,
     height: 1024,
-    loads: ['hero', 'inceleyin-mobile', 'phone'],
-    skips: ['hero-mobile', 'inceleyin', 'phone-mobile'],
+    loads: ['hero', 'disciplines-mobile', 'phone'],
+    skips: ['hero-mobile', 'disciplines', 'phone-mobile'],
   },
   {
     width: 1920,
     height: 1080,
-    loads: ['hero', 'inceleyin', 'phone'],
-    skips: ['hero-mobile', 'inceleyin-mobile', 'phone-mobile'],
+    loads: ['hero', 'disciplines', 'phone'],
+    skips: ['hero-mobile', 'disciplines-mobile', 'phone-mobile'],
   },
 ]
 
@@ -68,6 +68,6 @@ test('crossing the mobile threshold loads the mobile hero', async ({ page }) => 
 
   await page.setViewportSize({ width: 390, height: 844 })
   await expect.poll(() => names.has('hero-mobile')).toBe(true)
-  await expect(page.locator('#iletisim img:visible')).toHaveCount(0)
+  await expect(page.locator('#contact img:visible')).toHaveCount(0)
   expect(names).not.toContain('phone-mobile')
 })

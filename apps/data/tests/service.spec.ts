@@ -31,9 +31,9 @@ for (const lang of languages) {
 
       await expect(page).toHaveTitle(`${t.dataTags[tag]} · ${t.home.meta.title}`)
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(t.dataTags[tag])
-      await expect(page.getByRole('link', { name: t.service.back })).toHaveAttribute('href', '/#hizmetler')
+      await expect(page.getByRole('link', { name: t.service.back })).toHaveAttribute('href', '/#services')
       await expect(page.locator('main nav').first()).toContainText(String(i + 1).padStart(2, '0'))
-      for (const label of Object.values(t.service.kunye)) {
+      for (const label of Object.values(t.service.facts)) {
         await expect(page.locator('dt', { hasText: label })).toHaveCount(1)
       }
 
@@ -46,7 +46,7 @@ for (const lang of languages) {
 
       const next = page.getByRole('navigation', { name: t.service.closing.nav })
       await expect(next.getByRole('link')).toHaveCount(2)
-      await expect(next.getByRole('link').first()).toHaveAttribute('href', `/?tag=${tag}#calismalar`)
+      await expect(next.getByRole('link').first()).toHaveAttribute('href', `/?tag=${tag}#works`)
       await expect(next.getByRole('link').last()).toHaveAttribute('href', 'https://paktlabs.com/contact')
     })
   }
@@ -63,12 +63,12 @@ test('the board opens a service and the service leads back to its studies', asyn
   await openPage(page, '/', 'tr')
   await page.evaluate(() => ((window as unknown as { marker: number }).marker = 1))
 
-  await page.locator('#hizmetler a').nth(2).click()
+  await page.locator('#services a').nth(2).click()
   await expect(page).toHaveURL(/\/services\/quality$/)
   expect(await page.evaluate(() => (window as unknown as { marker?: number }).marker)).toBe(1)
 
   await page.getByRole('navigation', { name: dict.tr.service.closing.nav }).getByRole('link').first().click()
-  await expect(page).toHaveURL(/\/\?tag=quality#calismalar$/)
+  await expect(page).toHaveURL(/\/\?tag=quality#works$/)
   await expect(page.getByRole('checkbox', { name: dict.tr.dataTags.quality })).toBeChecked()
 })
 

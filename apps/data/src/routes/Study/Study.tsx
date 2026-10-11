@@ -60,7 +60,7 @@ function StudyView({ study, page, files }: StudyRoute) {
             tags={tags}
             title={title}
             lede={page.lede[language]}
-            kunye={page.kunye.map((row) => ({ label: row.label[language], value: row.value[language] }))}
+            facts={page.facts.map((row) => ({ label: row.label[language], value: row.value[language] }))}
           />
           <Summary summary={page.summary} />
           <Body

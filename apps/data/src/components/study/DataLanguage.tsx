@@ -21,7 +21,7 @@ import { Chapter } from './Chapter'
 import styles from './DataLanguage.module.css'
 import { useDataLanguage } from './dataLanguageContext'
 
-export const DATA_LANGUAGE_ID = 'veri-dili'
+export const DATA_LANGUAGE_ID = 'data-language'
 
 // Bolumun sayfaya gore degisen iki metni: giris paragrafi ve secicinin ekran
 // okuyucuya okunan adi.
