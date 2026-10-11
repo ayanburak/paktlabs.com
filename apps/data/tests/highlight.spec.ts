@@ -15,8 +15,8 @@ import { join } from 'node:path'
 
 import { expect, test } from '@playwright/test'
 
-import { highlight, type Token } from '../src/components/study/blocks/highlight'
-import { codeLanguage } from '../src/components/study/blocks/languages'
+import { highlight, type Token } from '../src/components/study/blocks/file/highlight'
+import { codeLanguage } from '../src/components/study/blocks/file/languages'
 
 const python = codeLanguage('a.py')
 const sql = codeLanguage('a.sql')

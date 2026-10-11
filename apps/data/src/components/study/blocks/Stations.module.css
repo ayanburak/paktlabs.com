@@ -21,7 +21,7 @@
   counter-increment: station;
   position: relative;
   background: var(--surface);
-  border: 2px solid var(--charcoal);
+  border: var(--card-border);
 }
 /* numara hattin uzerinde, istasyonun sol ust kosesinin hizasinda koyu bir
    kutuya oturur */
@@ -67,7 +67,7 @@
   text-transform: uppercase;
   list-style: none;
   background: var(--paper);
-  border-top: 2px solid var(--charcoal);
+  border-top: 2px solid var(--ink);
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
 }
@@ -84,16 +84,11 @@
 
 .details {
   padding: clamp(18px, 2.2vw, 28px) clamp(20px, 2.4vw, 32px);
-  border-top: 2px solid var(--charcoal);
+  border-top: 2px solid var(--ink);
 }
 .more[open] .details {
-  animation: drop 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-@keyframes drop {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
+  --drop-from: -10px;
+  animation: global(drop) 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .details p {
   margin: 0;

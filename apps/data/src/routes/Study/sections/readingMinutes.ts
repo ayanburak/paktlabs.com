@@ -10,7 +10,7 @@ description: Detay sayfasinin metninden yaklasik okuma suresini hesaplayan yardi
 
 import type { Language } from '@paktlabs/brand/i18n/language'
 
-import type { Block } from '@/content/studies/blocks'
+import { type Block, flattenBlocks } from '@/content/studies/blocks'
 import type { StudyPage } from '@/content/studies/types'
 
 // Ortalama bir okurun duz metinde dakikada okudugu kelime sayisi. Yaygin
@@ -18,8 +18,8 @@ import type { StudyPage } from '@/content/studies/types'
 // okundugu icin alt sinir secildi.
 const WORDS_PER_MINUTE = 200
 
-// Bir parcanin okunan metni. Donus tipi acikca yazili, BlockView'deki gibi
-// Block'a yeni bir tur eklenip burada karsiligi yazilmazsa derleme durur.
+// Bir parcanin kendi okunan metni, icindeki parcalar dahil degil. Donus tipi
+// acikca yazili, BlockView'deki gibi Block'a yeni bir tur eklenip burada karsiligi yazilmazsa derleme durur.
 // Tablo hucreleri ve sekillerdeki sayilar sayilmaz, okur onlari okumaz, goz
 // atar. Yalnizca duz metin sayilir, duz tablo, dosya agaci, karsilastirma,
 // kod ve terminal ciktisi da bu yuzden disarida.
@@ -33,7 +33,7 @@ function blockText(block: Block, language: Language): string[] {
         ...block.items.flatMap((item) => [item.title[language], item.text[language]]),
       ]
     case 'details':
-      return [block.meta[language], block.title[language], ...block.blocks.flatMap((inner) => blockText(inner, language))]
+      return [block.meta[language], block.title[language]]
     case 'sheet':
       return block.notes?.map((note) => note[language]) ?? []
     case 'table':
@@ -57,17 +57,13 @@ function blockText(block: Block, language: Language): string[] {
         ...(station.details ?? []).map((paragraph) => paragraph[language]),
       ])
     case 'chart':
-      return [
-        block.label[language],
-        block.title[language],
-        block.reading[language],
-        ...(block.blocks ?? []).flatMap((inner) => blockText(inner, language)),
-      ]
+      return [block.label[language], block.title[language], block.reading[language]]
   }
 }
 
 // Sayfadaki butun duz metin toplanir: kapak aciklamasi, ozet bandi ve her
-// bolumun etiketi, basligi, girisi ve parcalari. En az bir dakika doner, sifir
+// bolumun etiketi, basligi, girisi ve parcalari. Acilir kutu ve sekillerin
+// icindeki parcalar flattenBlocks ile ayni listeye gelir. En az bir dakika doner, sifir
 // dakikalik okuma suresi anlamsiz olurdu.
 export function readingMinutes(page: StudyPage, language: Language): number {
   const texts = [
@@ -79,7 +75,7 @@ export function readingMinutes(page: StudyPage, language: Language): number {
       chapter.label[language],
       chapter.title[language],
       chapter.lede[language],
-      ...chapter.blocks.flatMap((block) => blockText(block, language)),
+      ...flattenBlocks(chapter.blocks).flatMap((block) => blockText(block, language)),
     ]),
   ]
   const words = texts.join(' ').split(/\s+/).filter(Boolean).length

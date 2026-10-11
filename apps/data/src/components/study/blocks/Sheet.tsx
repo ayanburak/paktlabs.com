@@ -23,6 +23,7 @@ import { useDict } from '@/i18n'
 
 import { useDataLanguage } from '../dataLanguageContext'
 import { useStudyFile } from '../studyFiles'
+import { localeFor } from './format'
 import styles from './Sheet.module.css'
 
 interface SheetProps {
@@ -55,7 +56,7 @@ export function Sheet({ block }: SheetProps) {
   const selectedRow = Number(selected?.[2])
   const lastRow = rows.length - 1
   const count = rows.length - 1 - (block.total ? 1 : 0)
-  const format = new Intl.NumberFormat(site === 'tr' ? 'tr-TR' : 'en-US')
+  const format = new Intl.NumberFormat(localeFor(site))
   const rowLabel = block.rows
     ? `${format.format(count)} / ${format.format(block.rows)} ${study.sheet.rows}`
     : `${format.format(count)} ${study.sheet.rows}`

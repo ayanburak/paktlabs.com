@@ -8,7 +8,9 @@ Bu paket PaktLabs'ın bütün vitrin sitelerinin ortak katmanıdır. Landing ve 
 
 Klavyeyle gelinen her eleman aynı odak çerçevesini alır: bağlantılar ve düğmeler gibi açılır kutu başlıkları ve tarayıcının Tab sırasına kendisi aldığı yana kayan kutular da. Fareyle tıklamada çerçeve görünmez. Çerçevenin rengi `tokens.css` içindeki `--focus-ring` değişkeninden gelir, varsayılanı mürekkeptir. Koyu zeminli bir alan bu değişkeni kendi kutusunda açık bir renge çevirir, böylece içindeki düğmelerin çerçevesi koyu zeminde kaybolmaz. data'nın kod çerçevesi bunu altınla yapar.
 
-`.reveal` sınıfı `hooks/useReveal.ts` ile birlikte çalışır. Eleman yüzde on beşi ekrana girince belirir. Klavyeyle elemanın içindeki bir düğmeye gelindiğinde bu eşik beklenmez, eleman hemen belirir. Tarayıcı Tab'da yalnızca odaklanan düğmeyi ekrana getirdiği için uzun bir kutunun yüzde on beşi ekrana girmeyebilir ve düğme görünmez bir kutunun içinde kalırdı. Fareyle tıklamada bu kural çalışmaz, çünkü belirirken yukarı kayan eleman tıklanan düğmeyi imlecin altından kaçırırdı.
+`.reveal` sınıfı `hooks/useReveal.ts` ile birlikte çalışır. Eleman yüzde on beşi ekrana girince belirir. Klavyeyle elemanın içindeki bir düğmeye gelindiğinde bu eşik beklenmez, eleman hemen belirir. Tarayıcı Tab'da yalnızca odaklanan düğmeyi ekrana getirdiği için uzun bir kutunun yüzde on beşi ekrana girmeyebilir ve düğme görünmez bir kutunun içinde kalırdı. Fareyle tıklamada bu kural çalışmaz, çünkü belirirken yukarı kayan eleman tıklanan düğmeyi imlecin altından kaçırırdı. Belirme hareketini bileşen sınıfı ezmez, değişkenle ayarlar: `--reveal-from` kaç piksel uzaktan geleceği (eksi değer yukarıdan, varsayılan 22px), `--reveal-time` süre (0.6s), `--reveal-ease` transform eğrisi, `--i` ile `--reveal-step` elemanlar arası sıra gecikmesi (varsayılan 0). Belirmenin dışında geçişi olan bir bileşen (kalkış, gölge, dönüş) onu `--reveal-extra` değişkenine virgülle yazar, çünkü `.reveal` transition özelliğini tek yerden verir ve bileşenin kendi `transition`'ını ezerdi.
+
+Yukarıdan düşme animasyonu `global.css` içindeki tek `@keyframes drop` ile verilir, mesafesi `--drop-from` (varsayılan -12px). CSS modülleri keyframe adlarını kendi dosyalarına çevirdiği için bileşen onu `animation: global(drop) ...` yazarak çağırır. Kart dilinin ölçüleri, yani iki piksellik çerçeve, üç piksellik kalkış, sert gölge ve geçiş süresi `tokens.css` içinde `--card-border`, `--lift`, `--lift-drop`, `--lift-shadow` ve `--lift-time` adlarıyla durur. Hangi kutunun kalkacağını bileşen seçer. Giriş metni ve bölüm başlığının boyutu da `--text-lead` ve `--text-section` token'larıdır.
 
 `components/` altında `Page`, `Header`, `Footer`, `Contact`, `NotFound` ve `RevealImg` bileşenleri durur. `Page` her sayfanın ortak çerçevesidir: `Header`, `main` ve `Footer`'ı aynı sırayla kurar ve `useDocumentMeta` ile sekme başlığını günceller. Başlık ve açıklamayı, isteğe bağlı olarak `current` ve `homeHref` değerlerini alır ve son ikisini Header ile Footer'a iletir. Bölümlerin full-bleed hesabı `main`'in `#root` kadar geniş bir blok olmasına dayanır, bu yüzden bütün siteler aynı çerçeveyi kullanır. Header bulunulan disiplini `current` ile, logonun gideceği adresi `homeHref` ile alır. Footer'a `homeHref` verildiğinde ana siteye dönen bir bağlantı eklenir. Landing hiçbirine prop vermez.
 
@@ -30,11 +32,11 @@ import { Header } from '@paktlabs/brand/components/Header'
 import { createDictHook } from '@paktlabs/brand/i18n/createDictHook'
 
 // uygulamanın giriş dosyası main.tsx içinde
-import { App } from './App.tsx'
+import { Home } from './routes/Home/Home.tsx'
 import '@paktlabs/brand/styles/global.css'
 ```
 
-Global stil dosyası uygulamanın giriş dosyasında, `App` import edildikten sonra import edilir. Bu sıra derlenen CSS içinde global kuralların bileşen kurallarından sonra gelmesini sağlar, sıra değişirse eşit önem derecesindeki kurallarda kazanan değişir.
+Global stil dosyası uygulamanın giriş dosyasında, sayfa bileşenleri import edildikten sonra import edilir. Bu sıra derlenen CSS içinde global kuralların bileşen kurallarından sonra gelmesini sağlar, sıra değişirse eşit önem derecesindeki kurallarda kazanan değişir.
 
 Paketin içindeki dosyalar birbirini göreli yolla import eder. Uygulamalardaki `@/` alias'ı paketin içinde çalışmaz, çünkü o alias her uygulamanın kendi `src` klasörünü gösterir.
 

@@ -1,6 +1,6 @@
 /*
 file: blocks.ts
-importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock, TableBlock, TableCell, StationsBlock, Station, ChartBlock, ChartBar, ChartZone, DecisionsBlock, TimelineBlock, TimelineTask, TreeBlock, TreeGroup, TreeItem, CompareBlock, CompareRow, NoteBlock, CodeBlock, OutputBlock, DataFileBlock
+importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock, TableBlock, TableCell, StationsBlock, Station, ChartBlock, ChartBar, ChartZone, DecisionsBlock, TimelineBlock, TimelineTask, TreeBlock, TreeGroup, TreeItem, CompareBlock, CompareRow, NoteBlock, CodeBlock, OutputBlock, DataFileBlock, childBlocks, flattenBlocks
 
 Calisma sayfalarinin bolumlerine konan parcalarin tipleri. Bir parca icerigi
 bilmez, adini hikayeden degil bicimden alir. Bir bolumde hangi parcanin hangi
@@ -9,7 +9,9 @@ digerlerinden ayirir, sayfa da bu alana bakip dogru bileseni secer.
 
 Yeni bir anlatim bicimi gerektiginde buraya yeni bir parca tipi eklenir ve
 Block birlesimine katilir, eski sayfalara dokunulmaz. Yanlis ya da eksik
-yazilmis bir parca derleme hatasi verir.
+yazilmis bir parca derleme hatasi verir. Baska parca tasiyan parcalarin
+icini gezmek icin childBlocks ve flattenBlocks kullanilir, boylece her
+gezen kod kendi ozyinelemesini yazmaz.
 
 description: Calisma sayfalarindaki bolum parcalarinin tiplerini tanimlayan modul.
 */
@@ -273,3 +275,39 @@ export type Block =
   | CodeBlock
   | OutputBlock
   | DataFileBlock
+
+// Bir parcanin icine konan parcalar. Yalnizca acilir kutu ve sekil baska
+// parca tasir, digerleri bos liste verir. Yeni bir parca tipi icine parca
+// tasiyacaksa karsiligi buraya yazilir, yazilmazsa derleme durur.
+export function childBlocks(block: Block): Block[] {
+  switch (block.type) {
+    case 'details':
+      return block.blocks
+    case 'chart':
+      return block.blocks ?? []
+    case 'paragraph':
+    case 'list':
+    case 'sheet':
+    case 'table':
+    case 'stations':
+    case 'decisions':
+    case 'timeline':
+    case 'tree':
+    case 'compare':
+    case 'note':
+    case 'code':
+    case 'output':
+    case 'datafile':
+      return []
+    default: {
+      const unreachable: never = block
+      return unreachable
+    }
+  }
+}
+
+// Parca listesini ve iclerindeki butun parcalari tek duz listede verir. Bir
+// parca kendi icindekilerden once gelir.
+export function flattenBlocks(blocks: Block[]): Block[] {
+  return blocks.flatMap((block) => [block, ...flattenBlocks(childBlocks(block))])
+}

@@ -19,12 +19,12 @@ import type { DataFileBlock } from '@/content/studies/blocks'
 import { parseCsv } from '@/content/studies/csv'
 import { useDict } from '@/i18n'
 
-import { useDataLanguage } from '../dataLanguageContext'
-import { useStudyFile } from '../studyFiles'
+import { useDataLanguage } from '../../dataLanguageContext'
+import { useStudyFile } from '../../studyFiles'
 import styles from './DataFile.module.css'
 import { DownloadLink } from './FileActions'
 import { FileFrame } from './FileFrame'
-import { fileText, formatSize } from './format'
+import { fileText, formatSize } from './fileFormat'
 import { NumberedLines } from './NumberedLines'
 
 interface DataFileProps {

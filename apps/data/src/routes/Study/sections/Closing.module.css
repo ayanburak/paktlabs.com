@@ -38,12 +38,12 @@
 }
 .box {
   background: var(--paper);
-  border: 2px solid var(--charcoal);
-  transition: transform 0.16s ease, box-shadow 0.16s ease;
+  border: var(--card-border);
+  transition: transform var(--lift-time) ease, box-shadow var(--lift-time) ease;
 }
 .next a:hover .box {
-  transform: translateY(-3px);
-  box-shadow: 0 3px 0 var(--charcoal);
+  transform: translateY(var(--lift));
+  box-shadow: var(--lift-shadow);
 }
 .next a:hover h3,
 .next a:hover .go {

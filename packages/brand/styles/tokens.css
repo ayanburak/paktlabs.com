@@ -15,9 +15,9 @@ description: PaktLabs sitelerinin paylastigi renk, bosluk ve golge degiskenlerin
    dokunulmadi. yeni bir disiplin sayfasi acilirsa tone eslesmesi (--web/--auto/--data)
    burada guncellenir, baska hicbir dosyada renk sabiti tekrar tanimlanmaz. */
 :root {
+  /* her hex degeri tek bir adda durur, ayni renge giden diger adlar var() ile
+     buna baglanir. Bir renk degisirse yalnizca burada degisir */
   --gold: #e5b32e;
-  --charcoal: #2d3037;
-  --offwhite: #e9e8e0;
   --gray: #7e909e;
 
   --paper: #e9e8e0;
@@ -34,15 +34,15 @@ description: PaktLabs sitelerinin paylastigi renk, bosluk ve golge degiskenlerin
   --gold-wash: color-mix(in srgb, var(--gold) 26%, var(--paper));
   --line: #d3d2c6;
   --line-strong: #b7b6a8;
-  --on-ink: #e9e8e0;
+  --on-ink: var(--paper);
   /* klavye odak cercevesinin rengi. Acik zeminde murekkep. Koyu zeminli bir
      alan, ornegin data'daki kod cercevesi, bunu kendi kutusunda altina cevirir,
      icindeki dugmelerin cercevesi koyu zeminde kaybolmasin diye */
   --focus-ring: var(--ink);
 
-  --tone-web: #7e909e;
-  --tone-auto: #e5b32e;
-  --tone-data: #2d3037;
+  --tone-web: var(--gray);
+  --tone-auto: var(--gold);
+  --tone-data: var(--ink);
 
   --maxw: 1040px;
   --measure: 780px;
@@ -64,11 +64,21 @@ description: PaktLabs sitelerinin paylastigi renk, bosluk ve golge degiskenlerin
   --hero-art-right-share: 0.25;
 
   --gap: 112px;
-  --gap-lg: 152px;
-  --gap-sm: 96px;
 
-  --raise: 0 1px 2px rgba(45, 48, 55, 0.05), 0 12px 30px -16px rgba(45, 48, 55, 0.14);
-  --raise-hi: 0 4px 12px rgba(45, 48, 55, 0.06), 0 22px 44px -22px rgba(45, 48, 55, 0.18);
+  /* giris metni ve bolum basliginin boyutu. Landing ve data ayni olcuyu
+     kullanir, degisirse hepsi birlikte kayar */
+  --text-lead: clamp(15px, 1.3vw, 17px);
+  --text-section: clamp(32px, 3.8vw, 52px);
+
+  /* kart dili: iki piksellik cerceve, uzerine gelince uc piksel yukari kalkis
+     ve altina dusen sert golge. Hangi kutunun kalkacagini bilesen secer,
+     olculer buradan gelir. Altin golgeli kart --lift-drop'u kendi rengiyle
+     kullanir */
+  --card-border: 2px solid var(--ink);
+  --lift: -3px;
+  --lift-drop: 0 3px 0;
+  --lift-shadow: var(--lift-drop) var(--ink);
+  --lift-time: 0.16s;
 
   --font-display: 'Space Grotesk', 'Atkinson Hyperlegible', system-ui, sans-serif;
   --font-body: 'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;

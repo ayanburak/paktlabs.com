@@ -1,11 +1,16 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+/*
+file: main.tsx
 
-import { App } from './App.tsx'
+index.html'in girisi, ana sayfayi acar. Disiplin baglantilari kendi subdomain
+adreslerine gider, bu sitede router yoktur.
+
+description: Landing'in ana sayfasini acan giris dosyasi.
+*/
+
+import { Home } from './routes/Home/Home.tsx'
+import { mount } from './mount.tsx'
 import '@paktlabs/brand/styles/global.css'
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+// global.css bilesenlerden sonra import edilir, derlenen CSS'te global
+// kurallar bilesen kurallarindan sonra gelsin diye.
+mount(<Home />)

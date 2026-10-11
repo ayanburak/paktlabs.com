@@ -80,7 +80,6 @@
     "step": "Adım",
     "questions": {
       "area": {
-        "short": "Alan",
         "title": "Hangi alanda bir işiniz var?",
         "options": {
           "data": {
@@ -102,7 +101,6 @@
         }
       },
       "stage": {
-        "short": "Durum",
         "title": "Elinizde ne var?",
         "options": {
           "idea": {
@@ -124,7 +122,6 @@
         }
       },
       "timing": {
-        "short": "Zaman",
         "title": "Ne zamana lazım?",
         "options": {
           "days": {
@@ -147,7 +144,6 @@
       }
     },
     "details": {
-      "short": "Siz",
       "title": "Size nasıl ulaşalım?",
       "name": "Adınız",
       "email": "E-posta adresiniz",

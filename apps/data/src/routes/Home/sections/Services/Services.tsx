@@ -19,6 +19,7 @@ import { useBrandDict } from '@paktlabs/brand/i18n/useBrandDict'
 
 import { services } from '@/content/services'
 import { useDict } from '@/i18n'
+import { sequenceNumber } from '@/lib/sequenceNumber'
 import { servicesAnchor } from '@/routes/links'
 
 import { ServiceNote } from './ServiceNote'
@@ -44,7 +45,7 @@ export function Services() {
         {dataTags.map((tag, i) => (
           <li key={tag} style={{ '--i': i } as CSSProperties}>
             <ServiceNote
-              number={String(i + 1).padStart(2, '0')}
+              number={sequenceNumber(i)}
               title={names[tag]}
               summary={services[tag].summary[language]}
               go={home.services.go}

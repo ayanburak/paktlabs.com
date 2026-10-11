@@ -1,11 +1,25 @@
 /* tablo gercek bir disa aktarimin ekran goruntusu gibi durur. Bu yuzden hucre
    yazisi marka fontu degil, hesap tablosu programlarinin varsayilan fontu.
    Ic renkler programlarin kendi gri tonlari, marka paletinden degil. Dis
-   cerceve yine iki piksellik murekkep, sayfanin geri kalanina baglansin diye */
+   cerceve yine iki piksellik murekkep, sayfanin geri kalanina baglansin diye.
+   Bu renkler markanin degil tablo programinin oldugu icin tokens.css'e girmez,
+   yalnizca burada, dosyanin basinda toplanir */
 .sheet {
+  --sheet-text: #1f1f1f;
+  --sheet-bg: #fbfbf8;
+  --sheet-line: #c4c3b8;
+  --sheet-grid: #dcdad0;
+  --sheet-head-bg: #ecebe4;
+  --sheet-head-line: #c9c8bd;
+  --sheet-filter-bg: #f3f2ec;
+  --sheet-label: #555;
+  --sheet-fx: #6b6b6b;
+  --sheet-soft: #8a8a84;
+  --sheet-empty: #a0a09a;
+
   font: 400 13px/1.3 Calibri, Carlito, 'Segoe UI', Arial, sans-serif;
-  color: #1f1f1f;
-  background: #fbfbf8;
+  color: var(--sheet-text);
+  background: var(--sheet-bg);
   border: 2px solid var(--ink);
 }
 
@@ -17,14 +31,14 @@
   font: 500 12px/1.3 var(--font-mono);
   color: var(--muted);
   background: var(--panel);
-  border-bottom: 1px solid #c4c3b8;
+  border-bottom: 1px solid var(--sheet-line);
 }
 
 .bar {
   display: grid;
   grid-template-columns: 74px 30px minmax(0, 1fr);
-  background: #fbfbf8;
-  border-bottom: 1px solid #c4c3b8;
+  background: var(--sheet-bg);
+  border-bottom: 1px solid var(--sheet-line);
 }
 .bar span {
   padding: 5px 8px;
@@ -33,13 +47,13 @@
   text-overflow: ellipsis;
 }
 .address {
-  border-right: 1px solid #c4c3b8;
+  border-right: 1px solid var(--sheet-line);
 }
 .fx {
   font-style: italic;
   text-align: center;
-  color: #6b6b6b;
-  border-right: 1px solid #c4c3b8;
+  color: var(--sheet-fx);
+  border-right: 1px solid var(--sheet-line);
 }
 
 .scroll {
@@ -54,16 +68,16 @@
   padding: 4px 6px;
   white-space: nowrap;
   text-align: left;
-  border: 1px solid #dcdad0;
+  border: 1px solid var(--sheet-grid);
 }
 /* sutun harfleri ve satir numaralari programlardaki gibi gri baslik hucreleri */
 .scroll thead th,
 .scroll tbody th {
   font-weight: 400;
   text-align: center;
-  color: #555;
-  background: #ecebe4;
-  border-color: #c9c8bd;
+  color: var(--sheet-label);
+  background: var(--sheet-head-bg);
+  border-color: var(--sheet-head-line);
 }
 .scroll thead th:first-child,
 .scroll tbody th {
@@ -73,17 +87,17 @@
 /* baslik satirinda hucrelerin yaninda filtre oku durur */
 .head td {
   font-weight: 700;
-  background: #f3f2ec;
+  background: var(--sheet-filter-bg);
 }
 .head td::after {
   content: '▾';
   margin-left: 8px;
   font-size: 10px;
-  color: #8a8a84;
+  color: var(--sheet-soft);
 }
 .total td {
   font-weight: 700;
-  border-top: 2px solid #8a8a84;
+  border-top: 2px solid var(--sheet-soft);
 }
 .scroll .number {
   text-align: right;
@@ -94,7 +108,7 @@
   outline-offset: -2px;
 }
 .empty {
-  color: #a0a09a;
+  color: var(--sheet-empty);
 }
 
 .tabs {
@@ -104,17 +118,17 @@
   white-space: nowrap;
   font-size: 12.5px;
   background: var(--panel);
-  border-top: 1px solid #c4c3b8;
+  border-top: 1px solid var(--sheet-line);
 }
 .tabs span {
   padding: 6px 14px;
-  color: #555;
-  border-right: 1px solid #c4c3b8;
+  color: var(--sheet-label);
+  border-right: 1px solid var(--sheet-line);
 }
 .tabs .active {
   font-weight: 700;
-  color: #1f1f1f;
-  background: #fbfbf8;
+  color: var(--sheet-text);
+  background: var(--sheet-bg);
   box-shadow: inset 0 -2px 0 var(--ink);
 }
 

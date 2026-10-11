@@ -14,10 +14,6 @@
   border: 2px solid var(--ink);
   box-shadow: 4px 5px 0 var(--ink);
   rotate: var(--tilt, 0deg);
-  transition:
-    rotate 0.2s ease,
-    translate 0.2s ease,
-    box-shadow 0.2s ease;
 }
 .note::before {
   content: '';
@@ -34,21 +30,18 @@
 
 /* belirme iletisim kutulari ve landing'in disiplin kartlari gibi: kagit on
    iki piksel yukaridan kisa surede duser, kagitlar kirk bes milisaniye
-   arayla gelir. Brand'deki reveal asagidan ve daha yavas yukseltiyor, iki
-   sinifli secici onu yalnizca burada ezer. Egiklik rotate'te, kalkma
-   translate'te durdugu icin belirme hareketi onlara karismaz */
-.note:global(.reveal) {
-  transform: translateY(-12px);
-  transition:
-    opacity 0.28s ease,
-    transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
-    rotate 0.2s ease,
-    translate 0.2s ease,
-    box-shadow 0.2s ease;
-  transition-delay: calc(var(--i) * 45ms), calc(var(--i) * 45ms), 0s, 0s, 0s;
-}
-.note:global(.reveal.in) {
-  transform: translateY(0);
+   arayla gelir. Brand'deki reveal varsayilan olarak asagidan ve daha yavas
+   yukseliyor, burada yalnizca onun degiskenleri verilir. Egiklik rotate'te,
+   kalkma translate'te durdugu icin belirme hareketi onlara karismaz.
+   Egilme, kalkma ve golge gecisleri reveal'in transition'ini kendi
+   baslarina veremedigi icin --reveal-extra'ya yazilir, belirmeden sonra
+   gecikmesiz calisirlar */
+.note {
+  --reveal-from: -12px;
+  --reveal-time: 0.28s;
+  --reveal-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --reveal-step: 45ms;
+  --reveal-extra: rotate 0.2s ease, translate 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* uzerine gelinen ya da klavyeyle odaklanan kagit duzlesir ve kalkar,

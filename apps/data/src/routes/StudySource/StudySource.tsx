@@ -14,12 +14,8 @@ description: Bir calismanin paylasilan kod ve veri orneklerini gosteren sayfayi 
 import { useLanguage } from '@paktlabs/brand/i18n/language'
 
 import { Page } from '@/components/Page'
-import { Author } from '@/components/study/Author'
-import { Body } from '@/components/study/Body'
-import { Cover } from '@/components/study/Cover'
-import { DataLanguageProvider } from '@/components/study/DataLanguageProvider'
 import { LinkCard } from '@/components/study/LinkCard'
-import { StudyFilesContext } from '@/components/study/studyFiles'
+import { StudyLayout } from '@/components/study/StudyLayout'
 import { useDict } from '@/i18n'
 import { NotFound } from '@/routes/NotFound/NotFound'
 import { useSourceRoute } from '@/routes/studyLoader'
@@ -46,34 +42,27 @@ export function StudySource() {
 
   return (
     <Page title={`${title} · ${home.meta.title}`} description={source.lede[language]}>
-      <DataLanguageProvider key={study.slug} original={study.dataLanguage}>
-        <StudyFilesContext.Provider value={files}>
-          <Cover
-            crumb={{ href: studyPath, back: dict.crumb.back, current: `${study.number} · ${dict.crumb.current}` }}
-            tags={source.tags}
-            title={title}
-            lede={source.lede[language]}
-            facts={source.facts.map((row) => ({ label: row.label[language], value: row.value[language] }))}
+      <StudyLayout
+        study={study}
+        files={files}
+        crumb={{ href: studyPath, back: dict.crumb.back, current: `${study.number} · ${dict.crumb.current}` }}
+        tags={source.tags}
+        title={title}
+        lede={source.lede[language]}
+        facts={source.facts}
+        chapters={source.chapters}
+        tocNote={dict.toc.note}
+        dataLanguage={dict.dataLanguage}
+        afterAuthor={
+          <LinkCard
+            to={studyPath}
+            label={dict.back.label}
+            title={study.title[language]}
+            text={dict.back.text}
+            go={dict.back.go}
           />
-          <Body
-            chapters={source.chapters}
-            tocNote={dict.toc.note}
-            dataLanguage={dict.dataLanguage}
-            afterChapters={
-              <>
-                <Author id={study.author} />
-                <LinkCard
-                  to={studyPath}
-                  label={dict.back.label}
-                  title={study.title[language]}
-                  text={dict.back.text}
-                  go={dict.back.go}
-                />
-              </>
-            }
-          />
-        </StudyFilesContext.Provider>
-      </DataLanguageProvider>
+        }
+      />
     </Page>
   )
 }

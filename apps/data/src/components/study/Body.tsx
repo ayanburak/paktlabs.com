@@ -16,12 +16,12 @@ import { useLanguage } from '@paktlabs/brand/i18n/language'
 
 import type { Chapter as ChapterContent } from '@/content/studies/types'
 import { useDict } from '@/i18n'
+import { sequenceNumber } from '@/lib/sequenceNumber'
 
 import { BlockView } from './blocks/BlockView'
-import { sequenceNumber } from './blocks/format'
 import styles from './Body.module.css'
 import { Chapter } from './Chapter'
-import { DATA_LANGUAGE_ID, DataLanguage, type DataLanguageText } from './DataLanguage'
+import { DATA_LANGUAGE_ID, DATA_LANGUAGE_NUMBER, DataLanguage, type DataLanguageText } from './DataLanguage'
 import { useDataLanguage } from './dataLanguageContext'
 import { Toc, type TocEntry } from './Toc'
 
@@ -53,7 +53,7 @@ export function Body({ chapters, tocNote, dataLanguage, afterChapters }: BodyPro
       label: chapter.label[language],
     }))
     return showDataLanguage
-      ? [{ id: DATA_LANGUAGE_ID, number: '00', label: study.dataLanguage.label }, ...list]
+      ? [{ id: DATA_LANGUAGE_ID, number: DATA_LANGUAGE_NUMBER, label: study.dataLanguage.label }, ...list]
       : list
   }, [chapters, language, showDataLanguage, study])
 

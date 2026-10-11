@@ -21,7 +21,37 @@ import webSvg from '@/assets/illustrations/web.svg'
 import { useDict } from '@/i18n'
 
 import styles from './Work.module.css'
-import { Band } from './Work/Band'
+import { Band } from './Band'
+
+// Her bandin sozluk anahtari, figuru ve figurun olculeri. Sira ekrandaki
+// siradir, figur kenari bandin duzenini de belirler.
+const bands = [
+  {
+    key: 'data',
+    tone: 'data',
+    artSrc: dataSvg,
+    artSide: 'right',
+    groundOffset: '32.91%',
+    artWidth: 'clamp(236px, 23.6vw, 378px)',
+    tightTop: true,
+  },
+  {
+    key: 'automation',
+    tone: 'auto',
+    artSrc: autoSvg,
+    artSide: 'left',
+    groundOffset: '1.77%',
+    artWidth: 'clamp(200px, 20vw, 320px)',
+  },
+  {
+    key: 'web',
+    tone: 'web',
+    artSrc: webSvg,
+    artSide: 'right',
+    groundOffset: '12.31%',
+    artWidth: 'clamp(200px, 20vw, 320px)',
+  },
+] as const
 
 // Sira ve adlar data'nin suzgeciyle ayni kaynaktan gelir, iki site
 // birbirinden ayrilamaz.
@@ -31,6 +61,11 @@ export function Work() {
   const head = useReveal<HTMLDivElement>()
   const dataList = dataTags.map((tag) => ({ label: tagNames[tag], href: dataServiceUrl(tag) }))
   const plain = (list: readonly string[]) => list.map((label) => ({ label }))
+  const lists = {
+    data: dataList,
+    automation: plain(work.bands.automation.list),
+    web: plain(work.bands.web.list),
+  }
 
   return (
     <section id="work" className={cx('full-bleed', styles.work)}>
@@ -39,51 +74,18 @@ export function Work() {
         <h2>{work.title}</h2>
       </div>
 
-      <Band
-        tone="data"
-        flip
-        tightTop
-        index={work.bands.data.index}
-        title={work.bands.data.title}
-        desc={work.bands.data.desc}
-        href={disciplineUrls.data}
-        goLabel={work.go}
-        list={dataList}
-        artSrc={dataSvg}
-        artSide="right"
-        groundOffset="32.91%"
-        artWidth="clamp(236px, 23.6vw, 378px)"
-      />
-
-      <Band
-        tone="auto"
-        flip={false}
-        index={work.bands.automation.index}
-        title={work.bands.automation.title}
-        desc={work.bands.automation.desc}
-        href={disciplineUrls.automation}
-        goLabel={work.go}
-        list={plain(work.bands.automation.list)}
-        artSrc={autoSvg}
-        artSide="left"
-        groundOffset="1.77%"
-        artWidth="clamp(200px, 20vw, 320px)"
-      />
-
-      <Band
-        tone="web"
-        flip
-        index={work.bands.web.index}
-        title={work.bands.web.title}
-        desc={work.bands.web.desc}
-        href={disciplineUrls.web}
-        goLabel={work.go}
-        list={plain(work.bands.web.list)}
-        artSrc={webSvg}
-        artSide="right"
-        groundOffset="12.31%"
-        artWidth="clamp(200px, 20vw, 320px)"
-      />
+      {bands.map(({ key, ...figure }) => (
+        <Band
+          key={key}
+          {...figure}
+          index={work.bands[key].index}
+          title={work.bands[key].title}
+          desc={work.bands[key].desc}
+          href={disciplineUrls[key]}
+          goLabel={work.go}
+          list={lists[key]}
+        />
+      ))}
     </section>
   )
 }

@@ -11,6 +11,8 @@ kullanmaz, cunku burada cizim yok, ikinci sutunda facts var.
 description: Calisma sayfalarinin kapagini ve facts alanini gosteren bolum.
 */
 
+import { Link } from 'react-router-dom'
+
 import { TagList } from '@/components/TagList'
 import { useDict } from '@/i18n'
 
@@ -50,7 +52,7 @@ export function Cover({ crumb, tags, title, lede, facts }: CoverProps) {
       <div className={styles.inner}>
         <div>
           <nav className={styles.crumb} aria-label={dict.cover.crumb}>
-            <a href={crumb.href}>{crumb.back}</a>
+            <Link to={crumb.href}>{crumb.back}</Link>
             <span aria-hidden="true">/</span>
             <span>{crumb.current}</span>
           </nav>

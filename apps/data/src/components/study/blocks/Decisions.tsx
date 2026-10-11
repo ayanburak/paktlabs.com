@@ -15,9 +15,9 @@ import { cx } from '@paktlabs/brand/lib/cx'
 
 import type { DecisionsBlock, ListItem } from '@/content/studies/blocks'
 import { useDict } from '@/i18n'
+import { sequenceNumber } from '@/lib/sequenceNumber'
 
 import styles from './Decisions.module.css'
-import { sequenceNumber } from './format'
 
 interface DecisionProps {
   item: ListItem

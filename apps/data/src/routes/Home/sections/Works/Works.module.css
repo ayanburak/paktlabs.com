@@ -15,7 +15,7 @@
 }
 .head h2 {
   max-width: 24ch;
-  font-size: clamp(32px, 3.8vw, 52px);
+  font-size: var(--text-section);
   line-height: 1.12;
   letter-spacing: -0.02em;
 }

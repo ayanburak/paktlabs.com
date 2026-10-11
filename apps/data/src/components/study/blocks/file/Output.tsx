@@ -12,10 +12,10 @@ description: Calismanin bir komut ciktisini terminal gorunumunde gosteren parca.
 import type { OutputBlock } from '@/content/studies/blocks'
 import { useDict } from '@/i18n'
 
-import { useStudyFile } from '../studyFiles'
+import { useStudyFile } from '../../studyFiles'
 import { CopyButton } from './FileActions'
 import { FileFrame } from './FileFrame'
-import { fileText } from './format'
+import { fileText } from './fileFormat'
 import styles from './Output.module.css'
 
 interface OutputProps {

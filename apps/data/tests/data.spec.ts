@@ -7,7 +7,9 @@ sayida satir ve her satirda ayni sayida hucre tasimali, yoksa okur veri
 dilini degistirdiginde tablo kayar. code/tr ve code/en klasorlerinde de ayni
 yollarda ayni kod dosyalari bulunmali. Detay sayfasindaki ve kod sayfasindaki
 her parcanin cagirdigi dosya iki dilde var olmali, her kod dosyasinin dili
-kayitli olmali, bolum adresleri de sayfa icinde tekil olmali. Tarayiciya
+kayitli olmali, bolum adresleri de sayfa icinde tekil olmali. Parcalarin
+icerigi de tutarli olmali: tablo satirlarinin hucre sayisi, sekil bolgeleri
+ve eksen sinirlari, hesap tablosu hucre adresi ve takvim araligi. Tarayiciya
 ihtiyac yok, dosyalar diskten okunur.
 
 description: data sitesindeki calisma dosyalarinin iki dilde eslestigini denetleyen testler.
@@ -18,8 +20,8 @@ import { join } from 'node:path'
 
 import { expect, test } from '@playwright/test'
 
-import type { Block } from '../src/content/studies/blocks'
-import { codeLanguage } from '../src/components/study/blocks/languages'
+import { codeLanguage } from '../src/components/study/blocks/file/languages'
+import { type Block, flattenBlocks } from '../src/content/studies/blocks'
 import { parseCsv } from '../src/content/studies/csv'
 import { studies } from '../src/content/studies'
 import type { Chapter, Study } from '../src/content/studies/types'
@@ -62,14 +64,43 @@ type FileRef = { kind: 'data'; id: string } | { kind: 'code'; path: string }
 // Acilir kutularin ve sekillerin icindekiler dahil, bir parca listesindeki
 // butun dosya cagrilari.
 function fileRefs(blocks: Block[]): FileRef[] {
-  return blocks.flatMap((block): FileRef[] => {
+  return flattenBlocks(blocks).flatMap((block): FileRef[] => {
     if (block.type === 'sheet') return [{ kind: 'data', id: block.csv }]
     if (block.type === 'datafile') return [{ kind: 'data', id: block.csv }]
     if (block.type === 'code' || block.type === 'output') return [{ kind: 'code', path: block.path }]
-    if (block.type === 'details') return fileRefs(block.blocks)
-    if (block.type === 'chart') return fileRefs(block.blocks ?? [])
     return []
   })
+}
+
+// Bir parcanin kendi icerigindeki tutarsizliklar, okunabilir bir mesajla.
+// Tipler bu kurallari yakalayamaz: hucre sayisi, bolge kimligi, eksen
+// sinirlari, hucre adresi ve takvim araligi sayilara ve metne bakar. Bos
+// liste tutarlidir.
+function blockProblems(block: Block): string[] {
+  const problems: string[] = []
+  if (block.type === 'table') {
+    block.rows.forEach((row, index) => {
+      if (row.length !== block.head.length) problems.push(`table row ${index + 1} has ${row.length} cells, head has ${block.head.length}`)
+    })
+  }
+  if (block.type === 'chart') {
+    const zoneIds = (block.zones ?? []).map((zone) => zone.id)
+    for (const bar of block.bars) {
+      if (bar.zone !== undefined && !zoneIds.includes(bar.zone)) problems.push(`chart bar "${bar.label.en}" has unknown zone ${bar.zone}`)
+      if (bar.value > block.max) problems.push(`chart bar "${bar.label.en}" is ${bar.value}, above max ${block.max}`)
+    }
+    if (block.ticks.length < 2) problems.push(`chart "${block.title.en}" has ${block.ticks.length} ticks, needs at least 2`)
+  }
+  if (block.type === 'sheet' && !/^[A-Z]+\d+$/.test(block.cell)) problems.push(`sheet ${block.csv} has bad cell ${block.cell}`)
+  if (block.type === 'timeline') {
+    for (const task of block.tasks) {
+      // Baslangic birden sayildigi icin donem sayisi n ise cizgi n + 1'de biter.
+      if (task.start < 1 || task.start + task.length > block.periods + 1) {
+        problems.push(`timeline task "${task.label.en}" runs from ${task.start} for ${task.length}, periods is ${block.periods}`)
+      }
+    }
+  }
+  return problems
 }
 
 // Calismanin iki sayfasinin bolumleri: detay sayfasi her zaman, kod sayfasi
@@ -120,11 +151,21 @@ for (const study of studies) {
     }
   })
 
+  test(`${slug}: block contents are consistent`, async () => {
+    for (const [name, chapters] of await pages(study)) {
+      for (const chapter of chapters) {
+        for (const block of flattenBlocks(chapter.blocks)) {
+          expect(blockProblems(block), `${name}/${chapter.id}/${block.type}`).toEqual([])
+        }
+      }
+    }
+  })
+
   // Terminal ciktisi renklenmez, onun disindaki her kod dosyasinin dili
   // kayitli olmali, yoksa sayfa o dosyada hata verir.
   test(`${slug}: every code file has a known language`, async () => {
     for (const [, chapters] of await pages(study)) {
-      for (const block of chapters.flatMap((chapter) => chapter.blocks)) {
+      for (const block of flattenBlocks(chapters.flatMap((chapter) => chapter.blocks))) {
         if (block.type === 'code') expect(() => codeLanguage(block.path), block.path).not.toThrow()
       }
     }

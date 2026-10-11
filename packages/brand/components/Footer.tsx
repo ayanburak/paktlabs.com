@@ -15,6 +15,7 @@ description: Sayfanin en altindaki telif hakki satiri ve disiplin baglantilarini
 */
 
 import { disciplineOrder, disciplineUrls } from '../content/disciplines'
+import { mainSiteHost } from '../content/site'
 import { useBrandDict } from '../i18n/useBrandDict'
 
 import styles from './Footer.module.css'
@@ -39,7 +40,7 @@ export function Footer({ homeHref }: FooterProps) {
               {nav[key]}
             </a>
           ))}
-          {homeHref && <a href={homeHref}>paktlabs.com</a>}
+          {homeHref && <a href={homeHref}>{mainSiteHost}</a>}
         </nav>
       </div>
     </footer>

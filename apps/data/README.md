@@ -113,7 +113,7 @@ Tasarım dili landing sayfasından gelir ve elle yazılır. Mockup'lar saf HTML 
 
 ### Renkler ve fontlar
 
-Renkler `packages/brand/styles/tokens.css` dosyasından gelir, landing de aynı dosyayı kullanır. data kendi stillerinde renk sabiti yazmaz, aşağıdaki değişkenleri kullanır.
+Renkler `packages/brand/styles/tokens.css` dosyasından gelir, landing de aynı dosyayı kullanır. data kendi stillerinde renk sabiti yazmaz, aşağıdaki değişkenleri kullanır. Tek istisna hesap tablosudur: `Sheet.module.css` gerçek bir tablo programının ekran görüntüsü gibi durması için o programın gri tonlarını kullanır, bu renkler dosyanın başında `--sheet-*` adlarıyla toplanır ve marka paletine karışmaz.
 
 | Değişken | Değer | Kullanım |
 | --- | --- | --- |
@@ -207,7 +207,7 @@ Veri işlerini gösteren çalışan bir uygulama bu repoya girmez. Uygulama kend
 
 ## Yazım rehberi
 
-Detay sayfası her çalışmada aynı iskeletle kurulur: kapak ve künye, Sorun, Yaklaşım ve Sonuç bandı, içindekiler, numaralı bölümler, Meraklısına kartı, yazar kutusu ve kapanış. İskeletin içeriği çalışmanın `page.ts` dosyasında yazılır. Bölümlerin içi ise serbesttir. Her bölüm `blocks` listesinde sırayla dizilen parçalardan oluşur. Bir parça içeriği bilmez, adını hikâyeden değil biçimden alır. Hangi parçanın hangi sırayla ve kaç kez kullanılacağı serbesttir, böylece iki çalışmanın sayfası birbirine benzemek zorunda kalmaz. Yeni bir anlatım biçimi gerektiğinde `src/content/studies/blocks.ts` içine yeni bir parça tipi, `src/components/study/blocks/` altına bileşeni eklenir. Eski sayfalara dokunulmaz. Yanlış ya da eksik yazılmış bir parça derleme hatası verir.
+Detay sayfası her çalışmada aynı iskeletle kurulur: kapak ve künye, Sorun, Yaklaşım ve Sonuç bandı, içindekiler, numaralı bölümler, Meraklısına kartı, yazar kutusu ve kapanış. İskeletin içeriği çalışmanın `page.ts` dosyasında yazılır. Bölümlerin içi ise serbesttir. Her bölüm `blocks` listesinde sırayla dizilen parçalardan oluşur. Bir parça içeriği bilmez, adını hikâyeden değil biçimden alır. Hangi parçanın hangi sırayla ve kaç kez kullanılacağı serbesttir, böylece iki çalışmanın sayfası birbirine benzemek zorunda kalmaz. Yeni bir anlatım biçimi gerektiğinde `src/content/studies/blocks.ts` içine yeni bir parça tipi, `src/components/study/blocks/` altına bileşeni eklenir. Eski sayfalara dokunulmaz. Kod, çıktı ve veri dosyası parçalarının ortak bileşenleri `blocks/file/` altında durur. Başka parça taşıyan bir parça eklenirse `childBlocks` içine karşılığı yazılır, parça ağacını gezen her yer `flattenBlocks` ile gezer. Yanlış ya da eksik yazılmış bir parça derleme hatası verir. `tests/data.spec.ts` ayrıca parçaların içeriğini denetler: tablo satırlarının hücre sayısı, şekil bölgeleri ve eksen sınırları, hesap tablosu hücre adresi ve takvim aralığı.
 
 Her metin iki dili yan yana taşır. Aşağıdaki örneklerde kısalık için yalnızca bir iki alan gösterilir.
 
@@ -403,7 +403,7 @@ export const source: SourcePage = {
 
 ### Kod dosyası
 
-Çalışmanın `code` klasöründeki bir dosyayı satır numaralarıyla, yoluyla ve kopyalama düğmesiyle gösterir. `path` dosyanın `code/tr/` ve `code/en/` altındaki yoludur, başlıkta da bu yol yazar. Satır sayısı dosyadan, dilin adı ve renklendirme kuralları uzantıdan gelir. Dil `src/components/study/blocks/languages.ts` kaydından seçilir. Yeni bir dil gerektiğinde oraya bir kayıt eklenir, renklendirici ve kod bileşeni değişmez. Kayıtlı olmayan bir uzantı hata verir.
+Çalışmanın `code` klasöründeki bir dosyayı satır numaralarıyla, yoluyla ve kopyalama düğmesiyle gösterir. `path` dosyanın `code/tr/` ve `code/en/` altındaki yoludur, başlıkta da bu yol yazar. Satır sayısı dosyadan, dilin adı ve renklendirme kuralları uzantıdan gelir. Dil `src/components/study/blocks/file/languages.ts` kaydından seçilir. Yeni bir dil gerektiğinde oraya bir kayıt eklenir, renklendirici ve kod bileşeni değişmez. Kayıtlı olmayan bir uzantı hata verir.
 
 ```ts
 { type: 'code', path: 'rules/catalog.py' }

@@ -42,25 +42,19 @@
   min-height: 128px;
   padding: 18px 20px;
   background: var(--paper);
-  border: 2px solid var(--charcoal);
+  border: var(--card-border);
   transition:
-    transform 0.16s ease,
-    box-shadow 0.16s ease,
+    transform var(--lift-time) ease,
+    box-shadow var(--lift-time) ease,
     background 0.15s ease,
     color 0.15s ease;
-  animation: drop 0.28s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  animation: global(drop) 0.28s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
   animation-delay: calc(var(--i) * 45ms);
 }
 /* ekran her degistiginde kutular data'nin suzgec panelindeki gibi sirayla duser */
-@keyframes drop {
-  from {
-    opacity: 0;
-    transform: translateY(-12px);
-  }
-}
 .option:hover .face {
-  transform: translateY(-3px);
-  box-shadow: 0 3px 0 var(--charcoal);
+  transform: translateY(var(--lift));
+  box-shadow: var(--lift-shadow);
 }
 .input:checked + .face {
   background: var(--ink);

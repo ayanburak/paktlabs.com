@@ -23,6 +23,7 @@ description: Aktif dili ve dil degistirme fonksiyonunu bilesen agacina dagitan p
 import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 
+import { mainSiteHost } from '../content/site'
 import { LanguageContext } from './language'
 import type { Language } from './language'
 
@@ -39,12 +40,12 @@ function isLanguage(value: string | null | undefined): value is Language {
 // kalir. Secure yalnizca https'te eklenir, yerel http sunucusunda da yazilabilsin.
 function cookieAttributes(): string {
   const { hostname, protocol } = location
-  const shared = hostname === 'paktlabs.com' || hostname.endsWith('.paktlabs.com')
+  const shared = hostname === mainSiteHost || hostname.endsWith(`.${mainSiteHost}`)
   return [
     `Max-Age=${COOKIE_MAX_AGE}`,
     'Path=/',
     'SameSite=Lax',
-    shared && 'Domain=paktlabs.com',
+    shared && `Domain=${mainSiteHost}`,
     protocol === 'https:' && 'Secure',
   ]
     .filter(Boolean)

@@ -23,6 +23,10 @@ import { useDataLanguage } from './dataLanguageContext'
 
 export const DATA_LANGUAGE_ID = 'data-language'
 
+// Veri dili bolumu numaralanan bolumlerden once geldigi icin sifir numarasini
+// alir. Icindekiler ve bolumun kendisi ayni numarayi gostersin diye tek yerde.
+export const DATA_LANGUAGE_NUMBER = '00'
+
 // Bolumun sayfaya gore degisen iki metni: giris paragrafi ve secicinin ekran
 // okuyucuya okunan adi.
 export interface DataLanguageText {
@@ -52,7 +56,7 @@ export function DataLanguage({ text }: DataLanguageProps) {
   return (
     <Chapter
       id={DATA_LANGUAGE_ID}
-      number="00"
+      number={DATA_LANGUAGE_NUMBER}
       label={common.label}
       title={`${common.title} ${common.languages[data.original]}`}
       lede={text.lede}

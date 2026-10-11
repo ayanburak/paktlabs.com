@@ -4,6 +4,7 @@ importable: Band
 
 Veri, otomasyon ve web seritlerinin ucu de bu bilesenin ayni sekle sahip uc
 somut kullanimi, tone ve figurun hangi kenara oturdugu disardan verilir.
+Figur sagdaysa bant ters dizilir, ayri bir prop yoktur.
 Listenin bir satirina href verilirse satirin tamami baglanti olur ve sag
 ucunda bir ok durur. Bugun yalnizca Veri bandinin satirlari data'nin
 suzgecine baglanir, otomasyon ve web satirlari duz yazidir.
@@ -27,7 +28,6 @@ export interface BandItem {
 
 interface BandProps {
   tone: 'data' | 'auto' | 'web'
-  flip: boolean
   tightTop?: boolean
   index: string
   title: string
@@ -45,7 +45,6 @@ interface BandProps {
 
 export function Band({
   tone,
-  flip,
   tightTop,
   index,
   title,
@@ -69,7 +68,7 @@ export function Band({
       className={cx(
         styles.band,
         tone === 'web' && styles.web,
-        flip && styles.flip,
+        artSide === 'right' && styles.flip,
         tightTop && styles.tightTop,
       )}
       style={rootStyle}

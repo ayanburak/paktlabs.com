@@ -51,7 +51,7 @@ export function Closing({ study, closing }: ClosingProps) {
           <span className="eyebrow">{dict.closing.label}</span>
           <h2>{closing.title[language]}</h2>
           <nav className={styles.next} aria-label={dict.closing.nav}>
-            <a href={worksPath()} className={styles.back}>
+            <Link to={worksPath()} className={styles.back}>
               <span className={cx(styles.box, styles.head)}>
                 <span className="eyebrow">{dict.closing.all.label}</span>
                 <h3>{dict.closing.all.title}</h3>
@@ -60,7 +60,7 @@ export function Closing({ study, closing }: ClosingProps) {
                 <span>{dict.closing.all.text}</span>
                 <span className={styles.go}>{dict.closing.all.go}</span>
               </span>
-            </a>
+            </Link>
             {next && (
               <Link to={`/work/${next.slug}`}>
                 <span className={cx(styles.box, styles.head)}>

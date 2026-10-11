@@ -13,7 +13,7 @@ import { useDict } from '@/i18n'
 import { About } from './sections/About'
 import { Disciplines } from './sections/Disciplines'
 import { Hero } from './sections/Hero'
-import { Work } from './sections/Work'
+import { Work } from './sections/Work/Work'
 
 // Sayfa ortak iletisim bolumuyle kapanir, bolumdeki dugme iletisim
 // sayfasina gider.

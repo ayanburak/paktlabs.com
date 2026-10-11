@@ -80,7 +80,6 @@
     "step": "Step",
     "questions": {
       "area": {
-        "short": "Area",
         "title": "What area is the work in?",
         "options": {
           "data": {
@@ -102,7 +101,6 @@
         }
       },
       "stage": {
-        "short": "Stage",
         "title": "What do you have so far?",
         "options": {
           "idea": {
@@ -124,7 +122,6 @@
         }
       },
       "timing": {
-        "short": "Timing",
         "title": "When do you need it?",
         "options": {
           "days": {
@@ -147,7 +144,6 @@
       }
     },
     "details": {
-      "short": "You",
       "title": "How can we reach you?",
       "name": "Your name",
       "email": "Your email",

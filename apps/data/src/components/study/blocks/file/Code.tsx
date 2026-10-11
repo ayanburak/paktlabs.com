@@ -13,11 +13,11 @@ description: Calismanin bir kod dosyasini satir numaralari ve renklendirmeyle go
 import type { CodeBlock } from '@/content/studies/blocks'
 import { useDict } from '@/i18n'
 
-import { useStudyFile } from '../studyFiles'
+import { useStudyFile } from '../../studyFiles'
 import styles from './Code.module.css'
 import { CopyButton } from './FileActions'
 import { FileFrame } from './FileFrame'
-import { fileText } from './format'
+import { fileText } from './fileFormat'
 import { highlight } from './highlight'
 import { codeLanguage } from './languages'
 import { NumberedLines } from './NumberedLines'

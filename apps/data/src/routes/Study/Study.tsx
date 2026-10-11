@@ -11,11 +11,7 @@ description: Adresteki slug'a ait calismanin detay sayfasini olusturan bilesen.
 import { useLanguage } from '@paktlabs/brand/i18n/language'
 
 import { Page } from '@/components/Page'
-import { Author } from '@/components/study/Author'
-import { Body } from '@/components/study/Body'
-import { Cover } from '@/components/study/Cover'
-import { DataLanguageProvider } from '@/components/study/DataLanguageProvider'
-import { StudyFilesContext } from '@/components/study/studyFiles'
+import { StudyLayout } from '@/components/study/StudyLayout'
 import { useStudyTags } from '@/components/useStudyTags'
 import { useDict } from '@/i18n'
 import { worksPath } from '@/routes/links'
@@ -30,7 +26,7 @@ import { Summary } from './sections/Summary'
 // Sekme basligi calismanin basligi ve sitenin basligindan olusur, mockup'taki
 // "baslik · Veri · PaktLabs" bicimi. Sitenin basligi veri sayfasinin kendi
 // basligidir, ayrica bir anahtar tutulmaz. Kapak, govde ve yazar kutusu kod
-// sayfasiyla ortak, ozet bandi, Meraklisina karti ve kapanis bu sayfaya ozel.
+// sayfasiyla ortak ve StudyLayout'ta, ozet bandi, Meraklisina karti ve kapanis bu sayfaya ozel.
 // Calismanin metni ve dosyalari rota yukleyicisinden hazir gelir, calisma
 // yoksa yukleyici bir sey yuklemez.
 export function Study() {
@@ -53,29 +49,21 @@ function StudyView({ study, page, files }: StudyRoute) {
 
   return (
     <Page title={`${title} · ${home.meta.title}`} description={page.lede[language]}>
-      <DataLanguageProvider key={study.slug} original={study.dataLanguage}>
-        <StudyFilesContext.Provider value={files}>
-          <Cover
-            crumb={{ href: worksPath(), back: dict.cover.back, current: study.number }}
-            tags={tags}
-            title={title}
-            lede={page.lede[language]}
-            facts={page.facts.map((row) => ({ label: row.label[language], value: row.value[language] }))}
-          />
-          <Summary summary={page.summary} />
-          <Body
-            chapters={page.chapters}
-            tocNote={`${dict.toc.readingTime.before} ${minutes} ${dict.toc.readingTime.after}`}
-            dataLanguage={dict.dataLanguage}
-            afterChapters={
-              <>
-                <Curious study={study} />
-                <Author id={study.author} />
-              </>
-            }
-          />
-        </StudyFilesContext.Provider>
-      </DataLanguageProvider>
+      <StudyLayout
+        study={study}
+        files={files}
+        crumb={{ href: worksPath(), back: dict.cover.back, current: study.number }}
+        tags={tags}
+        title={title}
+        lede={page.lede[language]}
+        facts={page.facts}
+        chapters={page.chapters}
+        tocNote={`${dict.toc.readingTime.before} ${minutes} ${dict.toc.readingTime.after}`}
+        dataLanguage={dict.dataLanguage}
+        beforeAuthor={<Curious study={study} />}
+      >
+        <Summary summary={page.summary} />
+      </StudyLayout>
       <Closing study={study} closing={page.closing} />
     </Page>
   )

@@ -48,6 +48,7 @@ function zoneSpans(bars: ChartBar[], zones: ChartZone[]) {
 // bolgenin rengini alir, bolge adlari en altta bir bant olarak durur.
 function Vertical({ block, language }: PlotProps) {
   const zones = block.zones ?? []
+  const spans = zoneSpans(block.bars, zones)
   const style = (bar: ChartBar) => zones.find((zone) => zone.id === bar.zone)?.style ?? 'none'
 
   return (
@@ -75,11 +76,8 @@ function Vertical({ block, language }: PlotProps) {
         ))}
       </div>
       {zones.length > 0 && (
-        <div
-          className={styles.zones}
-          style={{ gridTemplateColumns: zoneSpans(block.bars, zones).map((span) => `${span.count}fr`).join(' ') }}
-        >
-          {zoneSpans(block.bars, zones).map((span) => (
+        <div className={styles.zones} style={{ gridTemplateColumns: spans.map((span) => `${span.count}fr`).join(' ') }}>
+          {spans.map((span) => (
             <span key={span.zone.id} className={styles[span.zone.style]}>
               {span.zone.label[language]}
             </span>

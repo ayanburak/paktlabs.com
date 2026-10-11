@@ -19,7 +19,7 @@
   margin-bottom: 14px;
 }
 .head h2 {
-  font-size: clamp(32px, 3.8vw, 52px);
+  font-size: var(--text-section);
   line-height: 1.12;
   letter-spacing: -0.02em;
   max-width: 24ch;
