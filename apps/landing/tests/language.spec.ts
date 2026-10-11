@@ -26,7 +26,7 @@ async function expectLanguage(page: Page, lang: Language) {
   await expect(page.locator('meta[name="description"]')).toHaveCount(1)
 }
 
-// Testler localhost'ta calistigi icin cerez Domain'siz, yalnizca bu adrese yazilir.
+// pl_lang cerezini tarayicinin kendi kaydindan okur.
 async function storedCookie(page: Page) {
   return (await page.context().cookies()).find((cookie) => cookie.name === 'pl_lang')
 }
@@ -102,14 +102,16 @@ test.describe('reading the stored language', () => {
 })
 
 test.describe('writing the language choice', () => {
-  test('persists the choice across reloads', async ({ page }) => {
+  test('persists the choice across reloads', async ({ page, baseURL }) => {
     await openHome(page)
     await switchTo(page, 'en')
     await expectLanguage(page, 'en')
     expect(await page.evaluate(() => localStorage.getItem('pl_lang'))).toBe('en')
     const cookie = await storedCookie(page)
     expect(cookie?.value).toBe('en')
-    expect(cookie?.domain).toBe('localhost')
+    // Yerelde cerez yalnizca localhost'a, canlida butun paktlabs.com alt alan adlarina yazilir.
+    const host = new URL(baseURL!).hostname
+    expect(cookie?.domain).toBe(host.endsWith('paktlabs.com') ? '.paktlabs.com' : host)
     expect(cookie?.sameSite).toBe('Lax')
     // bir yil, birkac saniyelik pay ile
     expect(cookie!.expires - Date.now() / 1000).toBeGreaterThan(365 * 24 * 3600 - 60)
