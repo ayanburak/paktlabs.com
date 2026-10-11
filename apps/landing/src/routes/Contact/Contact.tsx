@@ -38,13 +38,48 @@ interface ContactProps {
 type Status = 'editing' | 'sending' | 'sent' | 'failed'
 
 // Her adimin kendi cizimi. Dort cizimde Ada ayni boyda ve ayni golgenin
-// ustunde duruyor, sayfa hepsini ayni yukseklikte gosterir, genislik
-// cizimden gelir. Gonderildi ekraninda son adimin cizimi kalir.
+// ustunde duruyor, sayfa hepsini ayni yukseklikte ve ayni genislikteki bir
+// alanda gosterir. Gonderildi ekraninda son adimin cizimi kalir.
 const stepArt = {
   area: alanSvg,
   stage: durumSvg,
   timing: zamanSvg,
   details: sizSvg,
+}
+
+// Sayfa acilip ilk cizim geldikten sonra oteki cizimler arka planda indirilir.
+// Ziyaretci ilk soruyu cevaplayana kadar hepsi onbellekte olur ve adim
+// degisince beklenmez. load olayi beklenir ki bu indirme sayfanin kendi
+// dosyalarinin onune gecmesin.
+function usePreloadedArt() {
+  useEffect(() => {
+    const load = () => Object.values(stepArt).forEach((src) => (new Image().src = src))
+    if (document.readyState === 'complete') load()
+    else window.addEventListener('load', load, { once: true })
+    return () => window.removeEventListener('load', load)
+  }, [])
+}
+
+// Ekranda gosterilen cizim, istenen cizim indirilip cizilmeye hazir olunca
+// degisir. O ana kadar onceki cizim yerinde kalir, boylece belirme animasyonu
+// bos bir alanin ustunde oynamaz ve cizim animasyonsuz pat diye cikmaz. Ilk
+// acilista hazir olana kadar hicbir cizim gosterilmez. Indirme hata verirse
+// yine de gecilir, kirik bir dosya bir adimi kilitlemesin.
+function useReadyArt(wanted: string): string | undefined {
+  const [shown, setShown] = useState<string>()
+  useEffect(() => {
+    let live = true
+    const img = new Image()
+    img.src = wanted
+    img
+      .decode()
+      .catch(() => undefined)
+      .then(() => live && setShown(wanted))
+    return () => {
+      live = false
+    }
+  }, [wanted])
+  return shown
 }
 
 const emptyDetails: Details = { name: '', email: '', company: '', message: '', website: '' }
@@ -90,7 +125,8 @@ export function Contact({ sender }: ContactProps) {
   }
 
   const title = sent ? dict.sent.title : question ? dict.questions[question.id].title : dict.details.title
-  const art = stepArt[question ? question.id : 'details']
+  const art = useReadyArt(stepArt[question ? question.id : 'details'])
+  usePreloadedArt()
 
   return (
     <Page title={dict.meta.title} description={dict.meta.description}>
@@ -101,9 +137,11 @@ export function Contact({ sender }: ContactProps) {
           <p className={cx('rise', styles.lead)}>{dict.lead}</p>
         </div>
 
-        {/* cizim suslemedir, ekran okuyucu atlar. key adim degisince yeni
-            cizimin belirme animasyonunu bastan oynatir */}
-        <img className={styles.art} src={art} alt="" aria-hidden="true" key={art} />
+        {/* cizim suslemedir, ekran okuyucu atlar. Alanin olcusu sabit, icindeki
+            cizim degisir. key yeni cizimin belirme animasyonunu bastan oynatir */}
+        <div className={styles.art}>
+          {art && <img src={art} alt="" aria-hidden="true" key={art} />}
+        </div>
 
         <div className={styles.card}>
           <div className={cx(styles.box, styles.head)}>

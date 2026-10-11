@@ -41,14 +41,23 @@
 }
 
 /* adimin cizimi. Dort cizim de dikey ve ayni yukseklikte, genislikleri
-   farkli. Yukseklik sabit tutulur, genislik cizimden gelir, boylece adim
-   degisince Ada ayni boyda kalir. Cizimin altindaki golge elipsi, cizim
-   yuksekliginin yaklasik yuzde yedisi, translate ile yarisi kadar asagi
-   kayar ve ortasi formun alt kenarina oturur */
+   farkli. Alanin olcusu sabittir: yukseklik ortak, genislik en genis cizimin,
+   posta kutulu iletisim-siz.svg'nin orani. Cizim inmeden ya da adim
+   degisince alan daralmaz, form yerinden oynamaz. Cizimler alanin sol alt
+   kosesine yaslanir, Ada her adimda ayni yerde durur. Daha genis bir cizim
+   gelirse yalnizca --art-widest degisir. Cizimin altindaki golge elipsi,
+   cizim yuksekliginin yaklasik yuzde yedisi, translate ile yarisi kadar
+   asagi kayar ve ortasi formun alt kenarina oturur */
 .art {
-  height: min(50svh, 500px);
-  width: auto;
+  --art-height: min(50svh, 500px);
+  --art-widest: 262.66759 / 409.37089;
+  height: var(--art-height);
+  width: calc(var(--art-height) * (var(--art-widest)));
   translate: 0 3.5%;
+}
+.art img {
+  height: 100%;
+  width: auto;
   animation: appear 0.35s ease backwards;
 }
 @keyframes appear {

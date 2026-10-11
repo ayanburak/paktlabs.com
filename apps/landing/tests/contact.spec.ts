@@ -203,3 +203,32 @@ test('headings, landmarks and the decorative drawing', async ({ page }) => {
   await expect(page.locator('main img')).toHaveAttribute('alt', '')
   await expect(page.locator('main img')).toHaveAttribute('aria-hidden', 'true')
 })
+
+// Cizimler yavas gelse de form yerinden oynamaz ve yeni cizim inmeden onceki
+// cizim yerinde kalir. Her cizim bilerek 800 ms geciktirilir. Oteki cizimler
+// sayfa acilinca arka planda indirildigi icin gecikme ilk acilista odenir,
+// bu yuzden ilk adima hizli gecilip onceki cizimin kaldigi da olculur.
+test('slow drawings neither move the form nor leave the slot empty', async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 })
+  await page.route('**/iletisim-*.svg', async (route) => {
+    await new Promise((resolve) => setTimeout(resolve, 800))
+    await route.continue()
+  })
+  await page.addInitScript(() => localStorage.setItem('pl_lang', 'tr'))
+  await page.goto(contactPath)
+  const t = step('tr')
+  const art = page.locator('main img')
+  const formLeft = () => page.locator('main h2').evaluate((el) => Math.round(el.getBoundingClientRect().left))
+
+  await expect(art).toHaveAttribute('src', /iletisim-alan/)
+  const left = await formLeft()
+  await answer(page, [t.questions.area.options.data.label], new RegExp(t.actions.next))
+
+  // ikinci cizim henuz inmediyse ilki yerinde kalir, alan hic bos kalmaz
+  await expect(art).toHaveCount(1)
+  expect(await formLeft()).toBe(left)
+  await expect(art).toHaveAttribute('src', /iletisim-durum/)
+  await answer(page, [t.questions.stage.options.plan.label, t.questions.timing.options.month.label], new RegExp(t.actions.next))
+  await expect(art).toHaveAttribute('src', /iletisim-siz/)
+  expect(await formLeft()).toBe(left)
+})

@@ -55,9 +55,12 @@ export async function openHome(page: Page, lang?: Language) {
 }
 
 // openHome'un iletisim sayfasi icin olani. Form gonderimi testlerde gercek
-// servise gitmez, her test /api/contact'i kendisi taklit eder.
+// servise gitmez, her test /api/contact'i kendisi taklit eder. Adimin cizimi
+// indirilip hazir olunca DOM'a girer, bu yuzden ayrica beklenir. Dar ekranda
+// cizimin alani gizli ama img yine DOM'a girer.
 export async function openContact(page: Page, lang?: Language) {
   if (lang) await page.addInitScript((l) => localStorage.setItem('pl_lang', l), lang)
   await page.goto(contactPath, { waitUntil: 'networkidle' })
+  await page.locator('main img').waitFor({ state: 'attached' })
   await waitForAssets(page)
 }
