@@ -6,8 +6,8 @@ description: Anasayfayi olusturan bolumleri sirasiyla dizen bilesen.
 */
 
 import { Contact } from '@paktlabs/brand/components/Contact'
+import { Page } from '@paktlabs/brand/components/Page'
 
-import { Page } from '@/components/Page'
 import { useDict } from '@/i18n'
 
 import { About } from './sections/About'

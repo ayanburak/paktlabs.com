@@ -10,9 +10,8 @@ description: Ust bar, ortak bulunamadi bolumu ve alt bilgiden olusan landing 404
 */
 
 import { NotFound as NotFoundSection } from '@paktlabs/brand/components/NotFound'
+import { Page } from '@paktlabs/brand/components/Page'
 import { useBrandDict } from '@paktlabs/brand/i18n/useBrandDict'
-
-import { Page } from '@/components/Page'
 
 // Icerik ve metinler brand'deki ortak bulunamadi sayfasindan gelir, data da
 // ayni bolumu kendi cercevesinde gosterir. Cerceve Home'daki ust bar, main ve

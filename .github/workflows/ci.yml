@@ -1,7 +1,8 @@
 # PaktLabs sitelerinin lint, tip kontrolu ve Playwright davranis testleri,
 # iletisim servisinin pytest testleri.
 # Bagimliliklar npm workspaces ile kokte kurulur. Lint butun repoyu tek seferde
-# tarar, her uygulama kendi job'unda tip kontrolu ve testlerini calistirir.
+# tarar, ortak paketlerin, brand ve config, tip kontrolunu de yapar. Siteler matristeki tek bir isle
+# kosar, yeni bir site eklemek app listesine bir ad eklemekten ibarettir.
 # Gorsel snapshot testleri burada calismaz: referanslar yerel Linux/Chromium
 # font cizimiyle alindi, GitHub runner'inda piksel farki uretip yanlis alarm verir.
 name: CI
@@ -23,28 +24,17 @@ jobs:
           cache-dependency-path: package-lock.json
       - run: npm ci
       - run: npm run lint
+      - run: npm run typecheck -w packages/brand -w packages/config
 
-  brand:
+  site:
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [landing, data]
     defaults:
       run:
-        working-directory: packages/brand
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-          cache-dependency-path: package-lock.json
-      - run: npm ci
-        working-directory: .
-      - run: npm run typecheck
-
-  landing:
-    runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: apps/landing
+        working-directory: apps/${{ matrix.app }}
     steps:
       - uses: actions/checkout@v4
 
@@ -63,39 +53,10 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: playwright-report-landing
+          name: playwright-report-${{ matrix.app }}
           path: |
-            apps/landing/playwright-report
-            apps/landing/test-results
-          retention-days: 7
-
-  data:
-    runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: apps/data
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-          cache-dependency-path: package-lock.json
-
-      - run: npm ci
-        working-directory: .
-      - run: npm run typecheck
-      - run: npx playwright install --with-deps chromium
-      - run: npm test
-
-      - uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: playwright-report-data
-          path: |
-            apps/data/playwright-report
-            apps/data/test-results
+            apps/${{ matrix.app }}/playwright-report
+            apps/${{ matrix.app }}/test-results
           retention-days: 7
 
   # Servis sunucuda Python 3.10 ile calisir, testler de o surumle kosar ki

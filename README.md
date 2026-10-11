@@ -16,7 +16,7 @@ Landing alan bağımsızdır. Disiplin bağlantıları ayrı subdomain'lere gide
 
 Bu adresler `packages/brand/content/disciplines.ts` içinde tek yerde tutulur. Landing'in üst menüsü, mobil menüsü, disiplin kartları, iş kapsamı bantları ve alt menüsü ile disiplin sitelerinin üst barı aynı kaynağı kullanır. Adres değiştiğinde yalnızca bu dosya güncellenir. Veri bandının altı satırı ayrıca data sitesinin çalışma kategorileridir ve her biri data'daki o kategorinin hizmet sayfasını açar, örneğin `https://data.paktlabs.com/services/quality`. Hizmet sayfası işi anlatır, oradan o kategorideki çalışmalara geçilir. Kategorilerin kimlikleri, sırası ve iki dildeki adları iki sitenin ortak kaynağı olan brand paketinde durur, böylece landing'deki satırlar data'nın süzgecinden ayrışamaz. Otomasyon ve Web bantlarının satırları düz yazıdır. Subdomain'lerin DNS ve sertifika kurulumu bu reponun işi değildir, sunucu tarafında belgelenir. `web` ve `automation` subdomain'lerinin henüz sitesi ve DNS kaydı yoktur.
 
-Landing içinde `/web`, `/automation` veya `/data` gibi alt sayfalar tanımlanmaz, disiplinler kendi subdomain'lerindedir. Landing çok sayfalı bir derlemedir: her sayfa kendi HTML dosyası ve kendi küçük JS dosyasıyla gelir. Ana sayfa `index.html`, iletişim sayfası `contact/index.html` ve bulunamadı sayfası `404.html`'dir. Tek sayfalık bir uygulama yerine bu yol seçildi, çünkü öyle olsaydı nginx bilinmeyen her adreste ana sayfayı 200 koduyla verirdi ve bulunamadı sayfası gerçek 404 olmazdı. Ayrı dosyalarla her sayfanın Türkçe başlığı JS çalışmadan önce de yazılıdır ve bir sayfa ötekinin JS'ini indirmez. nginx `contact/index.html`'i ayrı bir ayar gerektirmeden `/contact/` adresinde sunar. `/contact` adresi klasör olduğu için nginx onu sondaki eğik çizgiyle `/contact/`'a kalıcı olarak yönlendirir, sayfa her iki adreste de açılır. Bilinmeyen her adreste `404.html` gerçek 404 koduyla döner. Bu dosya brand paketindeki ortak bulunamadı sayfasını landing'in üst barı ve alt bilgisiyle gösterir, böylece ziyaretçi sunucunun kendi hata sayfasını görmez. Vite de `appType: 'mpa'` ile aynı davranır, geliştirme sunucusunda bilinmeyen adres ana sayfayı açmaz. Yerelde iletişim sayfası sonda eğik çizgiyle, `/contact/` olarak açılır. Üç sayfa üst bar, içerik ve alt bilgiyi `src/components/Page.tsx` çerçevesiyle kurar. Derleme birden fazla giriş taşıdığı halde CSS tek dosya olarak üretilir, çünkü Vite ortak stilleri ayrı bir parçaya ayırdığında global stiller bileşen stillerinden önce yüklenir ve brand'in istediği sıra bozulur. Ana sayfa, bütün PaktLabs sitelerinde ortak olan iletişim bölümüyle kapanır. Bölümde form bulunmaz, tek düğme ana sitenin `/contact` adresindeki iletişim sayfasına gider, altında e-posta adresi durur. Hero'daki ve üst bardaki İletişim bağlantıları da aynı adrese gider.
+Landing içinde `/web`, `/automation` veya `/data` gibi alt sayfalar tanımlanmaz, disiplinler kendi subdomain'lerindedir. Landing çok sayfalı bir derlemedir: her sayfa kendi HTML dosyası ve kendi küçük JS dosyasıyla gelir. Ana sayfa `index.html`, iletişim sayfası `contact/index.html` ve bulunamadı sayfası `404.html`'dir. Tek sayfalık bir uygulama yerine bu yol seçildi, çünkü öyle olsaydı nginx bilinmeyen her adreste ana sayfayı 200 koduyla verirdi ve bulunamadı sayfası gerçek 404 olmazdı. Ayrı dosyalarla her sayfanın Türkçe başlığı JS çalışmadan önce de yazılıdır ve bir sayfa ötekinin JS'ini indirmez. nginx `contact/index.html`'i ayrı bir ayar gerektirmeden `/contact/` adresinde sunar. `/contact` adresi klasör olduğu için nginx onu sondaki eğik çizgiyle `/contact/`'a kalıcı olarak yönlendirir, sayfa her iki adreste de açılır. Bilinmeyen her adreste `404.html` gerçek 404 koduyla döner. Bu dosya brand paketindeki ortak bulunamadı sayfasını landing'in üst barı ve alt bilgisiyle gösterir, böylece ziyaretçi sunucunun kendi hata sayfasını görmez. Vite de `appType: 'mpa'` ile aynı davranır, geliştirme sunucusunda bilinmeyen adres ana sayfayı açmaz. Yerelde iletişim sayfası sonda eğik çizgiyle, `/contact/` olarak açılır. Üç sayfa üst bar, içerik ve alt bilgiyi brand'deki ortak `Page` çerçevesiyle kurar. Derleme birden fazla giriş taşıdığı halde CSS tek dosya olarak üretilir, çünkü Vite ortak stilleri ayrı bir parçaya ayırdığında global stiller bileşen stillerinden önce yüklenir ve brand'in istediği sıra bozulur. Ana sayfa, bütün PaktLabs sitelerinde ortak olan iletişim bölümüyle kapanır. Bölümde form bulunmaz, tek düğme ana sitenin `/contact` adresindeki iletişim sayfasına gider, altında e-posta adresi durur. Hero'daki ve üst bardaki İletişim bağlantıları da aynı adrese gider.
 
 ## İletişim sayfası
 
@@ -56,14 +56,21 @@ Repo npm workspaces ile kurulur. Bağımlılıklar kökte tek bir `package-lock.
 
 ```bash
 npm ci
-npm run lint         # bütün uygulamaları ve ortak paketi tek seferde tarar
+npm run lint         # bütün uygulamaları ve ortak paketleri tek seferde tarar
+npm run typecheck    # brand, config ve iki sitenin tip kontrolü
 cd apps/landing
 npm run dev          # http://localhost:5173
 npm run typecheck
 npm run build        # dist/ klasörüne üretim derlemesi
 ```
 
-Lint kökte çalışır ve tek bir `.oxlintrc.json` kullanır, böylece hiçbir uygulamanın import etmediği ortak paket dosyaları da taranır. Ortak paketin tip kontrolü `packages/brand` içinde `npm run typecheck` ile ayrıca yapılır, aynı nedenle.
+Lint kökte çalışır ve tek bir `.oxlintrc.json` kullanır, böylece hiçbir uygulamanın import etmediği ortak paket dosyaları da taranır. Kökteki `npm run typecheck` her workspace'in kendi `typecheck` komutunu sırayla çalıştırır, böylece brand ve config paketleri de iki sitenin yanında denetlenir.
+
+### Ortak yapılandırma
+
+`packages/config`, iki sitenin aynı tuttuğu yapılandırmanın tek kaynağıdır ve `@paktlabs/config` adıyla workspace olarak kurulur. İçinde TypeScript tabanları, `siteConfig` ile Vite ayarı ve `siteTestConfig` ile Playwright ayarı bulunur. Bir sitenin `vite.config.ts` ve `playwright.config.ts` dosyaları bu fonksiyonları portla çağırır, sitenin kendine özel ayarları `mergeConfig` ile üstüne eklenir. `tsconfig` dosyaları tabanları `extends` ile alır ve yalnızca dosyaya göreli olanları tutar. Yeni bir site kurulurken bu dosyalar kopyalanmaz, ince birer çağrı yazılır.
+
+Paketin kökte değil `packages` altında durmasının sebebi paketleme script'idir. `scripts/build-release.sh` `git archive` ile yalnızca kökteki `package.json` ve `package-lock.json` dosyalarını, `packages` ve `apps` klasörlerini alır. Kökte açılacak yeni bir klasör pakete girmez ve sunucuya giden paketteki derleme kırılırdı.
 
 ## Testler
 
@@ -76,9 +83,16 @@ npm test
 npm run test:visual
 ```
 
+Yayından sonra aynı davranış testleri canlı siteye karşı da çalıştırılır. `npm run test:live` build almaz ve yerel sunucu açmaz, `LIVE_URL` ortam değişkeniyle verilen adrese bağlanır. Landing için `https://paktlabs.com`, data için `https://data.paktlabs.com` hazır yazılıdır. Görsel testler dışarıda kalır, çünkü referanslar yerel font çizimiyle alınmıştır. Canlıyı yormamak için bu kipte yeniden deneme bir, paralel çalışma iki ile sınırlanır.
+
+```bash
+cd apps/landing
+npm run test:live
+```
+
 Test koşulları, toleranslar ve testlerin neyi kanıtlamadığı `apps/landing/tests/README.md` içinde anlatılır.
 
-GitHub Actions her push ve pull request'te beş iş çalıştırır: bütün repo için lint, ortak paketin tip kontrolü, landing'in ve data'nın kendi tip kontrolü ile davranış testleri ve iletişim servisinin Python 3.10 ile pytest testleri. Görsel testler CI'da çalıştırılmaz, çünkü referans görüntüler yerel font çizimiyle alınmıştır ve farklı bir runner'da yanlış alarm üretir.
+GitHub Actions her push ve pull request'te üç iş çalıştırır: bütün repo için lint ile brand'in tip kontrolü, bir matrisle landing ve data için ayrı ayrı tip kontrolü ile davranış testleri ve iletişim servisinin Python 3.10 ile pytest testleri. Yeni bir site eklemek matristeki `app` listesine bir ad eklemekten ibarettir. Görsel testler CI'da çalıştırılmaz, çünkü referans görüntüler yerel font çizimiyle alınmıştır ve farklı bir runner'da yanlış alarm üretir.
 
 `docs/visual-baseline/` klasörü, responsive düzeltmelerden önceki durumun `257ed79` commit'inden alınmış arşiv kaydıdır. Güncel referanslar `apps/landing/tests/visual.spec.ts-snapshots/` altında durur. Arşiv yeni görüntülerle değiştirilmez.
 
@@ -90,7 +104,7 @@ GitHub'a push yapılması canlı sitenin güncellendiği anlamına gelmez. Canl�
 
 İletişim servisi aynı script'lerle `api` adıyla yayınlanır. Paketi Python kodudur, sunucuda `/opt/paktlabs-api/releases` altına açılır, sürümün kendi Python ortamı orada kurulur, `/opt/paktlabs-api/current` symlink'i çevrilir ve systemd servisi yeniden başlatılır. Servis sağlık adresine cevap vermezse script kendiliğinden önceki sürüme döner. Ayrıntısı servisin README'sindedir.
 
-Paket, commit'lenmiş kaynaktan üretilir. Script `git archive` ile verilen commit'ten yalnızca kökteki `package.json` ve `package-lock.json` dosyalarını, ortak `packages` klasörünü ve `apps` klasörünü çıkarır, temiz bir ortamda `npm ci` ve yalnızca seçilen uygulamanın build komutunu çalıştırır. Bütün `apps` klasörünün alınmasının nedeni kilit dosyasının bütün uygulamaları listelemesidir, eksik bir uygulama klasörüyle `npm ci` kilitle uyuşmaz. Çalışma ağacındaki commit'lenmemiş bir değişiklik bu yüzden pakete giremez. HTML, JS, CSS ve SVG dosyalarının, data'da çalışmaların CSV, kod ve çıktı dosyalarının yanına önceden sıkıştırılmış `.gz` kopyaları eklenir, her dosyanın SHA256 özeti ve kaynak commit pakete yazılır.
+Paket, commit'lenmiş kaynaktan üretilir. Script `git archive` ile verilen commit'ten yalnızca kökteki `package.json` ve `package-lock.json` dosyalarını, ortak `packages` klasörünü, yani brand ve config paketlerini, ve `apps` klasörünü çıkarır, temiz bir ortamda `npm ci` ve yalnızca seçilen uygulamanın build komutunu çalıştırır. Bütün `apps` klasörünün alınmasının nedeni kilit dosyasının bütün uygulamaları listelemesidir, eksik bir uygulama klasörüyle `npm ci` kilitle uyuşmaz. Çalışma ağacındaki commit'lenmemiş bir değişiklik bu yüzden pakete giremez. HTML, JS, CSS ve SVG dosyalarının, data'da çalışmaların CSV, kod ve çıktı dosyalarının yanına önceden sıkıştırılmış `.gz` kopyaları eklenir, her dosyanın SHA256 özeti ve kaynak commit pakete yazılır.
 
 ```bash
 scripts/build-release.sh landing            # HEAD'den release/paktlabs-<zaman>-<commit>.tar.gz üretir

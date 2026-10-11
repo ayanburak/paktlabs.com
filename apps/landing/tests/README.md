@@ -55,6 +55,14 @@ zemin sapması = görsel alt kenarı − görsel yüksekliği × zemin yüzdesi 
 
 Görsel karşılaştırmada piksel başına Playwright'ın varsayılan renk eşiği kullanılır, farklı piksel oranı sıfırdır. Fontlar Google Fonts üzerinden ağdan yüklenir. Font sürümü, işletim sistemi veya font çizimi değiştiğinde çıkan fark önce görüntüden incelenir, doğrudan uygulama hatası sayılmaz. Referanslar Linux üzerinde Chromium 153 ile alınmıştır.
 
+## Canlıya karşı çalıştırma
+
+`npm run test:live` aynı davranış testlerini build almadan, `LIVE_URL` ile verilen adrese karşı çalıştırır. Görsel testler dışarıda kalır. Yayından sonra canlının beklendiği gibi davrandığını görmek için kullanılır, canlı sunucuyu yormamak için bu kipte yeniden deneme bir, paralel çalışma iki olur. Yerel bir önizlemeye karşı da denenebilir: `LIVE_URL=http://localhost:4173 npx playwright test --grep-invert @visual`.
+
+## Derlenmiş CSS denetimi
+
+`css.spec.ts` sayfanın yüklediği, kendi kaynağından gelen bütün stylesheet'leri `request` ile çeker ve içlerinde range sözdizimli medya sorgusu ya da `@container` bulunmadığını doğrular. Vite'ın CSS minify'ı klasik sorguları range sözdizimine çevirdiği için, `cssMinify: false` ayarı kaybolursa eski Safari'de mobil yerleşim hata vermeden kaybolur ve başka hiçbir test bunu görmez. Dosya sisteminden değil sayfadan okunduğu için test canlıda da çalışır. Bu ayar `packages/config` içindedir. Ayar geçici olarak açıldığında testin kırıldığı elle doğrulanmıştır.
+
 ## Referansların yenilenmesi
 
 Onaylı bir görsel değişiklikten sonra referanslar `npm run test:visual:update` ile yenilenir. Yenilenen görüntüler commit'lenmeden önce eski halleriyle yan yana incelenir. Açıklanamayan konum, boyut veya satır kırılımı farkı varsa referans güncellenmez, değişikliğin kendisi incelenir.
@@ -63,4 +71,4 @@ Bir listeye yeni bir metin girdiğinde aynı fontla yazılmış başka yazılard
 
 ## Kapsam dışında kalanlar
 
-Firefox, WebKit ve gerçek cihaz testi yoktur. Range sözdizimli medya sorgularının eski Safari sürümlerinde yok sayılması gibi motor farkları bu testlerle yakalanamaz. Canlı sunucunun sıkıştırma, önbellek ve TLS ayarları da bu testlerin kapsamında değildir.
+Firefox, WebKit ve gerçek cihaz testi yoktur. Eski Safari sürümlerinin range sözdizimini yok sayması gibi motor farkları bu testlerle yakalanamaz, yalnızca derlenmiş CSS'te böyle bir sözdiziminin bulunmadığı denetlenir. Canlı sunucunun sıkıştırma, önbellek ve TLS ayarları da bu testlerin kapsamında değildir.

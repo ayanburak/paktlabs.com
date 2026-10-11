@@ -45,6 +45,14 @@ Görsel karşılaştırmada piksel başına Playwright'ın varsayılan renk eşi
 
 Fontlar Google Fonts üzerinden ağdan yüklenir, görsel testler fontların ve görsellerin yüklenmesini bekler. Font sürümü, işletim sistemi veya font çizimi değiştiğinde çıkan fark önce görüntüden incelenir, doğrudan uygulama hatası sayılmaz. Referanslar Linux üzerinde Chromium 153 ile alınmıştır.
 
+## Canlıya karşı çalıştırma
+
+`npm run test:live` aynı davranış testlerini build almadan, `LIVE_URL` ile verilen adrese karşı çalıştırır. Görsel testler dışarıda kalır. Yayından sonra canlının beklendiği gibi davrandığını görmek için kullanılır, canlı sunucuyu yormamak için bu kipte yeniden deneme bir, paralel çalışma iki olur. Yerel bir önizlemeye karşı da denenebilir: `LIVE_URL=http://localhost:4173 npx playwright test --grep-invert @visual`.
+
+## Derlenmiş CSS denetimi
+
+`css.spec.ts` sayfanın yüklediği, kendi kaynağından gelen bütün stylesheet'leri `request` ile çeker ve içlerinde range sözdizimli medya sorgusu ya da `@container` bulunmadığını doğrular. Vite'ın CSS minify'ı klasik sorguları range sözdizimine çevirdiği için, `cssMinify: false` ayarı kaybolursa eski Safari'de mobil yerleşim hata vermeden kaybolur ve başka hiçbir test bunu görmez. Dosya sisteminden değil sayfadan okunduğu için test canlıda da çalışır. Bu ayar `packages/config` içindedir. Ayar geçici olarak açıldığında testin kırıldığı elle doğrulanmıştır.
+
 ## Referansların yenilenmesi
 
 Onaylı bir görsel değişiklikten sonra referanslar `npm run test:visual:update` ile yenilenir. Yenilenen görüntüler commit'lenmeden önce eski halleriyle yan yana incelenir. Açıklanamayan konum, boyut veya satır kırılımı farkı varsa referans güncellenmez, değişikliğin kendisi incelenir. Brand paketindeki bir değişiklik iki sitenin görünümünü birlikte değiştirebileceği için o durumda landing'in görsel testleri de çalıştırılır.

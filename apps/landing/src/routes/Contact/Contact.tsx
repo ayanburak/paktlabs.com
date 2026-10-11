@@ -15,6 +15,7 @@ description: Adim adim sorulardan olusan iletisim formunu ve cevap fisini goster
 
 import { useEffect, useId, useRef, useState } from 'react'
 
+import { Page } from '@paktlabs/brand/components/Page'
 import { useLanguage } from '@paktlabs/brand/i18n/language'
 import { cx } from '@paktlabs/brand/lib/cx'
 
@@ -22,7 +23,6 @@ import alanSvg from '@/assets/illustrations/iletisim-alan.svg'
 import durumSvg from '@/assets/illustrations/iletisim-durum.svg'
 import sizSvg from '@/assets/illustrations/iletisim-siz.svg'
 import zamanSvg from '@/assets/illustrations/iletisim-zaman.svg'
-import { Page } from '@/components/Page'
 import { useDict } from '@/i18n'
 
 import { ChoiceStep } from './ChoiceStep'

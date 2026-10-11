@@ -6,7 +6,8 @@
     "packages/*"
   ],
   "scripts": {
-    "lint": "oxlint"
+    "lint": "oxlint",
+    "typecheck": "npm run typecheck --workspaces --if-present"
   },
   "devDependencies": {
     "oxlint": "^1.81.0"

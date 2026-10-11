@@ -9,6 +9,7 @@
     "typecheck": "tsc -b",
     "preview": "vite preview",
     "test": "playwright test --grep-invert @visual",
+    "test:live": "LIVE_URL=https://paktlabs.com playwright test --grep-invert @visual",
     "test:visual": "playwright test --grep @visual",
     "test:visual:update": "playwright test --grep @visual --update-snapshots"
   },
@@ -19,6 +20,7 @@
     "react-router-dom": "^7.18.3"
   },
   "devDependencies": {
+    "@paktlabs/config": "0.0.0",
     "@playwright/test": "1.63.0",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",

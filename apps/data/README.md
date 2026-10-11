@@ -149,9 +149,9 @@ Site landing gibi Türkçe ve İngilizcedir. Metinler kod içinde düz string ol
 
 ## Teknik yapı
 
-Site React, Vite ve TypeScript ile yazılır, statik olarak derlenir ve nginx tarafından sunulur. Vite, TypeScript ve Playwright ayarları landing'inkilerin aynısıdır, böylece iki sitenin derleme ve test koşulları birbirinden ayrışmaz. Tek fark portlardır: geliştirme sunucusu 5174, testlerin kullandığı sunucu 4174 portunda çalışır. Landing 5173 ve 4173 portlarını kullandığı için iki site aynı anda açılabilir, testleri aynı anda çalışabilir.
+Site React, Vite ve TypeScript ile yazılır, statik olarak derlenir ve nginx tarafından sunulur. Vite, TypeScript ve Playwright ayarları `packages/config` paketinden gelir ve landing'inkilerle aynıdır, böylece iki sitenin derleme ve test koşulları birbirinden ayrışmaz. Tek fark portlardır: geliştirme sunucusu 5174, testlerin kullandığı sunucu 4174 portunda çalışır. Landing 5173 ve 4173 portlarını kullandığı için iki site aynı anda açılabilir, testleri aynı anda çalışabilir.
 
-Her sayfa `src/components/Page.tsx` çerçevesiyle kurulur. Çerçeve üst barı Veri bağlantısı işaretli olarak, içerik alanını ve paktlabs.com'a dönen bağlantısıyla alt bilgiyi yerleştirir, sekme başlığını günceller. Sayfa yalnızca kendi bölümlerini ve metnini verir.
+Her sayfa `src/components/Page.tsx` çerçevesiyle kurulur. Bu dosya brand'deki ortak `Page` bileşenini `current="data"` ve ana site adresiyle saran ince bir sarmaldır, çok sayfa çağırdığı için iki değer her yerde tekrar yazılmaz. Çerçeve üst barı Veri bağlantısı işaretli olarak, içerik alanını ve paktlabs.com'a dönen bağlantısıyla alt bilgiyi yerleştirir, sekme başlığını günceller. Sayfa yalnızca kendi bölümlerini ve metnini verir.
 
 ### Rotalar
 
@@ -194,6 +194,7 @@ npm run typecheck
 npm run build          # dist/ klasörüne üretim derlemesi
 npx playwright install chromium   # yalnızca ilk kurulumda
 npm test
+npm run test:live      # yayından sonra https://data.paktlabs.com'a karşı
 ```
 
 Testler landing'deki gibi üretim derlemesine karşı çalışır. Üst bar ve alt bilginin data'ya doğru bağlandığını, sayfa başlıklarını iki dilde, rotaları ve bulunamadı davranışını, veri sayfasındaki hero'nun yerleşimini kontrol eder. `study.spec.ts` detay sayfasının davranışını Demo Veri üzerinden denetler: bölümlerin ve içindekilerin sırası, veri dili bölümünün yalnızca diller farklıyken çıkması, seçicinin tabloları orijinal dile çevirmesi ve site dili değişince geri dönmesi, açılır kutular, içindekilerden bölüme geçiş, Meraklısına kartının, yazar kutusunun ve kapanış kartlarının adresleri, eşiklerin iki yanında yatay taşma. `source.spec.ts` kod sayfasını aynı çalışma üzerinden denetler: bölümlerin ve içindekilerin sırası, kapak, kod ve veri dosyalarının verinin dilini izlemesi, kopyalanan metnin dosyanın kendisiyle birebir aynı olması ve satır numarası taşımaması, indirilen dosyanın adının ve içeriğinin seçili veri dilinde olması, yazar kutusu, dönüş kartı ve yatay taşma. `data.spec.ts` tarayıcı açmadan iki dilin CSV'lerini ve kod dosyalarını, iki sayfadaki parçaların çağırdığı dosyaları, her kod dosyasının dilinin kayıtlı olduğunu ve bölüm adreslerinin tekilliğini denetler. `highlight.spec.ts` kod renklendiricisinin kurallarını küçük örneklerle ve renklendirmenin hiçbir kod dosyasının metnini değiştirmediğini denetler. `a11y.spec.ts` dört sayfa türünde başlık sırasını, sayfa bölgelerini, bağlantıları, mobil menünün klavye davranışını ve odak çerçevesini denetler. `visual.spec.ts` dört sayfa türünün onaylı görünümünü tam sayfa referanslarla karşılaştırır, `npm run test:visual` ile ayrıca çalıştırılır. Test koşulları ve testlerin neyi kanıtlamadığı `tests/README.md` içinde anlatılır.

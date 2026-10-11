@@ -2,41 +2,24 @@
 file: Page.tsx
 importable: Page
 
-data sitesindeki her sayfanin ortak cercevesi. Ust bar, sayfanin icerigi ve
-alt bilgi her rotada ayni sirayla gelir, sayfa yalnizca kendi bolumlerini ve
-sekme basligini verir.
+data sitesindeki her sayfanin cercevesi. Brand in ortak Page bilesenini Veri
+baglantisi isaretli ve ana siteye donus adresi verilmis olarak sarar.
 
     <Page title={meta.title} description={meta.description}>
       ...bolumler
     </Page>
 
-description: Ust bar, icerik alani ve alt bilgiyi kurup sekme basligini guncelleyen sayfa cercevesi.
+description: Brand in sayfa cercevesine data sitesinin disiplinini ve ana site adresini veren ince sarmal.
 */
 
-import type { ReactNode } from 'react'
+import type { ComponentProps } from 'react'
 
-import { Footer } from '@paktlabs/brand/components/Footer'
-import { Header } from '@paktlabs/brand/components/Header'
+import { Page as BrandPage } from '@paktlabs/brand/components/Page'
 import { mainSiteUrl } from '@paktlabs/brand/content/site'
-import { useDocumentMeta } from '@paktlabs/brand/i18n/useDocumentMeta'
 
-interface PageProps {
-  title: string
-  description: string
-  children?: ReactNode
-}
-
-// main, ekran okuyucuda menuyu atlayip dogrudan icerige gecmeyi sagliyor.
-// Landing'in Home bileseniyle ayni yapi, bolumlerin full-bleed hesabi bu
-// yuzden iki sitede de ayni ebeveyn genisligine gore yapiliyor.
-export function Page({ title, description, children }: PageProps) {
-  useDocumentMeta(title, description)
-
-  return (
-    <>
-      <Header current="data" homeHref={mainSiteUrl} />
-      <main>{children}</main>
-      <Footer homeHref={mainSiteUrl} />
-    </>
-  )
+// Bu sarmal cok sayfa tarafindan cagriliyor ve hepsi ayni iki degeri,
+// current ve homeHref, tekrar yazmasin diye duruyor. Cerceve brand te,
+// burada yalnizca data a ozel iki deger var.
+export function Page(props: Omit<ComponentProps<typeof BrandPage>, 'current' | 'homeHref'>) {
+  return <BrandPage {...props} current="data" homeHref={mainSiteUrl} />
 }

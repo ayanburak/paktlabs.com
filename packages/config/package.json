@@ -1,0 +1,25 @@
+{
+  "name": "@paktlabs/config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "exports": {
+    "./vite": "./vite.ts",
+    "./playwright": "./playwright.ts",
+    "./tsconfig.app.json": "./tsconfig.app.json",
+    "./tsconfig.node.json": "./tsconfig.node.json",
+    "./tsconfig.tests.json": "./tsconfig.tests.json"
+  },
+  "peerDependencies": {
+    "@playwright/test": "1.63.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "vite": "^8.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "typescript": "~6.0.2"
+  }
+}
