@@ -1,6 +1,6 @@
 /*
 file: language.ts
-importable: Language, languages, locales, LanguageContext, LanguageContextValue, useLanguage
+importable: Language, languages, locales, Localized, LanguageContext, LanguageContextValue, useLanguage
 
 Aktif dil LanguageProvider tarafindan tutulur, bilesenler onu useLanguage ile
 okur ve degistirir. Provider disinda cagrilan useLanguage hata verir.
@@ -22,6 +22,14 @@ export type Language = (typeof languages)[number]
 // Intl'in bekledigi yerel ayar kodu. Dil eklenince burada karsiligi yazilmazsa
 // derleme hata verir, sessizce baska bir bicime dusmez.
 export const locales: Record<Language, string> = { tr: 'tr-TR', en: 'en-US' }
+
+// Bir icerigin her dildeki hali. Sozluk disinda, icerik dosyalarinda yazilan
+// metinler bunu kullanir, data'nin calisma dosyalari ve brand'deki calisma
+// listesi gibi. Her metin iki dili yan yana tasir, boylece bir paragrafin
+// cevirisi ondan ayri bir dosyada unutulamaz. Bir dil eksik kalirsa derleme
+// hata verir. Varsayilan tip duz metin, ama paragraf listesi gibi baska bir
+// sey de verilebilir.
+export type Localized<T = string> = Record<Language, T>
 
 export interface LanguageContextValue {
   language: Language

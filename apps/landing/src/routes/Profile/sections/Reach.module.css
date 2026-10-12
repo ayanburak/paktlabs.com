@@ -1,0 +1,90 @@
+/* murekkep zeminli kapanis bandi. Solda kisinin kendi adresi buyuk yazilir,
+   sagda studyonun adresi kesikli cerceveli ayri bir notta durur. Iki adres
+   yan yana ama ayni kutuda degil, hangisinin kime gittigi karismasin diye */
+.reach {
+  color: var(--on-ink);
+  background: var(--ink);
+}
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
+  align-items: end;
+  gap: clamp(40px, 6vw, 96px);
+  max-width: calc(var(--maxw) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: clamp(72px, 11vh, 120px) var(--gutter);
+}
+.reach :global(.eyebrow) {
+  color: var(--gold);
+}
+
+/* adres uzun oldugu icin boyutu ekran genisligine baglidir ve en buyuk
+   halinde bile sutuna tek satir sigar. Yalnizca cok dar ekranda kelime
+   ortasindan bolunebilir */
+.mail {
+  display: inline-block;
+  margin-top: 20px;
+  font: 700 clamp(24px, 3.4vw, 46px) / 1.05 var(--font-display);
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
+}
+.mail:hover {
+  color: var(--gold);
+}
+.lead {
+  margin: 20px 0 0;
+  font-size: var(--text-lead);
+  color: var(--on-ink-muted);
+}
+.github {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+.github:hover {
+  color: var(--ink);
+  background: var(--on-ink);
+}
+
+.studio {
+  padding: 22px 22px 24px;
+  border: 2px dashed var(--gray);
+}
+.studio p {
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--on-ink-muted);
+}
+.studioMail {
+  display: block;
+  margin-top: 16px;
+  font: 600 18px/1.2 var(--font-display);
+}
+.studioMail:hover,
+.studioLink:hover {
+  color: var(--gold);
+}
+.studioLink {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

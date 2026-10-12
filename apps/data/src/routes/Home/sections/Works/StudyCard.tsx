@@ -11,6 +11,7 @@ description: Bir calismayi veri sayfasindaki listede normal ya da one cikan kart
 
 import { Link } from 'react-router-dom'
 
+import { workPath } from '@paktlabs/brand/content/works'
 import { useReveal } from '@paktlabs/brand/hooks/useReveal'
 import { useLanguage } from '@paktlabs/brand/i18n/language'
 import { cx } from '@paktlabs/brand/lib/cx'
@@ -41,7 +42,7 @@ export function StudyCard({ study }: StudyCardProps) {
   return (
     <Link
       ref={ref}
-      to={`/work/${study.slug}`}
+      to={workPath(study.slug)}
       className={cx('reveal', visible && 'in', styles.card, feature && styles.feature)}
     >
       <div className={cx(styles.box, styles.head)}>

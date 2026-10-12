@@ -1,0 +1,126 @@
+/* calisma listesi bir kayit defteri gibi: basligin altinda kalin bir cizgi,
+   satirlar ince cizgilerle ayrilir. Sagda kac calisma yayinda oldugu buyuk
+   bir sayi olarak durur */
+.works {
+  max-width: calc(var(--maxw) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: clamp(72px, 10vh, 112px) var(--gutter) clamp(80px, 12vh, 128px);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--ink);
+}
+.title {
+  margin-top: 14px;
+  font-size: var(--text-section);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+.lead {
+  max-width: 52ch;
+  margin: 16px 0 0;
+  font-size: var(--text-lead);
+  line-height: 1.62;
+  color: var(--muted);
+}
+.count {
+  flex: none;
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  text-align: right;
+}
+.count span {
+  display: block;
+  font: 700 clamp(56px, 6vw, 80px) / 0.9 var(--font-display);
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.row {
+  --reveal-from: 14px;
+  --reveal-step: 60ms;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+/* satirin solundaki kare disiplinin rengidir, ust bardaki disiplin
+   tonlariyla ayni. Uzerine gelince satir altin zemine doner ve ok saga kayar */
+.row a {
+  --tone: var(--ink);
+  display: grid;
+  grid-template-columns: 136px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+  padding: 22px 12px;
+  transition: background 0.15s ease;
+}
+.row a[data-tone='data'] {
+  --tone: var(--tone-data);
+}
+.row a[data-tone='automation'] {
+  --tone: var(--tone-auto);
+}
+.row a[data-tone='web'] {
+  --tone: var(--tone-web);
+}
+.row a:hover {
+  background: var(--gold-wash);
+}
+
+.discipline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.discipline::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: var(--tone);
+  border: 2px solid var(--ink);
+}
+.workTitle {
+  font: 600 clamp(19px, 1.8vw, 24px) / 1.25 var(--font-display);
+  letter-spacing: -0.015em;
+}
+.arrow {
+  font: 700 22px/1 var(--font-display);
+  transition: translate 0.15s ease;
+}
+.row a:hover .arrow {
+  translate: 6px 0;
+}
+
+@media (max-width: 768px) {
+  .head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .count {
+    text-align: left;
+  }
+  .row a {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px 16px;
+    padding: 18px 4px;
+  }
+  .discipline {
+    grid-column: 1 / -1;
+  }
+}

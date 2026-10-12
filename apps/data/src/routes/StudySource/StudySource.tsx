@@ -11,6 +11,7 @@ sayfasi gosterilir.
 description: Bir calismanin paylasilan kod ve veri orneklerini gosteren sayfayi olusturan bilesen.
 */
 
+import { workPath } from '@paktlabs/brand/content/works'
 import { useLanguage } from '@paktlabs/brand/i18n/language'
 
 import { Page } from '@/components/Page'
@@ -38,7 +39,7 @@ export function StudySource() {
 
   const { study, source, files } = route
   const title = source.title[language]
-  const studyPath = `/work/${study.slug}`
+  const studyPath = workPath(study.slug)
 
   return (
     <Page title={`${title} · ${home.meta.title}`} description={source.lede[language]}>

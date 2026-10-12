@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Burak Ayan'in profil sayfasi. Varsayilan dil tr. Metinler src/i18n/tr.json'daki profilePage.people.ayanburak.meta ile ayni kalmali, dil degisince JS gunceller. Kimin profili oldugunu root'taki data-profile soyler, ayni giris dosyasi her kisinin sayfasini acar. -->
+    <title>Burak Ayan · PaktLabs</title>
+    <meta name="description" content="PaktLabs'ın kurucusu Burak Ayan'ın profili ve yazdığı çalışmalar." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root" data-profile="ayanburak"></div>
+    <script type="module" src="/src/profile.tsx"></script>
+  </body>
+</html>

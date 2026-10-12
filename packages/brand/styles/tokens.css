@@ -35,6 +35,9 @@ description: PaktLabs sitelerinin paylastigi renk, bosluk ve golge degiskenlerin
   --line: #d3d2c6;
   --line-strong: #b7b6a8;
   --on-ink: var(--paper);
+  /* murekkep zeminde ikinci planda kalan yazi, e-posta ve kisa aciklamalar
+     gibi. data'daki yazar kutusu ve landing'deki profil bandi kullanir */
+  --on-ink-muted: #c9cbd0;
   /* klavye odak cercevesinin rengi. Acik zeminde murekkep. Koyu zeminli bir
      alan, ornegin data'daki kod cercevesi, bunu kendi kutusunda altina cevirir,
      icindeki dugmelerin cercevesi koyu zeminde kaybolmasin diye */

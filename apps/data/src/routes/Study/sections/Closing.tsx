@@ -12,6 +12,7 @@ description: Calisma detay sayfasini sonraki calismaya ve iletisime baglayan kap
 import { Link } from 'react-router-dom'
 
 import { contactEmail } from '@paktlabs/brand/content/contact'
+import { workPath } from '@paktlabs/brand/content/works'
 import { useReveal } from '@paktlabs/brand/hooks/useReveal'
 import { useLanguage } from '@paktlabs/brand/i18n/language'
 import { useBrandDict } from '@paktlabs/brand/i18n/useBrandDict'
@@ -62,7 +63,7 @@ export function Closing({ study, closing }: ClosingProps) {
               </span>
             </Link>
             {next && (
-              <Link to={`/work/${next.slug}`}>
+              <Link to={workPath(next.slug)}>
                 <span className={cx(styles.box, styles.head)}>
                   <span className="eyebrow">
                     {next.number} · {dict.closing.next.label}

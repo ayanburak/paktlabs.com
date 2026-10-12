@@ -4,7 +4,11 @@
     "description": "PaktLabs is a software team delivering web applications, workflow automation and data solutions tailored to you."
   },
   "hero": {
-    "lines": ["Locate", "Automate", "Migrate"],
+    "lines": [
+      "Locate",
+      "Automate",
+      "Migrate"
+    ],
     "cta": "Contact"
   },
   "about": {
@@ -171,5 +175,46 @@
       "text": "We'll reply by email within two working days."
     },
     "error": "The message could not be sent. Try again in a moment or email us directly:"
+  },
+  "profilePage": {
+    "badge": {
+      "disciplines": "Disciplines",
+      "languages": "Languages",
+      "languagesValue": "Turkish, English"
+    },
+    "works": {
+      "eyebrow": "Work",
+      "title": "Completed Work",
+      "lead": "Every study is published with developer notes on how it was built.",
+      "published": "published"
+    },
+    "reach": {
+      "eyebrow": "Reach directly",
+      "lead": "This address reaches him directly.",
+      "studio": "About the Studio",
+      "studioLead": "Get in touch to learn more about us or to share the details of your project.",
+      "contactPage": "Contact page"
+    },
+    "people": {
+      "ayanburak": {
+        "meta": {
+          "title": "Burak Ayan · PaktLabs",
+          "description": "Profile and published work of Burak Ayan, founder of PaktLabs."
+        },
+        "eyebrow": "Full Stack Developer | Data Analyst",
+        "badge": "PaktLabs · Founder",
+        "role": "Founder, software developer",
+        "intro": [
+          "He founded PaktLabs and works on the studio's projects from the first call to delivery.",
+          "He builds data pipelines, automations and web applications, and delivers each with notes that explain it."
+        ]
+      }
+    },
+    "links": {
+      "label": "Links",
+      "github": "GitHub profile",
+      "linkedin": "LinkedIn profile",
+      "website": "Personal website"
+    }
   }
 }

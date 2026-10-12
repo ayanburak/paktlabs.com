@@ -9,17 +9,17 @@ dosyalarindan yalnizca sayfa acilirken yukler, metinleri ana pakete girmez.
 description: Demo Veri calismasini veri sayfasindaki listeye ve detay sayfasina veren modul.
 */
 
+import { works } from '@paktlabs/brand/content/works'
+
 import type { Study } from '../types'
 
+// Ad, slug ve yazar brand'deki calisma listesinden gelir, profil sayfasi da
+// ayni kaydi okuyor. Burada yalnizca data'ya ozel kisim yazilir.
 export const demoData: Study = {
-  slug: 'demo-data',
+  ...works.demoData,
   number: '01',
   year: 2026,
   tags: ['quality', 'machineLearning'],
-  title: {
-    tr: 'Demo Veri: ürün kataloğu tekilleştirme',
-    en: 'Demo Data: product catalog deduplication',
-  },
   card: {
     lead: {
       tr: 'ERP ile üç tedarikçinin fiyat listesinde aynı ürünü bulup tek bir ürün kartında topladık.',
@@ -36,7 +36,6 @@ export const demoData: Study = {
       },
     ],
   },
-  author: 'ayanburak',
   dataLanguage: 'tr',
   code: { kind: 'page', page: () => import('./source').then((module) => module.source) },
   page: () => import('./page').then((module) => module.page),

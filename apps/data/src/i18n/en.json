@@ -97,8 +97,7 @@
       }
     },
     "author": {
-      "label": "Written by",
-      "photo": "profil.svg"
+      "label": "Written by"
     },
     "closing": {
       "label": "Next",

@@ -1,0 +1,233 @@
+/* bolum tam genislikte durur ve alt cizgisi sayfanin iki kenarina uzanir,
+   icerik inner'da maxw'e kilitlenir. Metin solda, kart sagda. Ust bar
+   saydam olarak bolumun ustunde durur, bolum onun payini kendisi birakir.
+   Kartin askisi bolumun en ustunden basladigi icin sag sutun yukari kadar
+   uzanir, metin ise kendi sutununda dikey ortalanir */
+.intro {
+  border-bottom: 2px solid var(--ink);
+}
+.inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: clamp(40px, 6vw, 112px);
+  max-width: calc(var(--maxw) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.text {
+  align-self: center;
+  padding: calc(var(--header-height) + clamp(40px, 8vh, 96px)) 0 clamp(56px, 9vh, 112px);
+}
+.text :global(.eyebrow) {
+  --rise-delay: 0.05s;
+}
+.name {
+  margin-top: 18px;
+  font-size: clamp(52px, 7.4vw, 104px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  --rise-delay: 0.12s;
+}
+/* unvan adin hemen altinda, altin bir cizgiyle adla baglanir. Cizgi adin
+   altini cizer gibi kisa durur, bolum cizgileriyle karismasin diye */
+.role {
+  display: inline-block;
+  margin: 22px 0 0;
+  padding-top: 12px;
+  font: 600 clamp(18px, 1.8vw, 22px) / 1.2 var(--font-display);
+  border-top: 4px solid var(--gold);
+  --rise-delay: 0.2s;
+}
+.lead {
+  max-width: 46ch;
+  margin-top: 28px;
+  font-size: var(--text-lead);
+  line-height: 1.62;
+  color: var(--muted);
+  --rise-delay: 0.28s;
+}
+.lead p {
+  margin: 0;
+}
+.lead p + p {
+  margin-top: 12px;
+}
+
+/* tanitimin altindaki uc kare dugme. Logo normalde murekkep rengindedir,
+   uzerine gelince ya da klavyeyle odaklaninca altina doner. Cerceve kart
+   dilindeki iki piksellik murekkep cizgidir ve degismez */
+.links {
+  display: flex;
+  gap: 12px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+  --rise-delay: 0.36s;
+}
+.links a {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  color: var(--ink);
+  border: var(--card-border);
+  transition: color 0.15s ease;
+}
+.links a:hover,
+.links a:focus-visible {
+  color: var(--gold);
+}
+
+/* askinin ipi ust barin hemen altindan kartin deligine iner, ust bardaki
+   menu yazilarinin ustunden gecmesin diye bardan baslamaz. Kart ipin
+   ucundan asilir, transform-origin oradadir. Acilista bir kez sallanip
+   hafif egik durur, uzerine gelince duzelir */
+.hanger {
+  --strap-top: var(--header-height);
+  --strap: calc(var(--strap-top) + clamp(40px, 7vh, 80px));
+  position: relative;
+  padding: var(--strap) 0 clamp(56px, 9vh, 112px);
+}
+.hanger::before {
+  content: '';
+  position: absolute;
+  top: var(--strap-top);
+  left: 50%;
+  width: 2px;
+  height: calc(var(--strap) - var(--strap-top) + 22px);
+  margin-left: -1px;
+  background: var(--ink);
+}
+
+.badge {
+  --tilt: -2.5deg;
+  position: relative;
+  width: clamp(260px, 25vw, 320px);
+  background: var(--surface);
+  border: var(--card-border);
+  box-shadow: 8px 8px 0 var(--gold);
+  transform: rotate(var(--tilt));
+  transform-origin: 50% 0;
+  transition: transform 0.4s cubic-bezier(0.3, 1.6, 0.5, 1);
+  animation: swing 1.6s cubic-bezier(0.3, 0.9, 0.3, 1) 0.2s backwards;
+}
+.badge:hover {
+  --tilt: 0deg;
+}
+@keyframes swing {
+  0% {
+    transform: rotate(9deg);
+  }
+  35% {
+    transform: rotate(-7deg);
+  }
+  65% {
+    transform: rotate(1deg);
+  }
+  100% {
+    transform: rotate(var(--tilt));
+  }
+}
+
+/* kartin ustundeki murekkep serit. Ortadaki delik ipin gectigi yer, kagit
+   renginde oyuk gibi durur */
+.strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px 10px;
+  font: 700 11px/1 var(--font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--ink);
+}
+.slot {
+  width: 44px;
+  height: 9px;
+  background: var(--paper);
+  border-radius: 5px;
+}
+
+/* fotograf kare, kartin icinde ince bir murekkep cerceveyle durur. Genislik
+   karttan gelir, width ve height yalnizca yuklenmeden once yer ayirir */
+.photo {
+  width: calc(100% - 36px);
+  height: auto;
+  aspect-ratio: 1;
+  margin: 18px 18px 0;
+  object-fit: cover;
+  background: var(--panel);
+  border: 2px solid var(--ink);
+}
+
+.body {
+  padding: 16px 18px 18px;
+}
+.badgeName {
+  margin: 0;
+  font: 700 24px/1.05 var(--font-display);
+  letter-spacing: -0.03em;
+}
+.badgeRole {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.rows {
+  margin: 16px 0 0;
+}
+.rows > div {
+  padding: 9px 0;
+  border-top: 1px solid var(--line-strong);
+}
+.rows dt {
+  font: 700 10px/1 var(--font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.rows dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 6px 0 0;
+  font: 600 15px/1.3 var(--font-display);
+}
+.rows a {
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.rows a:hover {
+  text-decoration-color: var(--ink);
+}
+
+.foot {
+  padding: 10px 18px;
+  font: 500 11px/1 var(--font-mono);
+  color: var(--faint);
+  border-top: 2px dashed var(--line-strong);
+}
+
+/* dar ekranda kart metnin altina iner. Ip ust bardan baslayamaz, kartin
+   ustunde kisa bir parca olarak kalir */
+@media (max-width: 768px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .text {
+    padding-bottom: 28px;
+  }
+  .hanger {
+    --strap-top: 0px;
+    --strap: 48px;
+    justify-self: center;
+  }
+  .badge {
+    width: min(300px, 82vw);
+  }
+}

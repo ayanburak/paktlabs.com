@@ -97,8 +97,7 @@
       }
     },
     "author": {
-      "label": "Hazırlayan",
-      "photo": "profil.svg"
+      "label": "Hazırlayan"
     },
     "closing": {
       "label": "Devam",

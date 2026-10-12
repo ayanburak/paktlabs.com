@@ -1,6 +1,6 @@
 /*
 file: support.ts
-importable: Language, languages, dict, contactPath, openHome, openContact, waitForAssets
+importable: Language, languages, dict, contactPath, profilePath, openHome, openContact, openProfile, waitForAssets
 
 Spec dosyalarinin ortak kullandigi sayfa acma yardimcilari ve beklenen degerler.
 Ekrandaki metinler landing'in ve brand paketinin sozluklerinden okunur, metin
@@ -34,6 +34,9 @@ export const dict = {
 // cizgi olmadan bu dosyayi bulmaz, canlida nginx iki bicimi de sunar.
 export const contactPath = '/contact/'
 
+// Profil sayfasi da ayni sebeple sondaki egik cizgiyle acilir.
+export const profilePath = '/profiles/ayanburak/'
+
 // lang verilirse tercih her sayfa yuklemesinden once localStorage'a yazilir.
 // Reload sonrasi kaydin degisip degismedigini olcen testler bu parametreyi
 // kullanmamali, yoksa her yuklemede tercih yeniden yazilir.
@@ -51,5 +54,13 @@ export async function openContact(page: Page, lang?: Language) {
   if (lang) await page.addInitScript((l) => localStorage.setItem('pl_lang', l), lang)
   await page.goto(contactPath, { waitUntil: 'networkidle' })
   await page.locator('main img').waitFor({ state: 'attached' })
+  await waitForAssets(page)
+}
+
+// openHome'un profil sayfasi icin olani. Fotograf da beklenir, yuklenmeden
+// alinan goruntude kartin yuksekligi farkli olurdu.
+export async function openProfile(page: Page, lang?: Language) {
+  if (lang) await page.addInitScript((l) => localStorage.setItem('pl_lang', l), lang)
+  await page.goto(profilePath, { waitUntil: 'networkidle' })
   await waitForAssets(page)
 }

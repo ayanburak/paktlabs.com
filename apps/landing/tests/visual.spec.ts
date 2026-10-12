@@ -15,7 +15,7 @@ description: Onayli TR ve EN gorunumun dort ekran olcusunde piksel karsilastirma
 
 import { expect, test } from '@playwright/test'
 
-import { languages, openContact, openHome } from './support'
+import { languages, openContact, openHome, openProfile } from './support'
 
 const sizes = [
   [390, 844],
@@ -49,6 +49,22 @@ test.describe('contact page @visual', () => {
         await page.setViewportSize({ width, height })
         await openContact(page, lang)
         await expect(page).toHaveScreenshot(`contact-${lang}-${width}x${height}.png`, { fullPage: true })
+      })
+    }
+  }
+})
+
+// Profil sayfasinin tam goruntusu. Kartin sallanmasi hareket azaltma
+// tercihinde calismaz, kart son egik halinde cekilir.
+test.describe('profile page @visual', () => {
+  test.use({ reducedMotion: 'reduce' })
+
+  for (const lang of languages) {
+    for (const [width, height] of sizes) {
+      test(`${lang} ${width}x${height}`, async ({ page }) => {
+        await page.setViewportSize({ width, height })
+        await openProfile(page, lang)
+        await expect(page).toHaveScreenshot(`profile-${lang}-${width}x${height}.png`, { fullPage: true })
       })
     }
   }

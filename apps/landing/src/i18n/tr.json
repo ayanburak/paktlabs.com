@@ -4,7 +4,11 @@
     "description": "PaktLabs; web uygulamaları, iş akışı otomasyonları ve veri çözümlerini size özel sunan bir yazılım ekibi."
   },
   "hero": {
-    "lines": ["Keşfet", "Hızlandır", "Yayınla"],
+    "lines": [
+      "Keşfet",
+      "Hızlandır",
+      "Yayınla"
+    ],
     "cta": "İletişim"
   },
   "about": {
@@ -171,5 +175,46 @@
       "text": "İki iş günü içinde size e-postayla dönüyoruz."
     },
     "error": "Mesaj gönderilemedi. Biraz sonra tekrar deneyin ya da doğrudan e-posta gönderin:"
+  },
+  "profilePage": {
+    "badge": {
+      "disciplines": "Disiplinler",
+      "languages": "Diller",
+      "languagesValue": "Türkçe, İngilizce"
+    },
+    "works": {
+      "eyebrow": "Çalışmalar",
+      "title": "Tamamladığı İşler",
+      "lead": "Her çalışma, nasıl yapıldığını anlatan geliştirici notlarıyla birlikte yayında.",
+      "published": "yayında"
+    },
+    "reach": {
+      "eyebrow": "Doğrudan ulaşın",
+      "lead": "Bu adres doğrudan kendisine ulaşır.",
+      "studio": "Stüdyo Hakkında",
+      "studioLead": "Bizim hakkımızda daha fazla bilgi edinmek, proje detaylarınızı paylaşmak için iletişime geçin.",
+      "contactPage": "İletişim sayfası"
+    },
+    "people": {
+      "ayanburak": {
+        "meta": {
+          "title": "Burak Ayan · PaktLabs",
+          "description": "PaktLabs'ın kurucusu Burak Ayan'ın profili ve yazdığı çalışmalar."
+        },
+        "eyebrow": "Full Stack Geliştirici | Veri Analisti",
+        "badge": "PaktLabs · Kurucu",
+        "role": "Kurucu, yazılım geliştirici",
+        "intro": [
+          "PaktLabs'ı kurdu ve bugün stüdyonun işlerinde ilk görüşmeden teslime kadar çalışıyor.",
+          "Veri hatları, otomasyonlar ve web uygulamaları yazıyor, her işi açıklayan notlarıyla birlikte teslim ediyor."
+        ]
+      }
+    },
+    "links": {
+      "label": "Bağlantılar",
+      "github": "GitHub profili",
+      "linkedin": "LinkedIn profili",
+      "website": "Kişisel web sitesi"
+    }
   }
 }

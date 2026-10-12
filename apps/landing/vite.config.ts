@@ -32,6 +32,9 @@ export default mergeConfig(siteConfig({ root: import.meta.dirname, port: 5173 })
         main: path.resolve(import.meta.dirname, 'index.html'),
         notFound: path.resolve(import.meta.dirname, '404.html'),
         contact: path.resolve(import.meta.dirname, 'contact/index.html'),
+        // Her profil kendi HTML'i, arama motoru basligi JS calismadan gorsun
+        // diye. Hepsi ayni src/profile.tsx'i yukler, yeni kisi bir satir ekler
+        profileAyanburak: path.resolve(import.meta.dirname, 'profiles/ayanburak/index.html'),
       },
     },
   },

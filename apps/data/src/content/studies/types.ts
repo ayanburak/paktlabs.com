@@ -26,17 +26,15 @@ description: data sitesindeki calismalarin icerik tiplerini tanimlayan modul.
 */
 
 import type { DataTag } from '@paktlabs/brand/content/dataTags'
-import type { Language } from '@paktlabs/brand/i18n/language'
+import type { ProfileId } from '@paktlabs/brand/content/profiles'
+import type { Language, Localized } from '@paktlabs/brand/i18n/language'
 
-import type { AuthorId } from '../authors'
 import type { TechName } from '../techNames'
 import type { Block } from './blocks'
 
-// Bir icerigin her dildeki hali. Calisma dosyalarinda her metin iki dili yan
-// yana yazilir, boylece bir paragrafin cevirisi ondan ayri bir dosyada
-// unutulamaz. Bir dil eksik kalirsa derleme hata verir. Varsayilan tip duz
-// metin, ama paragraf listesi gibi baska bir sey de verilebilir.
-export type Localized<T = string> = Record<Language, T>
+// Localized brand'de duruyor, calisma listesi de ayni tipi kullaniyor. Calisma
+// dosyalari onu buradan almaya devam etsin diye yeniden disari aciliyor.
+export type { Localized }
 
 // Facts satirlari calismadan calismaya ve sayfadan sayfaya degisir. Detay
 // sayfasi sektor, sure, girdi ve teslimi, kod sayfasi dil ve kutuphaneleri
@@ -141,7 +139,7 @@ export interface StudyListing {
 // kutusu her detay sayfasinda bulunur. Detay sayfasinin metni page ile
 // ancak sayfa acilirken yuklenir, liste yalnizca bu dosyadaki facts alanini okur.
 export interface Study extends StudyListing {
-  author: AuthorId
+  author: ProfileId
   dataLanguage: Language
   code: CodeLocation
   page: Lazy<StudyPage>
