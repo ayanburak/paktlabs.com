@@ -24,6 +24,28 @@
     "lead": "Adres yanlış yazılmış, sayfa taşınmış ya da henüz hazır olmayabilir.",
     "back": "Geri dön"
   },
+  "underConstruction": {
+    "tapes": [
+      "YAPIM AŞAMASINDA",
+      "ÇOK YAKINDA"
+    ],
+    "meanwhile": "Bu arada",
+    "cards": {
+      "data": {
+        "label": "Yayında",
+        "text": "Tamamladığımız veri çalışmaları ve veri hizmetlerimiz."
+      },
+      "contact": {
+        "label": "İletişim",
+        "title": "Bize yazın",
+        "text": "İşinizi dört kısa soruyla anlatın, size dönelim."
+      },
+      "team": {
+        "label": "Ekip",
+        "text": "Bu sitelerin arkasındaki kişi ve tamamladığı işler."
+      }
+    }
+  },
   "contact": {
     "eyebrow": "İletişim",
     "title": "Konuşalım",

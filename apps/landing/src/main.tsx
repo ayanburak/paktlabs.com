@@ -7,8 +7,9 @@ adreslerine gider, bu sitede router yoktur.
 description: Landing'in ana sayfasini acan giris dosyasi.
 */
 
+import { mount } from '@paktlabs/brand/lib/mount'
+
 import { Home } from './routes/Home/Home.tsx'
-import { mount } from './mount.tsx'
 import '@paktlabs/brand/styles/global.css'
 
 // global.css bilesenlerden sonra import edilir, derlenen CSS'te global

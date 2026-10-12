@@ -18,7 +18,7 @@ interface TestOptions {
 
 // Testler dev sunucusuna degil production build e karsi calisir, canliya giden
 // CSS ve asset isimleriyle ayni sartlarda olculsun diye. port, sitenin dev
-// sunucusuyla cakismayan bir portta durur ve iki sitenin testleri ayni anda
+// sunucusuyla cakismayan bir portta durur ve sitelerin testleri ayni anda
 // calisabilir. Eski bir preview acik kalmissa eski build i test etmemek icin
 // var olan sunucu yeniden kullanilmaz, port doluysa test baslamaz.
 //

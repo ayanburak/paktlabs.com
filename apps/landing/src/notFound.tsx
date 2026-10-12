@@ -7,8 +7,9 @@ adreste acilirsa acilsin ayni seyi gosterir.
 description: Landing'in bulunamadi sayfasini dil saglayicisiyla birlikte acan giris dosyasi.
 */
 
+import { mount } from '@paktlabs/brand/lib/mount'
+
 import { NotFound } from './routes/NotFound/NotFound.tsx'
-import { mount } from './mount.tsx'
 import '@paktlabs/brand/styles/global.css'
 
 // global.css main.tsx'teki gibi bilesenlerden sonra import edilir, derlenen

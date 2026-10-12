@@ -8,9 +8,10 @@ degisir.
 description: Landing'in iletisim sayfasini dil saglayicisi ve gondericiyle birlikte acan giris dosyasi.
 */
 
+import { mount } from '@paktlabs/brand/lib/mount'
+
 import { Contact } from './routes/Contact/Contact.tsx'
 import { apiSender } from './routes/Contact/apiSender.ts'
-import { mount } from './mount.tsx'
 import '@paktlabs/brand/styles/global.css'
 
 // global.css main.tsx'teki gibi bilesenlerden sonra import edilir, derlenen

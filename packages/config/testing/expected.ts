@@ -5,7 +5,7 @@ importable: mainSite, disciplineUrls, contactPage, contactEmail, contactMailto, 
 Testlerin bekledigi adresler ve hizmet listesi. Bu degerler bilerek elle yazili,
 uygulamanin kendi dosyalarindan (disciplines.ts, contact.ts, dataTags.ts, profiles.ts, works.ts) okunmaz.
 Okunsaydi yanlis yazilmis bir adres testi de gecirirdi. Bir adres degisirse
-burasi tek yerdir, iki sitenin butun testleri buradan okur.
+burasi tek yerdir, butun sitelerin testleri buradan okur.
 
 description: Iki sitenin testlerinin ortak kullandigi, elle yazili beklenen adresler ve hizmet listesi.
 */

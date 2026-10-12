@@ -9,6 +9,7 @@
   "exports": {
     "./styles/*": "./styles/*",
     "./assets/*": "./assets/*",
+    "./lib/mount": "./lib/mount.tsx",
     "./lib/*": "./lib/*.ts",
     "./hooks/*": "./hooks/*.ts",
     "./content/*": "./content/*.ts",

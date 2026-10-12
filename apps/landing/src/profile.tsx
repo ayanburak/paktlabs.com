@@ -9,9 +9,9 @@ description: Landing'in profil sayfalarini root'taki kimlige gore acan giris dos
 */
 
 import { profiles, type ProfileId } from '@paktlabs/brand/content/profiles'
+import { mount } from '@paktlabs/brand/lib/mount'
 
 import { Profile } from './routes/Profile/Profile.tsx'
-import { mount } from './mount.tsx'
 import '@paktlabs/brand/styles/global.css'
 
 // Kimlik HTML'e elle yazildigi icin yanlis yazilabilir. Bos bir sayfa yerine
