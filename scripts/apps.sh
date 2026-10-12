@@ -31,6 +31,20 @@ load_app() {
       live=/var/www/data
       url=https://data.paktlabs.com
       ;;
+    web)
+      kind=site
+      prefix=web
+      releases=/var/www/web-releases
+      live=/var/www/web
+      url=https://web.paktlabs.com
+      ;;
+    automation)
+      kind=site
+      prefix=automation
+      releases=/var/www/automation-releases
+      live=/var/www/automation
+      url=https://automation.paktlabs.com
+      ;;
     api)
       kind=service
       prefix=api
@@ -41,7 +55,7 @@ load_app() {
       url=https://paktlabs.com/api/health
       ;;
     *)
-      echo "bilinmeyen uygulama: '${1:-}', landing, data veya api olmali" >&2
+      echo "bilinmeyen uygulama: '${1:-}', landing, data, web, automation veya api olmali" >&2
       exit 1
       ;;
   esac

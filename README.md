@@ -114,7 +114,7 @@ Dile özel illüstrasyon dosyalarının nasıl ekleneceği `docs/illustrations.m
 
 ## Dağıtım
 
-GitHub'a push yapılması canlı sitenin güncellendiği anlamına gelmez. Canlıya alım ayrı ve elle çalıştırılan iki adımdır: paketleme ve yayınlama. Üç script de ilk argüman olarak uygulamanın adını alır. Her uygulamanın paket adı öneki, sunucudaki klasörleri ve canlı adresi `scripts/apps.sh` içinde tek yerde durur. Landing'in değerleri atomik yayın düzeni kurulduğundan beri aynıdır: paketler `paktlabs-` ile başlar, sürümler `/var/www/paktlabs-releases` altında durur.
+GitHub'a push yapılması canlı sitenin güncellendiği anlamına gelmez. Canlıya alım ayrı ve elle çalıştırılan iki adımdır: paketleme ve yayınlama. Üç script de ilk argüman olarak uygulamanın adını alır: `landing`, `data`, `web`, `automation` ya da iletişim servisi için `api`. Her uygulamanın paket adı öneki, sunucudaki klasörleri ve canlı adresi `scripts/apps.sh` içinde tek yerde durur. Landing'in değerleri atomik yayın düzeni kurulduğundan beri aynıdır: paketler `paktlabs-` ile başlar, sürümler `/var/www/paktlabs-releases` altında durur.
 
 İletişim servisi aynı script'lerle `api` adıyla yayınlanır. Paketi Python kodudur, sunucuda `/opt/paktlabs-api/releases` altına açılır, sürümün kendi Python ortamı orada kurulur, `/opt/paktlabs-api/current` symlink'i çevrilir ve systemd servisi yeniden başlatılır. Servis sağlık adresine cevap vermezse script kendiliğinden önceki sürüme döner. Ayrıntısı servisin README'sindedir.
 
