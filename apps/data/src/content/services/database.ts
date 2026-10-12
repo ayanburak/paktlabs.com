@@ -2,45 +2,41 @@
 file: database.ts
 importable: database
 
-Veri sayfasindaki panonun ve /services/database sayfasinin metni.
+/services/database sayfasinin metni. Ozet cumlesi veri sayfasindaki hizmetler
+panosunda da gorunur.
 
 description: Veritabani hizmetinin iki dilli icerigi.
 */
 
-import type { Service } from './types'
+import type { DataService } from './types'
 
-export const database: Service = {
+export const database: DataService = {
   summary: { tr: 'Verinin duracağı yapıyı kurar, kayıtları içine taşırız.', en: 'We build the structure your data lives in and move the records over.' },
-  lede: { tr: 'Excel dosyalarına ya da dağınık sistemlere sığmayan veriniz için düzenli bir veritabanı kurar, eski kayıtları kayıpsız taşırız.', en: 'When your data outgrows spreadsheets and scattered systems, we build an orderly database and move the old records over without loss.' },
+  lede: { tr: 'Verinin uzun süre güvenle duracağı yapıyı tasarlar, kurar ve veri büyüdükçe ayakta kalmasını sağlarız.', en: 'We design and build the structure where data can stay safely for years, and keep it standing as the data grows.' },
   facts: {
-    input: { tr: 'Mevcut dosyalar, eski sistemin dışa aktarımı', en: 'Your current files, an export of the old system' },
-    output: { tr: 'Kurulu veritabanı, taşıma betikleri, şema belgesi', en: 'A running database, migration scripts, a schema document' },
-    tools: 'PostgreSQL, SQLite, SQL Server, Python',
+    who: { tr: 'Verisi büyüyen, aynı veriye birden fazla kişinin ya da uygulamanın eriştiği işler', en: 'Work where the data keeps growing and several people or applications reach the same data' },
+    when: { tr: 'Yeni bir sistem kurulurken ya da var olan yapı yavaşlayıp karışmaya başladığında', en: 'When a new system is being set up, or when an existing one slows down and gets tangled' },
   },
-  scope: {
-    lede: { tr: 'Doğru kurulmuş bir veritabanı, verinin tek bir yerde, tutarlı ve aranabilir durması demektir.', en: 'A well built database keeps your data in one place, consistent and searchable.' },
+  scope: [
+    { title: { tr: 'Yapı tasarımı', en: 'Structure design' }, text: { tr: 'Hangi bilginin nerede ve nasıl duracağını işin gerçek kullanımına göre tasarlarız.', en: 'We design where and how each piece of information lives, based on how the work really uses it.' } },
+    { title: { tr: 'Taşıma', en: 'Migration' }, text: { tr: 'Eski bir sistemdeki veriyi kayıpsız biçimde yeni yapıya aktarırız.', en: 'We move data from an old system into the new structure without losing anything.' } },
+    { title: { tr: 'Hız', en: 'Speed' }, text: { tr: 'Yavaşlayan noktaları bulur, yapıyı kullanıma göre yeniden düzenleriz.', en: 'We find the places that slow down and rearrange the structure around real use.' } },
+    { title: { tr: 'Erişim ve yedek', en: 'Access and backup' }, text: { tr: 'Kimin neyi görüp değiştirebileceğini kurala bağlar, yedekleme düzenini kurarız.', en: 'We set rules for who can see and change what, and put a backup routine in place.' } },
+  ],
+  steps: [
+    { title: { tr: 'Kullanımı anlama', en: 'Understanding use' }, text: { tr: 'Verinin kimler tarafından, ne sıklıkla ve hangi amaçla kullanıldığını çıkarırız.', en: 'We find out who uses the data, how often and for what.' } },
+    { title: { tr: 'Tasarım', en: 'Design' }, text: { tr: 'Yapıyı önce kâğıt üzerinde kurar, sizinle birlikte gözden geçiririz.', en: 'We first draw the structure on paper and review it with you.' } },
+    { title: { tr: 'Kurulum ve aktarım', en: 'Build and transfer' }, text: { tr: 'Yapıyı kurar, var olan veriyi aktarır ve sonucu kaynakla karşılaştırırız.', en: 'We build it, move the existing data and compare the result with the source.' } },
+    { title: { tr: 'Bakım düzeni', en: 'Upkeep routine' }, text: { tr: 'Yedekleme, izleme ve güncelleme adımlarını yazılı hale getiririz.', en: 'We put the backup, monitoring and update steps in writing.' } },
+  ],
+  outcomes: {
+    lead: { title: { tr: 'Büyümeye hazır bir yapı', en: 'A structure ready to grow' }, text: { tr: 'Veri arttıkça ve yeni ihtiyaçlar geldikçe baştan kurulması gerekmeyen bir temel.', en: 'A base that does not need to be rebuilt as the data grows and new needs arrive.' } },
     items: [
-      { title: { tr: 'Şema tasarımı.', en: 'Schema design.' }, text: { tr: 'Tabloları, ilişkileri ve kuralları işinizin gerçek akışına göre çizeriz.', en: 'We lay out tables, relations and rules around how your work actually flows.' } },
-      { title: { tr: 'Taşıma.', en: 'Migration.' }, text: { tr: 'Eski kayıtları yeni yapıya kayıpsız aktarır, aktarımı sayılarla doğrularız.', en: 'We move the old records into the new structure without loss and check the move with counts.' } },
-      { title: { tr: 'Kurallar ve kısıtlar.', en: 'Rules and constraints.' }, text: { tr: 'Yanlış ya da eksik kaydın veritabanına girmesini baştan engelleriz.', en: 'We stop wrong or incomplete records from entering in the first place.' } },
-      { title: { tr: 'Erişim ve yedek.', en: 'Access and backups.' }, text: { tr: 'Kimin neyi göreceğini ve verinin nasıl yedekleneceğini ayarlarız.', en: 'We set who can see what and how the data is backed up.' } },
+      { title: { tr: 'Yapı belgesi', en: 'Structure document' }, text: { tr: 'Hangi bilginin nerede durduğunu ve nedenini anlatır.', en: 'It explains where each piece of information lives and why.' } },
+      { title: { tr: 'Aktarılmış veri', en: 'Migrated data' }, text: { tr: 'Kaynakla karşılaştırılmış, eksiksiz kayıtlar.', en: 'Complete records, checked against the source.' } },
+      { title: { tr: 'Yedekleme', en: 'Backups' }, text: { tr: 'Bir sorun anında verinin nasıl geri geleceği bellidir.', en: 'How data comes back after a problem is known in advance.' } },
+      { title: { tr: 'Erişim kuralları', en: 'Access rules' }, text: { tr: 'Kimin hangi veriye ulaşabildiği tanımlıdır.', en: 'Who can reach which data is defined.' } },
     ],
   },
-  steps: {
-    lede: { tr: 'Önce verinin bugün nasıl kullanıldığını anlar, yapıyı buna göre kurarız.', en: 'We first learn how the data is used today and build the structure around it.' },
-    items: [
-      { title: { tr: 'Keşif', en: 'Discovery' }, text: { tr: 'Hangi verinin nerede durduğunu ve kimin kullandığını çıkarırız.', en: 'We map which data lives where and who uses it.' } },
-      { title: { tr: 'Tasarım', en: 'Design' }, text: { tr: 'Şemayı çizer, sizinle örnek sorgular üzerinden sınarız.', en: 'We draw the schema and test it with you on sample queries.' } },
-      { title: { tr: 'Taşıma', en: 'Migration' }, text: { tr: 'Kayıtları aktarır, eski ve yeni sayıları karşılaştırırız.', en: 'We move the records and compare old and new counts.' } },
-      { title: { tr: 'Devir', en: 'Handover' }, text: { tr: 'Veritabanını, betikleri ve belgeyi kullanıma hazır teslim ederiz.', en: 'We hand over the database, scripts and documentation ready to use.' } },
-    ],
-  },
-  delivery: {
-    lede: { tr: 'Teslimden sonra veritabanını kendiniz yönetebilmeniz için her adım belgelenir.', en: 'Every step is documented so you can run the database yourself after handover.' },
-    items: [
-      { title: { tr: 'Kurulu veritabanı.', en: 'A running database.' }, text: { tr: 'Kayıtları taşınmış ve kullanıma hazır.', en: 'With the records moved in and ready to use.' } },
-      { title: { tr: 'Taşıma betikleri.', en: 'Migration scripts.' }, text: { tr: 'Aktarımı tekrar çalıştırmak ya da genişletmek için.', en: 'To run or extend the migration again.' } },
-      { title: { tr: 'Şema belgesi.', en: 'A schema document.' }, text: { tr: 'Her tablonun ne tuttuğunu ve tabloların nasıl bağlandığını anlatır.', en: 'It explains what each table holds and how the tables connect.' } },
-    ],
-  },
+  art: { tr: 'Ada, raflara etiketli kutuları sırasıyla yerleştiriyor.', en: 'Ada places labelled boxes on shelves in order.' },
 }

@@ -1,0 +1,95 @@
+/* ust bar seffaf olarak kapagin ustunde durdugu icin ust bosluk bar
+   yuksekligi kadar artar. Kapak ekrani kaplamaz, icerik kadar uzar */
+.hero {
+  padding: calc(var(--header-height) + 40px) var(--gutter) clamp(56px, 7vw, 88px);
+}
+.inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+
+.crumb {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font: 700 12px/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.crumb a {
+  padding: 7px 10px;
+  border: 2px solid var(--ink);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.crumb a:hover {
+  background: var(--ink);
+  color: var(--on-ink);
+}
+.crumb span {
+  color: var(--faint);
+}
+
+/* afis olcusunde baslik. Gorsellestirme gibi uzun tek kelimeler dar ekranda
+   tasmasin diye alt sinir kucuk tutuldu ve kelime gerekirse bolunur */
+.title {
+  margin-top: 32px;
+  font-size: clamp(44px, 9.4vw, 136px);
+  line-height: 0.86;
+  letter-spacing: -0.055em;
+  overflow-wrap: anywhere;
+}
+/* altin blok harflerin kenarindan biraz tasar, harfler bloga yapismasin
+   diye iki yanda kucuk bir pay var */
+.mark {
+  display: inline-block;
+  margin: 0.04em 0 0 -0.06em;
+  padding: 0.02em 0.08em 0.06em;
+  background: var(--gold);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  margin-top: clamp(36px, 4vw, 56px);
+  align-items: start;
+}
+
+.lede {
+  margin: 0;
+  max-width: 34ch;
+  font: 600 clamp(20px, 1.9vw, 25px)/1.3 var(--font-display);
+  letter-spacing: -0.01em;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+/* kunye iki piksellik cerceve icinde ust uste iki satir */
+.facts {
+  margin: 0;
+  border: var(--card-border);
+  background: var(--surface);
+}
+.facts > div {
+  padding: 14px 18px 16px;
+}
+.facts > div + div {
+  border-top: 2px solid var(--ink);
+}
+.facts dt {
+  font-size: 10px;
+}
+.facts dd {
+  margin: 8px 0 0;
+  font: 600 15px/1.4 var(--font-display);
+}
+
+@media (max-width: 768px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

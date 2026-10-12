@@ -2,45 +2,41 @@
 file: quality.ts
 importable: quality
 
-Veri sayfasindaki panonun ve /services/quality sayfasinin metni.
+/services/quality sayfasinin metni. Ozet cumlesi veri sayfasindaki hizmetler
+panosunda da gorunur.
 
 description: Veri Kalitesi hizmetinin iki dilli icerigi.
 */
 
-import type { Service } from './types'
+import type { DataService } from './types'
 
-export const quality: Service = {
+export const quality: DataService = {
   summary: { tr: 'Hataları ölçer, kaynağını bulur ve kurala bağlarız.', en: 'We measure errors, trace them to their source and turn them into rules.' },
-  lede: { tr: 'Raporlarınızdaki sayıların neden birbirini tutmadığını bulur, hataları ölçer ve tekrar etmemeleri için denetim kurallarına bağlarız.', en: 'We find out why the numbers in your reports disagree, measure the errors and set up checks so they do not come back.' },
+  lede: { tr: 'Verinin ne kadar güvenilir olduğunu ölçer, hataların nereden geldiğini bulur ve tekrar etmemeleri için kalıcı kontroller kurarız.', en: 'We measure how reliable the data is, find where the errors come from and set up lasting checks so they do not return.' },
   facts: {
-    input: { tr: 'Raporlar, kaynak tablolar, iş kuralları', en: 'Reports, source tables, business rules' },
-    output: { tr: 'Kalite raporu, denetim kuralları, düzeltme önerileri', en: 'A quality report, automated checks, suggested fixes' },
-    tools: 'Python, SQL, pytest',
+    who: { tr: 'Kararlarına, raporlarına ya da müşterilerine yanlış veri yansımasını göze alamayan ekipler', en: 'Teams that cannot afford wrong data reaching their decisions, reports or customers' },
+    when: { tr: 'Rakamlar birbirini tutmadığında ya da bir veriye duyulan güven sarsıldığında', en: 'When the numbers do not add up, or when trust in a piece of data is shaken' },
   },
-  scope: {
-    lede: { tr: 'Kalite işi hatayı bir kez düzeltmek değil, nereden geldiğini bulup bir daha girmemesini sağlamaktır.', en: 'Quality work is not fixing an error once, it is finding where it comes from and keeping it out.' },
+  scope: [
+    { title: { tr: 'Ölçüm', en: 'Measuring' }, text: { tr: 'Eksik, tekrar eden, çelişen ve geçersiz kayıtların ne kadar olduğunu ortaya koyarız.', en: 'We show how many records are missing, repeated, conflicting or invalid.' } },
+    { title: { tr: 'Kaynağı bulma', en: 'Finding the source' }, text: { tr: 'Hatanın verinin hangi aşamasında ortaya çıktığını geriye doğru izleriz.', en: 'We trace back to the stage where each error first appears.' } },
+    { title: { tr: 'Kurallar', en: 'Rules' }, text: { tr: 'Bir kaydın doğru sayılması için gereken koşulları sizinle birlikte tanımlarız.', en: 'Together we define what a record needs to count as correct.' } },
+    { title: { tr: 'Sürekli kontrol', en: 'Ongoing checks' }, text: { tr: 'Yeni gelen verinin bu kurallardan kendiliğinden geçmesini sağlarız.', en: 'We make new data pass through these rules on its own.' } },
+  ],
+  steps: [
+    { title: { tr: 'Tespit', en: 'Assessment' }, text: { tr: 'Verinin bugünkü durumunu ölçer, sorunları büyüklüğüne göre sıralarız.', en: 'We measure where the data stands today and rank the problems by size.' } },
+    { title: { tr: 'Kök neden', en: 'Root cause' }, text: { tr: 'Her sorunun nereden geldiğini bulur, belirtiyi değil kaynağı ele alırız.', en: 'We find where each problem comes from and fix the source, not the symptom.' } },
+    { title: { tr: 'Düzeltme', en: 'Correction' }, text: { tr: 'Geçmiş kayıtları düzeltir, aynı hatayı üreten adımı değiştiririz.', en: 'We correct past records and change the step that produced the error.' } },
+    { title: { tr: 'Takip', en: 'Follow-up' }, text: { tr: 'Kontrolleri çalışır halde bırakır, kalitenin zamanla nasıl değiştiğini görünür kılarız.', en: 'We leave the checks running and make changes in quality visible over time.' } },
+  ],
+  outcomes: {
+    lead: { title: { tr: 'Güvenilen bir veri', en: 'Data people trust' }, text: { tr: 'Üzerinde karar verilen rakamların nereden geldiği ve ne kadar doğru olduğu bilinir.', en: 'Everyone knows where the numbers behind a decision come from and how accurate they are.' } },
     items: [
-      { title: { tr: 'Ölçüm.', en: 'Measurement.' }, text: { tr: 'Eksik, tutarsız ve çelişen kayıtların oranını alan alan ölçeriz.', en: 'We measure the share of missing, inconsistent and conflicting records field by field.' } },
-      { title: { tr: 'Kaynak takibi.', en: 'Tracing.' }, text: { tr: 'Hatanın hangi sistemden ya da hangi adımdan geldiğini buluruz.', en: 'We find which system or step an error comes from.' } },
-      { title: { tr: 'Denetim kuralları.', en: 'Checks.' }, text: { tr: 'Her yeni veride kendiliğinden çalışan kontroller yazarız.', en: 'We write checks that run on every new batch of data by themselves.' } },
-      { title: { tr: 'Düzeltme.', en: 'Fixing.' }, text: { tr: 'Geçmişteki hatalı kayıtlar için kurala dayanan bir düzeltme yolu öneririz.', en: 'We propose a rule based way to repair past records.' } },
+      { title: { tr: 'Kalite raporu', en: 'Quality report' }, text: { tr: 'Bugünkü durumu ve giderilen sorunları anlatır.', en: 'It describes the current state and the problems solved.' } },
+      { title: { tr: 'Ortak tanım', en: 'Shared definition' }, text: { tr: 'Doğru verinin ne olduğu herkes için aynıdır.', en: 'What counts as correct data is the same for everyone.' } },
+      { title: { tr: 'Kendiliğinden kontrol', en: 'Automatic checks' }, text: { tr: 'Sorunlu veri içeri girmeden yakalanır.', en: 'Faulty data is caught before it gets in.' } },
+      { title: { tr: 'Uyarılar', en: 'Alerts' }, text: { tr: 'Bir sorun çıktığında ilgili kişiye haber gider.', en: 'The right person hears about a problem when it appears.' } },
     ],
   },
-  steps: {
-    lede: { tr: 'Önce hatanın ne kadar büyük olduğunu sayıyla gösterir, sonra kaynağına ineriz.', en: 'We first show how big the problem is in numbers, then go to its source.' },
-    items: [
-      { title: { tr: 'Ölçüm', en: 'Measure' }, text: { tr: 'Kalite sorunlarını alan bazında sayar, bir başlangıç tablosu çıkarırız.', en: 'We count quality problems per field and set a baseline.' } },
-      { title: { tr: 'İz sürme', en: 'Trace' }, text: { tr: 'En büyük sorunların kaynağına iner, nedenini kanıtıyla gösteririz.', en: 'We go to the source of the biggest problems and show the cause with evidence.' } },
-      { title: { tr: 'Kurallar', en: 'Rules' }, text: { tr: 'Kontrolleri yazar, geçmiş veride deneyerek ayarlarız.', en: 'We write the checks and tune them on past data.' } },
-      { title: { tr: 'İzleme', en: 'Monitor' }, text: { tr: 'Kontrollerin her yeni veride çalışmasını ve sonucunu raporlamasını sağlarız.', en: 'We make the checks run on every new batch and report their results.' } },
-    ],
-  },
-  delivery: {
-    lede: { tr: 'Sonunda verinizin ne kadar güvenilir olduğunu bir sayıyla söyleyebilirsiniz.', en: 'At the end you can state how reliable your data is with a number.' },
-    items: [
-      { title: { tr: 'Kalite raporu.', en: 'A quality report.' }, text: { tr: 'Hangi alanda ne kadar sorun olduğunu ve kaynağını gösterir.', en: 'It shows how much trouble each field has and where it comes from.' } },
-      { title: { tr: 'Denetim kuralları.', en: 'Automated checks.' }, text: { tr: 'Kendiliğinden çalışan, kodu sizde kalan kontroller.', en: 'Checks that run on their own, with the code left in your hands.' } },
-      { title: { tr: 'Düzeltme önerileri.', en: 'Suggested fixes.' }, text: { tr: 'Geçmiş kayıtları kurala göre onarmanın yolu.', en: 'A rule based way to repair past records.' } },
-    ],
-  },
+  art: { tr: 'Ada, büyüteçle bir kayıt listesini satır satır inceliyor.', en: 'Ada checks a list of records line by line with a magnifying glass.' },
 }

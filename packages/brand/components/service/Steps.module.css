@@ -1,0 +1,17 @@
+/* kapsam bolumunun aynasi, cizim solda dar sutunda ve metnin dikey
+   ortasinda. Dar ekranda cizim metnin altina iner */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .grid > figure {
+    order: 1;
+  }
+}

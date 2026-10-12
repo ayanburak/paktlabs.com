@@ -17,3 +17,6 @@ __pycache__/
 /undefined/
 
 .DS_Store
+
+# tsc -b ile elle calistirilan tip denetiminin artigi
+*.tsbuildinfo

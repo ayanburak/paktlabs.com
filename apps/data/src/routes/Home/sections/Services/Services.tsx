@@ -19,7 +19,7 @@ import { useBrandDict } from '@paktlabs/brand/i18n/useBrandDict'
 
 import { services } from '@/content/services'
 import { useDict } from '@/i18n'
-import { sequenceNumber } from '@/lib/sequenceNumber'
+import { sequenceNumber } from '@paktlabs/brand/lib/sequenceNumber'
 import { servicesAnchor } from '@/routes/links'
 
 import { ServiceNote } from './ServiceNote'

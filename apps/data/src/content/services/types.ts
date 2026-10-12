@@ -1,33 +1,19 @@
 /*
 file: types.ts
-importable: Service
+importable: DataService
 
-Bir hizmetin icerigi. Hizmet sayfasi her hizmette ayni uc bolumden olusur:
-kapsam, surec ve teslim. Bolumlerin ve facts satirlarinin adlari alti
-sayfada ayni oldugu icin sitenin sozlugunde bir kez durur, bu dosya yalnizca
-hizmete ozel metni tasir. Her metin iki dili yan yana tasir, bir dil eksik
-kalirsa derleme hata verir.
+Veri hizmetlerinin icerik tipi. Sayfanin metni brand'deki ortak Service
+tipine uyar, Veri, Otomasyon ve Web hizmetleri ayni sablonu paylasir.
+Buraya eklenen tek alan art, kapsam bolumundeki cizimin yer tutucusu.
 
 description: Veri hizmetlerinin icerik tipini tanimlayan modul.
 */
 
-import type { ListItem, Station } from '../studies/blocks'
-import type { Localized } from '../studies/types'
+import type { Service } from '@paktlabs/brand/content/service'
+import type { Localized } from '@paktlabs/brand/i18n/language'
 
-// summary panodaki kagidin tek cumlesi, lede sayfanin kapagindaki
-// aciklamadir. input okurun getirdigi, output teslim edilen, tools isin
-// yapildigi araclardir. Arac adlari iki dilde ayni oldugu icin duz metin.
-// Uc bolumun her biri bir giris cumlesi ve maddelerden olusur. steps
-// calisma sayfalarindaki istasyon hattiyla cizilir.
-export interface Service {
-  summary: Localized
-  lede: Localized
-  facts: {
-    input: Localized
-    output: Localized
-    tools: string
-  }
-  scope: { lede: Localized; items: ListItem[] }
-  steps: { lede: Localized; items: Station[] }
-  delivery: { lede: Localized; items: ListItem[] }
+// art, Ada'nin cizimi gelene kadar kesikli kutunun icinde yazan tariftir.
+// Cizim hazir oldugunda bu alan kalkar, rota kutunun yerine img verir.
+export interface DataService extends Service {
+  art: Localized
 }

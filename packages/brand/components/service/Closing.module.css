@@ -1,0 +1,60 @@
+/* koyu bant alt bilgiye kadar iner, alt boslugu gecis satiri tasir */
+.closing {
+  padding-bottom: 0;
+  background: var(--ink);
+  color: var(--on-ink);
+  --focus-ring: var(--gold);
+}
+.closing :global(.eyebrow) {
+  color: var(--gold);
+}
+
+.title {
+  margin-top: 18px;
+  max-width: 13ch;
+  font-size: clamp(48px, 7vw, 104px);
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 40px;
+  margin-top: 36px;
+}
+.links a {
+  padding-bottom: 6px;
+  font: 700 15px/1 var(--font-mono);
+  border-bottom: 3px solid var(--on-ink-muted);
+}
+.links a.primary {
+  border-bottom-color: var(--gold);
+}
+.links a:hover {
+  color: var(--gold);
+}
+
+/* onceki ve sonraki hizmet iki uca yaslanir */
+.pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: clamp(48px, 6vw, 72px);
+  border-top: 2px solid var(--muted);
+}
+.pager a {
+  padding: 20px 0 28px;
+  font: 600 18px/1.2 var(--font-display);
+  color: var(--on-ink-muted);
+}
+.pager a:last-child {
+  text-align: right;
+}
+.pager a:hover {
+  color: var(--on-ink);
+}
+.pager :global(.eyebrow) {
+  margin-bottom: 8px;
+  font-size: 11px;
+}

@@ -144,44 +144,9 @@
       "go": "← Back to the study"
     }
   },
-  "service": {
-    "back": "← Services",
-    "tag": "Service",
-    "facts": {
-      "input": "You bring",
-      "output": "We deliver",
-      "tools": "Tools"
-    },
-    "chapters": {
-      "scope": {
-        "label": "Scope",
-        "title": "What we do"
-      },
-      "steps": {
-        "label": "Process",
-        "title": "How we work"
-      },
-      "delivery": {
-        "label": "Delivery",
-        "title": "What you get"
-      }
-    },
-    "closing": {
-      "label": "Next step",
-      "title": "How can we help in this area?",
-      "nav": "Next step",
-      "works": {
-        "label": "Studies",
-        "title": "Our studies in this area",
-        "text": "Browse the studies we completed in this area and their developer notes.",
-        "go": "Browse studies →"
-      },
-      "contact": {
-        "label": "Contact",
-        "title": "Write to us about this",
-        "text": "Tell us about your project in four short questions and we will get back to you.",
-        "go": "Get in touch →"
-      }
-    }
+  "serviceArt": {
+    "label": "Svg area",
+    "ratio": "five by six",
+    "steps": "Ada and Bit walk together across numbered stepping stones, Ada points at the next one."
   }
 }

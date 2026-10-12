@@ -144,44 +144,9 @@
       "go": "← Çalışmaya dön"
     }
   },
-  "service": {
-    "back": "← Hizmetler",
-    "tag": "Hizmet",
-    "facts": {
-      "input": "Getirdiğiniz",
-      "output": "Teslim ettiğimiz",
-      "tools": "Araçlar"
-    },
-    "chapters": {
-      "scope": {
-        "label": "Kapsam",
-        "title": "Ne yapıyoruz"
-      },
-      "steps": {
-        "label": "Süreç",
-        "title": "Nasıl ilerliyoruz"
-      },
-      "delivery": {
-        "label": "Teslim",
-        "title": "Elinize ne geçer"
-      }
-    },
-    "closing": {
-      "label": "Sıradaki adım",
-      "title": "Bu alanda nasıl yardımcı olabiliriz?",
-      "nav": "Sıradaki adım",
-      "works": {
-        "label": "Çalışmalar",
-        "title": "Bu alandaki çalışmalarımız",
-        "text": "Bu alanda tamamladığımız çalışmaları ve geliştirici notlarını inceleyin.",
-        "go": "Çalışmaları incele →"
-      },
-      "contact": {
-        "label": "İletişim",
-        "title": "Bu iş için bize yazın",
-        "text": "İşinizi dört kısa soruyla anlatın, size dönüş yapalım.",
-        "go": "İletişime geç →"
-      }
-    }
+  "serviceArt": {
+    "label": "Svg alanı",
+    "ratio": "beşe altı",
+    "steps": "Ada ile Bit, yerdeki numaralı taşların üzerinden birlikte ilerliyor, Ada bir sonraki taşı gösteriyor."
   }
 }

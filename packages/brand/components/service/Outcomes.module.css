@@ -1,0 +1,86 @@
+/* altin burada zemin olarak kullaniliyor. Etiket rengi altin uzerinde
+   okunsun diye murekkebe doner */
+.outcomes {
+  background: var(--gold);
+}
+.outcomes :global(.eyebrow) {
+  color: var(--ink);
+}
+
+/* cerceve izgaranin disinda, kutular arasindaki cizgiler kutularin sag ve
+   alt kenarindan gelir. Ilk kutu iki satiri kaplar */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+  border: var(--card-border);
+  background: var(--paper);
+}
+.grid li {
+  padding: 24px 24px 28px;
+  border-right: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+}
+.grid li:first-child {
+  grid-row: span 2;
+  background: var(--ink);
+  color: var(--on-ink);
+}
+.grid li:nth-child(3),
+.grid li:nth-child(5) {
+  border-right: 0;
+}
+.grid li:nth-child(4),
+.grid li:nth-child(5) {
+  border-bottom: 0;
+}
+
+.grid h3 {
+  font-size: 22px;
+  line-height: 1.2;
+}
+.grid p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.5;
+}
+/* buyuk kutunun metni kutunun altina yaslanir, baslik ve cumle kutunun
+   bosta kalan yuksekligini buyuk puntoyla doldurur */
+.grid li:first-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(28px, 3vw, 40px);
+}
+.grid li:first-child h3 {
+  max-width: 12ch;
+  font-size: clamp(36px, 4.2vw, 58px);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+.grid li:first-child p {
+  margin-top: 18px;
+  max-width: 30ch;
+  color: var(--on-ink-muted);
+  font-size: clamp(17px, 1.5vw, 20px);
+}
+
+/* dar ekranda kutular alt alta, buyuk kutu tek satira iner */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .grid li,
+  .grid li:nth-child(3) {
+    border-right: 0;
+  }
+  .grid li:first-child {
+    grid-row: auto;
+  }
+  .grid li:nth-child(4) {
+    border-bottom: 2px solid var(--ink);
+  }
+}

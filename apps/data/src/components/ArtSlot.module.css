@@ -15,6 +15,11 @@
   background: repeating-linear-gradient(135deg, transparent 0 10px, rgba(45, 48, 55, 0.05) 10px 11px);
   color: var(--faint);
 }
+/* havada duran bir cizimin, ornegin hizmet sayfasindakilerin, basacagi bir
+   cizgi yok, kutu dort kenardan da cizilir */
+.floating {
+  border-bottom: 2px dashed var(--gray);
+}
 .label {
   font: 700 11px/1.35 var(--font-mono);
   letter-spacing: 0.08em;

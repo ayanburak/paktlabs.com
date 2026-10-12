@@ -16,7 +16,7 @@ import { useLanguage } from '@paktlabs/brand/i18n/language'
 
 import type { Chapter as ChapterContent } from '@/content/studies/types'
 import { useDict } from '@/i18n'
-import { sequenceNumber } from '@/lib/sequenceNumber'
+import { sequenceNumber } from '@paktlabs/brand/lib/sequenceNumber'
 
 import { BlockView } from './blocks/BlockView'
 import styles from './Body.module.css'

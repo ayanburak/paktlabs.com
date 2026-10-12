@@ -2,45 +2,41 @@
 file: machine-learning.ts
 importable: machineLearning
 
-Veri sayfasindaki panonun ve /services/machine-learning sayfasinin metni.
+/services/machine-learning sayfasinin metni. Ozet cumlesi veri sayfasindaki hizmetler
+panosunda da gorunur.
 
 description: Makine Ogrenmesi hizmetinin iki dilli icerigi.
 */
 
-import type { Service } from './types'
+import type { DataService } from './types'
 
-export const machineLearning: Service = {
+export const machineLearning: DataService = {
   summary: { tr: 'Elle verilen kararları öğrenen ve ölçülen modeller kurarız.', en: 'We build models that learn decisions made by hand, and measure them.' },
-  lede: { tr: 'Her gün elle verilen bir kararı geçmiş örneklerden öğrenen bir model kurar, ne kadar doğru çalıştığını ölçer ve işin içine yerleştiririz.', en: 'We build a model that learns a decision made by hand every day from past examples, measure how well it works and fit it into your workflow.' },
+  lede: { tr: 'Tekrar tekrar verilen kararları geçmiş örneklerden öğrenen modeller kurar, ne kadar doğru çalıştıklarını ölçer ve işinizin içine yerleştiririz.', en: 'We build models that learn repeated decisions from past examples, measure how well they work and place them inside your work.' },
   facts: {
-    input: { tr: 'Geçmiş kararlar ve örnekler, karar kuralları', en: 'Past decisions and examples, decision rules' },
-    output: { tr: 'Eğitilmiş model, değerlendirme raporu, kullanım kodu', en: 'A trained model, an evaluation report, the code to run it' },
-    tools: 'Python, scikit-learn, pandas',
+    who: { tr: 'Benzer kararları her gün yeniden veren ya da ileriyi tahmin etmesi gereken ekipler', en: 'Teams that make similar decisions every day, or that need to look ahead' },
+    when: { tr: 'Bir kararın kuralı elle yazılamayacak kadar karmaşıklaştığında ve geçmiş örnekler biriktiğinde', en: 'When a decision is too complex to write down as rules and past examples have piled up' },
   },
-  scope: {
-    lede: { tr: 'Model, elle verilen kararın yerini alacaksa ne kadar doğru olduğu baştan ölçülebilmelidir.', en: 'If a model is to take over a decision made by hand, how often it is right must be measurable from the start.' },
+  scope: [
+    { title: { tr: 'Uygunluk', en: 'Fit' }, text: { tr: 'Önce işin gerçekten bir modele ihtiyacı olup olmadığına ve verinin buna yetip yetmediğine bakarız.', en: 'First we check whether the work really needs a model and whether the data is enough for one.' } },
+    { title: { tr: 'Model kurma', en: 'Building the model' }, text: { tr: 'Tahmin, sınıflandırma ya da eşleştirme gibi işler için modeli eğitir ve ayarlarız.', en: 'We train and tune models for work such as forecasting, sorting or matching.' } },
+    { title: { tr: 'Ölçüm', en: 'Measuring' }, text: { tr: 'Modelin nerede doğru, nerede yanlış karar verdiğini gerçek örneklerle gösteririz.', en: 'We show with real examples where the model decides right and where it goes wrong.' } },
+    { title: { tr: 'İşe yerleştirme', en: 'Putting it to work' }, text: { tr: 'Modeli mevcut düzeninize bağlar, emin olamadığı kararları insana bırakırız.', en: 'We connect the model to how you already work and leave the uncertain calls to people.' } },
+  ],
+  steps: [
+    { title: { tr: 'Karar', en: 'Decision' }, text: { tr: 'Modelin hangi kararı vereceğini ve başarının nasıl ölçüleceğini birlikte tanımlarız.', en: 'Together we define which decision the model makes and how success is measured.' } },
+    { title: { tr: 'Hazırlık', en: 'Preparation' }, text: { tr: 'Geçmiş örnekleri toplar, öğrenmeye uygun hale getiririz.', en: 'We collect past examples and make them ready for learning.' } },
+    { title: { tr: 'Eğitim ve sınama', en: 'Training and testing' }, text: { tr: 'Modeli eğitir, hiç görmediği örneklerle sınar, hatalarını tek tek inceleriz.', en: 'We train the model, test it on examples it has never seen and study its mistakes one by one.' } },
+    { title: { tr: 'Yayın ve izleme', en: 'Release and watch' }, text: { tr: 'Modeli kullanıma alır, zamanla bozulup bozulmadığını izleriz.', en: 'We put the model into use and watch whether it degrades over time.' } },
+  ],
+  outcomes: {
+    lead: { title: { tr: 'Ölçülmüş bir model', en: 'A measured model' }, text: { tr: 'Ne kadar doğru çalıştığı, nerede yanıldığı ve ne zaman insana danışması gerektiği bilinir.', en: 'How well it works, where it errs and when it should ask a person are all known.' } },
     items: [
-      { title: { tr: 'Uygunluk.', en: 'Fit.' }, text: { tr: 'Kararın modele bırakılabilir olup olmadığını önce veriyle sınarız.', en: 'We first test with data whether the decision can be left to a model at all.' } },
-      { title: { tr: 'Model.', en: 'Model.' }, text: { tr: 'Geçmiş örneklerden öğrenen, açıklanabilir modeller kurarız.', en: 'We build explainable models that learn from past examples.' } },
-      { title: { tr: 'Ölçüm.', en: 'Measurement.' }, text: { tr: 'Modelin ne zaman haklı ne zaman yanlış olduğunu ayrı bir test setinde ölçeriz.', en: 'We measure on a held out set when the model is right and when it is wrong.' } },
-      { title: { tr: 'İnsanla birlikte.', en: 'With people.' }, text: { tr: 'Modelin emin olmadığı durumları kişiye bırakan bir akış kurarız.', en: 'We build a flow that leaves the cases the model is unsure about to a person.' } },
+      { title: { tr: 'Çalışan model', en: 'A working model' }, text: { tr: 'İşinize bağlı, kararlarını kendiliğinden verir.', en: 'Connected to your work, it makes its calls on its own.' } },
+      { title: { tr: 'Ölçüm raporu', en: 'Measurement report' }, text: { tr: 'Başarıyı ve hataları gerçek örneklerle anlatır.', en: 'It shows success and errors with real examples.' } },
+      { title: { tr: 'İzleme', en: 'Monitoring' }, text: { tr: 'Başarı düştüğünde haber verir.', en: 'It tells you when performance drops.' } },
+      { title: { tr: 'Yenileme', en: 'Refreshing' }, text: { tr: 'Modelin yeni veriyle nasıl güncelleneceği bellidir.', en: 'How to update the model with new data is clear.' } },
     ],
   },
-  steps: {
-    lede: { tr: 'Önce kararın kendisini anlar, modeli ancak ölçebileceğimiz bir hedefle kurarız.', en: 'We first understand the decision itself and only build a model against a target we can measure.' },
-    items: [
-      { title: { tr: 'Karar', en: 'Decision' }, text: { tr: 'Elle verilen kararı, girdilerini ve doğru sonucun ne olduğunu çıkarırız.', en: 'We map the decision made by hand, its inputs and what a right answer is.' } },
-      { title: { tr: 'Veri', en: 'Data' }, text: { tr: 'Geçmiş kararları öğrenmeye uygun bir veri setine çeviririz.', en: 'We turn past decisions into a data set fit for learning.' } },
-      { title: { tr: 'Model', en: 'Model' }, text: { tr: 'Modelleri eğitir, ayrı bir test setinde karşılaştırırız.', en: 'We train models and compare them on a separate test set.' } },
-      { title: { tr: 'Devreye alma', en: 'Rollout' }, text: { tr: 'Seçilen modeli işin akışına yerleştirir, sonuçlarını izleriz.', en: 'We fit the chosen model into the workflow and watch its results.' } },
-    ],
-  },
-  delivery: {
-    lede: { tr: 'Model teslim edildiğinde ne kadar güvenilebileceği de onunla birlikte teslim edilir.', en: 'When the model is delivered, how far it can be trusted is delivered with it.' },
-    items: [
-      { title: { tr: 'Eğitilmiş model.', en: 'A trained model.' }, text: { tr: 'İşin akışında çalışacak halde.', en: 'Ready to run inside your workflow.' } },
-      { title: { tr: 'Değerlendirme raporu.', en: 'An evaluation report.' }, text: { tr: 'Doğruluk, hata türleri ve belirsizlik payıyla.', en: 'With accuracy, types of errors and uncertainty.' } },
-      { title: { tr: 'Kullanım kodu.', en: 'The code to run it.' }, text: { tr: 'Modeli yeni veriyle çalıştırmak ve yeniden eğitmek için.', en: 'To run the model on new data and retrain it.' } },
-    ],
-  },
+  art: { tr: 'Ada, küçük robot Bit’e bir kart destesini tek tek gösteriyor.', en: 'Ada shows a deck of cards to the little robot Bit one by one.' },
 }

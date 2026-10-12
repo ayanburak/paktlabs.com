@@ -9,7 +9,45 @@ description: Rotalari saran ve sayfa gecislerinde kaydirma konumunu yoneten cerc
 */
 
 import { useEffect } from 'react'
-import { Outlet, ScrollRestoration } from 'react-router-dom'
+import { Outlet, ScrollRestoration, type Location } from 'react-router-dom'
+
+// --- Kaydirma konumunun anahtari ---
+
+// ScrollRestoration her sayfanin konumunu tarayici oturumunda o sayfanin
+// gecmis anahtariyla saklar. Uygulama icindeki gecislerde her sayfanin kendi
+// anahtari var. Sayfa bastan yuklendiginde ise, adres yazilarak, baska bir
+// siteden ya da duz bir a etiketiyle gelindiginde, ilk girisin anahtari her
+// zaman default. Bastan yuklenen butun sayfalar ayni anahtari paylastigi icin
+// biri digerinin konumunda aciliyordu, ornegin hizmet sayfasinin en altindaki
+// Sonraki dugmesi bir sonraki hizmeti en alttan aciyordu. Bu yuzden ilk
+// girisin anahtari sayfanin kendi adresi yapildi.
+// Kayitlar kutuphanenin varsayilan adi yerine bu adla saklanir, onceki
+// surumden oturumda kalmis default kayitlari hic okunmasin diye.
+const SCROLL_STORAGE_KEY = 'pl-scroll-positions'
+
+function scrollKey(location: Location): string {
+  return location.key === 'default' ? `page:${location.pathname}${location.search}` : location.key
+}
+
+// Ziyaretci sayfaya bir baglantiyla ya da adres yazarak geldiyse sayfa en
+// ustten, adreste bolum varsa o bolumden acilir. Yenilemede ve geri ileri
+// dugmesinde kaldigi yere doner. Ilk gelista sayfanin eski kaydi silinir ki
+// ScrollRestoration onu okuyup sayfayi eski konumuna goturmesin. Bu islem
+// modul yuklenirken, ScrollRestoration oturumdaki kayitlari okumadan once
+// yapilmali.
+const firstEntry = performance.getEntriesByType('navigation')[0]
+const arrivedFresh = !(firstEntry instanceof PerformanceNavigationTiming) || firstEntry.type === 'navigate'
+
+if (arrivedFresh) {
+  try {
+    const saved: Record<string, number> = JSON.parse(sessionStorage.getItem(SCROLL_STORAGE_KEY) ?? '{}')
+    delete saved[`page:${location.pathname}${location.search}`]
+    sessionStorage.setItem(SCROLL_STORAGE_KEY, JSON.stringify(saved))
+  } catch {
+    // oturum deposu kapaliysa ScrollRestoration da bir sey saklayamaz,
+    // silinecek bir kayit da yoktur
+  }
+}
 
 // Bozuk yuzde kodlu bir adres (ornegin /#%) cozulemez, ham deger kullanilir.
 function readHashId() {
@@ -32,11 +70,12 @@ const USER_EVENTS = ['wheel', 'touchstart', 'pointerdown', 'keydown'] as const
 // olculdu. Bu yuzden her font dalgasindan sonra bolume yeniden hizalanir.
 // Okur kendisi kaydirmaya, tiklamaya ya da tusa basmaya baslayinca hizalama
 // durur, okurun konumuna bir daha dokunulmaz. Yalnizca ilk acilista calisir,
-// sonraki gecislerde fontlar zaten yuklu.
+// sonraki gecislerde fontlar zaten yuklu. Yenilemede ve geri dugmesinde
+// calismaz, orada okur bolume degil kaldigi yere doner.
 function useHashAfterFonts() {
   useEffect(() => {
     const id = readHashId()
-    if (!id) return
+    if (!id || !arrivedFresh) return
     const align = () => document.getElementById(id)?.scrollIntoView({ behavior: 'instant' })
     const stop = () => {
       document.fonts.removeEventListener('loadingdone', align)
@@ -49,7 +88,8 @@ function useHashAfterFonts() {
 }
 
 // Ileri gidilen sayfa en ustten, adreste bir bolum varsa o bolumden acilir.
-// Geri ve ileri dugmesinde okur kaldigi yere doner. Ikisi de sayfa tam
+// Geri ve ileri dugmesinde ve yenilemede okur kaldigi yere doner, sayfa
+// bastan yuklenmis olsa da. Ikisi de sayfa tam
 // boyuyla cizildikten sonra olur, cunku calisma sayfalarinin dosyalari
 // rota yukleyicisinde, sayfa cizilmeden once gelir.
 export function Root() {
@@ -58,7 +98,7 @@ export function Root() {
   return (
     <>
       <Outlet />
-      <ScrollRestoration />
+      <ScrollRestoration getKey={scrollKey} storageKey={SCROLL_STORAGE_KEY} />
     </>
   )
 }

@@ -2,7 +2,7 @@
 file: sequenceNumber.ts
 importable: sequenceNumber
 
-description: Bolumlerin, icindekilerin, kararlarin ve hizmetlerin gosterdigi iki haneli sira numarasini yazan yardimci.
+description: Sitelerin bolumlerde, icindekilerde, kararlarda ve hizmet sayfalarinda gosterdigi iki haneli sira numarasini yazan yardimci.
 */
 
 // Sira sifirdan baslar, numara birden: ilk oge 01. Bicim burada tek yerde

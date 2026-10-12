@@ -37,5 +37,38 @@
     "analysis": "Analysis",
     "visualization": "Visualization",
     "machineLearning": "Machine Learning"
+  },
+  "service": {
+    "back": "← Services",
+    "actions": {
+      "contact": "Write to us",
+      "works": "See our work"
+    },
+    "facts": {
+      "label": "Service details",
+      "who": "Who it is for",
+      "when": "When"
+    },
+    "scope": {
+      "label": "Scope",
+      "title": "What the work covers"
+    },
+    "steps": {
+      "label": "Process",
+      "title": "How we work"
+    },
+    "outcomes": {
+      "label": "Delivery",
+      "title": "What you have when we are done"
+    },
+    "closing": {
+      "label": "Next step",
+      "title": "Do you have work in this area?",
+      "contact": "Go to the contact page →",
+      "works": "Our work in this area →",
+      "nav": "Other services",
+      "prev": "← Previous",
+      "next": "Next →"
+    }
   }
 }

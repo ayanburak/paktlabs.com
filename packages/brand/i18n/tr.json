@@ -37,5 +37,38 @@
     "analysis": "Analiz",
     "visualization": "Görselleştirme",
     "machineLearning": "Makine Öğrenmesi"
+  },
+  "service": {
+    "back": "← Hizmetler",
+    "actions": {
+      "contact": "Bize yazın",
+      "works": "Çalışmaları gör"
+    },
+    "facts": {
+      "label": "Hizmet künyesi",
+      "who": "Kimin için",
+      "when": "Ne zaman"
+    },
+    "scope": {
+      "label": "Kapsam",
+      "title": "Bu iş neleri kapsar"
+    },
+    "steps": {
+      "label": "Süreç",
+      "title": "Nasıl ilerliyoruz"
+    },
+    "outcomes": {
+      "label": "Teslim",
+      "title": "İş bittiğinde elinizde olanlar"
+    },
+    "closing": {
+      "label": "Sıradaki adım",
+      "title": "Bu alanda bir işiniz mi var?",
+      "contact": "İletişim sayfasına geç →",
+      "works": "Bu alandaki çalışmalar →",
+      "nav": "Öteki hizmetler",
+      "prev": "← Önceki",
+      "next": "Sonraki →"
+    }
   }
 }

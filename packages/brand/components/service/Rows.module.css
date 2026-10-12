@@ -1,0 +1,38 @@
+.rows {
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+/* numara, baslik ve cumle yan yana. Baslik sutunu sabit oranda kalir ki
+   satirlarin cumleleri ayni hizadan baslasin */
+.rows li {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1.7fr);
+  gap: 20px;
+  padding: 18px 0 20px;
+  border-top: 2px solid var(--ink);
+  align-items: baseline;
+}
+.number {
+  font: 700 12px/1 var(--font-mono);
+  color: var(--faint);
+}
+.rows h3 {
+  font-size: 20px;
+  line-height: 1.2;
+}
+.rows p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+@media (max-width: 768px) {
+  .rows li {
+    grid-template-columns: 36px minmax(0, 1fr);
+    row-gap: 6px;
+  }
+  .rows p {
+    grid-column: 2;
+  }
+}

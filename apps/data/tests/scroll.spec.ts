@@ -1,7 +1,8 @@
 /*
 file: scroll.spec.ts
 
-Site ici gecislerde kaydirma konumunu kontrol eder. Konumu React Router'in
+Site ici gecislerde ve bastan yuklenen sayfalarda kaydirma konumunu kontrol
+eder. Konumu React Router'in
 ScrollRestoration'i kurar. Calisma sayfalarinin dosyalari rota
 yukleyicisinde indirildigi icin konum ancak sayfa tam boyuyla cizildikten
 sonra kurulmalidir. Ileri gidilen sayfa en ustten acilmali, geri donulen
@@ -16,7 +17,7 @@ description: data sitesinde sayfa gecislerindeki kaydirma konumu testleri.
 import { expect, type Page, test } from '@playwright/test'
 import { required } from '@paktlabs/config/testing/support'
 
-import { openPage } from './support'
+import { dict, openPage } from './support'
 
 // Atlanan bolumun ust kenari, ust bar payi dahil, ekranin ustunden en fazla
 // bu kadar piksel asagida durmali.
@@ -108,4 +109,38 @@ test('back from the source page returns to the same place on the study page', as
   await page.goBack()
   await expect(page).toHaveURL('/work/demo-data')
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(before)
+})
+
+// Bastan yuklenen sayfalar, yani adres yazilarak ya da duz bir a etiketiyle
+// gelinenler, eskiden ayni kaydirma anahtarini paylasiyordu ve biri
+// digerinin konumunda aciliyordu. Hizmet sayfasinin en altindaki Sonraki
+// baglantisi bunu gosteren ilk yer oldu.
+async function toBottom(page: Page) {
+  await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' }))
+  return page.evaluate(() => window.scrollY)
+}
+
+test('a full page load from a plain link starts at the top and back returns to the old place', async ({ page }) => {
+  await openPage(page, '/services/preparation', 'tr')
+  const before = await toBottom(page)
+  expect(before).toBeGreaterThan(1000)
+
+  await page.getByRole('navigation', { name: dict.tr.service.closing.nav }).getByRole('link').last().click()
+  await expect(page).toHaveURL('/services/database')
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
+
+  await page.goBack()
+  await expect(page).toHaveURL('/services/preparation')
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(before)
+})
+
+test('a reload keeps the place, a fresh visit to the same address starts at the top', async ({ page }) => {
+  await openPage(page, '/services/analysis', 'tr')
+  await page.evaluate(() => window.scrollTo({ top: 900, behavior: 'instant' }))
+
+  await page.reload({ waitUntil: 'networkidle' })
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(900)
+
+  await page.goto('/services/analysis', { waitUntil: 'networkidle' })
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
 })

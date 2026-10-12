@@ -21,10 +21,10 @@ import { database } from './database'
 import { machineLearning } from './machine-learning'
 import { preparation } from './preparation'
 import { quality } from './quality'
-import type { Service } from './types'
+import type { DataService } from './types'
 import { visualization } from './visualization'
 
-export const services: Record<DataTag, Service> = {
+export const services: Record<DataTag, DataService> = {
   preparation,
   database,
   quality,
