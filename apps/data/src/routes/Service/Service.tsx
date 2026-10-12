@@ -12,13 +12,13 @@ description: Adresteki hizmeti bulup brand'deki hizmet sablonunu data'nin adresl
 
 import { useParams } from 'react-router-dom'
 
-import { ArtSlot } from '@paktlabs/brand/components/ArtSlot'
 import { ServicePage, type ServiceLink } from '@paktlabs/brand/components/service/ServicePage'
 import { dataServicePath, dataTagSlugs, dataTags, type DataTag } from '@paktlabs/brand/content/dataTags'
 import { useLanguage } from '@paktlabs/brand/i18n/language'
 import { useBrandDict } from '@paktlabs/brand/i18n/useBrandDict'
 import { sequenceNumber } from '@paktlabs/brand/lib/sequenceNumber'
 
+import { ArtSlot } from '@/components/ArtSlot'
 import { Page } from '@/components/Page'
 import { services } from '@/content/services'
 import { useDict } from '@/i18n'

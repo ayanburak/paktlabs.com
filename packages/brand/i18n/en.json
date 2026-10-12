@@ -25,25 +25,9 @@
     "back": "Go back"
   },
   "underConstruction": {
-    "tapes": [
-      "UNDER CONSTRUCTION",
-      "COMING SOON"
-    ],
-    "meanwhile": "Meanwhile",
-    "cards": {
-      "data": {
-        "label": "Live",
-        "text": "Our finished data work and data services."
-      },
-      "contact": {
-        "label": "Contact",
-        "title": "Write to us",
-        "text": "Tell us about your work in four short questions and we'll get back to you."
-      },
-      "team": {
-        "label": "Team",
-        "text": "The person behind these sites and the work they have finished."
-      }
+    "actions": {
+      "data": "Our data work →",
+      "contact": "Write to us →"
     }
   },
   "contact": {

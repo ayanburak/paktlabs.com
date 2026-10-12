@@ -5,10 +5,6 @@
   },
   "home": {
     "title": "Web vitrinimiz hazırlanıyor",
-    "lead": "Bu sitede yakında web çalışmalarımız ve hizmetlerimiz olacak. Web sitesi ve web uygulaması işlerini şimdiden alıyoruz, ne yapmak istediğinizi anlatmanız yeterli.",
-    "art": {
-      "label": "web-construction.svg",
-      "note": "Ada vitrinin içinde, iki basamaklı bir merdivenin üstünde duvara yeni bir rafı vidalıyor. Belinde alet kemeri var, rafta küçük tarayıcı pencereleri duruyor. Merdiven vitrinin tabanına basar. Oran sekize dokuz."
-    }
+    "lead": "Bu sitede yakında web çalışmalarımız ve hizmetlerimiz olacak. Web sitesi ve web uygulaması işlerini şimdiden alıyoruz, ne yapmak istediğinizi anlatmanız yeterli."
   }
 }

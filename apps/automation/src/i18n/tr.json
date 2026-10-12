@@ -5,10 +5,6 @@
   },
   "home": {
     "title": "Otomasyon vitrinimiz hazırlanıyor",
-    "lead": "Bu sitede yakında otomasyon çalışmalarımız ve hizmetlerimiz olacak. Tekrar eden işleri otomatiğe bağlama işlerini şimdiden alıyoruz, ne yapmak istediğinizi anlatmanız yeterli.",
-    "art": {
-      "label": "automation-construction.svg",
-      "note": "Ada vitrinin içinde, yarısı kurulmuş Bit'in yanında diz çökmüş. Bit'in sırtındaki kapak açık, Ada tornavidayla son vidayı sıkıyor, yerde açık bir alet çantası duruyor. İkisi de vitrinin tabanına basar. Oran sekize dokuz."
-    }
+    "lead": "Bu sitede yakında otomasyon çalışmalarımız ve hizmetlerimiz olacak. Tekrar eden işleri otomatiğe bağlama işlerini şimdiden alıyoruz, ne yapmak istediğinizi anlatmanız yeterli."
   }
 }

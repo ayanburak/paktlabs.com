@@ -11,7 +11,6 @@ description: Calisma detay sayfasini sonraki calismaya ve iletisime baglayan kap
 
 import { Link } from 'react-router-dom'
 
-import { ArtSlot } from '@paktlabs/brand/components/ArtSlot'
 import { contactEmail } from '@paktlabs/brand/content/contact'
 import { workPath } from '@paktlabs/brand/content/works'
 import { useReveal } from '@paktlabs/brand/hooks/useReveal'
@@ -19,6 +18,7 @@ import { useLanguage } from '@paktlabs/brand/i18n/language'
 import { useBrandDict } from '@paktlabs/brand/i18n/useBrandDict'
 import { cx } from '@paktlabs/brand/lib/cx'
 
+import { ArtSlot } from '@/components/ArtSlot'
 import { studies } from '@/content/studies'
 import type { Study, StudyPage } from '@/content/studies/types'
 import { useDict } from '@/i18n'

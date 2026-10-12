@@ -13,7 +13,7 @@ hazir oldugunda bilesen kaldirilir, yerine ayni kutuya tek bir img konur.
 description: Cizilmemis bir illustrasyon icin kesikli cizgili, aciklamali yer tutucu kutu.
 */
 
-import { cx } from '../lib/cx'
+import { cx } from '@paktlabs/brand/lib/cx'
 
 import styles from './ArtSlot.module.css'
 
