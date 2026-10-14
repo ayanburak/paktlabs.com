@@ -16,7 +16,7 @@ description: Blok katalogunda her parca turunu ornek verilerle gosteren bolumler
 */
 
 // NOTE: Ornek dosyalar 2026-10-14'te Demo Veri'den kopyalandi. Demo Veri
-// yayindan kalktiginda bu kopyalar burada kalir, katalog etkilenmez.
+// 2026-10-15'te yayindan kalkti, bu kopyalar burada kaldi, katalog etkilenmedi.
 
 import type { Block } from '../blocks'
 import type { Chapter } from '../types'

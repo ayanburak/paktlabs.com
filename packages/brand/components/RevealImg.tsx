@@ -21,6 +21,10 @@ import type { CSSProperties } from 'react'
 import { useReveal } from '../hooks/useReveal'
 import { cx } from '../lib/cx'
 
+// Dar ekranda indirilmesi istenmeyen gorseller icin picture icinde img'in
+// yerini tutan 1x1 bos svg. Genis ekranda source eslesir ve asil gorsel iner.
+export const emptyImage = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="1" height="1"/%3E'
+
 interface RevealImgProps {
   src: string
   alt?: string

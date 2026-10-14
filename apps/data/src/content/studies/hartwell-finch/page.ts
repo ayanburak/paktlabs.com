@@ -1092,12 +1092,5 @@ export const page: StudyPage = {
   ],
   closing: {
     title: { tr: 'Sizin de cironuz büyürken kârınız yerinde mi sayıyor?', en: 'Is your profit standing still while turnover grows?' },
-    art: {
-      label: { tr: 'Svg alanı · D3 · hartwell-finch-kapanis.svg · üçe dört', en: 'Svg area · D3 · hartwell-finch-closing.svg · three by four' },
-      note: {
-        tr: 'Çizim henüz yok. Önerisi ayrıca verilecek.',
-        en: 'No drawing yet. A proposal will be given separately.',
-      },
-    },
   },
 }

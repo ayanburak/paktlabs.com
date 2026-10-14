@@ -9,7 +9,6 @@ klasorunde yazilir ve buradaki listeye eklenir.
 description: Calismalarin listesini ve slug ile calisma bulan fonksiyonu disari acan modul.
 */
 
-import { demoData } from './demo-data'
 import { hartwellFinch } from './hartwell-finch'
 import type { Study } from './types'
 
@@ -20,7 +19,7 @@ import type { Study } from './types'
 // vardi, Burak'in karariyla kaldirildi. 00 numarasi one cikan calismaya
 // ayrildi, ilk gercek calisma Hartwell & Finch bu numarayla ve feature
 // alaniyla listenin en ustunde duruyor.
-export const studies: Study[] = [hartwellFinch, demoData].sort((a, b) => a.number.localeCompare(b.number))
+export const studies: Study[] = [hartwellFinch]
 
 // Blok katalogunun ornek dosyalari da bu klasorde, kendi alt klasorunde
 // durur ve calisma dosyalari gibi bu adla yuklenir. Katalog bir calisma

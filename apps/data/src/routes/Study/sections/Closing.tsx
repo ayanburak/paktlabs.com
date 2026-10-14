@@ -3,14 +3,17 @@ file: Closing.tsx
 importable: Closing
 
 Detay sayfasini kapatan bolum: calismanin sorusu, butun calismalara donus
-karti, varsa sonraki calismanin karti, iletisim adresi ve cizilmemis figurun
-yeri. Veri sayfasinin iletisim bolumuyle ayni zemin ve olculerde durur.
+karti, varsa sonraki calismanin karti, iletisim adresi ve butun calismalarda
+ortak olan cizim. Veri sayfasinin iletisim bolumuyle ayni zemin ve olculerde
+durur.
 
 description: Calisma detay sayfasini sonraki calismaya ve iletisime baglayan kapanis bolumu.
 */
 
 import { Link } from 'react-router-dom'
 
+import phoneUrl from '@paktlabs/brand/assets/phone.svg'
+import { RevealImg, emptyImage } from '@paktlabs/brand/components/RevealImg'
 import { contactEmail } from '@paktlabs/brand/content/contact'
 import { workPath } from '@paktlabs/brand/content/works'
 import { useReveal } from '@paktlabs/brand/hooks/useReveal'
@@ -18,7 +21,6 @@ import { useLanguage } from '@paktlabs/brand/i18n/language'
 import { useBrandDict } from '@paktlabs/brand/i18n/useBrandDict'
 import { cx } from '@paktlabs/brand/lib/cx'
 
-import { ArtSlot } from '@/components/ArtSlot'
 import { studies } from '@/content/studies'
 import type { Study, StudyPage } from '@/content/studies/types'
 import { useDict } from '@/i18n'
@@ -26,6 +28,8 @@ import { worksPath } from '@/routes/links'
 
 import styles from './Closing.module.css'
 
+// NOTE: Ortak cizim simdilik iletisim bolumundeki telefon, gercek kapanis
+// cizimi gelince yalnizca bu import degisir. Takip: TASKS.md 14.
 interface ClosingProps {
   study: Study
   closing: StudyPage['closing']
@@ -81,9 +85,10 @@ export function Closing({ study, closing }: ClosingProps) {
             {contactEmail}
           </a>
         </div>
-        <figure className={styles.art}>
-          <ArtSlot label={closing.art.label[language]} note={closing.art.note[language]} />
-        </figure>
+        <picture className={styles.art}>
+          <source media="(min-width: 769px)" srcSet={phoneUrl} />
+          <RevealImg src={emptyImage} />
+        </picture>
       </div>
     </section>
   )

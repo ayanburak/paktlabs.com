@@ -23,14 +23,12 @@ import { useReveal } from '../hooks/useReveal'
 import { useBrandDict } from '../i18n/useBrandDict'
 import { cx } from '../lib/cx'
 import phoneUrl from '../assets/phone.svg'
-import { RevealImg } from './RevealImg'
+import { emptyImage, RevealImg } from './RevealImg'
 
 import styles from './Contact.module.css'
 
 // Mobilde telefon gorseli yok. Bos img sayesinde masaustu SVG'si yalnizca
 // source eslesince iner, dar ekranda hic indirilmez.
-const emptyImage = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="1" height="1"/%3E'
-
 export function Contact() {
   const { contact } = useBrandDict()
   const main = useReveal<HTMLDivElement>()

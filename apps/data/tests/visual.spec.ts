@@ -1,7 +1,7 @@
 /*
 file: visual.spec.ts
 
-data'nin bes sayfa turunun, yani veri sayfasi, hizmet sayfasi, Demo Veri'nin
+data'nin bes sayfa turunun, yani veri sayfasi, hizmet sayfasi, Hartwell & Finch'in
 detay sayfasi, kod ve veri sayfasi ve bulunamadi sayfasinin onayli gorunumunu
 tam sayfa referanslarla karsilastirir. Dil, DPR 1, hareket azaltma tercihi ve tolerans
 landing'in visual.spec.ts dosyasiyla ayni. Veri ve bulunamadi sayfalari
@@ -49,8 +49,8 @@ const longPageSizes = [
 
 const pages = [
   ['home', '/', sizes],
-  ['study', '/work/demo-data', longPageSizes],
-  ['source', '/work/demo-data/source', longPageSizes],
+  ['study', '/work/hartwell-finch', longPageSizes],
+  ['source', '/work/hartwell-finch/source', longPageSizes],
   ['service', '/services/preparation', longPageSizes],
   ['notfound', '/yok', sizes],
 ] as const

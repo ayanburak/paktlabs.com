@@ -11,7 +11,7 @@ description: Landing'in profil sayfasinin metinlerini, baglantilarini ve yerlesi
 */
 
 import { expect, test } from '@playwright/test'
-import { contactMailto, contactPage, demoDataWork, personalMailto, profileLinks } from '@paktlabs/config/testing/expected'
+import { contactMailto, contactPage, hartwellFinchWork, personalMailto, profileLinks } from '@paktlabs/config/testing/expected'
 
 import { dict, languages, openProfile, profilePath } from './support'
 
@@ -65,7 +65,7 @@ test('the photo loads on the badge', async ({ page }) => {
 test('the work row opens the study on its discipline site', async ({ page }) => {
   await openProfile(page)
 
-  await expect(page.locator(`a[href="${demoDataWork}"]`)).toHaveCount(1)
+  await expect(page.locator(`a[href="${hartwellFinchWork}"]`)).toHaveCount(1)
 })
 
 // Kisinin kendi adresi ile studyonun adresi ayri kutularda, info@ kisinin

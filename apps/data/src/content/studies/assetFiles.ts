@@ -23,7 +23,7 @@ import { fileKey, type FileKind, type StudyFileSet, type StudyFiles } from './fi
 // languages listesiyle ayni kalmali. Yeni bir dil eklenirse ikisi de
 // guncellenir, tests/data.spec.ts bu uyumu denetler.
 
-// Anahtar dosyanin yolu, ornegin ./demo-data/code/en/rules/catalog.py, deger
+// Anahtar dosyanin yolu, ornegin ./hartwell-finch/code/en/hfa/bc.py, deger
 // derlenen sitedeki adresi. no-inline olmadan Vite kucuk dosyalari adres
 // yerine metnin kendisiyle ana JS'e gomer, bu modulun amaci tam tersi.
 const urls = import.meta.glob<string>('./*/{data,code}/{tr,en}/**/*', {

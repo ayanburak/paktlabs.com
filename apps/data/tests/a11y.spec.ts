@@ -21,8 +21,8 @@ import { catalogReachable, dict, languages, openPage } from './support'
 // Blok katalogu canlida sifreli, sifre verilmeden yalnizca yerelde olculur.
 const pages = [
   '/',
-  '/work/demo-data',
-  '/work/demo-data/source',
+  '/work/hartwell-finch',
+  '/work/hartwell-finch/source',
   '/services/preparation',
   '/yok',
   ...(catalogReachable ? ['/blocks'] : []),

@@ -12,9 +12,9 @@ description: data sitesinin rota ve bulunamadi sayfasi testleri.
 
 import { expect, test } from '@playwright/test'
 
-import { demoData } from '../src/content/studies/demo-data'
-import { page as demoPage } from '../src/content/studies/demo-data/page'
-import { source as demoSource } from '../src/content/studies/demo-data/source'
+import { hartwellFinch } from '../src/content/studies/hartwell-finch'
+import { page as studyPage } from '../src/content/studies/hartwell-finch/page'
+import { source as studySource } from '../src/content/studies/hartwell-finch/source'
 
 import { dict, languages, openPage } from './support'
 
@@ -39,11 +39,11 @@ test('a malformed hash still opens the page', async ({ page }) => {
 // Geri don dugmesi sitenin icinden gelen ziyaretciyi geldigi sayfaya,
 // adresi dogrudan acan ziyaretciyi ana sayfaya goturur.
 test('back button returns to the previous page of the site', async ({ page }) => {
-  await openPage(page, '/work/demo-data', 'tr')
+  await openPage(page, '/work/hartwell-finch', 'tr')
   await page.goto('/boyle-bir-sayfa-yok', { waitUntil: 'networkidle' })
   await page.getByRole('link', { name: dict.tr.notFound.back }).click()
 
-  await expect(page).toHaveURL('/work/demo-data')
+  await expect(page).toHaveURL('/work/hartwell-finch')
 })
 
 test('back button opens the home page when the address was opened directly', async ({ page }) => {
@@ -55,11 +55,11 @@ test('back button opens the home page when the address was opened directly', asy
 
 for (const lang of languages) {
   test(`${lang}: study address opens the study`, async ({ page }) => {
-    await openPage(page, '/work/demo-data', lang)
+    await openPage(page, '/work/hartwell-finch', lang)
 
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(demoData.title[lang])
-    await expect(page).toHaveTitle(`${demoData.title[lang]} · ${dict[lang].home.meta.title}`)
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', demoPage.lede[lang])
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(hartwellFinch.title[lang])
+    await expect(page).toHaveTitle(`${hartwellFinch.title[lang]} · ${dict[lang].home.meta.title}`)
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', studyPage.lede[lang])
   })
 }
 
@@ -72,11 +72,11 @@ test('unknown study slug shows the not found page', async ({ page }) => {
 
 for (const lang of languages) {
   test(`${lang}: source address opens the code and data page`, async ({ page }) => {
-    await openPage(page, '/work/demo-data/source', lang)
+    await openPage(page, '/work/hartwell-finch/source', lang)
 
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(demoSource.title[lang])
-    await expect(page).toHaveTitle(`${demoSource.title[lang]} · ${dict[lang].home.meta.title}`)
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', demoSource.lede[lang])
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(studySource.title[lang])
+    await expect(page).toHaveTitle(`${studySource.title[lang]} · ${dict[lang].home.meta.title}`)
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', studySource.lede[lang])
   })
 }
 

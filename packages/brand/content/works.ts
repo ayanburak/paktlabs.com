@@ -7,7 +7,7 @@ yazari. Calismanin kendisi, yani karti, detay sayfasi ve kodu, disiplinin
 kendi sitesinde durur, burada yalnizca baska sitelerin de bilmesi gereken
 kisim var. Profil sayfasi bir kisinin calismalarini bu listeden bulur:
 
-    workUrl(works.demoData)  // https://data.paktlabs.com/work/demo-data
+    workUrl(works.hartwellFinch)  // https://data.paktlabs.com/work/hartwell-finch
 
 Yeni bir calisma once buraya, sonra disiplin sitesindeki kendi klasorune
 yazilir. data'nin tanim dosyasi buradaki kaydi kendi icine acar, ad ve slug
@@ -40,15 +40,6 @@ export const works = {
     title: {
       tr: 'Hartwell & Finch kârlılık ve veri incelemesi',
       en: 'Hartwell & Finch profitability and data review',
-    },
-  },
-  demoData: {
-    discipline: 'data',
-    slug: 'demo-data',
-    author: 'ayanburak',
-    title: {
-      tr: 'Demo Veri: ürün kataloğu tekilleştirme',
-      en: 'Demo Data: product catalog deduplication',
     },
   },
 } as const satisfies Record<string, Work>

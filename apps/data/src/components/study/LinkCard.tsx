@@ -7,7 +7,7 @@ bir aciklama ve gecis yazisi. Kartin tamami tek bir baglantidir. Detay
 sayfasindaki Meraklisina karti ve kod sayfasindaki calismaya donus karti
 bunu kullanir, ikisi ayni gorunur.
 
-    <LinkCard to="/work/demo-data/source" label="Meraklisina" title="..." text="..." go="Koda git →" />
+    <LinkCard to="/work/hartwell-finch/source" label="Meraklisina" title="..." text="..." go="Koda git →" />
 
 description: Calisma sayfalarinda baska bir sayfaya goturen iki kutulu kart.
 */

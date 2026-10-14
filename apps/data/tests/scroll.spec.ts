@@ -27,13 +27,13 @@ test.use({ reducedMotion: 'reduce' })
 
 test('a study opened from a card starts at the top and back returns to the card', async ({ page }) => {
   await openPage(page, '/', 'tr')
-  const card = page.locator('a[href="/work/demo-data"]').first()
+  const card = page.locator('a[href="/work/hartwell-finch"]').first()
   await card.scrollIntoViewIfNeeded()
   const before = await page.evaluate(() => window.scrollY)
   expect(before).toBeGreaterThan(0)
 
   await card.click()
-  await expect(page).toHaveURL('/work/demo-data')
+  await expect(page).toHaveURL('/work/hartwell-finch')
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
 
   await page.goBack()
@@ -42,12 +42,12 @@ test('a study opened from a card starts at the top and back returns to the card'
 })
 
 test('a contents link still moves to its chapter on the same page', async ({ page }) => {
-  await openPage(page, '/work/demo-data', 'tr')
+  await openPage(page, '/work/hartwell-finch', 'tr')
   const link = page.locator('nav a[href^="#"]').nth(2)
   const id = required(await link.getAttribute('href'), 'icindekiler linkinin href i').slice(1)
 
   await link.click()
-  await expect(page).toHaveURL(`/work/demo-data#${id}`)
+  await expect(page).toHaveURL(`/work/hartwell-finch#${id}`)
   await expect
     .poll(() => chapterTop(page, id))
     .toBeLessThan(CHAPTER_TOP_MAX)
@@ -73,7 +73,7 @@ function chapterTop(page: Page, id: string) {
 
 test('a study address with a chapter opens at that chapter, even when the fonts arrive late', async ({ page }) => {
   await slowFonts(page)
-  await openPage(page, '/work/demo-data#decisions', 'tr')
+  await openPage(page, '/work/hartwell-finch#decisions', 'tr')
   await page.evaluate(() => document.fonts.ready)
   await expect.poll(() => chapterTop(page, 'decisions')).toBeGreaterThanOrEqual(0)
   await expect.poll(() => chapterTop(page, 'decisions')).toBeLessThan(CHAPTER_TOP_MAX)
@@ -83,7 +83,7 @@ test('a study address with a chapter opens at that chapter, even when the fonts 
 test('the chapter alignment stops once the reader scrolls', async ({ page }) => {
   await slowFonts(page)
   await page.addInitScript(() => localStorage.setItem('pl_lang', 'tr'))
-  await page.goto('/work/demo-data#decisions', { waitUntil: 'domcontentloaded' })
+  await page.goto('/work/hartwell-finch#decisions', { waitUntil: 'domcontentloaded' })
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(1000)
   await page.mouse.move(600, 400)
   await page.mouse.wheel(0, -1500)
@@ -96,18 +96,18 @@ test('the chapter alignment stops once the reader scrolls', async ({ page }) => 
 // sayfa da dosyalarini yukleyicide aldigi icin geri donuste sayfa yeniden
 // yuklenir, konum ancak sayfa tam boyuna ulastiginda dogru kurulabilir.
 test('back from the source page returns to the same place on the study page', async ({ page }) => {
-  await openPage(page, '/work/demo-data', 'tr')
-  const card = page.locator('a[href="/work/demo-data/source"]')
+  await openPage(page, '/work/hartwell-finch', 'tr')
+  const card = page.locator('a[href="/work/hartwell-finch/source"]')
   await card.scrollIntoViewIfNeeded()
   const before = await page.evaluate(() => window.scrollY)
   expect(before).toBeGreaterThan(2000)
 
   await card.click()
-  await expect(page).toHaveURL('/work/demo-data/source')
+  await expect(page).toHaveURL('/work/hartwell-finch/source')
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
 
   await page.goBack()
-  await expect(page).toHaveURL('/work/demo-data')
+  await expect(page).toHaveURL('/work/hartwell-finch')
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(before)
 })
 

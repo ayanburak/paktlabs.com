@@ -14,9 +14,9 @@ description: data sayfalarinin ust bar, alt bilgi ve sayfa basligi testleri.
 import { expect, test } from '@playwright/test'
 import { disciplineUrls, mainSite } from '@paktlabs/config/testing/expected'
 
-import { demoData } from '../src/content/studies/demo-data'
-import { page as demoPage } from '../src/content/studies/demo-data/page'
-import { source as demoSource } from '../src/content/studies/demo-data/source'
+import { hartwellFinch } from '../src/content/studies/hartwell-finch'
+import { page as studyPage } from '../src/content/studies/hartwell-finch/page'
+import { source as studySource } from '../src/content/studies/hartwell-finch/source'
 
 import { dict, languages, openPage } from './support'
 
@@ -53,8 +53,8 @@ for (const lang of languages) {
 // dosyalarindan kurar. Dil sayfa acikken degistirilir, cunku asil risk
 // basligin ilk acilista dogru gelip dil degisince eski dilde kalmasi.
 const studyPages = [
-  ['/work/demo-data', demoData.title, demoPage.lede],
-  ['/work/demo-data/source', demoSource.title, demoSource.lede],
+  ['/work/hartwell-finch', hartwellFinch.title, studyPage.lede],
+  ['/work/hartwell-finch/source', studySource.title, studySource.lede],
 ] as const
 
 for (const [path, title, lede] of studyPages) {

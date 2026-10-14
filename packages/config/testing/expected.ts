@@ -1,6 +1,6 @@
 /*
 file: expected.ts
-importable: mainSite, disciplineUrls, contactPage, contactEmail, contactMailto, authorProfile, profileLinks, personalMailto, demoDataWork, services
+importable: mainSite, disciplineUrls, contactPage, contactEmail, contactMailto, authorProfile, profileLinks, personalMailto, hartwellFinchWork, services
 
 Testlerin bekledigi adresler ve hizmet listesi. Bu degerler bilerek elle yazili,
 uygulamanin kendi dosyalarindan (disciplines.ts, contact.ts, dataTags.ts, profiles.ts, works.ts) okunmaz.
@@ -31,7 +31,7 @@ export const profileLinks = {
   website: 'https://ayanburak.com',
 }
 export const personalMailto = 'mailto:contact@ayanburak.com'
-export const demoDataWork = 'https://data.paktlabs.com/work/demo-data'
+export const hartwellFinchWork = 'https://data.paktlabs.com/work/hartwell-finch'
 
 // Veri hizmetleri, ekrandaki sirayla. tag sozluk anahtaridir (dataTags),
 // slug data sitesindeki /services/<slug> adresidir.

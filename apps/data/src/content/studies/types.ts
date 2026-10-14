@@ -70,9 +70,8 @@ export interface Chapter {
 // kapaktaki tek cumlelik aciklamadir, sekmenin aciklamasi da ondan gelir.
 // summary kapagin altindaki Sorun, Yaklasim ve Sonuc bandidir, sayfayi
 // yalnizca kaydirip gecen okur isi bu uc paragraftan anlar. Bolumler
-// sayfadaki sirasiyla yazilir. closing sayfayi kapatan bolumun sorusu ve
-// yanindaki cizimin yeri, cizim gelene kadar alanin icinde hangi cizimin
-// istendigi yazar.
+// sayfadaki sirasiyla yazilir. closing sayfayi kapatan bolumun sorusudur,
+// yanindaki cizim butun calismalarda ortaktir, Closing bileseninde durur.
 export interface StudyPage {
   lede: Localized
   facts: FactRow[]
@@ -84,7 +83,6 @@ export interface StudyPage {
   chapters: Chapter[]
   closing: {
     title: Localized
-    art: { label: Localized; note: Localized }
   }
 }
 

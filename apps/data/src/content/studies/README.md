@@ -18,7 +18,7 @@ Yeni bir parça türü eklenirken sırası şöyledir: `blocks.ts`'e tip yazıl�
 
 ## Sayfa iskeleti
 
-`page.ts` iskeletin içeriğini taşır. `lede` kapaktaki tek cümlelik açıklama ve sekmenin açıklamasıdır. `facts` kapağın sağındaki satırlardır. `summary` Sorun, Yaklaşım ve Sonuç bandıdır. `chapters` numaralı bölümlerdir. `closing` kapanış bölümünün sorusu ve yanındaki çizimin yeridir, çizim gelene kadar alanın içinde hangi çizimin istendiği yazar. Yazar `works.ts`'teki kayıtta kimliğiyle anılır, adı, e-postası ve profil adresi brand'deki `content/profiles.ts`'te, fotoğrafı `content/profilePhotos.ts`'te durur. Meraklısına kartının metni çalışmaya değil sitenin sözlüğüne aittir ve kodun yerine göre seçilir.
+`page.ts` iskeletin içeriğini taşır. `lede` kapaktaki tek cümlelik açıklama ve sekmenin açıklamasıdır. `facts` kapağın sağındaki satırlardır. `summary` Sorun, Yaklaşım ve Sonuç bandıdır. `chapters` numaralı bölümlerdir. `closing` kapanış bölümünün sorusudur. Yanındaki çizim bütün çalışmalarda ortaktır, çalışmaya çizim yazılmaz. Yazar `works.ts`'teki kayıtta kimliğiyle anılır, adı, e-postası ve profil adresi brand'deki `content/profiles.ts`'te, fotoğrafı `content/profilePhotos.ts`'te durur. Meraklısına kartının metni çalışmaya değil sitenin sözlüğüne aittir ve kodun yerine göre seçilir.
 
 ```ts
 closing: {

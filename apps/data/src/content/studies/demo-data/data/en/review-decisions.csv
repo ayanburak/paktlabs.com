@@ -1,7 +1,0 @@
-pair_id;record_a;record_b;score;decision;decided_by;time_s;timestamp
-DP-0003208;SUP-A · Wall Plug Plastic 8 mm Grey;SUP-C · PLASTIC PLUG 8MM GREY;0.81;same;team_1;4.2;2026-05-14 10:12
-DP-0003209;ERP · PAINT BRUSH 2.5";SUP-B · BRUSH OIL PAINT 2,5 INCH;0.77;same;team_1;6.9;2026-05-14 10:12
-DP-0003210;SUP-B · SILICONE WHITE 280 ML;SUP-C · silicone clear 280ml;0.63;different;team_1;3.8;2026-05-14 10:12
-DP-0003211;ERP · SANDPAPER 120;SUP-A · Sandpaper P120 Dry;0.88;same;team_2;5.1;2026-05-14 10:13
-DP-0003212;SUP-A · Furniture Hinge 35 mm Straight;SUP-B · HINGE 35MM HALF OVERLAY;0.71;different;team_2;9.4;2026-05-14 10:13
-DP-0003213;SUP-C · Cable tie 200mm black;ERP · CABLE TIE 200X4.8 BLACK;0.59;skipped;team_2;12.0;2026-05-14 10:13

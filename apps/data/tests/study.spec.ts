@@ -1,7 +1,7 @@
 /*
 file: study.spec.ts
 
-Calisma detay sayfasinin davranisini Demo Veri uzerinden kontrol eder:
+Calisma detay sayfasinin davranisini Hartwell & Finch uzerinden kontrol eder:
 bolumlerin ve icindekilerin sirasi, veri dili bolumu ve tablolarin dili,
 acilir kutular, istasyon seridi, icindekilerden bolume gecis, Meraklisina
 karti, yazar kutusu, kapanis kartlari ve yatay tasma. Beklenen metinler
@@ -15,12 +15,12 @@ description: data sitesindeki calisma detay sayfasinin davranis testleri.
 import { expect, test } from '@playwright/test'
 import { authorProfile } from '@paktlabs/config/testing/expected'
 
-import { page as demoPage } from '../src/content/studies/demo-data/page'
+import { page as studyPage } from '../src/content/studies/hartwell-finch/page'
 
 import { dict, languages, openPage } from './support'
 
-const path = '/work/demo-data'
-const chapters = demoPage.chapters
+const path = '/work/hartwell-finch'
+const chapters = studyPage.chapters
 
 for (const lang of languages) {
   test(`${lang}: chapters and contents follow the page order`, async ({ page }) => {
@@ -31,16 +31,16 @@ for (const lang of languages) {
     const labels = chapters.map((chapter) => chapter.label[lang])
     const contents = page.getByRole('navigation', { name: dict[lang].study.toc.title }).locator('ol a')
 
-    // Demo Veri'nin verisi Turkce, Ingilizcede basta 00 veri dili bolumu var.
-    if (lang === 'en') {
+    // Hartwell & Finch'in verisi Ingilizce, Turkcede basta 00 veri dili bolumu var.
+    if (lang === 'tr') {
       await expect(contentTitles).toHaveText([
-        `${dict.en.study.dataLanguage.title} ${dict.en.study.dataLanguage.languages.tr}`,
+        `${dict.tr.study.dataLanguage.title} ${dict.tr.study.dataLanguage.languages.en}`,
         ...titles,
       ])
-      await expect(contents).toHaveText([`00${dict.en.study.dataLanguage.label}`, ...labels.map((label, i) => `0${i + 1}${label}`)])
+      await expect(contents).toHaveText([`00${dict.tr.study.dataLanguage.label}`, ...labels.map((label, i) => `${String(i + 1).padStart(2, '0')}${label}`)])
     } else {
       await expect(contentTitles).toHaveText(titles)
-      await expect(contents).toHaveText(labels.map((label, i) => `0${i + 1}${label}`))
+      await expect(contents).toHaveText(labels.map((label, i) => `${String(i + 1).padStart(2, '0')}${label}`))
     }
   })
 
@@ -52,61 +52,61 @@ for (const lang of languages) {
   })
 }
 
-test('tr: the data language chapter is absent when the data is already Turkish', async ({ page }) => {
-  await openPage(page, path, 'tr')
+test('en: the data language chapter is absent when the data is already English', async ({ page }) => {
+  await openPage(page, path, 'en')
 
   await expect(page.locator('#data-language')).toHaveCount(0)
 })
 
-test('en: the data language switch shows the original tables and keeps the site in English', async ({ page }) => {
-  await openPage(page, path, 'en')
+test('tr: the data language switch shows the original tables and keeps the site in Turkish', async ({ page }) => {
+  await openPage(page, path, 'tr')
 
-  const text = dict.en.study.dataLanguage
-  const translated = page.getByRole('button', { name: `${text.translated} · ${text.languages.en}` })
-  const original = page.getByRole('button', { name: `${text.original} · ${text.languages.tr}` })
-  const firstSheet = page.locator('#problem details').first()
+  const text = dict.tr.study.dataLanguage
+  const translated = page.getByRole('button', { name: `${text.translated} · ${text.languages.tr}` })
+  const original = page.getByRole('button', { name: `${text.original} · ${text.languages.en}` })
+  const firstSheet = page.locator('#data details').first()
 
   await expect(translated).toHaveAttribute('aria-pressed', 'true')
-  await expect(firstSheet).toContainText('combined_raw_records.xlsx')
+  await expect(firstSheet).toContainText('Müşteri ref')
 
   await original.click()
   await expect(original).toHaveAttribute('aria-pressed', 'true')
-  await expect(firstSheet).toContainText('birlesik_ham_kayitlar.xlsx')
-  await expect(page.locator('html')).toHaveAttribute('lang', 'en')
+  await expect(firstSheet).toContainText('Customer ref')
+  await expect(page.locator('html')).toHaveAttribute('lang', 'tr')
 })
 
 test('the data language returns to the site language when the site language changes', async ({ page }) => {
-  await openPage(page, path, 'en')
+  await openPage(page, path, 'tr')
 
-  const text = dict.en.study.dataLanguage
-  await page.getByRole('button', { name: `${text.original} · ${text.languages.tr}` }).click()
-  await page.getByRole('button', { name: 'TR', exact: true }).click()
+  const text = dict.tr.study.dataLanguage
+  await page.getByRole('button', { name: `${text.original} · ${text.languages.en}` }).click()
   await page.getByRole('button', { name: 'EN', exact: true }).click()
+  await page.getByRole('button', { name: 'TR', exact: true }).click()
 
-  await expect(page.getByRole('button', { name: `${text.translated} · ${text.languages.en}` })).toHaveAttribute(
+  await expect(page.getByRole('button', { name: `${text.translated} · ${text.languages.tr}` })).toHaveAttribute(
     'aria-pressed',
     'true',
   )
-  await expect(page.locator('#problem details').first()).toContainText('combined_raw_records.xlsx')
+  await expect(page.locator('#data details').first()).toContainText('Müşteri ref')
 })
 
 test('details boxes and station strips open and close', async ({ page }) => {
   await openPage(page, path, 'tr')
 
-  const box = page.locator('#problem details').first()
+  const box = page.locator('#data details').first()
   await box.locator('summary').click()
   await expect(box).toHaveAttribute('open', '')
   await box.locator('summary').click()
   await expect(box).not.toHaveAttribute('open', '')
 
-  const strip = page.locator('#pipeline article details').first()
+  const strip = page.locator('#consolidation article details').first()
   await strip.locator('summary').click()
   await expect(strip).toHaveAttribute('open', '')
 })
 
 test('a contents link moves to its chapter and marks it as read', async ({ page }) => {
   const chapter = chapters[3]
-  if (!chapter) throw new Error('Demo Veri en az dort bolum tasimali')
+  if (!chapter) throw new Error('Hartwell & Finch en az dort bolum tasimali')
   await openPage(page, path, 'tr')
 
   const contents = page.getByRole('navigation', { name: dict.tr.study.toc.title })
@@ -122,20 +122,19 @@ test('the curious card, the author box and the closing cards point to the right 
 
   await expect(page.getByRole('link', { name: new RegExp(dict.tr.study.curious.label) })).toHaveAttribute(
     'href',
-    '/work/demo-data/source',
+    '/work/hartwell-finch/source',
   )
   await expect(page.getByRole('link', { name: /Burak Ayan/ })).toHaveAttribute(
     'href',
     authorProfile,
   )
 
-  // Liste bitince basa donuldugu icin listenin sonundaki Demo Veri'den
-  // sonraki calisma, en ustteki Hartwell & Finch'tir.
+  // Listede tek calisma var, sonraki calisma karti yok, yalnizca tum
+  // calismalara donus karti kalir. Ikinci calisma eklenince burada ikinci
+  // bir kart beklenir.
   const closing = page.getByRole('navigation', { name: dict.tr.study.closing.nav })
-  const links = closing.getByRole('link')
-  await expect(links).toHaveCount(2)
-  await expect(links.nth(0)).toHaveAttribute('href', '/#works')
-  await expect(links.nth(1)).toHaveAttribute('href', '/work/hartwell-finch')
+  await expect(closing.getByRole('link')).toHaveCount(1)
+  await expect(closing.getByRole('link')).toHaveAttribute('href', '/#works')
 })
 
 // 768/769 ve 1100/1101 CSS'teki iki esigin iki yani. Genis tablolar kendi

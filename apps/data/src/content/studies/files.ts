@@ -4,14 +4,14 @@ importable: FileKind, StudyFile, StudyFileSet, StudyFiles, fileKey
 
 Bir calismanin dosyalari: hesap tablolarinin CSV'leri, kod dosyalari ve
 terminal ciktilari. Her dosya calismanin klasorunde <tur>/<dil>/<yol>
-kalibiyla durur, ornegin data/tr/raw-records.csv ya da
-code/en/rules/catalog.py. Iki dilin dosyalari ayni yollarda bulunur.
+kalibiyla durur, ornegin data/tr/panther-invoice.csv ya da
+code/en/hfa/bc.py. Iki dilin dosyalari ayni yollarda bulunur.
 
 Dosyalarin nereden geldigini StudyFiles soyut sinifi saklar. Sayfalar
 dosyalari ondan bir kerede alir, parcalar dosyayi tur ve yoluyla ister:
 
-    const files = await assetFiles.load('demo-data')
-    files.tr[fileKey('data', 'raw-records.csv')].text
+    const files = await assetFiles.load('hartwell-finch')
+    files.tr[fileKey('data', 'panther-invoice.csv')].text
 
 description: Calisma dosyalarinin tiplerini ve onlari veren soyut sinifi tanimlayan modul.
 */
