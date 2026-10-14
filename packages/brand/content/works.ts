@@ -33,6 +33,15 @@ export interface Work {
 // Listenin sirasi profil sayfasindaki sirasidir, yeni calisma en uste yazilir.
 // Disiplin sitesi kendi listesini kendi numarasina gore ayrica siralar.
 export const works = {
+  hartwellFinch: {
+    discipline: 'data',
+    slug: 'hartwell-finch',
+    author: 'ayanburak',
+    title: {
+      tr: 'Hartwell & Finch kârlılık ve veri incelemesi',
+      en: 'Hartwell & Finch profitability and data review',
+    },
+  },
   demoData: {
     discipline: 'data',
     slug: 'demo-data',

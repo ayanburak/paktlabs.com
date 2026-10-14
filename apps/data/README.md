@@ -108,7 +108,10 @@ Bir işin yanıldığı yerler gizlenmez, kanıtıyla gösterilir. Modelin yanl�
 
 ## Yazım dili
 
-Metinler PaktLabs'ın marka sesiyle "biz" diliyle yazılır. Dil sade ve Türkçedir. Cümleler kısa tutulur, pazarlama sıfatları kullanılmaz. Bir sonucun büyüklüğü sıfatla değil, bağlamıyla verilen bir sayıyla anlatılır.
+Veri sayfası ve hizmet sayfaları PaktLabs'ın marka sesiyle, "biz" diliyle yazılır. Çalışma sayfaları ve onların kod sayfaları ise 2026-10-14'ten beri Burak'ın kararıyla edilgen dille yazılır: "karşılaştırdık" yerine "karşılaştırıldı", "bulduk" yerine "bulundu", İngilizcesinde de "we compared" yerine "were compared". Çalışma bir ekibin günlüğü gibi değil, yapılmış bir işin raporu gibi okunmalıdır. Dil sade ve Türkçedir. Cümleler kısa tutulur, pazarlama sıfatları kullanılmaz. Bir sonucun büyüklüğü sıfatla değil, bağlamıyla verilen bir sayıyla anlatılır.
+Yüzdeler simgeyle yazılır: Türkçede %41, İngilizcede 41%. Aynı ifadede sayılar karışık yazılmaz, "on bir klasörde 1.425 dosya" değil "11 klasörde 1.425 dosya" denir. FY25, EBITDA, KPI gibi finans ve yönetim kısaltmaları kullanılmaz, günlük dildeki karşılıkları yazılır: "Mart 2025'te kapanan mali yıl", "kâr", "aylık göstergeler". Bir terim gerçekten gerekiyorsa ilk geçtiği yerde düz bir cümleyle açıklanır. Yabancı bir şirketin vergileri Türkçe metinde KDV diye anılmaz, "vergi" denir: ithalat vergisi, satış vergisi, gümrük vergisi. İngilizce metinde ülkenin kendi adı, örneğin VAT, kalır.
+
+Geçmişe dönük bir iş öyle anlatılır. Hartwell & Finch çalışması 2026'da yapıldı, verisi 2021 ile Haziran 2025 arasına aittir ve şirket geçmişte yaşadığı bir sorunun kaynağını araştırttı. Böyle bir işte metin o anki bir krizi çözüyormuş gibi yazılmaz, "bu yıl" ve "ertesi yıl" yerine "Mart 2025'te kapanan yıl" gibi açık dönem adları kullanılır.
 Bir yazım yönergesi metnin içine taşınmaz. Metin kendisini anlatmaz, "bu bölümde sade bir dille anlatılmıştır" gibi cümleler kurulmaz.
 
 Kod tarafında koda bağlanan her şey İngilizcedir: değişken, fonksiyon, sınıf, dosya ve klasör adları. Yorumlar, docstring'ler, arayüz metinleri ve belgeler Türkçedir.
@@ -175,9 +178,9 @@ Metinler dil başına ayrı dosyalarda değil, aynı yerde iki dili yan yana yaz
 
 Kodun yeri iki seçenekten biridir. Firma kodun paylaşılmasına izin verdiyse künye dosyasına GitHub deposunun adresi yazılır, detay sayfasındaki Meraklısına kartı yalnızca depoya bağlanır ve sitede ayrıca kod sayfası bulunmaz. İzin vermediyse paylaşılan kısım sitedeki kod sayfasında gösterilir. İkisinden birinin yazılması zorunludur, ikisi birden yazılamaz. Kodu GitHub'da olan bir çalışmanın kod sayfası adresi bulunamadı sayfasına düşer.
 
-Veri sayfasındaki listede yalnızca gerçek çalışmalar durur. Mockup'tan taşınan lorem yer tutucular 2026-10-11'de kaldırıldı, gerçek bir çalışma gelene kadar listedeki tek çalışma Demo Veri'dir. Yeni bir çalışma kendi klasöründe yazılır ve `src/content/studies/index.ts` içindeki listeye eklenir, liste numara sırasıyla dizilir.
+Veri sayfasındaki listede yalnızca gerçek çalışmalar durur. Mockup'tan taşınan lorem yer tutucular 2026-10-11'de kaldırıldı. İlk gerçek çalışma Hartwell & Finch kârlılık ve veri incelemesi 2026-10-14'te yayınlandı, kurgusal Demo Veri yayından kalkana kadar listede onunla birlikte durur. Yeni bir çalışma kendi klasöründe yazılır ve `src/content/studies/index.ts` içindeki listeye eklenir, liste numara sırasıyla dizilir.
 
-Bir çalışma listede normal kart ya da tam satır kaplayan öne çıkan kart olarak görünür. Öne çıkan kart, künye dosyasına `feature` alanı yazılan çalışmadır: teknik detaylar ve kullanılan araçların logoları bu alandan gelir, numaranın yanında Öne çıkan yazar. Bugün hiçbir çalışmada bu alan yok, bu yüzden öne çıkan kart görünmüyor. Tasarımı `StudyCard.tsx` ve stil dosyasında duruyor, bir çalışmaya `feature` yazıldığında yeniden görünür. 00 numarası öne çıkan çalışma için ayrılmıştı.
+Bir çalışma listede normal kart ya da tam satır kaplayan öne çıkan kart olarak görünür. Öne çıkan kart, künye dosyasına `feature` alanı yazılan çalışmadır: teknik detaylar ve kullanılan araçların logoları bu alandan gelir, numaranın yanında Öne çıkan yazar. Bugün öne çıkan çalışma Hartwell & Finch'tir, 00 numarasıyla listenin en üstünde durur. Bir çalışmayı öne çıkarmak için bileşen ya da CSS yazılmaz, yalnızca bu alan doldurulur, araçların logoları da `techNames.ts` listesinde olmalıdır.
 
 ### Verinin dili
 

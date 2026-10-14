@@ -129,10 +129,13 @@ test('the curious card, the author box and the closing cards point to the right 
     authorProfile,
   )
 
-  // Demo Veri tek gercek calisma, sonraki calisma karti cikmaz.
+  // Liste bitince basa donuldugu icin listenin sonundaki Demo Veri'den
+  // sonraki calisma, en ustteki Hartwell & Finch'tir.
   const closing = page.getByRole('navigation', { name: dict.tr.study.closing.nav })
-  await expect(closing.getByRole('link')).toHaveCount(1)
-  await expect(closing.getByRole('link')).toHaveAttribute('href', '/#works')
+  const links = closing.getByRole('link')
+  await expect(links).toHaveCount(2)
+  await expect(links.nth(0)).toHaveAttribute('href', '/#works')
+  await expect(links.nth(1)).toHaveAttribute('href', '/work/hartwell-finch')
 })
 
 // 768/769 ve 1100/1101 CSS'teki iki esigin iki yani. Genis tablolar kendi

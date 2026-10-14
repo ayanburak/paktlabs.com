@@ -1,0 +1,19 @@
+$ python run.py
+1/ loading the BC script-out
+2/ master tables: items, customers
+3/ sales and management accounts
+4/ channel data: Amazon, Wayfair, Shopify, eBay
+5/ logistics, customs, outside services
+6/ pricing and discounts
+7/ quality, production, labour
+8/ product cost model
+9/ channel P&L, margin bridge, decision impacts
+10/ deliverables: Excel, report, presentation, dashboard
+   out/HF_01_Consolidated_Dataset.xlsx
+   out/HF_02_Data_Quality_Log.xlsx
+   out/HF_03_Margin_Analysis.xlsx
+   out/HF_04_KPI_Pack.xlsx
+   out/HF_Findings_Report.html
+   out/HF_Board_Presentation.html
+   out/HF_KPI_Dashboard.html
+done, 173 s

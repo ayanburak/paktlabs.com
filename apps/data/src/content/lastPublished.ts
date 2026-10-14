@@ -12,4 +12,4 @@ description: Son yayinlanan calismanin tarihini YYYY-AA-GG biciminde tutan modul
 // yalnizca yil var, gun ve ay icin her calismaya ayri bir alan acmak bugun
 // tek bir kutu icin fazla olurdu, Burak'in karari boyle. Tarih dilden
 // bagimsiz oldugu icin sozlukte degil burada, degisince tek dosya degisir.
-export const lastPublished = '2026-10-11'
+export const lastPublished = '2026-10-14'

@@ -10,6 +10,7 @@ description: Calismalarin listesini ve slug ile calisma bulan fonksiyonu disari 
 */
 
 import { demoData } from './demo-data'
+import { hartwellFinch } from './hartwell-finch'
 import type { Study } from './types'
 
 // Liste numaraya gore siralanir. Kartlar ve sonraki calisma baglantisi bu
@@ -17,10 +18,9 @@ import type { Study } from './types'
 //
 // NOTE: 2026-10-11'e kadar listede mockup'tan tasinan lorem yer tutucular da
 // vardi, Burak'in karariyla kaldirildi. 00 numarasi one cikan calismaya
-// ayrilmisti, bugun hicbir calismada feature alani yok ve one cikan kart
-// gorunmuyor. Kartin tasarimi StudyCard'da duruyor, bir calismanin facts alanina
-// feature yazilinca yeniden gorunur.
-export const studies: Study[] = [demoData].sort((a, b) => a.number.localeCompare(b.number))
+// ayrildi, ilk gercek calisma Hartwell & Finch bu numarayla ve feature
+// alaniyla listenin en ustunde duruyor.
+export const studies: Study[] = [hartwellFinch, demoData].sort((a, b) => a.number.localeCompare(b.number))
 
 // Blok katalogunun ornek dosyalari da bu klasorde, kendi alt klasorunde
 // durur ve calisma dosyalari gibi bu adla yuklenir. Katalog bir calisma

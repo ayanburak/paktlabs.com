@@ -1,0 +1,19 @@
+$ python run.py
+1/ BC script-out yükleniyor
+2/ ana tablolar: ürün, müşteri
+3/ satışlar ve yönetim hesapları
+4/ kanal verisi: Amazon, Wayfair, Shopify, eBay
+5/ lojistik, gümrük, dış hizmetler
+6/ fiyat ve iskonto
+7/ kalite, üretim, işçilik
+8/ ürün maliyet modeli
+9/ kanal P&L, marj köprüsü, karar etkileri
+10/ teslim dosyaları: Excel, rapor, sunum, dashboard
+   out/HF_01_Consolidated_Dataset.xlsx
+   out/HF_02_Data_Quality_Log.xlsx
+   out/HF_03_Margin_Analysis.xlsx
+   out/HF_04_KPI_Pack.xlsx
+   out/HF_Findings_Report.html
+   out/HF_Board_Presentation.html
+   out/HF_KPI_Dashboard.html
+bitti, 173 sn

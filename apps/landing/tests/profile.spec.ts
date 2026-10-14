@@ -80,8 +80,12 @@ test('the personal and studio addresses stay apart', async ({ page }) => {
   await expect(studio.locator(`a[href="${contactPage}"]`)).toHaveCount(1)
 })
 
+// Rozet acilista 1,8 saniye sallanir ve donerken sag kenardan tasar. Olcum
+// animasyonun ortasina denk gelirse test sebepsiz kirilir, bu yuzden oteki
+// yerlesim testleri gibi hareket azaltma tercihiyle olculur.
 for (const [width, height] of [[390, 844], [768, 1024], [769, 1024], [1366, 1024]] as const) {
   test(`${width}x${height}: the profile page does not overflow sideways`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.setViewportSize({ width, height })
     await openProfile(page)
 

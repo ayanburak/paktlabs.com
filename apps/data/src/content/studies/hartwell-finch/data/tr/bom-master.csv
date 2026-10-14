@@ -1,0 +1,22 @@
+Tip;Açıklama;Meşe m3 (ERP);Meşe m3 gerçek;Kumaş m (ERP);Kumaş m gerçek;Sünger kg;İşçilik saat std;İşçilik saat gerçek 2024;Notlar
+SOF2;İkili kanepe;0,020;0,021;8,00;8,56;10;6,5;8,0;Velmont kadifesi dar top, fire fazla
+SOF3;Üçlü kanepe;0,025;0,027;10,00;10,70;13;8,0;9,2;Velmont kadifesi dar top, fire fazla
+SOFC;Köşe kanepe;0,035;0,039;15,00;16,05;21;11,5;14,1;Velmont kadifesi dar top, fire fazla
+ARMC;Berjer;0,012;0,013;5,00;5,35;6;4,5;5,4;Velmont kadifesi dar top, fire fazla
+FTST;Puf;0,005;0,005;2,50;2,68;3;1,5;1,8;Velmont kadifesi dar top, fire fazla
+DCHR;Yemek sandalyesi;0,020;0,022;0,80;0,86;0;1,6;1,9;Velmont kadifesi dar top, fire fazla
+BEDD;Çift kişilik karyola;0,090;0,096;3,00;3,21;3;5,5;5,8;yeni meşe kalitesinde verim düşük
+BEDK;King size karyola;0,110;0,120;3,50;3,75;4;6,0;6,3;yeni meşe kalitesinde verim düşük
+BEDS;Super king karyola;0,130;0,141;4,00;4,28;4;6,5;7,0;yeni meşe kalitesinde verim düşük
+WRD2;İki kapılı gardırop;0,180;0,194;0,00;0,00;0;8,0;8,5;yeni meşe kalitesinde verim düşük
+WRD3;Üç kapılı gardırop;0,250;0,281;0,00;0,00;0;10,5;11,3;yeni meşe kalitesinde verim düşük
+CHST;Beş çekmeceli şifonyer;0,100;0,108;0,00;0,00;0;6,0;6,2;yeni meşe kalitesinde verim düşük
+BSDT;Komodin;0,030;0,032;0,00;0,00;0;2,0;2,0;
+DTB4;Dört kişilik yemek masası;0,090;0,100;0,00;0,00;0;4,5;4,6;yeni meşe kalitesinde verim düşük
+DTB6;Altı kişilik yemek masası;0,140;0,155;0,00;0,00;0;6,0;6,4;yeni meşe kalitesinde verim düşük
+DTB8;Sekiz kişilik açılır yemek masası;0,200;0,222;0,00;0,00;0;8,5;9,2;yeni meşe kalitesinde verim düşük
+SDBD;Konsol;0,140;0,152;0,00;0,00;0;6,0;6,3;yeni meşe kalitesinde verim düşük
+COFT;Sehpa;0,050;0,057;0,00;0,00;0;2,0;2,1;
+TVUN;TV ünitesi;0,080;0,086;0,00;0,00;0;3,5;3,7;
+BKCS;Kitaplık;0,100;0,110;0,00;0,00;0;3,5;3,6;yeni meşe kalitesinde verim düşük
+DESK;Çalışma masası;0,070;0,077;0,00;0,00;0;3,0;3,0;

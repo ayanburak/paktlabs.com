@@ -1,0 +1,7 @@
+ref;cost_gbp;ref_kind;cust_no;platform;match
+Ingram Furniture L;188.16;name;C10016;;customer
+Private customer;31.92;name;;Amazon UK;pool
+Private customer;77.94;name;;Shopify;pool
+Private customer;31.42;name;;Wayfair UK;pool
+#11186;91.84;shopify;;Shopify;order
+CLAIM 1660;164.95;claim;;;order
