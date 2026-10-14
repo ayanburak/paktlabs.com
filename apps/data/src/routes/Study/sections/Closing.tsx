@@ -29,7 +29,7 @@ import { worksPath } from '@/routes/links'
 import styles from './Closing.module.css'
 
 // NOTE: Ortak cizim simdilik iletisim bolumundeki telefon, gercek kapanis
-// cizimi gelince yalnizca bu import degisir. Takip: TASKS.md 14.
+// cizimi gelince yalnizca bu import degisir. Takip: .claude/tasks/acik.md 14.
 interface ClosingProps {
   study: Study
   closing: StudyPage['closing']
