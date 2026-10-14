@@ -11,7 +11,8 @@ her parcanin cagirdigi dosya iki dilde var olmali, her kod dosyasinin dili
 kayitli olmali, bolum adresleri de sayfa icinde tekil olmali. Parcalarin
 icerigi de tutarli olmali: tablo satirlarinin hucre sayisi, sekil bolgeleri
 ve eksen sinirlari, cizgi serilerinin nokta sayisi, bilesim ve pasta
-yuzdelerinin toplami, hesap tablosu hucre adresi ve takvim araligi. Blok
+yuzdelerinin toplami, isi ve korelasyon tablolarinin boyutu, karar tablosunun
+kareligi, hesap tablosu hucre adresi ve takvim araligi. Blok
 katalogu da calismalarla ayni denetimlerden gecer, ayrica her katalog
 bolumunun kendi parca turunu gosterdigi olculur. Tarayiciya ihtiyac yok,
 dosyalar diskten okunur.
@@ -139,6 +140,24 @@ function blockProblems(block: Block): string[] {
       const prev = block.slices[index - 1]
       if (prev && slice.value > prev.value) problems.push(`pie slice "${slice.label.en}" is larger than the one before, write slices largest first`)
     })
+  }
+  if (block.type === 'heat') {
+    for (const row of block.rows) {
+      if (row.values.length !== block.columns.length) problems.push(`heat row "${row.label.en}" has ${row.values.length} values for ${block.columns.length} columns`)
+      if (row.values.some((value) => value < 0 || value > block.max)) problems.push(`heat row "${row.label.en}" leaves the scale 0..${block.max}`)
+    }
+  }
+  // Alt ucgen: i. satir i deger tasir, ilk satir bos.
+  if (block.type === 'correlation') {
+    if (block.values.length !== block.variables.length) problems.push(`correlation "${block.title.en}" has ${block.values.length} rows for ${block.variables.length} variables`)
+    block.values.forEach((row, index) => {
+      if (row.length !== index) problems.push(`correlation row ${index + 1} has ${row.length} values, the lower triangle needs ${index}`)
+      if (row.some((value) => value < -1 || value > 1)) problems.push(`correlation row ${index + 1} has a value outside -1..1`)
+    })
+  }
+  if (block.type === 'matrix') {
+    const n = block.classes.length
+    if (block.cells.length !== n || block.cells.some((row) => row.length !== n)) problems.push(`matrix "${block.title.en}" is not ${n} by ${n}`)
   }
   if (block.type === 'sheet' && !/^[A-Z]+\d+$/.test(block.cell)) problems.push(`sheet ${block.csv} has bad cell ${block.cell}`)
   if (block.type === 'timeline') {

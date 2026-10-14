@@ -2,7 +2,7 @@
 
 Bu belge data.paktlabs.com'a yeni bir çalışmanın nasıl yazılacağını ve çalışma sayfalarında kullanılabilen parçaları anlatır. Belge, içerik yazılırken açık duracak yerde, çalışma klasörlerinin ve parça tiplerinin tutulduğu `blocks.ts` dosyasının yanında durur. Sitenin sayfa türleri, içerik ilkeleri ve tasarım dili `apps/data/README.md` içinde anlatılır, burada yazılan her şey o ilkelere uyar.
 
-Detay sayfası her çalışmada aynı iskeletle kurulur: kapak ve künye, Sorun, Yaklaşım ve Sonuç bandı, içindekiler, numaralı bölümler, Meraklısına kartı, yazar kutusu ve kapanış. İskeletin içeriği çalışmanın `page.ts` dosyasında yazılır. Bölümlerin içi ise serbesttir. Her bölüm `blocks` listesinde sırayla dizilen parçalardan oluşur. Bir parça içeriği bilmez, adını hikâyeden değil biçimden alır. Hangi parçanın hangi sırayla ve kaç kez kullanılacağı serbesttir, böylece iki çalışmanın sayfası birbirine benzemek zorunda kalmaz. Yeni bir anlatım biçimi gerektiğinde `src/content/studies/blocks.ts` içine yeni bir parça tipi, `src/components/study/blocks/` altına bileşeni eklenir. Eski sayfalara dokunulmaz. Kod, çıktı ve veri dosyası parçalarının ortak bileşenleri `blocks/file/` altında durur. Başka parça taşıyan bir parça eklenirse `childBlocks` içine karşılığı yazılır, parça ağacını gezen her yer `flattenBlocks` ile gezer. Yanlış ya da eksik yazılmış bir parça derleme hatası verir. `tests/data.spec.ts` ayrıca parçaların içeriğini denetler: tablo satırlarının hücre sayısı, şekil bölgeleri ve eksen sınırları, çizgi serilerinin nokta sayısı, bileşim ve pasta yüzdelerinin toplamı, hesap tablosu hücre adresi ve takvim aralığı.
+Detay sayfası her çalışmada aynı iskeletle kurulur: kapak ve künye, Sorun, Yaklaşım ve Sonuç bandı, içindekiler, numaralı bölümler, Meraklısına kartı, yazar kutusu ve kapanış. İskeletin içeriği çalışmanın `page.ts` dosyasında yazılır. Bölümlerin içi ise serbesttir. Her bölüm `blocks` listesinde sırayla dizilen parçalardan oluşur. Bir parça içeriği bilmez, adını hikâyeden değil biçimden alır. Hangi parçanın hangi sırayla ve kaç kez kullanılacağı serbesttir, böylece iki çalışmanın sayfası birbirine benzemek zorunda kalmaz. Yeni bir anlatım biçimi gerektiğinde `src/content/studies/blocks.ts` içine yeni bir parça tipi, `src/components/study/blocks/` altına bileşeni eklenir. Eski sayfalara dokunulmaz. Kod, çıktı ve veri dosyası parçalarının ortak bileşenleri `blocks/file/` altında durur. Başka parça taşıyan bir parça eklenirse `childBlocks` içine karşılığı yazılır, parça ağacını gezen her yer `flattenBlocks` ile gezer. Yanlış ya da eksik yazılmış bir parça derleme hatası verir. `tests/data.spec.ts` ayrıca parçaların içeriğini denetler: tablo satırlarının hücre sayısı, şekil bölgeleri ve eksen sınırları, çizgi serilerinin nokta sayısı, bileşim ve pasta yüzdelerinin toplamı, ısı ve korelasyon tablolarının boyutu, karar tablosunun kareliği, hesap tablosu hücre adresi ve takvim aralığı.
 
 Her metin iki dili yan yana taşır. Aşağıdaki örneklerde kısalık için yalnızca bir iki alan gösterilir.
 
@@ -181,6 +181,60 @@ Tek bir bütünün az sayıda parçaya bölünüşünü bir bakışta gösterir:
   title: { tr: 'İnternet iadelerinin nedenleri', en: '…' },
   reading: { tr: '…', en: '…' },
   slices: [{ label: { tr: 'Ölçü ya da beden uymadı', en: 'Size did not fit' }, value: 38 } /* … */],
+}
+```
+
+## Isı tablosu
+
+İki boyutlu bir sorunun cevabını tek bakışta verir: hangi kaynakta hangi alanın ne kadar dolu olduğu, hangi ayda hangi bölgenin zayıf kaldığı. Üstteki etiket, soru, okuma ve altındaki parçalar öteki şekillerle aynıdır. `columns` sütunların, `rows` satırların adlarıdır, her satırın `values` listesi sütunlarla aynı sırada değerler taşır. Hücrenin zemini değerle beş kademede koyulaşır ve değer her zaman hücrenin içinde yazar, renk tek başına bir şey anlatmaz. Koyuluk sürekli artmaz, çünkü orta koyulukta ne koyu ne açık yazı yeterince okunurdu. İlk üç kademede yazı koyu, son ikisinde açık renklidir. `max` en koyu kademenin karşılığıdır, yüzdelerde genellikle 100. Altta kademeleri gösteren bir ölçek durur.
+
+```ts
+{
+  type: 'heat',
+  label: { tr: 'Şekil 5', en: 'Figure 5' },
+  title: { tr: 'Kaynağa ve alana göre doluluk', en: '…' },
+  reading: { tr: '…', en: '…' },
+  unit: 'percent',
+  decimals: 0,
+  max: 100,
+  columns: [{ tr: 'Ad', en: 'Name' }, { tr: 'Barkod', en: 'Barcode' }],
+  rows: [{ label: { tr: 'Tedarikçi C', en: 'Supplier C' }, values: [100, 12] }],
+}
+```
+
+## Korelasyon tablosu
+
+Birkaç değişkenin ikişer ikişer ne kadar birlikte hareket ettiğini gösterir. Veri analizi ve makine öğrenmesi işlerinde modele hangi değişkenin girdiğini anlatmak için kullanılır. Yalnızca alt üçgen çizilir, üst yarı aynı sayıları tekrar ederdi. Köşegende kendisiyle ilişkiyi gösteren kesikli hücreler durur. `variables` değişkenlerin adlarıdır. `values` satır satır yazılır: ilk satır boştur, ikinci satır bir, üçüncü satır iki değer taşır. Her değer o satırın değişkeniyle soldaki değişkenlerden biri arasındaki katsayıdır, -1 ile 1 arasında. Artı katsayı mürekkebin beş kademesinde, eksi katsayı altına doğru koyulaşır. Katsayı her hücrede işaretiyle ve iki haneyle yazar. 0,3'ten güçlü ilişkilerin hücresi çerçeve alır, göz önce onlara gider. Tablonun altında katsayının neden sonuç göstermediğini söyleyen not sitenin sözlüğünden gelir, her tabloda aynıdır. Dar ekranda tablo kendi alanında yana kaydırılır.
+
+```ts
+{
+  type: 'correlation',
+  label: { tr: 'Şekil 6', en: 'Figure 6' },
+  title: { tr: 'Ürün özellikleri ve iade oranı arasındaki ilişki', en: '…' },
+  reading: { tr: '…', en: '…' },
+  variables: [{ tr: 'Fiyat', en: 'Price' }, { tr: 'İndirim oranı', en: 'Discount' }, { tr: 'İade oranı', en: 'Return rate' }],
+  values: [[], [0.12], [0.15, 0.41]],
+}
+```
+
+## Doğru ve yanlış kararlar
+
+Bir modelin ya da kuralın kararlarını gerçekle karşılaştırır. Makine öğrenmesi ve veri kalitesi işleri için düşünüldü. Teknikte karışıklık matrisi denir ama sayfada bu terim kullanılmaz, her hücre ne olduğunu düz bir cümleyle söyler. Satırlar gerçekteki sınıf, sütunlar verilen karardır, ikisi de `classes` sırasındadır. `actual` ve `decided` eksenlerin adlarıdır, örneğin Gerçekte ve Modelin kararı. `cells` satır satır hücrelerdir, her hücre bir sayı ve ne anlama geldiğini söyleyen kısa bir metin taşır. Köşegendeki hücreler doğru kararlardır, gerisi hatadır ve altın zeminle ayrılır, Doğru ve Hata etiketleri buradan kendiliğinden çıkar. Satır ve sütun toplamları ile köşedeki genel toplam hesaplanır, elle yazılmaz. `key` verilirse tablonun altında hata türleri düz cümleyle anlatılır, örneğin hangisinin daha pahalı hata olduğu. İkiden fazla sınıf da yazılabilir, tablo kare kalmalıdır.
+
+```ts
+{
+  type: 'matrix',
+  label: { tr: 'Şekil 7', en: 'Figure 7' },
+  title: { tr: 'Test setindeki 1.600 çiftte modelin kararları', en: '…' },
+  reading: { tr: '…', en: '…' },
+  actual: { tr: 'Gerçekte', en: 'Actually' },
+  decided: { tr: 'Modelin kararı', en: 'Model decided' },
+  classes: [{ tr: 'Aynı ürün', en: 'Same product' }, { tr: 'Farklı ürün', en: 'Different product' }],
+  cells: [
+    [{ value: 612, text: { tr: 'Birleştirildi', en: 'Merged' } }, { value: 18, text: { tr: 'Kaçırıldı, ayrı kaldı', en: '…' } }],
+    [{ value: 4, text: { tr: 'Yanlışlıkla birleştirildi', en: '…' } }, { value: 966, text: { tr: 'Ayrı tutuldu', en: 'Kept apart' } }],
+  ],
+  key: [{ title: { tr: 'Kaçırılan', en: 'Missed' }, text: { tr: '…', en: '…' } }],
 }
 ```
 

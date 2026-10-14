@@ -60,7 +60,16 @@ function blockText(block: Block, language: Language): string[] {
     case 'line':
     case 'composition':
     case 'pie':
+    case 'heat':
+    case 'correlation':
       return [block.label[language], block.title[language], block.reading[language]]
+    case 'matrix':
+      return [
+        block.label[language],
+        block.title[language],
+        block.reading[language],
+        ...(block.key ?? []).flatMap((item) => [item.title[language], item.text[language]]),
+      ]
   }
 }
 

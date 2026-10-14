@@ -16,13 +16,16 @@ import type { Block } from '@/content/studies/blocks'
 import { Chart } from './Chart'
 import { Compare } from './Compare'
 import { Composition } from './Composition'
+import { Correlation } from './Correlation'
 import { Decisions } from './Decisions'
 import { Details } from './Details'
 import { Code } from './file/Code'
 import { DataFile } from './file/DataFile'
 import { Output } from './file/Output'
+import { Heat } from './Heat'
 import { Line } from './Line'
 import { List } from './List'
+import { Matrix } from './Matrix'
 import { Note } from './Note'
 import { Paragraph } from './Paragraph'
 import { Pie } from './Pie'
@@ -61,6 +64,12 @@ export function BlockView({ block }: BlockViewProps): ReactElement {
       return <Composition block={block} />
     case 'pie':
       return <Pie block={block} />
+    case 'heat':
+      return <Heat block={block} />
+    case 'correlation':
+      return <Correlation block={block} />
+    case 'matrix':
+      return <Matrix block={block} />
     case 'decisions':
       return <Decisions block={block} />
     case 'timeline':

@@ -1,6 +1,6 @@
 /*
 file: blocks.ts
-importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock, TableBlock, TableCell, StationsBlock, Station, ChartBlock, ChartBar, ChartZone, LineBlock, LineSeries, CompositionBlock, CompositionPart, CompositionRow, PieBlock, PieSlice, DecisionsBlock, TimelineBlock, TimelineTask, TreeBlock, TreeGroup, TreeItem, CompareBlock, CompareRow, NoteBlock, CodeBlock, OutputBlock, DataFileBlock, childBlocks, flattenBlocks
+importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock, TableBlock, TableCell, StationsBlock, Station, ChartBlock, ChartBar, ChartZone, LineBlock, LineSeries, CompositionBlock, CompositionPart, CompositionRow, PieBlock, PieSlice, HeatBlock, HeatRow, CorrelationBlock, MatrixBlock, MatrixCell, DecisionsBlock, TimelineBlock, TimelineTask, TreeBlock, TreeGroup, TreeItem, CompareBlock, CompareRow, NoteBlock, CodeBlock, OutputBlock, DataFileBlock, childBlocks, flattenBlocks
 
 Calisma sayfalarinin bolumlerine konan parcalarin tipleri. Bir parca icerigi
 bilmez, adini hikayeden degil bicimden alir. Bir bolumde hangi parcanin hangi
@@ -227,6 +227,72 @@ export interface PieBlock {
   blocks?: Block[]
 }
 
+// Isi tablosunun bir satiri. values sutunlarla ayni sirada degerlerdir.
+export interface HeatRow {
+  label: Localized
+  values: number[]
+}
+
+// Iki boyutlu bir sorunun cevabini tek bakista veren tablo, ornegin hangi
+// kaynakta hangi alanin ne kadar dolu oldugu. Hucrenin zemini degerle
+// koyulasir, deger hucrenin icinde yazar, renk tek basina bir sey anlatmaz.
+// max zeminin en koyu oldugu degerdir, yuzdelerde genellikle 100.
+export interface HeatBlock {
+  type: 'heat'
+  label: Localized
+  title: Localized
+  reading: Localized
+  unit: 'percent' | 'count'
+  decimals: number
+  max: number
+  columns: Localized[]
+  rows: HeatRow[]
+  blocks?: Block[]
+}
+
+// Degiskenlerin ikiser ikiser ne kadar birlikte hareket ettigini gosteren
+// tablo. Yalnizca alt ucgen cizilir, ust yari ayni sayilari tekrar ederdi.
+// values satir satir yazilir: ilk satir bos, ikinci satir bir deger, ucuncu
+// satir iki deger tasir, her deger o satirin degiskeniyle soldaki
+// degiskenlerden biri arasindaki katsayidir, -1 ile 1 arasinda. Arti yon
+// murekkep, eksi yon altin koyulasir. Tablonun altinda katsayinin neden
+// sonuc gostermedigini soyleyen not sitenin sozlugunden gelir.
+export interface CorrelationBlock {
+  type: 'correlation'
+  label: Localized
+  title: Localized
+  reading: Localized
+  variables: Localized[]
+  values: number[][]
+  blocks?: Block[]
+}
+
+// Karar tablosunun bir hucresi: kac kayit oldugu ve ne anlama geldigi, duz
+// bir cumleyle, ornegin Kacirildi, ayri kaldi.
+export interface MatrixCell {
+  value: number
+  text: Localized
+}
+
+// Bir modelin ya da kuralin kararlarini gercekle karsilastiran tablo. Satirlar
+// gercekteki sinif, sutunlar verilen karar, ikisi de classes sirasinda.
+// Kosegen dogru kararlardir, gerisi hatadir ve altin zeminle ayrilir, hucrenin
+// ustundeki Dogru ya da Hata etiketi buradan kendiliginden cikar. Satir ve
+// sutun toplamlari hesaplanir, elle yazilmaz. actual ve decided eksenlerin
+// adlaridir. key tablonun altinda hata turlerini duz cumleyle anlatir.
+export interface MatrixBlock {
+  type: 'matrix'
+  label: Localized
+  title: Localized
+  reading: Localized
+  actual: Localized
+  decided: Localized
+  classes: Localized[]
+  cells: MatrixCell[][]
+  key?: ListItem[]
+  blocks?: Block[]
+}
+
 // Verilen kararlar, alt alta ve numarali. Her kararin sorusu baslik, cevabi
 // paragraf olarak yazilir. Numara siradan cikar, ustundeki kucuk etiketin
 // adi sitenin sozlugunden gelir.
@@ -348,6 +414,9 @@ export type Block =
   | LineBlock
   | CompositionBlock
   | PieBlock
+  | HeatBlock
+  | CorrelationBlock
+  | MatrixBlock
   | DecisionsBlock
   | TimelineBlock
   | TreeBlock
@@ -368,6 +437,9 @@ export function childBlocks(block: Block): Block[] {
     case 'line':
     case 'composition':
     case 'pie':
+    case 'heat':
+    case 'correlation':
+    case 'matrix':
       return block.blocks ?? []
     case 'paragraph':
     case 'list':

@@ -124,6 +124,14 @@
         "path": "çıktı",
         "kind": "Terminal çıktısı"
       }
+    },
+    "matrix": {
+      "correct": "Doğru",
+      "error": "Hata",
+      "total": "Toplam"
+    },
+    "correlation": {
+      "note": "Katsayı iki değerin birlikte hareket ettiğini gösterir, birinin ötekine yol açtığını göstermez."
     }
   },
   "source": {

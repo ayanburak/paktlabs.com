@@ -30,14 +30,17 @@ interface FigureProps {
   title: string
   reading: string
   description: string
+  after?: ReactNode
   blocks?: Block[]
   children: ReactNode
 }
 
 // Sekil ekran okuyucuya tek bir gorsel olarak tanitilir, description butun
 // degerleriyle okunan aciklamadir. Aciklamayi her sekil kendi verisinden
-// uretir, elle yazilmaz, boylece sekil degisince aciklama eskimez.
-export function Figure({ label, title, reading, description, blocks, children }: FigureProps) {
+// uretir, elle yazilmaz, boylece sekil degisince aciklama eskimez. after
+// seklin hemen altinda duran metindir, ornegin bir not ya da hata turlerinin
+// aciklamasi. Gorselin disinda kalir ki ekran okuyucu onu da okusun.
+export function Figure({ label, title, reading, description, after, blocks, children }: FigureProps) {
   const { ref, visible } = useReveal<HTMLElement>()
 
   return (
@@ -50,6 +53,7 @@ export function Figure({ label, title, reading, description, blocks, children }:
       <div role="img" aria-label={description}>
         {children}
       </div>
+      {after}
       {blocks?.map((inner, index) => (
         <BlockView key={index} block={inner} />
       ))}

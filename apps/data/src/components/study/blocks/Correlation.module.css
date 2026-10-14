@@ -1,0 +1,94 @@
+/* dar ekranda tablo kendi alaninda yana kaydirilir, sayfa tasmaz */
+.scroll {
+  overflow-x: auto;
+}
+.corr {
+  border-collapse: separate;
+  border-spacing: 4px;
+  margin-left: -4px;
+}
+.corr thead th {
+  width: 84px;
+  padding: 0 6px 6px;
+  font: 600 10.5px/1.25 var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  vertical-align: bottom;
+  color: var(--faint);
+}
+.corr tbody th {
+  padding-right: 10px;
+  font: 600 13px/1.2 var(--font-display);
+  text-align: left;
+  white-space: nowrap;
+}
+.corr td {
+  width: 84px;
+  height: 48px;
+  font: 500 13px/1 var(--font-mono);
+  text-align: center;
+  border: 1.5px solid transparent;
+}
+/* kendisiyle iliski bilgi tasimaz, hucre kesikli ve soluk */
+.corr td.self {
+  font-size: 11px;
+  color: var(--faint);
+  border: 1.5px dashed var(--line-strong);
+}
+.positive {
+  background: color-mix(in srgb, var(--ink) var(--depth), var(--surface));
+}
+.negative {
+  background: color-mix(in srgb, var(--gold) var(--depth), var(--surface));
+}
+.corr td.strong {
+  border-color: var(--ink);
+}
+.corr td.light {
+  color: var(--paper);
+}
+.scale {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font: 500 11px/1 var(--font-mono);
+  color: var(--faint);
+}
+.scale i {
+  width: 90px;
+  height: 10px;
+  border: 1px solid var(--line-strong);
+}
+.negativeScale {
+  background: linear-gradient(90deg, var(--gold), var(--surface));
+}
+.positiveScale {
+  background: linear-gradient(90deg, var(--surface), var(--ink));
+}
+
+@media (max-width: 768px) {
+  .corr thead th {
+    width: auto;
+    font-size: 8.5px;
+    letter-spacing: 0.04em;
+  }
+  .corr tbody th {
+    font-size: 11.5px;
+    white-space: normal;
+  }
+  .corr td {
+    width: auto;
+    min-width: 44px;
+    height: 40px;
+    font-size: 11px;
+  }
+}
+
+/* katsayinin neden sonuc gostermedigini soyleyen not, tabloya yakin durur */
+.note {
+  margin: 12px 0 0;
+  font: 400 12.5px/1.5 var(--font-mono);
+  color: var(--faint);
+}

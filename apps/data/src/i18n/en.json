@@ -124,6 +124,14 @@
         "path": "output",
         "kind": "Terminal output"
       }
+    },
+    "matrix": {
+      "correct": "Correct",
+      "error": "Error",
+      "total": "Total"
+    },
+    "correlation": {
+      "note": "A coefficient shows that two values move together, not that one causes the other."
     }
   },
   "source": {

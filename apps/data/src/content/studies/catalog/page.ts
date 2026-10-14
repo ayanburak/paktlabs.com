@@ -318,6 +318,113 @@ export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
       },
     ],
   },
+  heat: {
+    label: { tr: 'Tablo', en: 'Table' },
+    title: { tr: 'Isı tablosu', en: 'Heat table' },
+    lede: {
+      tr: 'İki boyutlu bir sorunun cevabını tek bakışta verir. Hücrenin koyuluğu değeri gösterir, sayı hücrenin içinde yazar. İçerik dosyasındaki adı heat.',
+      en: 'Answers a two-way question at a glance. The darkness of a cell shows its value and the number is written inside. Its name in the content file is heat.',
+    },
+    blocks: [
+      {
+        type: 'heat',
+        label: { tr: 'Şekil 5', en: 'Figure 5' },
+        title: { tr: 'Kaynağa ve alana göre doluluk', en: 'Fill rate by source and field' },
+        reading: {
+          tr: "Ad ve fiyat her kaynakta dolu. Asıl boşluk barkod ve ölçüde, en çok da Tedarikçi C'de.",
+          en: 'Name and price are filled in every source. The real gaps are in barcode and size, most of all at Supplier C.',
+        },
+        unit: 'percent',
+        decimals: 0,
+        max: 100,
+        columns: [
+          { tr: 'Ad', en: 'Name' },
+          { tr: 'Fiyat', en: 'Price' },
+          { tr: 'Marka', en: 'Brand' },
+          { tr: 'Ölçü', en: 'Size' },
+          { tr: 'Barkod', en: 'Barcode' },
+        ],
+        rows: [
+          { label: { tr: 'ERP', en: 'ERP' }, values: [100, 100, 92, 61, 34] },
+          { label: { tr: 'Tedarikçi A', en: 'Supplier A' }, values: [100, 100, 97, 48, 71] },
+          { label: { tr: 'Tedarikçi B', en: 'Supplier B' }, values: [100, 99, 100, 88, 88] },
+          { label: { tr: 'Tedarikçi C', en: 'Supplier C' }, values: [100, 96, 63, 22, 12] },
+        ],
+      },
+    ],
+  },
+  correlation: {
+    label: { tr: 'Şekil', en: 'Figure' },
+    title: { tr: 'Korelasyon tablosu', en: 'Correlation table' },
+    lede: {
+      tr: 'Birkaç değişkenin ikişer ikişer ne kadar birlikte hareket ettiğini gösterir. Yalnızca alt üçgen çizilir. İçerik dosyasındaki adı correlation.',
+      en: 'Shows how strongly several variables move together, pair by pair. Only the lower triangle is drawn. Its name in the content file is correlation.',
+    },
+    blocks: [
+      {
+        type: 'correlation',
+        label: { tr: 'Şekil 6', en: 'Figure 6' },
+        title: { tr: 'Ürün özellikleri ve iade oranı arasındaki ilişki', en: 'How product features relate to the return rate' },
+        reading: {
+          tr: 'İadeyle en güçlü ilişki ürün puanında, puan düştükçe iade artıyor. İndirim oranı ve uzun teslim de iadeyle birlikte artıyor, fiyatın etkisi zayıf.',
+          en: 'The strongest link to returns is the product rating, returns rise as the rating falls. Discount and long delivery also rise with returns, price has little effect.',
+        },
+        variables: [
+          { tr: 'Fiyat', en: 'Price' },
+          { tr: 'İndirim oranı', en: 'Discount' },
+          { tr: 'Teslim süresi', en: 'Delivery time' },
+          { tr: 'Ürün puanı', en: 'Rating' },
+          { tr: 'İade oranı', en: 'Return rate' },
+        ],
+        values: [[], [0.12], [0.08, -0.05], [0.21, -0.1, -0.34], [0.15, 0.41, 0.38, -0.62]],
+      },
+    ],
+  },
+  matrix: {
+    label: { tr: 'Sonuç', en: 'Result' },
+    title: { tr: 'Doğru ve yanlış kararlar', en: 'Right and wrong decisions' },
+    lede: {
+      tr: 'Bir modelin ya da kuralın kararlarını gerçekle karşılaştırır. Toplamlar kendiliğinden hesaplanır, hatalı kutular altın zeminle ayrılır. İçerik dosyasındaki adı matrix.',
+      en: 'Compares the decisions of a model or a rule with the truth. Totals are calculated on their own and wrong cells stand out in gold. Its name in the content file is matrix.',
+    },
+    blocks: [
+      {
+        type: 'matrix',
+        label: { tr: 'Şekil 7', en: 'Figure 7' },
+        title: { tr: 'Test setindeki 1.600 çiftte modelin kararları', en: 'The model’s decisions on 1,600 test pairs' },
+        reading: {
+          tr: "Model 1.600 çiftin 1.578'inde doğru karar verdi. Yanıldığı 22 çiftin 18'i kaçırılan eşleşme, yanlış birleştirdiği yalnızca 4 çift var.",
+          en: 'The model was right on 1,578 of 1,600 pairs. Of the 22 it got wrong, 18 were missed matches and only 4 were wrongly merged.',
+        },
+        actual: { tr: 'Gerçekte', en: 'Actually' },
+        decided: { tr: 'Modelin kararı', en: 'Model decided' },
+        classes: [
+          { tr: 'Aynı ürün', en: 'Same product' },
+          { tr: 'Farklı ürün', en: 'Different product' },
+        ],
+        cells: [
+          [
+            { value: 612, text: { tr: 'Birleştirildi', en: 'Merged' } },
+            { value: 18, text: { tr: 'Kaçırıldı, ayrı kaldı', en: 'Missed, left apart' } },
+          ],
+          [
+            { value: 4, text: { tr: 'Yanlışlıkla birleştirildi', en: 'Merged by mistake' } },
+            { value: 966, text: { tr: 'Ayrı tutuldu', en: 'Kept apart' } },
+          ],
+        ],
+        key: [
+          {
+            title: { tr: 'Kaçırılan', en: 'Missed' },
+            text: { tr: 'İki kayıt aynı üründü ama model ayırdı. Listede aynı ürün iki kez kalır, zararı küçüktür.', en: 'The two records were the same product but the model kept them apart. The product stays in the list twice, which does little harm.' },
+          },
+          {
+            title: { tr: 'Yanlış birleşen', en: 'Wrongly merged' },
+            text: { tr: 'İki kayıt farklı üründü ama model birleştirdi. İki ürünün fiyatı karışır, bu yüzden daha pahalı hatadır.', en: 'The two records were different products but the model merged them. Their prices get mixed, which makes it the costlier mistake.' },
+          },
+        ],
+      },
+    ],
+  },
   decisions: {
     label: { tr: 'Gerekçe', en: 'Reasoning' },
     title: { tr: 'Karar listesi', en: 'Decision list' },
