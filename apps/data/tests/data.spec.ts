@@ -10,7 +10,8 @@ yollarda ayni kod dosyalari bulunmali. Detay sayfasindaki ve kod sayfasindaki
 her parcanin cagirdigi dosya iki dilde var olmali, her kod dosyasinin dili
 kayitli olmali, bolum adresleri de sayfa icinde tekil olmali. Parcalarin
 icerigi de tutarli olmali: tablo satirlarinin hucre sayisi, sekil bolgeleri
-ve eksen sinirlari, hesap tablosu hucre adresi ve takvim araligi. Blok
+ve eksen sinirlari, cizgi serilerinin nokta sayisi, bilesim ve pasta
+yuzdelerinin toplami, hesap tablosu hucre adresi ve takvim araligi. Blok
 katalogu da calismalarla ayni denetimlerden gecer, ayrica her katalog
 bolumunun kendi parca turunu gosterdigi olculur. Tarayiciya ihtiyac yok,
 dosyalar diskten okunur.
@@ -108,6 +109,36 @@ function blockProblems(block: Block): string[] {
       if (bar.value > block.max) problems.push(`chart bar "${bar.label.en}" is ${bar.value}, above max ${block.max}`)
     }
     if (block.ticks.length < 2) problems.push(`chart "${block.title.en}" has ${block.ticks.length} ticks, needs at least 2`)
+  }
+  if (block.type === 'line') {
+    if (block.series.length > 3) problems.push(`line "${block.title.en}" has ${block.series.length} series, at most 3 read well`)
+    if (block.series.filter((series) => series.highlight).length > 1) problems.push(`line "${block.title.en}" highlights more than one series`)
+    for (const series of block.series) {
+      if (series.values.length !== block.points.length) {
+        problems.push(`line series "${series.label.en}" has ${series.values.length} values, there are ${block.points.length} points`)
+      }
+      if (series.values.some((value) => value < 0 || value > block.max)) problems.push(`line series "${series.label.en}" leaves the axis 0..${block.max}`)
+    }
+    if (block.ticks.length < 2) problems.push(`line "${block.title.en}" has ${block.ticks.length} ticks, needs at least 2`)
+  }
+  // Yuzdeler tam sayi yazildigi icin toplam yuvarlamadan bir eksik ya da
+  // fazla olabilir, yarim puanlik pay buna birakilir.
+  if (block.type === 'composition') {
+    if (block.parts.length > 4) problems.push(`composition "${block.title.en}" has ${block.parts.length} parts, at most 4`)
+    for (const row of block.rows) {
+      if (row.values.length !== block.parts.length) problems.push(`composition row "${row.label.en}" has ${row.values.length} values for ${block.parts.length} parts`)
+      const sum = row.values.reduce((a, b) => a + b, 0)
+      if (Math.abs(sum - 100) > 0.5) problems.push(`composition row "${row.label.en}" sums to ${sum}, not 100`)
+    }
+  }
+  if (block.type === 'pie') {
+    if (block.slices.length > 5) problems.push(`pie "${block.title.en}" has ${block.slices.length} slices, at most 5`)
+    const sum = block.slices.reduce((a, slice) => a + slice.value, 0)
+    if (Math.abs(sum - 100) > 0.5) problems.push(`pie "${block.title.en}" sums to ${sum}, not 100`)
+    block.slices.forEach((slice, index) => {
+      const prev = block.slices[index - 1]
+      if (prev && slice.value > prev.value) problems.push(`pie slice "${slice.label.en}" is larger than the one before, write slices largest first`)
+    })
   }
   if (block.type === 'sheet' && !/^[A-Z]+\d+$/.test(block.cell)) problems.push(`sheet ${block.csv} has bad cell ${block.cell}`)
   if (block.type === 'timeline') {

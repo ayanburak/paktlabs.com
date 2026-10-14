@@ -1,0 +1,109 @@
+/* solda daire, sagda dilimlerin listesi. Dar ekranda liste dairenin altina iner */
+.pie {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 36px;
+  align-items: center;
+}
+.disc {
+  position: relative;
+  width: 240px;
+  aspect-ratio: 1;
+}
+.disc svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+/* dilimlerin arasinda kagit renginde ince bir bosluk, cevresinde murekkep */
+.disc path {
+  stroke: var(--paper);
+  stroke-width: 0.8;
+}
+.rim {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 0.8;
+}
+.ink {
+  fill: var(--ink);
+}
+.gold {
+  fill: var(--gold);
+}
+.gray {
+  fill: var(--gray);
+}
+.light {
+  fill: var(--panel);
+}
+.hatchBase {
+  fill: var(--surface);
+}
+.hatchLine {
+  fill: var(--line-strong);
+}
+.value {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  font: 700 12.5px/1 var(--font-mono);
+  translate: -50% -50%;
+}
+.onInk {
+  color: var(--paper);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+}
+.list li {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 9px 0;
+  font-size: 14.5px;
+}
+.list li + li {
+  border-top: 1px solid var(--line);
+}
+.list b {
+  font: 600 13px/1 var(--font-mono);
+}
+.key {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--ink);
+}
+.key-ink {
+  background: var(--ink);
+}
+.key-gold {
+  background: var(--gold);
+}
+.key-gray {
+  background: var(--gray);
+}
+.key-light {
+  background: var(--panel);
+}
+.key-hatched {
+  background: repeating-linear-gradient(135deg, var(--surface) 0 4px, var(--line-strong) 4px 5.5px);
+}
+
+@media (max-width: 768px) {
+  .pie {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    justify-items: center;
+  }
+  .list {
+    width: 100%;
+  }
+}

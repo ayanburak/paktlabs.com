@@ -1,30 +1,3 @@
-.figure {
-  margin: 0;
-}
-.figure > * + * {
-  margin-top: 24px;
-}
-.figure > figcaption + * {
-  margin-top: 24px;
-}
-/* seklin altindaki acilir kutu sekle biraz daha yakin durur */
-.figure > details {
-  margin-top: 20px;
-}
-
-.title {
-  margin-top: 10px;
-  font-size: clamp(19px, 1.7vw, 23px);
-  letter-spacing: -0.02em;
-}
-.reading {
-  margin: 8px 0 0;
-  max-width: 64ch;
-  font-size: 15.5px;
-  line-height: 1.65;
-  color: var(--muted);
-}
-
 /* --- dikey sekil --- */
 /* cubuk alani sifirdan max'a, ustte deger yazisi icin otuz piksel pay var */
 .vertical {

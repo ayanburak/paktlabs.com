@@ -1,0 +1,75 @@
+.row {
+  display: grid;
+  grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  padding: 7px 0;
+}
+.name {
+  font: 600 14.5px/1.3 var(--font-display);
+}
+.bar {
+  display: flex;
+  height: 30px;
+  border: 2px solid var(--ink);
+}
+/* dilimlerin arasinda murekkep bir cizgi, ilk dilimde cizgi yok */
+.part {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--w);
+  overflow: hidden;
+  font: 600 11.5px/1 var(--font-mono);
+  white-space: nowrap;
+}
+.part + .part {
+  border-left: 2px solid var(--ink);
+}
+
+/* parca zeminleri. Ayni siniflar renk aciklamasindaki kutularda da kullanilir */
+.ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+.light {
+  background: var(--panel);
+}
+.gold {
+  background: var(--gold);
+}
+.hatched {
+  background: repeating-linear-gradient(135deg, var(--surface) 0 5px, var(--line-strong) 5px 6.5px);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 14px;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.legend i {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--ink);
+}
+
+@media (max-width: 768px) {
+  .row {
+    grid-template-columns: minmax(84px, 110px) minmax(0, 1fr);
+    gap: 10px;
+  }
+  .name {
+    font-size: 13px;
+  }
+  .part {
+    font-size: 10.5px;
+  }
+}

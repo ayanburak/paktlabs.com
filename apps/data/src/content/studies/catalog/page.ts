@@ -21,6 +21,10 @@ description: Blok katalogunda her parca turunu ornek verilerle gosteren bolumler
 import type { Block } from '../blocks'
 import type { Chapter } from '../types'
 
+// Bolumun etiketi parcanin kumesidir, Sekil ya da Veri gibi. Tur adi
+// etikete yazilmaz, Turkce sayfada buyuk harfe cevrilince line kelimesindeki
+// i noktali buyuk I olurdu. Tur adi girisin sonunda yazar.
+//
 // Anahtarlar Block birlesiminin butun turleridir. Bir tur eksik kalirsa ya da
 // fazladan bir anahtar yazilirsa TypeScript derlemeyi durdurur. Bolumler
 // buradaki sirayla, yazim rehberindeki sirayla gosterilir. Bolumun id'si
@@ -28,11 +32,11 @@ import type { Chapter } from '../types'
 // tasidigini ayrica denetler.
 export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
   paragraph: {
-    label: { tr: 'paragraph', en: 'paragraph' },
+    label: { tr: 'Metin', en: 'Text' },
     title: { tr: 'Paragraf', en: 'Paragraph' },
     lede: {
-      tr: 'Bölüm girişinden sonra gelen ara anlatım, örneğin iki tablodan önce onları tanıtan cümle.',
-      en: 'Running text after the chapter intro, for example the sentence that introduces the next two tables.',
+      tr: 'Bölüm girişinden sonra gelen ara anlatım, örneğin iki tablodan önce onları tanıtan cümle. İçerik dosyasındaki adı paragraph.',
+      en: 'Running text after the chapter intro, for example the sentence that introduces the next two tables. Its name in the content file is paragraph.',
     },
     blocks: [
       {
@@ -45,11 +49,11 @@ export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
     ],
   },
   list: {
-    label: { tr: 'list', en: 'list' },
+    label: { tr: 'Metin', en: 'Text' },
     title: { tr: 'Liste', en: 'List' },
     lede: {
-      tr: 'Kısa maddeler. Yan yana numaralı görünüm birkaç etkiyi bir bakışta, alt alta görünüm biraz daha uzun anlatılan sınırları gösterir.',
-      en: 'Short items. The numbered side by side view shows a few effects at a glance, the stacked view shows limits that need a little more text.',
+      tr: 'Kısa maddeler. Yan yana numaralı görünüm birkaç etkiyi bir bakışta, alt alta görünüm biraz daha uzun anlatılan sınırları gösterir. İçerik dosyasındaki adı list.',
+      en: 'Short items. The numbered side by side view shows a few effects at a glance, the stacked view shows limits that need a little more text. Its name in the content file is list.',
     },
     blocks: [
       {
@@ -73,11 +77,11 @@ export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
     ],
   },
   details: {
-    label: { tr: 'details', en: 'details' },
+    label: { tr: 'Düzen', en: 'Layout' },
     title: { tr: 'Açılır kutu', en: 'Expandable box' },
     lede: {
-      tr: 'Ayrıntıyı ilk katmandan ayırır. Kapalı gelir, okur isterse açar. İçine başka parçalar konabilir.',
-      en: 'Keeps detail out of the first layer. It starts closed and opens when the reader wants. Other blocks can go inside.',
+      tr: 'Ayrıntıyı ilk katmandan ayırır. Kapalı gelir, okur isterse açar. İçine başka parçalar konabilir. İçerik dosyasındaki adı details.',
+      en: 'Keeps detail out of the first layer. It starts closed and opens when the reader wants. Other blocks can go inside. Its name in the content file is details.',
     },
     blocks: [
       {
@@ -97,11 +101,11 @@ export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
     ],
   },
   sheet: {
-    label: { tr: 'sheet', en: 'sheet' },
+    label: { tr: 'Veri', en: 'Data' },
     title: { tr: 'Hesap tablosu', en: 'Spreadsheet' },
     lede: {
-      tr: 'Ham veri, hesap tablosu programlarına yakın bir görünümle. Kaynak kusurları düzeltilmeden durur ve altındaki notta açıklanır.',
-      en: 'Raw data in a view close to spreadsheet programs. Source flaws stay unfixed and are explained in the note below.',
+      tr: 'Ham veri, hesap tablosu programlarına yakın bir görünümle. Kaynak kusurları düzeltilmeden durur ve altındaki notta açıklanır. İçerik dosyasındaki adı sheet.',
+      en: 'Raw data in a view close to spreadsheet programs. Source flaws stay unfixed and are explained in the note below. Its name in the content file is sheet.',
     },
     blocks: [
       {
@@ -121,11 +125,11 @@ export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
     ],
   },
   table: {
-    label: { tr: 'table', en: 'table' },
+    label: { tr: 'Veri', en: 'Data' },
     title: { tr: 'Düz tablo', en: 'Plain table' },
     lede: {
-      tr: 'Sitenin diliyle yazılan kısa bir karşılaştırma. Bir hücre oran taşıyorsa küçük bir çubukla çizilir.',
-      en: 'A short comparison written in the language of the site. A cell holding a share is drawn with a small bar.',
+      tr: 'Sitenin diliyle yazılan kısa bir karşılaştırma. Bir hücre oran taşıyorsa küçük bir çubukla çizilir. İçerik dosyasındaki adı table.',
+      en: 'A short comparison written in the language of the site. A cell holding a share is drawn with a small bar. Its name in the content file is table.',
     },
     blocks: [
       {
@@ -144,11 +148,11 @@ export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
     ],
   },
   stations: {
-    label: { tr: 'stations', en: 'stations' },
+    label: { tr: 'Süreç', en: 'Process' },
     title: { tr: 'İstasyon hattı', en: 'Station line' },
     lede: {
-      tr: 'Sırayla geçilen adımlar. Her adımın ayrıntısı alt kenarında açılan bir şeritte durur.',
-      en: 'Steps passed in order. The detail of each step sits in a strip that opens at its bottom edge.',
+      tr: 'Sırayla geçilen adımlar. Her adımın ayrıntısı alt kenarında açılan bir şeritte durur. İçerik dosyasındaki adı stations.',
+      en: 'Steps passed in order. The detail of each step sits in a strip that opens at its bottom edge. Its name in the content file is stations.',
     },
     blocks: [
       {
@@ -168,11 +172,11 @@ export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
     ],
   },
   chart: {
-    label: { tr: 'chart', en: 'chart' },
+    label: { tr: 'Şekil', en: 'Figure' },
     title: { tr: 'Çubuk şekli', en: 'Bar chart' },
     lede: {
-      tr: 'Tek bir soruya cevap veren dikey ya da yatay çubuklar. Eksen sıfırdan başlar, değer çubuğun ucunda yazar.',
-      en: 'Vertical or horizontal bars answering one question. The axis starts at zero and the value sits at the end of the bar.',
+      tr: 'Tek bir soruya cevap veren dikey ya da yatay çubuklar. Eksen sıfırdan başlar, değer çubuğun ucunda yazar. İçerik dosyasındaki adı chart.',
+      en: 'Vertical or horizontal bars answering one question. The axis starts at zero and the value sits at the end of the bar. Its name in the content file is chart.',
     },
     blocks: [
       {
@@ -193,12 +197,133 @@ export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
       },
     ],
   },
+  line: {
+    label: { tr: 'Şekil', en: 'Figure' },
+    title: { tr: 'Çizgi şekli', en: 'Line chart' },
+    lede: {
+      tr: 'Bir değerin zaman içinde nasıl değiştiğini gösterir. Her çizginin sonunda değeri ve adı yazar, ayrı bir renk açıklaması aranmaz. İçerik dosyasındaki adı line.',
+      en: 'Shows how a value changes over time. Each line ends with its value and name, so no colour key is needed. Its name in the content file is line.',
+    },
+    blocks: [
+      {
+        type: 'line',
+        label: { tr: 'Şekil 2', en: 'Figure 2' },
+        title: { tr: 'Aylara göre iade oranı', en: 'Return rate by month' },
+        reading: {
+          tr: 'Mağaza iadesi yıl boyunca yüzde 3 civarında kaldı, internet satışlarında ise her ay biraz arttı ve yıl sonunda neredeyse iki katına çıktı.',
+          en: 'Store returns stayed around 3 percent all year, while online returns rose a little every month and almost doubled by the end of the year.',
+        },
+        unit: 'percent',
+        decimals: 1,
+        max: 12,
+        ticks: [0, 4, 8, 12],
+        points: [
+          { tr: 'Oca', en: 'Jan' },
+          { tr: 'Şub', en: 'Feb' },
+          { tr: 'Mar', en: 'Mar' },
+          { tr: 'Nis', en: 'Apr' },
+          { tr: 'May', en: 'May' },
+          { tr: 'Haz', en: 'Jun' },
+          { tr: 'Tem', en: 'Jul' },
+          { tr: 'Ağu', en: 'Aug' },
+          { tr: 'Eyl', en: 'Sep' },
+          { tr: 'Eki', en: 'Oct' },
+          { tr: 'Kas', en: 'Nov' },
+          { tr: 'Ara', en: 'Dec' },
+        ],
+        series: [
+          { label: { tr: 'İnternet', en: 'Online' }, values: [6.1, 6.4, 6.0, 6.8, 7.2, 7.9, 8.4, 9.1, 9.6, 10.2, 10.8, 11.3], highlight: true },
+          { label: { tr: 'Mağaza', en: 'Store' }, values: [3.2, 3.0, 3.4, 3.1, 3.3, 3.5, 3.2, 3.4, 3.3, 3.6, 3.4, 3.5] },
+        ],
+      },
+    ],
+  },
+  composition: {
+    label: { tr: 'Şekil', en: 'Figure' },
+    title: { tr: 'Bileşim çubuğu', en: 'Composition bar' },
+    lede: {
+      tr: 'Birkaç bütünün parçalara nasıl bölündüğünü alt alta kıyaslar. Her satır yüzde yüzdür, dar dilimlerin değeri açılır kutuda verilir. İçerik dosyasındaki adı composition.',
+      en: 'Compares how several wholes split into parts, one under another. Each row is a hundred percent, narrow slices get their value in the box below. Its name in the content file is composition.',
+    },
+    blocks: [
+      {
+        type: 'composition',
+        label: { tr: 'Şekil 3', en: 'Figure 3' },
+        title: { tr: 'Kaynağa göre kayıtların akıbeti', en: 'What happened to the records, by source' },
+        reading: {
+          tr: "Her kaynakta kayıtların çoğu başka bir kayıtla birleşti. Tedarikçi C'de karantinaya alınan pay diğerlerinin üç katı.",
+          en: 'In every source most records merged with another record. Supplier C sent three times as many records to quarantine as the others.',
+        },
+        parts: [
+          { label: { tr: 'Birleşti', en: 'Merged' }, style: 'ink' },
+          { label: { tr: 'Tek kaldı', en: 'Stayed single' }, style: 'light' },
+          { label: { tr: 'İncelemeye gitti', en: 'Went to review' }, style: 'gold' },
+          { label: { tr: 'Karantina', en: 'Quarantine' }, style: 'hatched' },
+        ],
+        rows: [
+          { label: { tr: 'ERP', en: 'ERP' }, values: [62, 29, 6, 3] },
+          { label: { tr: 'Tedarikçi A', en: 'Supplier A' }, values: [58, 31, 7, 4] },
+          { label: { tr: 'Tedarikçi B', en: 'Supplier B' }, values: [66, 26, 5, 3] },
+          { label: { tr: 'Tedarikçi C', en: 'Supplier C' }, values: [49, 30, 10, 11] },
+        ],
+        blocks: [
+          {
+            type: 'details',
+            meta: { tr: 'Şekil 3 · Veri', en: 'Figure 3 · Data' },
+            title: { tr: 'Bütün yüzdeler', en: 'All percentages' },
+            blocks: [
+              {
+                type: 'table',
+                head: [
+                  { tr: 'Kaynak', en: 'Source' },
+                  { tr: 'Birleşti', en: 'Merged' },
+                  { tr: 'Tek kaldı', en: 'Single' },
+                  { tr: 'İnceleme', en: 'Review' },
+                  { tr: 'Karantina', en: 'Quarantine' },
+                ],
+                rows: [
+                  [{ tr: 'ERP', en: 'ERP' }, { meter: 62 }, { meter: 29 }, { meter: 6 }, { meter: 3 }],
+                  [{ tr: 'Tedarikçi C', en: 'Supplier C' }, { meter: 49 }, { meter: 30 }, { meter: 10 }, { meter: 11 }],
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  pie: {
+    label: { tr: 'Şekil', en: 'Figure' },
+    title: { tr: 'Pasta grafiği', en: 'Pie chart' },
+    lede: {
+      tr: 'Tek bir bütünün az sayıda parçaya bölünüşü. En fazla beş dilim, en büyüğü saat on ikiden başlar. İçerik dosyasındaki adı pie.',
+      en: 'One whole split into a few parts. Five slices at most, the largest starts at twelve o’clock. Its name in the content file is pie.',
+    },
+    blocks: [
+      {
+        type: 'pie',
+        label: { tr: 'Şekil 4', en: 'Figure 4' },
+        title: { tr: 'İnternet iadelerinin nedenleri', en: 'Reasons for online returns' },
+        reading: {
+          tr: 'İadelerin üçte birinden fazlası ölçü ya da beden uymadığı için geldi. Hasarlı gelen ürünler ikinci sırada.',
+          en: 'More than a third of returns came back because the size did not fit. Damaged goods come second.',
+        },
+        slices: [
+          { label: { tr: 'Ölçü ya da beden uymadı', en: 'Size did not fit' }, value: 38 },
+          { label: { tr: 'Hasarlı geldi', en: 'Arrived damaged' }, value: 24 },
+          { label: { tr: 'Beklentiyi karşılamadı', en: 'Did not meet expectations' }, value: 19 },
+          { label: { tr: 'Yanlış ürün gönderildi', en: 'Wrong item sent' }, value: 11 },
+          { label: { tr: 'Diğer', en: 'Other' }, value: 8 },
+        ],
+      },
+    ],
+  },
   decisions: {
-    label: { tr: 'decisions', en: 'decisions' },
+    label: { tr: 'Gerekçe', en: 'Reasoning' },
     title: { tr: 'Karar listesi', en: 'Decision list' },
     lede: {
-      tr: 'Teknik okurun soracağı "neden böyle" sorularının cevabı. Her cevap bir deneme ya da ölçüme dayanır.',
-      en: 'Answers to the "why this way" questions a technical reader will ask. Every answer rests on a trial or a measurement.',
+      tr: 'Teknik okurun soracağı "neden böyle" sorularının cevabı. Her cevap bir deneme ya da ölçüme dayanır. İçerik dosyasındaki adı decisions.',
+      en: 'Answers to the "why this way" questions a technical reader will ask. Every answer rests on a trial or a measurement. Its name in the content file is decisions.',
     },
     blocks: [
       {
@@ -213,11 +338,11 @@ export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
     ],
   },
   timeline: {
-    label: { tr: 'timeline', en: 'timeline' },
+    label: { tr: 'Süreç', en: 'Process' },
     title: { tr: 'Zaman çizelgesi', en: 'Timeline' },
     lede: {
-      tr: 'Bir işin takvimi. Altın çubuklar ayrı bir tarafın işini gösterir, altında anlamı yazar.',
-      en: 'The schedule of a job. Gold bars show the work of another party, their meaning is written below.',
+      tr: 'Bir işin takvimi. Altın çubuklar ayrı bir tarafın işini gösterir, altında anlamı yazar. İçerik dosyasındaki adı timeline.',
+      en: 'The schedule of a job. Gold bars show the work of another party, their meaning is written below. Its name in the content file is timeline.',
     },
     blocks: [
       {
@@ -234,11 +359,11 @@ export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
     ],
   },
   tree: {
-    label: { tr: 'tree', en: 'tree' },
+    label: { tr: 'Kod', en: 'Code' },
     title: { tr: 'Dosya ağacı', en: 'File tree' },
     lede: {
-      tr: 'Teslim edilen bir deponun ya da veritabanının yapısı, kod görünümünde.',
-      en: 'The structure of a delivered repository or database, in a code view.',
+      tr: 'Teslim edilen bir deponun ya da veritabanının yapısı, kod görünümünde. İçerik dosyasındaki adı tree.',
+      en: 'The structure of a delivered repository or database, in a code view. Its name in the content file is tree.',
     },
     blocks: [
       {
@@ -258,11 +383,11 @@ export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
     ],
   },
   compare: {
-    label: { tr: 'compare', en: 'compare' },
+    label: { tr: 'Sonuç', en: 'Result' },
     title: { tr: 'Önce ve sonra', en: 'Before and after' },
     lede: {
-      tr: 'Bir işin öncesini ve sonrasını ölçü ölçü karşılaştırır.',
-      en: 'Compares the before and after of a job, measure by measure.',
+      tr: 'Bir işin öncesini ve sonrasını ölçü ölçü karşılaştırır. İçerik dosyasındaki adı compare.',
+      en: 'Compares the before and after of a job, measure by measure. Its name in the content file is compare.',
     },
     blocks: [
       {
@@ -279,11 +404,11 @@ export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
     ],
   },
   note: {
-    label: { tr: 'note', en: 'note' },
+    label: { tr: 'Metin', en: 'Text' },
     title: { tr: 'Not kutusu', en: 'Note box' },
     lede: {
-      tr: 'Akışın dışında kalan ama bilinmesi gereken kısa bir not. Bir sayfada az kullanılır.',
-      en: 'A short note outside the flow that the reader should know. Used sparingly on a page.',
+      tr: 'Akışın dışında kalan ama bilinmesi gereken kısa bir not. Bir sayfada az kullanılır. İçerik dosyasındaki adı note.',
+      en: 'A short note outside the flow that the reader should know. Used sparingly on a page. Its name in the content file is note.',
     },
     blocks: [
       {
@@ -294,29 +419,29 @@ export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
     ],
   },
   code: {
-    label: { tr: 'code', en: 'code' },
+    label: { tr: 'Kod', en: 'Code' },
     title: { tr: 'Kod dosyası', en: 'Code file' },
     lede: {
-      tr: 'Çalışmanın code klasöründeki bir dosya, satır numaraları ve kopyalama düğmesiyle.',
-      en: 'A file from the code folder of a study, with line numbers and a copy button.',
+      tr: 'Çalışmanın code klasöründeki bir dosya, satır numaraları ve kopyalama düğmesiyle. İçerik dosyasındaki adı code.',
+      en: 'A file from the code folder of a study, with line numbers and a copy button. Its name in the content file is code.',
     },
     blocks: [{ type: 'code', path: 'rules/catalog.py' }],
   },
   output: {
-    label: { tr: 'output', en: 'output' },
+    label: { tr: 'Kod', en: 'Code' },
     title: { tr: 'Terminal çıktısı', en: 'Terminal output' },
     lede: {
-      tr: 'Bir komutun çıktısı. Sayılar sayfadaki tablolar ve şekillerle aynı olmalıdır.',
-      en: 'The output of a command. Its numbers must match the tables and figures on the page.',
+      tr: 'Bir komutun çıktısı. Sayılar sayfadaki tablolar ve şekillerle aynı olmalıdır. İçerik dosyasındaki adı output.',
+      en: 'The output of a command. Its numbers must match the tables and figures on the page. Its name in the content file is output.',
     },
     blocks: [{ type: 'output', path: 'out/evaluate.txt' }],
   },
   datafile: {
-    label: { tr: 'datafile', en: 'datafile' },
+    label: { tr: 'Veri', en: 'Data' },
     title: { tr: 'Veri dosyası', en: 'Data file' },
     lede: {
-      tr: 'İndirilebilir bir veri dosyası, tam önizlemesi ve altında bir notla.',
-      en: 'A downloadable data file, with a full preview and a note below.',
+      tr: 'İndirilebilir bir veri dosyası, tam önizlemesi ve altında bir notla. İçerik dosyasındaki adı datafile.',
+      en: 'A downloadable data file, with a full preview and a note below. Its name in the content file is datafile.',
     },
     blocks: [
       {

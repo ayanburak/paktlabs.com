@@ -57,6 +57,9 @@ function blockText(block: Block, language: Language): string[] {
         ...(station.details ?? []).map((paragraph) => paragraph[language]),
       ])
     case 'chart':
+    case 'line':
+    case 'composition':
+    case 'pie':
       return [block.label[language], block.title[language], block.reading[language]]
   }
 }

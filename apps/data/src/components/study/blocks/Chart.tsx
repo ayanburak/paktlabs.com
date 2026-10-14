@@ -2,9 +2,9 @@
 file: Chart.tsx
 importable: Chart
 
-Tek bir soruya cevap veren cubuk sekli. Ustte kucuk etiket, soru ve tek
-cumlelik okuma, ortada sekil, altta istege bagli parcalar, genellikle
-verisini tasiyan acilir kutu. Sekil HTML ve CSS ile cizilir, olceklenen bir
+Tek bir soruya cevap veren cubuk sekli. Etiket, soru, okuma ve altindaki
+parcalar butun sekillerin ortak cercevesi Figure'dan gelir. Sekil HTML ve
+CSS ile cizilir, olceklenen bir
 SVG icindeki yazi dar ekranda okunmayacak kadar kuculurdu. Eksen sifirdan
 baslar ve kesilmez, degerler cubugun hemen ucunda yazar.
 
@@ -13,14 +13,13 @@ description: Dikey ya da yatay cubuk seklini basligi, okumasi ve verisiyle goste
 
 import type { CSSProperties } from 'react'
 
-import { useReveal } from '@paktlabs/brand/hooks/useReveal'
 import { type Language, useLanguage } from '@paktlabs/brand/i18n/language'
 import { cx } from '@paktlabs/brand/lib/cx'
 
 import type { ChartBar, ChartBlock, ChartZone } from '@/content/studies/blocks'
 
-import { BlockView } from './BlockView'
 import styles from './Chart.module.css'
+import { Figure } from './Figure'
 import { formatValue } from './format'
 
 interface PlotProps {
@@ -126,34 +125,27 @@ interface ChartProps {
   block: ChartBlock
 }
 
-// Sekil ekran okuyucuya tek bir gorsel olarak, butun degerleriyle okunan bir
-// aciklamayla tanitilir. Aciklama elle yazilmaz, cubuklardan uretilir,
-// boylece sekil degisince aciklama eskimez.
+// Ekran okuyucunun okudugu aciklama cubuklardan uretilir.
 export function Chart({ block }: ChartProps) {
   const { language } = useLanguage()
-  const { ref, visible } = useReveal<HTMLElement>()
   const description = [
     block.title[language],
     ...block.bars.map((bar) => `${bar.label[language]}: ${formatValue(bar.value, block.unit, block.decimals, language)}`),
   ].join('. ')
 
   return (
-    <figure ref={ref} className={cx('reveal', visible && 'in', styles.figure)}>
-      <figcaption>
-        <span className="eyebrow">{block.label[language]}</span>
-        <h3 className={styles.title}>{block.title[language]}</h3>
-        <p className={styles.reading}>{block.reading[language]}</p>
-      </figcaption>
-      <div role="img" aria-label={description}>
-        {block.direction === 'vertical' ? (
-          <Vertical block={block} language={language} />
-        ) : (
-          <Horizontal block={block} language={language} />
-        )}
-      </div>
-      {block.blocks?.map((inner, index) => (
-        <BlockView key={index} block={inner} />
-      ))}
-    </figure>
+    <Figure
+      label={block.label[language]}
+      title={block.title[language]}
+      reading={block.reading[language]}
+      description={description}
+      blocks={block.blocks}
+    >
+      {block.direction === 'vertical' ? (
+        <Vertical block={block} language={language} />
+      ) : (
+        <Horizontal block={block} language={language} />
+      )}
+    </Figure>
   )
 }

@@ -1,0 +1,118 @@
+/* solda eksen, ortada cizim, sagda serilerin uc etiketleri, altta noktalarin
+   adlari. Cizim alani sabit yukseklikte, cizgi bu alana gore olceklenir */
+.line {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 104px;
+  grid-template-rows: 240px auto;
+}
+.axis {
+  position: relative;
+}
+.axis span {
+  position: absolute;
+  right: 8px;
+  top: var(--y);
+  font: 500 11px/1 var(--font-mono);
+  color: var(--faint);
+  translate: 0 -50%;
+}
+.plot {
+  position: relative;
+  border-left: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+}
+.grid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--y);
+  border-top: 1px solid var(--line);
+}
+/* cizgi kalinligi olcekten etkilenmesin, viewBox yuzlukken kalinlik piksel kalir */
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.svg polyline {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.svg .ink {
+  stroke: var(--ink);
+}
+.svg .gold {
+  stroke: var(--gold);
+}
+.svg .gray {
+  stroke: var(--gray);
+}
+.dot {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  translate: -50% -50%;
+}
+.dot.ink {
+  background: var(--ink);
+}
+.dot.gold {
+  background: var(--gold);
+}
+.dot.gray {
+  background: var(--gray);
+}
+/* deger cizginin ucunda yazar, okur renk aciklamasi aramasin */
+.ends {
+  position: relative;
+}
+.ends span {
+  position: absolute;
+  left: 10px;
+  top: var(--y);
+  font: 400 11.5px/1.25 var(--font-body);
+  color: var(--muted);
+  translate: 0 -50%;
+}
+.ends b {
+  display: block;
+  font: 700 12.5px/1.2 var(--font-mono);
+  color: var(--ink);
+}
+.points {
+  grid-column: 2;
+  position: relative;
+  height: 26px;
+}
+.points span {
+  position: absolute;
+  left: var(--x);
+  top: 8px;
+  font: 500 11px/1 var(--font-mono);
+  color: var(--faint);
+  white-space: nowrap;
+  translate: -50% 0;
+}
+
+@media (max-width: 768px) {
+  .line {
+    grid-template-columns: 34px minmax(0, 1fr) 78px;
+    grid-template-rows: 210px auto;
+  }
+  .axis span,
+  .points span {
+    font-size: 10px;
+  }
+  /* sekizden fazla nokta dar ekranda yan yana sigmaz, adlarin biri atlanir */
+  .dense .points span:nth-child(even) {
+    visibility: hidden;
+  }
+}

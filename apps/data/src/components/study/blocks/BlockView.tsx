@@ -15,14 +15,17 @@ import type { Block } from '@/content/studies/blocks'
 
 import { Chart } from './Chart'
 import { Compare } from './Compare'
+import { Composition } from './Composition'
 import { Decisions } from './Decisions'
 import { Details } from './Details'
 import { Code } from './file/Code'
 import { DataFile } from './file/DataFile'
 import { Output } from './file/Output'
+import { Line } from './Line'
 import { List } from './List'
 import { Note } from './Note'
 import { Paragraph } from './Paragraph'
+import { Pie } from './Pie'
 import { Sheet } from './Sheet'
 import { Stations } from './Stations'
 import { Table } from './Table'
@@ -52,6 +55,12 @@ export function BlockView({ block }: BlockViewProps): ReactElement {
       return <Stations block={block} />
     case 'chart':
       return <Chart block={block} />
+    case 'line':
+      return <Line block={block} />
+    case 'composition':
+      return <Composition block={block} />
+    case 'pie':
+      return <Pie block={block} />
     case 'decisions':
       return <Decisions block={block} />
     case 'timeline':

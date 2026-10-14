@@ -2,7 +2,7 @@
 
 Bu belge data.paktlabs.com'a yeni bir çalışmanın nasıl yazılacağını ve çalışma sayfalarında kullanılabilen parçaları anlatır. Belge, içerik yazılırken açık duracak yerde, çalışma klasörlerinin ve parça tiplerinin tutulduğu `blocks.ts` dosyasının yanında durur. Sitenin sayfa türleri, içerik ilkeleri ve tasarım dili `apps/data/README.md` içinde anlatılır, burada yazılan her şey o ilkelere uyar.
 
-Detay sayfası her çalışmada aynı iskeletle kurulur: kapak ve künye, Sorun, Yaklaşım ve Sonuç bandı, içindekiler, numaralı bölümler, Meraklısına kartı, yazar kutusu ve kapanış. İskeletin içeriği çalışmanın `page.ts` dosyasında yazılır. Bölümlerin içi ise serbesttir. Her bölüm `blocks` listesinde sırayla dizilen parçalardan oluşur. Bir parça içeriği bilmez, adını hikâyeden değil biçimden alır. Hangi parçanın hangi sırayla ve kaç kez kullanılacağı serbesttir, böylece iki çalışmanın sayfası birbirine benzemek zorunda kalmaz. Yeni bir anlatım biçimi gerektiğinde `src/content/studies/blocks.ts` içine yeni bir parça tipi, `src/components/study/blocks/` altına bileşeni eklenir. Eski sayfalara dokunulmaz. Kod, çıktı ve veri dosyası parçalarının ortak bileşenleri `blocks/file/` altında durur. Başka parça taşıyan bir parça eklenirse `childBlocks` içine karşılığı yazılır, parça ağacını gezen her yer `flattenBlocks` ile gezer. Yanlış ya da eksik yazılmış bir parça derleme hatası verir. `tests/data.spec.ts` ayrıca parçaların içeriğini denetler: tablo satırlarının hücre sayısı, şekil bölgeleri ve eksen sınırları, hesap tablosu hücre adresi ve takvim aralığı.
+Detay sayfası her çalışmada aynı iskeletle kurulur: kapak ve künye, Sorun, Yaklaşım ve Sonuç bandı, içindekiler, numaralı bölümler, Meraklısına kartı, yazar kutusu ve kapanış. İskeletin içeriği çalışmanın `page.ts` dosyasında yazılır. Bölümlerin içi ise serbesttir. Her bölüm `blocks` listesinde sırayla dizilen parçalardan oluşur. Bir parça içeriği bilmez, adını hikâyeden değil biçimden alır. Hangi parçanın hangi sırayla ve kaç kez kullanılacağı serbesttir, böylece iki çalışmanın sayfası birbirine benzemek zorunda kalmaz. Yeni bir anlatım biçimi gerektiğinde `src/content/studies/blocks.ts` içine yeni bir parça tipi, `src/components/study/blocks/` altına bileşeni eklenir. Eski sayfalara dokunulmaz. Kod, çıktı ve veri dosyası parçalarının ortak bileşenleri `blocks/file/` altında durur. Başka parça taşıyan bir parça eklenirse `childBlocks` içine karşılığı yazılır, parça ağacını gezen her yer `flattenBlocks` ile gezer. Yanlış ya da eksik yazılmış bir parça derleme hatası verir. `tests/data.spec.ts` ayrıca parçaların içeriğini denetler: tablo satırlarının hücre sayısı, şekil bölgeleri ve eksen sınırları, çizgi serilerinin nokta sayısı, bileşim ve pasta yüzdelerinin toplamı, hesap tablosu hücre adresi ve takvim aralığı.
 
 Her metin iki dili yan yana taşır. Aşağıdaki örneklerde kısalık için yalnızca bir iki alan gösterilir.
 
@@ -133,6 +133,54 @@ Tek bir soruya cevap verir. `label` şeklin üstündeki küçük etikettir, örn
   ticks: [0, 2, 4, 6, 8],
   bars: [{ label: { tr: 'Tedarikçi C', en: 'Supplier C' }, value: 6.2, highlight: true }],
   blocks: [/* açılır kutu ve hesap tablosu */],
+}
+```
+
+## Çizgi şekli
+
+Bir değerin zaman içinde nasıl değiştiğini gösterir: aylar, haftalar, sürümler. Kategorileri karşılaştırmak için değil, eğilimi göstermek için kullanılır, kategoriler için çubuk şekli seçilir. Üstteki etiket, soru, okuma ve altındaki parçalar çubuk şekliyle aynıdır. `points` yatay eksendeki noktaların adlarıdır, `series` çizgilerdir ve her serinin `values` listesi noktalar kadar değer taşır. Eksen sıfırdan `max`'a uzanır ve kesilmez, `ticks` eksende yazan değerlerdir. Her çizginin son değeri ve adı çizginin ucunda yazar, okur ayrı bir renk açıklaması aramaz. Uç etiketleri birbirine çok yakın düşerse kendiliğinden aralanır. `highlight` bir seriyi altın çizer. Vurgusuz ilk seri mürekkep, ondan sonrakiler gri çizilir. En fazla üç seri kullanılır, daha fazlası okunmaz. Sekizden fazla nokta dar ekranda yan yana sığmadığı için orada noktaların adları birer atlanarak yazılır. Ara değerler ekran okuyucuya okunmaz, onlar şeklin altındaki açılır kutudaki tabloda verilir.
+
+```ts
+{
+  type: 'line',
+  label: { tr: 'Şekil 2', en: 'Figure 2' },
+  title: { tr: 'Aylara göre iade oranı', en: 'Return rate by month' },
+  reading: { tr: '…', en: '…' },
+  unit: 'percent',
+  decimals: 1,
+  max: 12,
+  ticks: [0, 4, 8, 12],
+  points: [{ tr: 'Oca', en: 'Jan' }, { tr: 'Şub', en: 'Feb' } /* … */],
+  series: [{ label: { tr: 'İnternet', en: 'Online' }, values: [6.1, 6.4 /* … */], highlight: true }],
+}
+```
+
+## Bileşim çubuğu
+
+Birkaç bütünün parçalara nasıl bölündüğünü alt alta kıyaslar: kaynaklara göre kayıtların akıbeti, yıllara göre bütçenin dağılımı. Her satır ayrı bir bütündür ve yüzde yüzdür. Tek bir bütün anlatılacaksa pasta grafiği seçilir. `parts` parçaların adları ve zeminleridir, en fazla dört parça kullanılır. `style` zemini seçer: `ink` mürekkep, `light` açık gri, `gold` altın, `hatched` taramalı. Altın okurun gözünü tek bir parçaya çekmek için bir kez kullanılır. `rows` satırlardır, her satırın `values` listesi parçalarla aynı sırada yüzdeler taşır ve toplamı yüzdür. Yüzde 8'in altındaki dilimin değeri çubuğun içine sığmadığı için yazılmaz, kesin değerler altındaki açılır kutuda verilir. Ekran okuyucuya bütün değerler okunur.
+
+```ts
+{
+  type: 'composition',
+  label: { tr: 'Şekil 3', en: 'Figure 3' },
+  title: { tr: 'Kaynağa göre kayıtların akıbeti', en: '…' },
+  reading: { tr: '…', en: '…' },
+  parts: [{ label: { tr: 'Birleşti', en: 'Merged' }, style: 'ink' }, { label: { tr: 'Karantina', en: 'Quarantine' }, style: 'hatched' }],
+  rows: [{ label: { tr: 'Tedarikçi C', en: 'Supplier C' }, values: [89, 11] }],
+}
+```
+
+## Pasta grafiği
+
+Tek bir bütünün az sayıda parçaya bölünüşünü bir bakışta gösterir: iade nedenleri, bütçe kalemleri. En fazla beş dilim kullanılır, daha fazlası küçük dilimlerde okunmaz ve "Diğer" diye birleştirilir. Dilimler büyükten küçüğe yazılır, en büyüğü saat on ikiden başlar ve saat yönünde küçülür. Renkler sıradan gelir: mürekkep, altın, gri, açık gri, taramalı. Yüzdeler dilimin üstünde ve sağdaki listede yazar, yüzde 8'in altındaki dilimde yalnızca listede. Dilimlerin toplamı yüzdür. Dar ekranda liste dairenin altına iner.
+
+```ts
+{
+  type: 'pie',
+  label: { tr: 'Şekil 4', en: 'Figure 4' },
+  title: { tr: 'İnternet iadelerinin nedenleri', en: '…' },
+  reading: { tr: '…', en: '…' },
+  slices: [{ label: { tr: 'Ölçü ya da beden uymadı', en: 'Size did not fit' }, value: 38 } /* … */],
 }
 ```
 

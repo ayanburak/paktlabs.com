@@ -1,6 +1,6 @@
 /*
 file: blocks.ts
-importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock, TableBlock, TableCell, StationsBlock, Station, ChartBlock, ChartBar, ChartZone, DecisionsBlock, TimelineBlock, TimelineTask, TreeBlock, TreeGroup, TreeItem, CompareBlock, CompareRow, NoteBlock, CodeBlock, OutputBlock, DataFileBlock, childBlocks, flattenBlocks
+importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock, TableBlock, TableCell, StationsBlock, Station, ChartBlock, ChartBar, ChartZone, LineBlock, LineSeries, CompositionBlock, CompositionPart, CompositionRow, PieBlock, PieSlice, DecisionsBlock, TimelineBlock, TimelineTask, TreeBlock, TreeGroup, TreeItem, CompareBlock, CompareRow, NoteBlock, CodeBlock, OutputBlock, DataFileBlock, childBlocks, flattenBlocks
 
 Calisma sayfalarinin bolumlerine konan parcalarin tipleri. Bir parca icerigi
 bilmez, adini hikayeden degil bicimden alir. Bir bolumde hangi parcanin hangi
@@ -149,6 +149,84 @@ export interface ChartBlock {
   blocks?: Block[]
 }
 
+// Cizgi seklinin bir serisi. values her noktadaki degerdir, noktalarin
+// sayisi seklin points listesiyle ayni olmalidir. highlight seriyi altin
+// cizer, okurun gozunu tek bir seriye cekmek icin. Vurgusuz ilk seri
+// murekkep, ondan sonrakiler gri cizilir.
+export interface LineSeries {
+  label: Localized
+  values: number[]
+  highlight?: true
+}
+
+// Bir degerin zaman icinde nasil degistigini gosteren cizgi sekli. points
+// yatay eksendeki noktalarin adlaridir, aylar ya da haftalar gibi. Eksen
+// sifirdan max'a uzanir ve kesilmez, ticks eksende yazan degerlerdir. Her
+// serinin son degeri ve adi cizginin ucunda yazar, ayrica bir renk
+// aciklamasi aranmaz. En fazla uc seri, daha fazlasi okunmaz.
+export interface LineBlock {
+  type: 'line'
+  label: Localized
+  title: Localized
+  reading: Localized
+  unit: 'percent' | 'count'
+  decimals: number
+  max: number
+  ticks: number[]
+  points: Localized[]
+  series: LineSeries[]
+  blocks?: Block[]
+}
+
+// Bilesim cubugunun bir parcasi. style parcanin zeminidir: ink murekkep,
+// light acik gri, gold altin, hatched taramali. Altin okurun gozunu tek bir
+// parcaya cekmek icin bir kez kullanilir.
+export interface CompositionPart {
+  label: Localized
+  style: 'ink' | 'light' | 'gold' | 'hatched'
+}
+
+// Bilesim cubugunun bir satiri. values parcalarin yuzdeleridir, parcalarla
+// ayni sirada ve toplami yuz.
+export interface CompositionRow {
+  label: Localized
+  values: number[]
+}
+
+// Bir butunun parcalara nasil bolundugunu gosteren yuzde yuzluk cubuklar.
+// Her satir ayri bir butundur, satirlar alt alta kiyaslanir. Dar bir dilimin
+// yuzdesi cubugun icine sigmazsa yazilmaz, kesin degerler altindaki acilir
+// kutuda verilir. En fazla dort parca.
+export interface CompositionBlock {
+  type: 'composition'
+  label: Localized
+  title: Localized
+  reading: Localized
+  parts: CompositionPart[]
+  rows: CompositionRow[]
+  blocks?: Block[]
+}
+
+// Pasta seklinin bir dilimi. value dilimin yuzdesidir.
+export interface PieSlice {
+  label: Localized
+  value: number
+}
+
+// Tek bir butunun az sayida parcaya bolunusu. Dilimler buyukten kucuge
+// yazilir, en buyugu saat on ikiden baslar ve saat yonunde ilerler. Renkler
+// siradan gelir: murekkep, altin, gri, acik gri, taramali. Yuzdeler hem
+// dilimin ustunde hem yanindaki listede yazar, dar dilimde yalnizca listede.
+// En fazla bes dilim, toplami yuz.
+export interface PieBlock {
+  type: 'pie'
+  label: Localized
+  title: Localized
+  reading: Localized
+  slices: PieSlice[]
+  blocks?: Block[]
+}
+
 // Verilen kararlar, alt alta ve numarali. Her kararin sorusu baslik, cevabi
 // paragraf olarak yazilir. Numara siradan cikar, ustundeki kucuk etiketin
 // adi sitenin sozlugunden gelir.
@@ -267,6 +345,9 @@ export type Block =
   | TableBlock
   | StationsBlock
   | ChartBlock
+  | LineBlock
+  | CompositionBlock
+  | PieBlock
   | DecisionsBlock
   | TimelineBlock
   | TreeBlock
@@ -276,7 +357,7 @@ export type Block =
   | OutputBlock
   | DataFileBlock
 
-// Bir parcanin icine konan parcalar. Yalnizca acilir kutu ve sekil baska
+// Bir parcanin icine konan parcalar. Yalnizca acilir kutu ve sekiller baska
 // parca tasir, digerleri bos liste verir. Yeni bir parca tipi icine parca
 // tasiyacaksa karsiligi buraya yazilir, yazilmazsa derleme durur.
 export function childBlocks(block: Block): Block[] {
@@ -284,6 +365,9 @@ export function childBlocks(block: Block): Block[] {
     case 'details':
       return block.blocks
     case 'chart':
+    case 'line':
+    case 'composition':
+    case 'pie':
       return block.blocks ?? []
     case 'paragraph':
     case 'list':
