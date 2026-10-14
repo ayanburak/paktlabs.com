@@ -132,6 +132,18 @@
     },
     "correlation": {
       "note": "Katsayı iki değerin birlikte hareket ettiğini gösterir, birinin ötekine yol açtığını göstermez."
+    },
+    "record": {
+      "field": "Alan",
+      "empty": "boş"
+    },
+    "acceptance": {
+      "criterion": "Ölçüt",
+      "target": "Hedef",
+      "result": "Teslimde",
+      "status": "Durum",
+      "met": "Karşılandı",
+      "missed": "Karşılanmadı"
     }
   },
   "source": {

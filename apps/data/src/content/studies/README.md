@@ -2,7 +2,7 @@
 
 Bu belge data.paktlabs.com'a yeni bir çalışmanın nasıl yazılacağını ve çalışma sayfalarında kullanılabilen parçaları anlatır. Belge, içerik yazılırken açık duracak yerde, çalışma klasörlerinin ve parça tiplerinin tutulduğu `blocks.ts` dosyasının yanında durur. Sitenin sayfa türleri, içerik ilkeleri ve tasarım dili `apps/data/README.md` içinde anlatılır, burada yazılan her şey o ilkelere uyar.
 
-Detay sayfası her çalışmada aynı iskeletle kurulur: kapak ve künye, Sorun, Yaklaşım ve Sonuç bandı, içindekiler, numaralı bölümler, Meraklısına kartı, yazar kutusu ve kapanış. İskeletin içeriği çalışmanın `page.ts` dosyasında yazılır. Bölümlerin içi ise serbesttir. Her bölüm `blocks` listesinde sırayla dizilen parçalardan oluşur. Bir parça içeriği bilmez, adını hikâyeden değil biçimden alır. Hangi parçanın hangi sırayla ve kaç kez kullanılacağı serbesttir, böylece iki çalışmanın sayfası birbirine benzemek zorunda kalmaz. Yeni bir anlatım biçimi gerektiğinde `src/content/studies/blocks.ts` içine yeni bir parça tipi, `src/components/study/blocks/` altına bileşeni eklenir. Eski sayfalara dokunulmaz. Kod, çıktı ve veri dosyası parçalarının ortak bileşenleri `blocks/file/` altında durur. Başka parça taşıyan bir parça eklenirse `childBlocks` içine karşılığı yazılır, parça ağacını gezen her yer `flattenBlocks` ile gezer. Yanlış ya da eksik yazılmış bir parça derleme hatası verir. `tests/data.spec.ts` ayrıca parçaların içeriğini denetler: tablo satırlarının hücre sayısı, şekil bölgeleri ve eksen sınırları, çizgi serilerinin nokta sayısı, bileşim ve pasta yüzdelerinin toplamı, ısı ve korelasyon tablolarının boyutu, karar tablosunun kareliği, hesap tablosu hücre adresi ve takvim aralığı.
+Detay sayfası her çalışmada aynı iskeletle kurulur: kapak ve künye, Sorun, Yaklaşım ve Sonuç bandı, içindekiler, numaralı bölümler, Meraklısına kartı, yazar kutusu ve kapanış. İskeletin içeriği çalışmanın `page.ts` dosyasında yazılır. Bölümlerin içi ise serbesttir. Her bölüm `blocks` listesinde sırayla dizilen parçalardan oluşur. Bir parça içeriği bilmez, adını hikâyeden değil biçimden alır. Hangi parçanın hangi sırayla ve kaç kez kullanılacağı serbesttir, böylece iki çalışmanın sayfası birbirine benzemek zorunda kalmaz. Yeni bir anlatım biçimi gerektiğinde `src/content/studies/blocks.ts` içine yeni bir parça tipi, `src/components/study/blocks/` altına bileşeni eklenir. Eski sayfalara dokunulmaz. Kod, çıktı ve veri dosyası parçalarının ortak bileşenleri `blocks/file/` altında durur. Başka parça taşıyan bir parça eklenirse `childBlocks` içine karşılığı yazılır, parça ağacını gezen her yer `flattenBlocks` ile gezer. Yanlış ya da eksik yazılmış bir parça derleme hatası verir. `tests/data.spec.ts` ayrıca parçaların içeriğini denetler: tablo satırlarının hücre sayısı, şekil bölgeleri ve eksen sınırları, çizgi serilerinin nokta sayısı, bileşim ve pasta yüzdelerinin toplamı, ısı ve korelasyon tablolarının boyutu, karar tablosunun kareliği, adım adım hesabın sonuç satırı, hesap tablosu hücre adresi ve takvim aralığı.
 
 Her metin iki dili yan yana taşır. Aşağıdaki örneklerde kısalık için yalnızca bir iki alan gösterilir.
 
@@ -235,6 +235,51 @@ Bir modelin ya da kuralın kararlarını gerçekle karşılaştırır. Makine ö
     [{ value: 4, text: { tr: 'Yanlışlıkla birleştirildi', en: '…' } }, { value: 966, text: { tr: 'Ayrı tutuldu', en: 'Kept apart' } }],
   ],
   key: [{ title: { tr: 'Kaçırılan', en: 'Missed' }, text: { tr: '…', en: '…' } }],
+}
+```
+
+## Tek kayıt, önce ve sonra
+
+Bir işin tek bir kayda ne yaptığını alan alan gösterir. Okur dönüşümü soyut bir anlatımdan değil somut bir satırdan görür. Hesap tablosu çok satırı, önce ve sonra parçası ölçüleri gösterir, bu parça tek bir kaydı yakından gösterir. `before` ve `after` iki sütunun başlıklarıdır, örneğin Kaynakta ve Normalizasyondan sonra, sitenin dilini izler. `fields` alanlardır. `name` alanın kendi adıdır, kod olduğu için iki dilde aynı yazılır. Alanın `before` ve `after` değerleri verinin parçasıdır ve hesap tablosu gibi verinin dilini izler, okur veri dilini değiştirince değerler de değişir. Değer yoksa yazılmaz, sayfada soluk bir boş yazar. Değişen alanın yeni değerinin solunda altın bir çizgi durur, değişmeyen alan soluk yazılır. İkisi de değerlerin kendisinden çıkar, elle işaretlenmez. `note` tablonun altındaki kısa açıklamadır.
+
+```ts
+{
+  type: 'record',
+  before: { tr: 'Kaynakta', en: 'In the source' },
+  after: { tr: 'Normalizasyondan sonra', en: 'After normalisation' },
+  fields: [
+    { name: 'name', before: { tr: 'VİDA YHB 4X40 ÇİNKO 100LÜ', en: '…' }, after: { tr: 'Vida, yıldız başlı', en: '…' } },
+    { name: 'size', after: { tr: '4 × 40 mm', en: '4 × 40 mm' } },
+  ],
+  note: { tr: '…', en: '…' },
+}
+```
+
+## Adım adım hesap
+
+Bir sayının nereden çıktığını satır satır gösterir: iş yükü, maliyet, kazanılan süre. Böyle bir hesap paragrafın içinde yazıldığında okur sayıları aklında tutmak zorunda kalır. `label`, `title` ve isteğe bağlı `reading` şekillerin üstündekiyle aynı ölçüdedir. `steps` satırlardır. İlk satırın işlemi yazılmaz, sonraki her satırın `op` alanı satırın önündeki işlemdir: `+`, `−`, `×`, `÷` ya da `=`. Son satır sonuçtur, `=` ile başlar ve değeri altın zeminde yazar. `detail` satırın altındaki kısa açıklamadır, sayının nereden geldiğini söyler. `value` değer birimiyle ve sitenin diline göre yazılmış haliyle yazılır, örneğin 23,3 saat ve 23.3 hours. Değerler hesaplanmaz, sayfadaki metinle aynı olmalıdır. Hesap şekil değil düz bir listedir, ekran okuyucu satırları tek tek okur.
+
+```ts
+{
+  type: 'calc',
+  label: { tr: 'Hesap 1', en: 'Calculation 1' },
+  title: { tr: 'İnceleme bandının ekibe yükü', en: '…' },
+  steps: [
+    { label: { tr: 'İncelemeye giden çift', en: '…' }, value: { tr: '14.000', en: '14,000' } },
+    { op: '×', label: { tr: 'Bir çifte bakma süresi', en: '…' }, value: { tr: '6 sn', en: '6 s' } },
+    { op: '=', label: { tr: 'Toplam süre', en: 'Total time' }, value: { tr: '23,3 saat', en: '23.3 hours' } },
+  ],
+}
+```
+
+## Kabul ölçütleri
+
+İşin başında müşteriyle konuşulan hedefleri ve teslimde ölçülen sonuçları yan yana koyar. Önce ve sonra parçası değişimi gösterir, bu parça verilen sözü gösterir. Her satırda `criterion` ölçüt, `target` hedef, `result` teslimdeki sonuçtur, `met` hedefin tutup tutmadığını söyler. Tutmayan bir hedef de yazılır ve durumu Karşılanmadı diye altın zeminde görünür. Bir işin yetersiz kaldığı yer saklanmaz, nedeni sayfanın Bilinen sınırlar bölümünde anlatılır. Sütun başlıkları ve durum etiketleri sitenin sözlüğünden gelir.
+
+```ts
+{
+  type: 'acceptance',
+  rows: [{ criterion: { tr: 'Gecelik çalışma süresi', en: '…' }, target: { tr: '60 dk altı', en: 'under 60 min' }, result: { tr: '41 dk', en: '41 min' }, met: true }],
 }
 ```
 

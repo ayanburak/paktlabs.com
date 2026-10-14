@@ -132,6 +132,18 @@
     },
     "correlation": {
       "note": "A coefficient shows that two values move together, not that one causes the other."
+    },
+    "record": {
+      "field": "Field",
+      "empty": "empty"
+    },
+    "acceptance": {
+      "criterion": "Criterion",
+      "target": "Target",
+      "result": "At handover",
+      "status": "Status",
+      "met": "Met",
+      "missed": "Not met"
     }
   },
   "source": {

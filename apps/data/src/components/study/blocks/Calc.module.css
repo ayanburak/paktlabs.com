@@ -1,0 +1,48 @@
+.steps {
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+}
+.steps li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: baseline;
+  padding: 11px 0;
+}
+.steps li + li {
+  border-top: 1px solid var(--line);
+}
+.op {
+  font: 600 16px/1 var(--font-mono);
+  text-align: center;
+  color: var(--faint);
+}
+.label {
+  font-size: 14.5px;
+  line-height: 1.4;
+}
+.label small {
+  display: block;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.value {
+  font: 500 15px/1 var(--font-mono);
+  text-align: right;
+  white-space: nowrap;
+}
+/* sonuc satiri kalin bir cizgiyle ayrilir, degeri altin zeminde */
+.steps li.result {
+  border-top: 2px solid var(--ink);
+}
+.result .label {
+  font: 700 15px/1.4 var(--font-display);
+}
+.result .value {
+  padding: 5px 8px;
+  font-weight: 700;
+  background: var(--gold);
+}

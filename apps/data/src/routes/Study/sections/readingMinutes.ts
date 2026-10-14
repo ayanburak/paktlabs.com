@@ -44,6 +44,17 @@ function blockText(block: Block, language: Language): string[] {
       return []
     case 'datafile':
       return block.note ? [block.note[language]] : []
+    case 'record':
+      return block.note ? [block.note[language]] : []
+    case 'calc':
+      return [
+        block.label[language],
+        block.title[language],
+        block.reading?.[language] ?? '',
+        ...block.steps.flatMap((step) => [step.label[language], step.detail?.[language] ?? '']),
+      ]
+    case 'acceptance':
+      return block.rows.map((row) => row.criterion[language])
     case 'decisions':
       return block.items.flatMap((item) => [item.title[language], item.text[language]])
     case 'timeline':

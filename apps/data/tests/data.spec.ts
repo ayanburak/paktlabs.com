@@ -12,7 +12,7 @@ kayitli olmali, bolum adresleri de sayfa icinde tekil olmali. Parcalarin
 icerigi de tutarli olmali: tablo satirlarinin hucre sayisi, sekil bolgeleri
 ve eksen sinirlari, cizgi serilerinin nokta sayisi, bilesim ve pasta
 yuzdelerinin toplami, isi ve korelasyon tablolarinin boyutu, karar tablosunun
-kareligi, hesap tablosu hucre adresi ve takvim araligi. Blok
+kareligi, hesabin sonuc satiri, hesap tablosu hucre adresi ve takvim araligi. Blok
 katalogu da calismalarla ayni denetimlerden gecer, ayrica her katalog
 bolumunun kendi parca turunu gosterdigi olculur. Tarayiciya ihtiyac yok,
 dosyalar diskten okunur.
@@ -158,6 +158,12 @@ function blockProblems(block: Block): string[] {
   if (block.type === 'matrix') {
     const n = block.classes.length
     if (block.cells.length !== n || block.cells.some((row) => row.length !== n)) problems.push(`matrix "${block.title.en}" is not ${n} by ${n}`)
+  }
+  // Hesabin son satiri sonuctur ve = ile baslar, ilk satirin islemi olmaz.
+  if (block.type === 'calc') {
+    if (block.steps[0]?.op !== undefined) problems.push(`calc "${block.title.en}" starts with an operation`)
+    if (block.steps[block.steps.length - 1]?.op !== '=') problems.push(`calc "${block.title.en}" does not end with a result line`)
+    if (block.steps.slice(1).some((step) => step.op === undefined)) problems.push(`calc "${block.title.en}" has a line without an operation`)
   }
   if (block.type === 'sheet' && !/^[A-Z]+\d+$/.test(block.cell)) problems.push(`sheet ${block.csv} has bad cell ${block.cell}`)
   if (block.type === 'timeline') {

@@ -425,6 +425,74 @@ export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
       },
     ],
   },
+  record: {
+    label: { tr: 'Veri', en: 'Data' },
+    title: { tr: 'Tek kayıt, önce ve sonra', en: 'One record, before and after' },
+    lede: {
+      tr: 'Bir işin tek bir kayda ne yaptığını alan alan gösterir. Değerler verinin dilini izler, değişen alanlar kendiliğinden işaretlenir. İçerik dosyasındaki adı record.',
+      en: 'Shows field by field what a job did to one record. Values follow the data language and changed fields are marked on their own. Its name in the content file is record.',
+    },
+    blocks: [
+      {
+        type: 'record',
+        before: { tr: 'Kaynakta', en: 'In the source' },
+        after: { tr: 'Normalizasyondan sonra', en: 'After normalisation' },
+        fields: [
+          { name: 'name', before: { tr: 'VİDA YHB 4X40 ÇİNKO 100LÜ', en: 'SCREW PH 4X40 ZINC 100PC' }, after: { tr: 'Vida, yıldız başlı', en: 'Screw, Phillips head' } },
+          { name: 'size', after: { tr: '4 × 40 mm', en: '4 × 40 mm' } },
+          { name: 'finish', after: { tr: 'Çinko', en: 'Zinc' } },
+          { name: 'pack_qty', before: { tr: 'PKT', en: 'PKT' }, after: { tr: '100 adet', en: '100 pieces' } },
+          { name: 'barcode', before: { tr: '8691234500127', en: '8691234500127' }, after: { tr: '8691234500127', en: '8691234500127' } },
+        ],
+        note: {
+          tr: 'Ölçü, kaplama ve paketteki adet adın içinden ayrıştırıldı. Barkod değişmedi.',
+          en: 'Size, finish and pack quantity were parsed out of the name. The barcode did not change.',
+        },
+      },
+    ],
+  },
+  calc: {
+    label: { tr: 'Gerekçe', en: 'Reasoning' },
+    title: { tr: 'Adım adım hesap', en: 'Step by step calculation' },
+    lede: {
+      tr: 'Bir sayının nereden çıktığını satır satır gösterir. Son satır sonuçtur ve altın zeminde yazar. İçerik dosyasındaki adı calc.',
+      en: 'Shows line by line where a number comes from. The last line is the result, written on gold. Its name in the content file is calc.',
+    },
+    blocks: [
+      {
+        type: 'calc',
+        label: { tr: 'Hesap 1', en: 'Calculation 1' },
+        title: { tr: 'İnceleme bandının ekibe yükü', en: 'The review load on the team' },
+        reading: { tr: 'Bant geniş tutulduğunda bile yük günde üç saati geçmiyor.', en: 'Even with a wide band the load stays under three hours a day.' },
+        steps: [
+          { label: { tr: 'İncelemeye giden çift', en: 'Pairs sent to review' }, detail: { tr: '0,55 ile 0,92 arası skor alanlar', en: 'scored between 0.55 and 0.92' }, value: { tr: '14.000', en: '14,000' } },
+          { op: '×', label: { tr: 'Bir çifte bakma süresi', en: 'Time to check one pair' }, detail: { tr: 'ekibin ilk haftasındaki ortalama', en: 'team average in the first week' }, value: { tr: '6 sn', en: '6 s' } },
+          { op: '=', label: { tr: 'Toplam süre', en: 'Total time' }, value: { tr: '23,3 saat', en: '23.3 hours' } },
+          { op: '÷', label: { tr: 'İş günü', en: 'Working days' }, detail: { tr: 'devirden önceki iki hafta', en: 'the two weeks before handover' }, value: { tr: '9', en: '9' } },
+          { op: '=', label: { tr: 'Günlük yük', en: 'Daily load' }, value: { tr: '2,6 saat', en: '2.6 hours' } },
+        ],
+      },
+    ],
+  },
+  acceptance: {
+    label: { tr: 'Sonuç', en: 'Result' },
+    title: { tr: 'Kabul ölçütleri', en: 'Acceptance criteria' },
+    lede: {
+      tr: 'İşin başındaki hedefleri ve teslimde ölçülen sonuçları yan yana koyar. Tutmayan bir hedef de saklanmaz. İçerik dosyasındaki adı acceptance.',
+      en: 'Puts the targets agreed at the start next to the results measured at handover. A missed target is not hidden. Its name in the content file is acceptance.',
+    },
+    blocks: [
+      {
+        type: 'acceptance',
+        rows: [
+          { criterion: { tr: 'Kaçırılan eşleşme, bütün kaynaklar', en: 'Missed matches, all sources' }, target: { tr: "%3'ün altı", en: 'under 3%' }, result: { tr: '%2,4', en: '2.4%' }, met: true },
+          { criterion: { tr: 'Yanlış birleşme', en: 'Wrong merges' }, target: { tr: "%0,5'in altı", en: 'under 0.5%' }, result: { tr: '%0,25', en: '0.25%' }, met: true },
+          { criterion: { tr: 'Gecelik çalışma süresi', en: 'Nightly run time' }, target: { tr: '60 dk altı', en: 'under 60 min' }, result: { tr: '41 dk', en: '41 min' }, met: true },
+          { criterion: { tr: 'Kaçırılan eşleşme, Tedarikçi C', en: 'Missed matches, Supplier C' }, target: { tr: "%3'ün altı", en: 'under 3%' }, result: { tr: '%6,2', en: '6.2%' }, met: false },
+        ],
+      },
+    ],
+  },
   decisions: {
     label: { tr: 'Gerekçe', en: 'Reasoning' },
     title: { tr: 'Karar listesi', en: 'Decision list' },

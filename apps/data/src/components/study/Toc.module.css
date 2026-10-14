@@ -5,6 +5,17 @@
   align-self: start;
   padding: 64px 0 40px;
 }
+/* Bolum sayisi cok olup liste ekrandan uzun duserse kendi icinde kayar,
+   yoksa alttaki bolumlere hic ulasilamazdi, blok katalogunda boyle. Liste
+   ekrana sigiyorsa kaydirma cubugu cikmaz, gorunus degismez. Yalnizca
+   masaustunde, dar ekrandaki barin altindaki okuma cizgisi kutunun disinda
+   durur ve kirpilmamali */
+@media (min-width: 1101px) {
+  .toc {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+}
 
 /* bar yalnizca dar ekranda gorunur */
 .bar {

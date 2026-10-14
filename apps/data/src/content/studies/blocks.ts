@@ -1,6 +1,6 @@
 /*
 file: blocks.ts
-importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock, TableBlock, TableCell, StationsBlock, Station, ChartBlock, ChartBar, ChartZone, LineBlock, LineSeries, CompositionBlock, CompositionPart, CompositionRow, PieBlock, PieSlice, HeatBlock, HeatRow, CorrelationBlock, MatrixBlock, MatrixCell, DecisionsBlock, TimelineBlock, TimelineTask, TreeBlock, TreeGroup, TreeItem, CompareBlock, CompareRow, NoteBlock, CodeBlock, OutputBlock, DataFileBlock, childBlocks, flattenBlocks
+importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock, TableBlock, TableCell, StationsBlock, Station, ChartBlock, ChartBar, ChartZone, LineBlock, LineSeries, CompositionBlock, CompositionPart, CompositionRow, PieBlock, PieSlice, HeatBlock, HeatRow, CorrelationBlock, MatrixBlock, MatrixCell, RecordBlock, RecordField, CalcBlock, CalcStep, AcceptanceBlock, AcceptanceRow, DecisionsBlock, TimelineBlock, TimelineTask, TreeBlock, TreeGroup, TreeItem, CompareBlock, CompareRow, NoteBlock, CodeBlock, OutputBlock, DataFileBlock, childBlocks, flattenBlocks
 
 Calisma sayfalarinin bolumlerine konan parcalarin tipleri. Bir parca icerigi
 bilmez, adini hikayeden degil bicimden alir. Bir bolumde hangi parcanin hangi
@@ -293,6 +293,66 @@ export interface MatrixBlock {
   blocks?: Block[]
 }
 
+// Tek kaydin bir alani. name alanin kendi adidir, kod oldugu icin iki dilde
+// aynidir. before ve after alanin degeri, verinin parcasi sayilir ve verinin
+// dilini izler. Deger yoksa yazilmaz, sayfada bos diye gorunur.
+export interface RecordField {
+  name: string
+  before?: Localized
+  after?: Localized
+}
+
+// Bir isin tek bir kayda ne yaptigini alan alan gosterir. before ve after
+// iki sutunun basliklaridir, ornegin Kaynakta ve Normalizasyondan sonra,
+// sitenin dilini izler. Degisen alanin yeni degerinin solunda altin bir
+// cizgi durur, degismeyen alan soluk yazilir, ikisi de verinin kendisinden
+// cikar. note tablonun altindaki kisa aciklamadir.
+export interface RecordBlock {
+  type: 'record'
+  before: Localized
+  after: Localized
+  fields: RecordField[]
+  note?: Localized
+}
+
+// Hesabin bir satiri. op satirin onundeki islemdir, ilk satirda yazilmaz.
+// label satirin ne oldugu, detail altindaki kisa aciklama, value sonuc
+// sutununda yazan deger, birimiyle ve sitenin diline gore yazilmis haliyle.
+export interface CalcStep {
+  op?: '+' | '−' | '×' | '÷' | '='
+  label: Localized
+  detail?: Localized
+  value: Localized
+}
+
+// Bir sayinin nereden ciktigini satir satir gosteren hesap. Son satir
+// sonuctur, = ile baslar ve degeri altin zeminde yazar. Hesap sayfadaki
+// metinle ayni sayilari tasimalidir.
+export interface CalcBlock {
+  type: 'calc'
+  label: Localized
+  title: Localized
+  reading?: Localized
+  steps: CalcStep[]
+}
+
+// Kabul olcutlerinin bir satiri: olcut, isin basindaki hedef, teslimde
+// olculen sonuc ve hedefin tutup tutmadigi.
+export interface AcceptanceRow {
+  criterion: Localized
+  target: Localized
+  result: Localized
+  met: boolean
+}
+
+// Isin basinda musteriyle konusulan hedefler ve teslimde olculen sonuclar.
+// Tutmayan bir hedef de yazilir, durumu Karsilanmadi diye altin zeminde
+// gorunur. Sutun basliklari ve durum etiketleri sitenin sozlugunden gelir.
+export interface AcceptanceBlock {
+  type: 'acceptance'
+  rows: AcceptanceRow[]
+}
+
 // Verilen kararlar, alt alta ve numarali. Her kararin sorusu baslik, cevabi
 // paragraf olarak yazilir. Numara siradan cikar, ustundeki kucuk etiketin
 // adi sitenin sozlugunden gelir.
@@ -417,6 +477,9 @@ export type Block =
   | HeatBlock
   | CorrelationBlock
   | MatrixBlock
+  | RecordBlock
+  | CalcBlock
+  | AcceptanceBlock
   | DecisionsBlock
   | TimelineBlock
   | TreeBlock
@@ -454,6 +517,9 @@ export function childBlocks(block: Block): Block[] {
     case 'code':
     case 'output':
     case 'datafile':
+    case 'record':
+    case 'calc':
+    case 'acceptance':
       return []
     default: {
       const unreachable: never = block
