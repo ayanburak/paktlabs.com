@@ -20,6 +20,7 @@ description: Blok katalogunda her parca turunu ornek verilerle gosteren bolumler
 
 import type { Block } from '../blocks'
 import type { Chapter } from '../types'
+import { schema } from './schema'
 
 // Bolumun etiketi parcanin kumesidir, Sekil ya da Veri gibi. Tur adi
 // etikete yazilmaz, Turkce sayfada buyuk harfe cevrilince line kelimesindeki
@@ -490,6 +491,72 @@ export const catalog: Record<Block['type'], Omit<Chapter, 'id'>> = {
           { criterion: { tr: 'Gecelik çalışma süresi', en: 'Nightly run time' }, target: { tr: '60 dk altı', en: 'under 60 min' }, result: { tr: '41 dk', en: '41 min' }, met: true },
           { criterion: { tr: 'Kaçırılan eşleşme, Tedarikçi C', en: 'Missed matches, Supplier C' }, target: { tr: "%3'ün altı", en: 'under 3%' }, result: { tr: '%6,2', en: '6.2%' }, met: false },
         ],
+      },
+    ],
+  },
+  schema: {
+    label: { tr: 'Kod', en: 'Code' },
+    title: { tr: 'Veritabanı şeması', en: 'Database schema' },
+    lede: {
+      tr: 'Kurulan veritabanının tablolarını ve bağlarını gösterir. İki görünüşü var: çizim levhası ve ortadaki tablo. Çizgiler yerleşimden kendiliğinden hesaplanır. İçerik dosyasındaki adı schema.',
+      en: 'Shows the tables of a delivered database and how they link. It has two views: the drawing sheet and the central table. Lines are worked out from the layout on their own. Its name in the content file is schema.',
+    },
+    blocks: [
+      {
+        type: 'schema',
+        view: 'plate',
+        schema,
+        layout: ['brand product review_decision', 'supplier supplier_item price_history'],
+        label: { tr: 'Şema 1', en: 'Schema 1' },
+        title: { tr: 'Teslim edilen veritabanının yapısı', en: 'Structure of the delivered database' },
+        reading: {
+          tr: 'Ürün kartı merkezde durur. Kaynaklardan gelen her satır bir ürüne bağlanır, fiyatlar ve inceleme kararları bu satırların etrafında birikir.',
+          en: 'The product card sits at the centre. Every row from the sources links to a product, and prices and review decisions gather around these rows.',
+        },
+        blocks: [
+          {
+            type: 'details',
+            meta: { tr: 'Şema 1 · Ayrıntı', en: 'Schema 1 · Detail' },
+            title: { tr: 'Tabloların bütün sütunları', en: 'Every column of every table' },
+            blocks: schema.tables.map((table) => ({ type: 'dbtable', view: 'columns', schema, table: table.name }) as const),
+          },
+        ],
+      },
+      {
+        type: 'schema',
+        view: 'center',
+        schema,
+        main: 'product',
+        layout: [
+          'brand product review_decision',
+          'brand product review_decision',
+          'supplier supplier_item price_history',
+        ],
+        label: { tr: 'Şema 2', en: 'Schema 2' },
+        title: { tr: 'Aynı veritabanı, ürün kartı ortada', en: 'The same database, product card in the middle' },
+        reading: {
+          tr: 'Ortadaki görünüş tek bir tablonun etrafında dönen şemalar için. Merkezi belli olmayan bir şemada çizim levhası seçilir.',
+          en: 'The central view suits schemas that turn around one table. For a schema without a clear centre, the drawing sheet is used.',
+        },
+      },
+    ],
+  },
+  dbtable: {
+    label: { tr: 'Veri', en: 'Data' },
+    title: { tr: 'Veritabanı tablosu', en: 'Database table' },
+    lede: {
+      tr: 'Hesap tablosunun veritabanındaki karşılığı. Bir tablonun sütun yapısını ya da bir sorgunun sonucunu gösterir. İçerik dosyasındaki adı dbtable.',
+      en: 'The database counterpart of the spreadsheet. Shows the columns of a table or the result of a query. Its name in the content file is dbtable.',
+    },
+    blocks: [
+      { type: 'dbtable', view: 'columns', schema, table: 'supplier_item' },
+      { type: 'dbtable', view: 'rows', schema, table: 'supplier_item', csv: 'supplier-items' },
+      {
+        type: 'paragraph',
+        text: {
+          tr: 'Aynı vida dört kaynakta dört ayrı adla geçiyor. Tedarikçi C tek tek satıyor ve kendi kodunu vermiyor, fiyatı bu yüzden paket fiyatıyla yan yana konamazdı.',
+          en: 'The same screw appears under four names in four sources. Supplier C sells single pieces and gives no code of its own, so its price could not sit next to the pack prices.',
+        },
       },
     ],
   },

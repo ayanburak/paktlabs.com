@@ -2,7 +2,7 @@
 
 Bu belge data.paktlabs.com'a yeni bir çalışmanın nasıl yazılacağını ve çalışma sayfalarında kullanılabilen parçaları anlatır. Belge, içerik yazılırken açık duracak yerde, çalışma klasörlerinin ve parça tiplerinin tutulduğu `blocks.ts` dosyasının yanında durur. Sitenin sayfa türleri, içerik ilkeleri ve tasarım dili `apps/data/README.md` içinde anlatılır, burada yazılan her şey o ilkelere uyar.
 
-Detay sayfası her çalışmada aynı iskeletle kurulur: kapak ve künye, Sorun, Yaklaşım ve Sonuç bandı, içindekiler, numaralı bölümler, Meraklısına kartı, yazar kutusu ve kapanış. İskeletin içeriği çalışmanın `page.ts` dosyasında yazılır. Bölümlerin içi ise serbesttir. Her bölüm `blocks` listesinde sırayla dizilen parçalardan oluşur. Bir parça içeriği bilmez, adını hikâyeden değil biçimden alır. Hangi parçanın hangi sırayla ve kaç kez kullanılacağı serbesttir, böylece iki çalışmanın sayfası birbirine benzemek zorunda kalmaz. Yeni bir anlatım biçimi gerektiğinde `src/content/studies/blocks.ts` içine yeni bir parça tipi, `src/components/study/blocks/` altına bileşeni eklenir. Eski sayfalara dokunulmaz. Kod, çıktı ve veri dosyası parçalarının ortak bileşenleri `blocks/file/` altında durur. Başka parça taşıyan bir parça eklenirse `childBlocks` içine karşılığı yazılır, parça ağacını gezen her yer `flattenBlocks` ile gezer. Yanlış ya da eksik yazılmış bir parça derleme hatası verir. `tests/data.spec.ts` ayrıca parçaların içeriğini denetler: tablo satırlarının hücre sayısı, şekil bölgeleri ve eksen sınırları, çizgi serilerinin nokta sayısı, bileşim ve pasta yüzdelerinin toplamı, ısı ve korelasyon tablolarının boyutu, karar tablosunun kareliği, adım adım hesabın sonuç satırı, hesap tablosu hücre adresi ve takvim aralığı.
+Detay sayfası her çalışmada aynı iskeletle kurulur: kapak ve künye, Sorun, Yaklaşım ve Sonuç bandı, içindekiler, numaralı bölümler, Meraklısına kartı, yazar kutusu ve kapanış. İskeletin içeriği çalışmanın `page.ts` dosyasında yazılır. Bölümlerin içi ise serbesttir. Her bölüm `blocks` listesinde sırayla dizilen parçalardan oluşur. Bir parça içeriği bilmez, adını hikâyeden değil biçimden alır. Hangi parçanın hangi sırayla ve kaç kez kullanılacağı serbesttir, böylece iki çalışmanın sayfası birbirine benzemek zorunda kalmaz. Yeni bir anlatım biçimi gerektiğinde `src/content/studies/blocks.ts` içine yeni bir parça tipi, `src/components/study/blocks/` altına bileşeni eklenir. Eski sayfalara dokunulmaz. Kod, çıktı ve veri dosyası parçalarının ortak bileşenleri `blocks/file/` altında durur. Başka parça taşıyan bir parça eklenirse `childBlocks` içine karşılığı yazılır, parça ağacını gezen her yer `flattenBlocks` ile gezer. Yanlış ya da eksik yazılmış bir parça derleme hatası verir. `tests/data.spec.ts` ayrıca parçaların içeriğini denetler: tablo satırlarının hücre sayısı, şekil bölgeleri ve eksen sınırları, çizgi serilerinin nokta sayısı, bileşim ve pasta yüzdelerinin toplamı, ısı ve korelasyon tablolarının boyutu, karar tablosunun kareliği, adım adım hesabın sonuç satırı, şemanın bağları ve yerleşimi, sorgu sonucunun sütunları, hesap tablosu hücre adresi ve takvim aralığı.
 
 Her metin iki dili yan yana taşır. Aşağıdaki örneklerde kısalık için yalnızca bir iki alan gösterilir.
 
@@ -281,6 +281,57 @@ Bir sayının nereden çıktığını satır satır gösterir: iş yükü, maliy
   type: 'acceptance',
   rows: [{ criterion: { tr: 'Gecelik çalışma süresi', en: '…' }, target: { tr: '60 dk altı', en: 'under 60 min' }, result: { tr: '41 dk', en: '41 min' }, met: true }],
 }
+```
+
+## Veritabanı şeması
+
+Kurulan veritabanının tablolarını ve tabloların birbirine nasıl bağlandığını gösterir. Veritabanı işlerinin vitrinidir. Şema çalışmanın klasöründe `schema.ts` dosyasına bir kez yazılır, şema ve veritabanı tablosu parçaları onu aynı yerden okur, böylece bir sütun iki yerde ayrı ayrı yazılmaz.
+
+`schema.ts` bir `DbSchema` taşır. `engine` veritabanının adıdır, örneğin PostgreSQL. `tables` tablolardır: her tablonun `name` adı, `rows` kayıt sayısı, `brief` tabloyu tanıtan ve özet görünüşte gösterilen sütunları, genellikle bir tane, ve `columns` sütunları vardır. Her sütunun `name` ve `type` alanı kod olduğu için iki dilde aynı yazılır. `pk` tablonun anahtarını, `ref` başka bir tablonun anahtarına bağlanan sütunu işaretler, `tablo.sütun` biçiminde, örneğin `brand.id`. `nullable` sütunun boş kalabildiğini söyler, `note` ne tuttuğunu sitenin diliyle anlatır. `links` her bağın tek cümlelik anlatımıdır, anahtarı bağ sütununun `tablo.sütun` adıdır. Bağların kendisi `ref` alanlarından çıkar, ayrıca yazılmaz.
+
+Parçanın iki görünüşü vardır. `plate` teknik bir çizim levhasıdır: çift çerçeve, sağ altta levhanın adını, veritabanını, tablo ve bağ sayısını taşıyan antet. Tablolarda yalnızca anahtar, bağ ve tanıtan sütunlar görünür, kalanlar +N sütun diye özetlenir. Bağlar kırık çizgilerle çizilir, her bağın çıktığı satırda tablonun kenarında bir numara durur ve levhanın altında o numaranın cümlesi yazar. Aynı anahtara aynı yandan giden bağlar tek bir gövdede birleşir, birleştikleri yerde bir nokta durur. Kesişen iki çizgiden yatay olanı küçük bir köprüyle atlar. Bir boşluktan geçen çizgilerin sırası, üst üste binmeyecek ve en az kesişecek şekilde kendiliğinden seçilir. `center` bir tabloyu ortada, `main` alanında verilen tabloyu, bütün sütunları ve türleriyle büyük bir kart olarak gösterir, ötekiler etrafında yalnızca anahtar ve bağ sütunlarıyla durur ve bağlar karttan karta düz gider. Bu görünüş tek bir tablonun etrafında dönen şemalar içindir, merkezi belli olmayan bir şemada levha seçilir.
+
+`layout` tabloların yerleşimidir ve tek elle yazılan kısımdır. Her satırı boşluklarla ayrılmış tablo adlarından oluşur, CSS'in `grid-template-areas` yazımı gibi okunur. Bir tablo birden çok hücre kaplayabilir, ortadaki tablo görünüşünde ana tablo iki satır boyunca yazılır. Levhada bir bağ yalnızca yan yana iki sütun arasında ya da aynı sütunun içinde çizilebilir, iki sütun atlayan bir bağ için yerleşim değiştirilir, `data.spec.ts` bu durumu yakalar. Çizgiler, şeritler, numaralar, köprüler ve bağ listesi yerleşimden kendiliğinden çıkar. Tablolar sayfa açıldıktan sonra ölçülür, çizgiler ilk anda değil ölçümden sonra gelir. Dar ekranda şema kendi alanında yana kaydırılır. Tabloların bütün sütunları için şeklin altına açılır kutu içinde veritabanı tabloları konur.
+
+```ts
+// schema.ts
+export const schema: DbSchema = {
+  engine: 'PostgreSQL',
+  tables: [
+    {
+      name: 'product',
+      rows: 85850,
+      brief: ['name'],
+      columns: [
+        { name: 'id', type: 'integer', pk: true, note: { tr: 'Ürün kartının kimliği', en: 'Product card id' } },
+        { name: 'brand_id', type: 'integer', ref: 'brand.id', nullable: true, note: { tr: '…', en: '…' } },
+      ],
+    },
+  ],
+  links: { 'product.brand_id': { tr: 'Bir markanın birden çok ürünü olur.', en: 'A brand has many products.' } },
+}
+
+// page.ts
+{
+  type: 'schema',
+  view: 'plate',
+  schema,
+  layout: ['brand product review_decision', 'supplier supplier_item price_history'],
+  label: { tr: 'Şema 1', en: 'Schema 1' },
+  title: { tr: 'Teslim edilen veritabanının yapısı', en: '…' },
+  reading: { tr: '…', en: '…' },
+  blocks: [{ type: 'details', meta: { tr: '…', en: '…' }, title: { tr: 'Tabloların bütün sütunları', en: '…' },
+    blocks: schema.tables.map((table) => ({ type: 'dbtable', view: 'columns', schema, table: table.name }) as const) }],
+}
+```
+
+## Veritabanı tablosu
+
+Hesap tablosunun veritabanındaki karşılığıdır, `schema.ts`'teki şemayı kullanır. Üstte mürekkep bir şerit tablonun adını ve neyin gösterildiğini söyler. `view: 'columns'` tablonun sütun yapısını gösterir: sıra, ad, tür, boş kalabilmesi, bağ ve açıklama, hepsi şemadan gelir, anahtar ve bağ sütunlarının adı altın zeminlidir. `view: 'rows'` bir sorgunun sonucunu gösterir: satırlar çalışmanın data klasöründeki CSV'den gelir ve hesap tablosu gibi verinin dilini izler. CSV'nin ilk satırı sütun adlarıdır, başlıklarda adın altında şemadaki türü yazar, sayı türündeki sütunlar sağa yaslanır, boş hücre NULL olarak görünür. Değerler veritabanından geldiği gibi yazılır, ondalık ayracı her iki dilde de noktadır. Kaynak kusurları hesap tablosundaki gibi düzeltilmeden durur. Sorgunun kendisi gösterilmez, yalnızca sonucu. Dar ekranda tablo kendi alanında yana kaydırılır.
+
+```ts
+{ type: 'dbtable', view: 'columns', schema, table: 'supplier_item' }
+{ type: 'dbtable', view: 'rows', schema, table: 'supplier_item', csv: 'supplier-items' }
 ```
 
 ## Karar listesi

@@ -55,6 +55,10 @@ function blockText(block: Block, language: Language): string[] {
       ]
     case 'acceptance':
       return block.rows.map((row) => row.criterion[language])
+    case 'schema':
+      return [block.label[language], block.title[language], block.reading[language], ...Object.values(block.schema.links).map((text) => text[language])]
+    case 'dbtable':
+      return []
     case 'decisions':
       return block.items.flatMap((item) => [item.title[language], item.text[language]])
     case 'timeline':

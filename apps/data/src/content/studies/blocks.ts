@@ -1,6 +1,6 @@
 /*
 file: blocks.ts
-importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock, TableBlock, TableCell, StationsBlock, Station, ChartBlock, ChartBar, ChartZone, LineBlock, LineSeries, CompositionBlock, CompositionPart, CompositionRow, PieBlock, PieSlice, HeatBlock, HeatRow, CorrelationBlock, MatrixBlock, MatrixCell, RecordBlock, RecordField, CalcBlock, CalcStep, AcceptanceBlock, AcceptanceRow, DecisionsBlock, TimelineBlock, TimelineTask, TreeBlock, TreeGroup, TreeItem, CompareBlock, CompareRow, NoteBlock, CodeBlock, OutputBlock, DataFileBlock, childBlocks, flattenBlocks
+importable: Block, ParagraphBlock, ListBlock, ListItem, DetailsBlock, SheetBlock, TableBlock, TableCell, StationsBlock, Station, ChartBlock, ChartBar, ChartZone, LineBlock, LineSeries, CompositionBlock, CompositionPart, CompositionRow, PieBlock, PieSlice, HeatBlock, HeatRow, CorrelationBlock, MatrixBlock, MatrixCell, RecordBlock, RecordField, CalcBlock, CalcStep, AcceptanceBlock, AcceptanceRow, DbColumn, DbTable, DbSchema, SchemaBlock, DbTableBlock, DecisionsBlock, TimelineBlock, TimelineTask, TreeBlock, TreeGroup, TreeItem, CompareBlock, CompareRow, NoteBlock, CodeBlock, OutputBlock, DataFileBlock, childBlocks, flattenBlocks
 
 Calisma sayfalarinin bolumlerine konan parcalarin tipleri. Bir parca icerigi
 bilmez, adini hikayeden degil bicimden alir. Bir bolumde hangi parcanin hangi
@@ -353,6 +353,77 @@ export interface AcceptanceBlock {
   rows: AcceptanceRow[]
 }
 
+// Veritabani tablosunun bir sutunu. name ve type kod oldugu icin iki dilde
+// aynidir. pk sutunun tablonun anahtari oldugunu, ref baska bir tablonun
+// anahtarina baglandigini soyler, tablo.sutun biciminde, ornegin brand.id.
+// nullable bos kalabildigini, note sutunun ne tuttugunu sitenin diliyle
+// anlatir.
+export interface DbColumn {
+  name: string
+  type: string
+  pk?: true
+  ref?: string
+  nullable?: true
+  note: Localized
+}
+
+// Veritabaninin bir tablosu. rows tablodaki kayit sayisidir. brief semanin
+// ozet halinde anahtar ve bag sutunlarinin yaninda gorunen, tabloyu tanitan
+// sutunlardir, genellikle bir tane. Kalan sutunlar ozette +N sutun olur.
+export interface DbTable {
+  name: string
+  rows: number
+  brief: string[]
+  columns: DbColumn[]
+}
+
+// Bir calismanin veritabani. Calisma klasorunde schema.ts dosyasinda bir kez
+// yazilir, sema ve veritabani tablosu parcalari onu ayni yerden okur. engine
+// veritabaninin adidir, ornegin PostgreSQL. links her bag icin tek cumlelik
+// anlatimdir, anahtari bag sutununun tablo.sutun adidir. Baglar sutunlarin
+// ref alanlarindan cikar, burada yalnizca cumleleri yazilir.
+export interface DbSchema {
+  engine: string
+  tables: DbTable[]
+  links: Record<string, Localized>
+}
+
+// Veritabani semasi, iki gorunusle. plate teknik bir cizim levhasidir: cift
+// cerceve, sag altta antet, tablolarda yalnizca anahtar, bag ve tanitan
+// sutunlar, baglar kirik cizgiyle, her bagin ciktigi satirda bir numara ve
+// levhanin altinda o numaranin cumlesi. center bir tabloyu ortada butun
+// sutunlariyla buyuk bir kart olarak gosterir, otekiler etrafinda yalnizca
+// anahtar ve bag sutunlariyla durur, baglar duz cizgiyle gider. main ortadaki
+// tablodur, yalnizca center'da kullanilir.
+//
+// layout tablolarin yerlesimidir, her satiri bosluklarla ayrilmis tablo
+// adlarindan olusur ve CSS grid-template-areas gibi okunur. Bir tablo birden
+// cok hucre kaplayabilir, center'da ortadaki tablo iki satir boyunca yazilir.
+// Cizgiler, seritler, numaralar ve kopruler yerlesimden kendiliginden cikar.
+// plate'te bir bag yalnizca yan yana iki sutun arasinda ya da ayni sutunda
+// cizilebilir, iki sutun atlayan bag icin yerlesim degistirilir.
+export interface SchemaBlock {
+  type: 'schema'
+  view: 'plate' | 'center'
+  schema: DbSchema
+  layout: string[]
+  main?: string
+  label: Localized
+  title: Localized
+  reading: Localized
+  blocks?: Block[]
+}
+
+// Veritabani tablosu, hesap tablosunun veritabanindaki karsiligi. columns
+// tablonun sutun yapisini gosterir: sira, ad, tur, bos kalabilmesi, bag ve
+// aciklama, hepsi semadan gelir. rows bir sorgunun sonucunu gosterir:
+// satirlar calismanin data klasorundeki CSV'den gelir ve verinin dilini
+// izler, CSV'nin ilk satiri tablonun sutun adlaridir ve sutunlarin turu
+// semadan okunur. Bos hucre NULL olarak gorunur.
+export type DbTableBlock =
+  | { type: 'dbtable'; view: 'columns'; schema: DbSchema; table: string }
+  | { type: 'dbtable'; view: 'rows'; schema: DbSchema; table: string; csv: string }
+
 // Verilen kararlar, alt alta ve numarali. Her kararin sorusu baslik, cevabi
 // paragraf olarak yazilir. Numara siradan cikar, ustundeki kucuk etiketin
 // adi sitenin sozlugunden gelir.
@@ -480,6 +551,8 @@ export type Block =
   | RecordBlock
   | CalcBlock
   | AcceptanceBlock
+  | SchemaBlock
+  | DbTableBlock
   | DecisionsBlock
   | TimelineBlock
   | TreeBlock
@@ -503,6 +576,7 @@ export function childBlocks(block: Block): Block[] {
     case 'heat':
     case 'correlation':
     case 'matrix':
+    case 'schema':
       return block.blocks ?? []
     case 'paragraph':
     case 'list':
@@ -520,6 +594,7 @@ export function childBlocks(block: Block): Block[] {
     case 'record':
     case 'calc':
     case 'acceptance':
+    case 'dbtable':
       return []
     default: {
       const unreachable: never = block

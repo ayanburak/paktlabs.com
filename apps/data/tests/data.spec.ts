@@ -12,7 +12,7 @@ kayitli olmali, bolum adresleri de sayfa icinde tekil olmali. Parcalarin
 icerigi de tutarli olmali: tablo satirlarinin hucre sayisi, sekil bolgeleri
 ve eksen sinirlari, cizgi serilerinin nokta sayisi, bilesim ve pasta
 yuzdelerinin toplami, isi ve korelasyon tablolarinin boyutu, karar tablosunun
-kareligi, hesabin sonuc satiri, hesap tablosu hucre adresi ve takvim araligi. Blok
+kareligi, hesabin sonuc satiri, semanin baglari ve yerlesimi, hesap tablosu hucre adresi ve takvim araligi. Blok
 katalogu da calismalarla ayni denetimlerden gecer, ayrica her katalog
 bolumunun kendi parca turunu gosterdigi olculur. Tarayiciya ihtiyac yok,
 dosyalar diskten okunur.
@@ -31,6 +31,7 @@ import { type Block, flattenBlocks } from '../src/content/studies/blocks'
 import { parseCsv } from '../src/content/studies/csv'
 import { CATALOG_SLUG, studies } from '../src/content/studies'
 import { catalogChapters } from '../src/content/studies/catalog/page'
+import { layoutColumn, schemaLinks } from '../src/content/studies/dbschema'
 import type { Chapter, Study } from '../src/content/studies/types'
 
 const root = join(import.meta.dirname, '../src/content/studies')
@@ -88,6 +89,7 @@ function fileRefs(blocks: Block[]): FileRef[] {
     if (block.type === 'sheet') return [{ kind: 'data', id: block.csv }]
     if (block.type === 'datafile') return [{ kind: 'data', id: block.csv }]
     if (block.type === 'code' || block.type === 'output') return [{ kind: 'code', path: block.path }]
+    if (block.type === 'dbtable' && block.view === 'rows') return [{ kind: 'data', id: block.csv }]
     return []
   })
 }
@@ -165,6 +167,31 @@ function blockProblems(block: Block): string[] {
     if (block.steps[block.steps.length - 1]?.op !== '=') problems.push(`calc "${block.title.en}" does not end with a result line`)
     if (block.steps.slice(1).some((step) => step.op === undefined)) problems.push(`calc "${block.title.en}" has a line without an operation`)
   }
+  // Sema: her bag var olan bir anahtara gider, her bagin cumlesi vardir,
+  // fazladan cumle yoktur, her tablo yerlesimde durur ve levhada bir bag iki
+  // sutun atlamaz, yol bulucu yalnizca yan yana sutunlar arasinda cizer.
+  if (block.type === 'schema') {
+    const names = block.schema.tables.map((table) => table.name)
+    const links = schemaLinks(block.schema)
+    for (const link of links) {
+      const target = block.schema.tables.find((table) => table.name === link.to[0])?.columns.find((column) => column.name === link.to[1])
+      if (!target?.pk) problems.push(`schema link ${link.from.join('.')} points to ${link.to.join('.')}, which is not a key`)
+      if (!link.text) problems.push(`schema link ${link.from.join('.')} has no sentence`)
+      const gap = Math.abs(layoutColumn(block.layout, link.from[0]) - layoutColumn(block.layout, link.to[0]))
+      if (block.view === 'plate' && gap > 1) problems.push(`schema link ${link.from.join('.')} skips a column in the layout`)
+    }
+    for (const key of Object.keys(block.schema.links)) {
+      if (!links.some((link) => link.from.join('.') === key)) problems.push(`schema sentence ${key} has no link`)
+    }
+    for (const name of names) if (layoutColumn(block.layout, name) < 0) problems.push(`schema table ${name} is not in the layout`)
+    const widths = new Set(block.layout.map((row) => row.trim().split(/\s+/).length))
+    if (widths.size !== 1) problems.push('schema layout rows have different lengths')
+    for (const table of block.schema.tables) {
+      for (const brief of table.brief) if (!table.columns.some((column) => column.name === brief)) problems.push(`schema table ${table.name} has unknown brief column ${brief}`)
+    }
+    if (block.view === 'center' && !names.includes(block.main ?? '')) problems.push(`schema center view needs a main table, got ${block.main}`)
+  }
+  if (block.type === 'dbtable' && !block.schema.tables.some((table) => table.name === block.table)) problems.push(`dbtable has unknown table ${block.table}`)
   if (block.type === 'sheet' && !/^[A-Z]+\d+$/.test(block.cell)) problems.push(`sheet ${block.csv} has bad cell ${block.cell}`)
   if (block.type === 'timeline') {
     for (const task of block.tasks) {
@@ -246,6 +273,20 @@ for (const { slug, pages } of subjects) {
       for (const chapter of chapters) {
         for (const block of flattenBlocks(chapter.blocks)) {
           expect(blockProblems(block), `${name}/${chapter.id}/${block.type}`).toEqual([])
+        }
+      }
+    }
+  })
+
+  // Sorgu sonucunun sutun adlari CSV'nin ilk satirindadir, turleri semadan
+  // okunur. Semada olmayan bir sutun sayfada tursuz kalirdi.
+  test(`${slug}: query result columns exist in the schema`, async () => {
+    for (const [, chapters] of await pages()) {
+      for (const block of flattenBlocks(chapters.flatMap((chapter) => chapter.blocks))) {
+        if (block.type !== 'dbtable' || block.view !== 'rows') continue
+        const columns = block.schema.tables.find((table) => table.name === block.table)?.columns.map((column) => column.name) ?? []
+        for (const language of ['tr', 'en']) {
+          for (const name of readCsv(slug, language, block.csv)[0] ?? []) expect(columns, `${block.csv}.csv ${language}`).toContain(name)
         }
       }
     }

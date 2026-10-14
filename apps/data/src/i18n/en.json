@@ -144,6 +144,28 @@
       "status": "Status",
       "met": "Met",
       "missed": "Not met"
+    },
+    "schema": {
+      "rows": "rows",
+      "more": "columns",
+      "engine": "Database",
+      "tables": "Tables",
+      "links": "Links",
+      "ends": "The numbered end is the many side of a link, the end marked 1 is the one side.",
+      "sheet": "Sheet"
+    },
+    "dbtable": {
+      "columns": "Columns",
+      "result": "Query result",
+      "index": "#",
+      "column": "Column",
+      "type": "Type",
+      "nullable": "Nullable",
+      "ref": "Link",
+      "note": "Description",
+      "yes": "yes",
+      "no": "no",
+      "rows": "rows"
     }
   },
   "source": {

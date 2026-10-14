@@ -19,6 +19,7 @@ import { Chart } from './Chart'
 import { Compare } from './Compare'
 import { Composition } from './Composition'
 import { Correlation } from './Correlation'
+import { DbTable } from './DbTable'
 import { Decisions } from './Decisions'
 import { Details } from './Details'
 import { Code } from './file/Code'
@@ -31,6 +32,7 @@ import { Matrix } from './Matrix'
 import { Note } from './Note'
 import { Paragraph } from './Paragraph'
 import { Pie } from './Pie'
+import { Schema } from './schema/Schema'
 import { Sheet } from './Sheet'
 import { SingleRecord } from './SingleRecord'
 import { Stations } from './Stations'
@@ -79,6 +81,10 @@ export function BlockView({ block }: BlockViewProps): ReactElement {
       return <Calc block={block} />
     case 'acceptance':
       return <Acceptance block={block} />
+    case 'schema':
+      return <Schema block={block} />
+    case 'dbtable':
+      return <DbTable block={block} />
     case 'decisions':
       return <Decisions block={block} />
     case 'timeline':

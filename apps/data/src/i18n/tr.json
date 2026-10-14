@@ -144,6 +144,28 @@
       "status": "Durum",
       "met": "Karşılandı",
       "missed": "Karşılanmadı"
+    },
+    "schema": {
+      "rows": "satır",
+      "more": "sütun",
+      "engine": "Veritabanı",
+      "tables": "Tablo",
+      "links": "Bağ",
+      "ends": "Numaralı uç bağın çok tarafı, 1 yazan uç tek tarafıdır.",
+      "sheet": "Levha"
+    },
+    "dbtable": {
+      "columns": "Sütunlar",
+      "result": "Sorgu sonucu",
+      "index": "#",
+      "column": "Sütun",
+      "type": "Tür",
+      "nullable": "Boş olabilir",
+      "ref": "Bağ",
+      "note": "Açıklama",
+      "yes": "evet",
+      "no": "hayır",
+      "rows": "satır"
     }
   },
   "source": {
