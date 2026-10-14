@@ -5,7 +5,8 @@ importable: DataFile
 Indirilebilir bir veri dosyasi: basliginda adi, satir, sutun ve boyutu,
 indirme baglantisi, govdesinde dosyanin tam metni satir numaralariyla,
 altinda bir not. Onizleme ve indirilen dosya ayni dosyadir. Dosya ve adi
-verinin dilini, not sitenin dilini izler.
+verinin dilini, not sitenin dilini izler. Kirk satirdan uzun bir dosya sayfada
+otuz satirlik bir pencerede kendi icinde kayar.
 
 description: Calismanin bir veri dosyasini onizlemesi ve indirme baglantisiyla gosteren parca.
 */
@@ -27,6 +28,12 @@ import { FileFrame } from './FileFrame'
 import { fileText, formatSize } from './fileFormat'
 import { NumberedLines } from './NumberedLines'
 
+// Bu sayidan uzun dosyalar sayfayi boylu boyunca uzatmasin diye kendi
+// icinde kayan bir pencerede durur. Kesit dosyalari bunun altinda kalir ve
+// eskisi gibi tamamen acik gorunur, tam bir fatura gibi yuzlerce satirlik
+// dosyalar pencereye girer.
+const LONG_FILE = 40
+
 interface DataFileProps {
   block: DataFileBlock
 }
@@ -45,6 +52,12 @@ export function DataFile({ block }: DataFileProps) {
   const columns = parseCsv(header)[0]?.length ?? 0
   const size = formatSize(new TextEncoder().encode(file.text).length, site, study.files.bytes)
   const name = block.name[data.language]
+  const lines = (
+    <NumberedLines count={records.length + 1}>
+      <b className={styles.header}>{header}</b>
+      {records.map((record) => `\n${record}`)}
+    </NumberedLines>
+  )
 
   return (
     <div data-datafile>
@@ -53,10 +66,15 @@ export function DataFile({ block }: DataFileProps) {
         meta={`${records.length} ${study.files.lines} · ${columns} ${study.files.columns} · ${size}`}
         action={<DownloadLink url={file.url} name={name} />}
       >
-        <NumberedLines count={records.length + 1}>
-          <b className={styles.header}>{header}</b>
-          {records.map((record) => `\n${record}`)}
-        </NumberedLines>
+        {records.length > LONG_FILE ? (
+          // Klavyeyle de kaydirilabilsin diye pencere odak alir, ekran
+          // okuyucu onu dosyanin adiyla tanitir.
+          <div className={styles.window} tabIndex={0} role="region" aria-label={name}>
+            {lines}
+          </div>
+        ) : (
+          lines
+        )}
       </FileFrame>
       {block.note && <p className={styles.note}>{block.note[site]}</p>}
     </div>

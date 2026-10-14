@@ -516,6 +516,27 @@ export const page: StudyPage = {
           ],
         },
         {
+          type: 'details',
+          meta: { tr: 'Tablo 3 · teslim', en: 'Table 3 · delivered' },
+          title: { tr: 'Veri kalitesi logunun tamamı', en: 'The whole data quality log' },
+          blocks: [
+            {
+              type: 'sheet',
+              csv: 'data-quality-log',
+              name: { tr: 'HF_02_Data_Quality_Log.xlsx', en: 'HF_02_Data_Quality_Log.xlsx' },
+              tabs: { tr: ['Veri kalitesi logu'], en: ['Data quality log'] },
+              cell: 'C47',
+              numbers: ['D', 'F'],
+              notes: [
+                {
+                  tr: "Birleştirme sırasında bulunan her sorun, etkilediği satır sayısı, mümkünse sterlin etkisi ve nasıl ele alındığıyla. Seçili hücre, kapanmayan 533 bin £'lık farkın kaydı. Kişi adları ve bir kişiye işaret eden bir açıklama değiştirildi.",
+                  en: 'Every issue found during consolidation, with the number of rows it affected, its effect in pounds where possible and how it was treated. The selected cell is the entry for the £533k gap that does not close. Person names and one wording that pointed to a person were changed.',
+                },
+              ],
+            },
+          ],
+        },
+        {
           type: 'note',
           label: { tr: 'Yakalanan hata', en: 'Error caught' },
           text: {
@@ -685,7 +706,7 @@ export const page: StudyPage = {
         },
         {
           type: 'details',
-          meta: { tr: 'Tablo 3 · teslim', en: 'Table 3 · delivered' },
+          meta: { tr: 'Tablo 4 · teslim', en: 'Table 4 · delivered' },
           title: { tr: 'Altı platformda sipariş başına ekonomi', en: 'Economics per order on six platforms' },
           blocks: [
             {
@@ -754,7 +775,7 @@ export const page: StudyPage = {
         },
         {
           type: 'details',
-          meta: { tr: 'Tablo 4 · ham veri', en: 'Table 4 · raw data' },
+          meta: { tr: 'Tablo 5 · ham veri', en: 'Table 5 · raw data' },
           title: { tr: 'Bir aylık gümrük ekstresi', en: 'One month of the customs statement' },
           blocks: [
             {
@@ -887,7 +908,7 @@ export const page: StudyPage = {
         },
         {
           type: 'details',
-          meta: { tr: 'Tablo 5 · ham veri', en: 'Table 5 · raw data' },
+          meta: { tr: 'Tablo 6 · ham veri', en: 'Table 6 · raw data' },
           title: { tr: 'Operasyon müdürünün ürün ağacı sayfası', en: 'The operations manager’s bill of materials sheet' },
           blocks: [
             {

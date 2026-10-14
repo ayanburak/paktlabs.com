@@ -1,0 +1,51 @@
+no;kaynak;sorun;etkilenen_satır;örnek;etki_gbp;ele_alınış
+DQ001;BC Item;Legacy Code alanı boş;389;;;kod kuralından dolduruldu
+DQ002;BC Item;Legacy Code alanı kod yapısıyla çelişiyor;17;"HF-ASH-FTST-BI->ASH03-LG; HF-ASH-SOF2-VN->ASH04-VN; HF-BRO-BEDK-BI->BRO06-VE; HF-BRO-TVUN-SO->BRO04-LG; HF-COT-ARMC-VN->COT08-PI";;kod kuralı kullanıldı
+DQ003;BC HF Item Mapping;Eşleme kod yapısıyla çelişiyor, tip numarası yanlış ürüne eşlenmiş;9;"COT08-LG->HF-ASH-FTST-LT; COT19-PS->HF-THO-DESK-NO; GRA02-VN->HF-PEM-SOF2-LO; KEN11-PI->HF-WIN-DCHR-BI; LUD06-WS->HF-MAR-SOF2-WS; NOR17-NO->HF-GRA-FTST-VO";;kod kuralı kullanıldı
+DQ004;BC HF Item Mapping;Eşleme tablosu eksik, ürünlerin yalnızca bir kısmını kapsıyor;514;518 eşleme / 1032 ürün;;kod kuralıyla tamamlandı
+DQ005;BC Customer;Aynı müşteri BC'de iki kartta açılmış;6;"C11007=C10009; C11022=C10072; C11035=C10041; C11037=C10005; C11040=C10045; C11045=C10103";;master_no ile birleştirildi
+DQ006;Sage customers;BC Legacy Account No alanıyla eşlendi;152;;;
+DQ007;Sage customers;Ad ya da benzerlikle eşlendi, BC alanı boştu;24;;;
+DQ008;Sage customers;BC hesabı yok, büyük ihtimalle geçişten önce kapanmış;11;THEO002, THEP001, YEAD001, HOLL001, CANT001, PENR001, CALL002, HOME001, ABBO001, DURH001, EBAY;;S- önekiyle ayrı müşteri olarak tutuldu
+DQ009;Sage SOP lines;Aynı belgede birebir tekrar eden satırlar, yönetim hesapları ancak bunlarla tutuyor;102;örn. belge 40027;93.905,98;dup_flag=1 ile tutuldu, finans ekibine sorulacak
+DQ010;BC Sales Cr.Memo;Neden kodu açıklamayla çelişiyor, örneğin taşıma hasarına PRICE kodu;69;"PRICE:Transit damage - leg; DAMAGE:Agreed discount not applied; PRICE:Damaged on delivery";;analizde açıklama kullanıldı
+DQ011;BC Sales Invoice;Sage dışa aktarımı 23/06/2023'te bitiyor, son hafta BC'ye 01/07/2023 tarihli MIGR faturalarıyla yeniden girilmiş;38;277 satır;302.017,17;Sage ile örtüşme yok, çift sayım yok. Haziran 2023 eksik, Temmuz 2023 fazla görünüyor
+DQ012;MA FY22;Bazı aylarda basılı EBITDA satırların toplamından yuvarlama düzeyinde farklı;8;May-21 -200, Sep-21 +100, Oct-21 -100, Nov-21 -200, Dec-21 -100, Jan-22 +100;;satırların toplamı kullanıldı
+DQ013;MA FY22;Dosya bin GBP cinsinden, öteki yıllar GBP;1;MA FY22 FINAL.xlsx;;1.000 ile çarpıldı
+DQ014;MA FY23;Bazı aylarda basılı EBITDA satırların toplamından yuvarlama düzeyinde farklı;4;Jun-22 +3, Aug-22 +2, Oct-22 -2, Nov-22 +2;;satırların toplamı kullanıldı
+DQ015;MA FY24;Bazı aylarda basılı EBITDA satırların toplamından yuvarlama düzeyinde farklı;2;Apr-23 -2, Feb-24 +2;;satırların toplamı kullanıldı
+DQ016;MA FY25;Bazı aylarda basılı EBITDA satırların toplamından yuvarlama düzeyinde farklı;1;Oct-24 -2;;satırların toplamı kullanıldı
+DQ017;FX rates monthly (CB);EUR kuru komşu aylardan %10’dan fazla sapıyor, yazım hatası;1;2023-11=1.7;;atıldı ve ara değerle dolduruldu
+DQ018;FX rates monthly (CB);EUR kuru eksik;2;2023-11, 2025-07;;ara değer ya da en yakın ay kullanıldı
+DQ019;FX rates monthly (CB);USD kuru eksik;3;2021-07, 2022-12, 2025-07;;ara değer ya da en yakın ay kullanıldı
+DQ020;FX rates monthly (CB);AUD kuru eksik;13;2021-01, 2021-02, 2021-03, 2021-04, 2021-05, 2021-06;;ara değer ya da en yakın ay kullanıldı
+DQ021;Amazon UK;Gönderilmiş sipariş henüz hiçbir ödeme dosyasında yok, büyük ihtimalle Temmuz 2025’ten sonra ödendi;29;;;komisyon ortalama oranla tahmin edildi
+DQ022;Amazon DE;Gönderilmiş sipariş henüz hiçbir ödeme dosyasında yok, büyük ihtimalle Temmuz 2025’ten sonra ödendi;3;;;komisyon ortalama oranla tahmin edildi
+DQ023;Amazon US;Gönderilmiş sipariş henüz hiçbir ödeme dosyasında yok, büyük ihtimalle Temmuz 2025’ten sonra ödendi;7;;;komisyon ortalama oranla tahmin edildi
+DQ024;Wayfair UK;İade durumundaki siparişler BC'de hâlâ gelir, iade ayrıca kesinti olarak geliyor;37;;;gelirde tutuldu, kesinti iade sayıldı
+DQ025;Wayfair US;İade durumundaki siparişler BC'de hâlâ gelir, iade ayrıca kesinti olarak geliyor;29;;;gelirde tutuldu, kesinti iade sayıldı
+DQ026;Shopify exports;Üç aylık dosyalar birbirine taşıyor, aynı sipariş iki dosyada;511;#11837, #11839, #11840, #11842, #11843;;her sipariş numarasının ilk kopyası tutuldu
+DQ027;Shopify;Ürün olmayan satırlar, kumaş koruma ve numune paketleri;1537;PROTECT, WGA, SWATCH;38.692,50;gelirde tutuldu, ürün yok
+DQ028;Shopify;Klarna ve PayPal komisyonları verilen hiçbir kaynakta yok, yalnızca Shopify Payments faturaları var;14540;ödemelerin yaklaşık yarısı Klarna ya da PayPal;;tahmin edilmedi, raporda belirtildi
+DQ029;Meridian jobs;Aynı konteyner referansı iki iş numarasıyla faturalanmış, mükerrer fatura olabilir;2;HF-US-25028, HF-US-25058;8.270,83;tutuldu, depo müdürüne sorulacak
+DQ030;EuroLink invoices;Referans bir siparişe ya da müşteriye bağlanmıyor, kişi adı ya da serbest metin;328;PO5232, 8668, 8178, EX-DISPLAY;203.620,56;aynı ay ve hizmetteki bağlanmış satırların kanal dağılımına göre paylaştırıldı
+DQ031;Panther invoices;Referans bir siparişe ya da müşteriye bağlanmıyor, kişi adı ya da serbest metin;7910;Özel müşteri adları;846.321,60;aynı ay ve hizmetteki bağlanmış satırların kanal dağılımına göre paylaştırıldı
+DQ032;ClearPath;Ticari faturalarda menşe beyanı olduğu halde eksik sayılıp gümrük vergisi ödenmiş;209;;38.759,47;geri istenebilir olarak raporlandı
+DQ033;Staffline invoices;Ajans fatura dosyaları ile BC kayıtları aylara göre farklı, dosya eksik ya da geç kaydedilmiş;26;;;maliyet için BC, saatler için fatura dosyaları kullanıldı
+DQ034;Pricing;1 Nisan 2024'ten sonra 2023 fiyat listesinden kesilen satırlar, 2024 artışı Eylül'e kadar uygulanmamış;5163;2024-04 - 2024-10;349.683,81;satır ayrıntısı an_price_delay tablosunda
+DQ035;Stockist discount matrix;Fatura kesilen müşteri iskonto matrisinde yok;10;S-ABBO001, S-CALL002, S-CANT001, S-DURH001, S-HOLL001, S-HOME001;;
+DQ036;Co-op marketing;Bir bölgedeki üç aylık geriye dönük primler pazarlamaya kodlanmış, anlaşma yok;16;297.131 GBP, Ç4-23..Ç1-25;297.131,00;gelirden indirim olarak yeniden sınıflandırıldı
+DQ037;Returns logs;Sütun adları ve düzen her yıl değişiyor, ürün kod ya da açıklamayla yazılmış;3354;beş dosya, 2021 ile 2025 arası;;tek düzene getirildi
+DQ038;Returns logs;Müşteri adı eşleşmedi, çoğu özel müşteri;1004;Lumb Home ve özel müşteri adları;;
+DQ039;Returns logs;Tahmini maliyet boş;724;;;boş bırakıldı
+DQ040;Returns logs;Maliyet alanında 25 GBP gibi sabit değerler var, büyük ihtimalle yalnızca taşıma;302;;;
+DQ041;BC Production Order;HF Order Type boş;108;;;UNSPECIFIED olarak tutuldu
+DQ042;Scrap and rework log;Karışık tarih biçimleri, gg/aa/yyyy ve gg/aa/yy;569;;;
+DQ043;Stocktakes;Hammadde sayımları sistem miktarlarından çok farklı, bazı kumaşlarda %50’den fazla;52;mutlak fark / sistem = %57;;stok kayıtları güvenilmez, maliyet modelinde stok hareketi kullanılmadı
+DQ044;Stocktakes;Her sayım dosyasında standart maliyet sütunu boş;965;;;sayımlar değerlenemedi
+DQ045;BC Production BOM;Üretim ürün ağacı olmayan ürün;8;HF-ASH-ARMC-WS-X, HF-BRO-BEDS-LG-X, HF-DAL-WRD3-PC-X, HF-ELM-DCHR-WC-X, HF-KEN-BEDK-PS-X, HF-NOR-BKCS-SO-X;;maliyet hesaplanmadı
+DQ046;MA vs BC;Yönetim hesaplarının 4900 satırı BC kredi notlarından büyük, fark ayrıntısı verilmeyen elle kayıtlardan;4;FY23 -161.309, FY24 -82.869, FY25 -165.479, FY26 -123.197;-532.853,58;ayrı satırda gösterildi, muhasebe defteri istendi
+DQ047;MA vs platforms;Haziran 2023 web ve pazar yeri özet faturaları ne Sage'de ne BC'de var;2;"Amazon UK 17.159; Wayfair UK 4.141; web son hafta";21.300,00;platform raporları kullanıldı, yönetim hesapları toplamı etkilenmedi
+DQ048;MA FY23-FY26;Malzeme satırı, 5000, o ay kaydedilen alış faturalarına eşit, stok düzeltmesi yok;36;aylık brüt kâr oranı %13 ile %52 arasında oynuyor;;yalnızca yıllık bakıldı, aylık stok düzeltmesi önerildi
+DQ049;BC Item;Standart maliyetler geçişte, Mayıs 2023'te Sage'den yüklenmiş ve hiç güncellenmemiş;1032;yeniden kurulan maliyetle ortalama fark %23;;BC standart maliyeti kullanılmadı, maliyet ürün ağacı ve alışlardan yeniden kuruldu
+DQ050;BC purchase invoices;Taşıyıcı faturaları 5390 askı hesabına kaydedilmiş, yönetim hesaplarının düzeninde yok;11;;472.137,83;taşıyıcı dosyaları kullanıldı, yönetim hesaplarının taşıma satırları bunları zaten içeriyor

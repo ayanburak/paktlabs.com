@@ -3,6 +3,32 @@
   color: var(--gold);
 }
 
+/* uzun dosyanin penceresi, yaklasik otuz satir. Cerceve govdesi gibi esnek
+   kutudur, numaralar ve metin yan yana kalir. Odaklaninca ortak odak
+   cercevesi gorunur, kaydirma cubugu kod alaninin rengini alir */
+.window {
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  min-width: 0;
+  max-height: 680px;
+  overflow: auto;
+  scrollbar-color: var(--code-faint) transparent;
+}
+
+/* pencere iki yonde de kendisi kayar, yoksa uzun satirlarin yatay cubugu
+   yuzlerce satir asagida, metnin en altinda kalirdi. Numaralar yana
+   kayarken solda sabit durur ve altlarindaki metni ortmek icin cercevenin
+   zeminini alir */
+.window pre {
+  overflow: visible;
+}
+.window pre:first-child {
+  position: sticky;
+  left: 0;
+  background: var(--ink);
+}
+
 .note {
   max-width: 64ch;
   margin-top: 12px;

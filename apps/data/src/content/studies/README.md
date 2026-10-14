@@ -422,7 +422,7 @@ Bir komutun çıktısını kod dosyalarından biraz daha koyu bir zeminde, satı
 
 ## Veri dosyası
 
-İndirilebilir bir veri dosyasını tam önizlemesiyle, indirme bağlantısıyla ve altındaki notla gösterir. `csv` dosyanın `data` klasöründeki kimliğidir, hesap tablosundaki gibi. `name` indirilen ve başlıkta görünen dosya adıdır, verinin dilini izler. `note` sitenin dilini izler. Satır, sütun ve boyut dosyadan hesaplanır.
+İndirilebilir bir veri dosyasını tam önizlemesiyle, indirme bağlantısıyla ve altındaki notla gösterir. `csv` dosyanın `data` klasöründeki kimliğidir, hesap tablosundaki gibi. `name` indirilen ve başlıkta görünen dosya adıdır, verinin dilini izler. `note` sitenin dilini izler. Satır, sütun ve boyut dosyadan hesaplanır. 40 satırdan uzun bir dosya sayfada yaklaşık 30 satırlık, kendi içinde kayan bir pencerede gösterilir. Bu yüzden bir kaynağın tamamı da paylaşılabilir: detay sayfasındaki hesap tablosu kısa bir kesiti, kod sayfasındaki veri dosyası aynı kaynağın tamamını gösterir, ikisi ayrı kimlikle yazılır, örneğin `panther-invoice` ve `panther-invoice-full`.
 
 ```ts
 {

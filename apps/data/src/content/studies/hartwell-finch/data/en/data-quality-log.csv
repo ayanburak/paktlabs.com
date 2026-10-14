@@ -1,0 +1,51 @@
+id;source;issue;rows_affected;example;impact_gbp;treatment
+DQ001;BC Item;Legacy Code field blank;389;;;filled from the code rule
+DQ002;BC Item;Legacy Code field contradicts the code structure;17;"HF-ASH-FTST-BI->ASH03-LG; HF-ASH-SOF2-VN->ASH04-VN; HF-BRO-BEDK-BI->BRO06-VE; HF-BRO-TVUN-SO->BRO04-LG; HF-COT-ARMC-VN->COT08-PI";;code rule used
+DQ003;BC HF Item Mapping;Mapping contradicts the code structure (type number mapped to the wrong product);9;"COT08-LG->HF-ASH-FTST-LT; COT19-PS->HF-THO-DESK-NO; GRA02-VN->HF-PEM-SOF2-LO; KEN11-PI->HF-WIN-DCHR-BI; LUD06-WS->HF-MAR-SOF2-WS; NOR17-NO->HF-GRA-FTST-VO";;code rule used
+DQ004;BC HF Item Mapping;"Mapping table incomplete; covers only part of the range";514;518 mappings / 1032 items;;completed from the code rule
+DQ005;BC Customer;Same customer set up on two BC cards;6;"C11007=C10009; C11022=C10072; C11035=C10041; C11037=C10005; C11040=C10045; C11045=C10103";;merged via master_no
+DQ006;Sage customers;Matched via BC Legacy Account No;152;;;
+DQ007;Sage customers;Matched by name or fuzzy match (BC legacy field was blank);24;;;
+DQ008;Sage customers;"No BC account; most likely closed before go-live";11;THEO002, THEP001, YEAD001, HOLL001, CANT001, PENR001, CALL002, HOME001, ABBO001, DURH001, EBAY;;kept as separate customer with S- prefix
+DQ009;Sage SOP lines;"Identical duplicate lines within the same document; MA totals only reconcile with them included";102;e.g. document 40027;93,905.98;"kept with dup_flag=1; to be confirmed with finance"
+DQ010;BC Sales Cr.Memo;Reason code contradicts the description (e.g. PRICE code for transit damage);69;"PRICE:Transit damage - leg; DAMAGE:Agreed discount not applied; PRICE:Damaged on delivery";;description used in the analysis
+DQ011;BC Sales Invoice;"Sage export stops on 23/06/2023; the last week was re-keyed in BC as MIGR invoices dated 01/07/2023";38;277 lines;302,017.17;No overlap with Sage, so no double count. June 2023 is understated and July 2023 overstated
+DQ012;MA FY22;Printed EBITDA differs from the sum of lines in some months (rounding level);8;May-21 -200, Sep-21 +100, Oct-21 -100, Nov-21 -200, Dec-21 -100, Jan-22 +100;;sum of lines used
+DQ013;MA FY22;"File is in GBP thousands; other years are in GBP";1;MA FY22 FINAL.xlsx;;multiplied by 1,000
+DQ014;MA FY23;Printed EBITDA differs from the sum of lines in some months (rounding level);4;Jun-22 +3, Aug-22 +2, Oct-22 -2, Nov-22 +2;;sum of lines used
+DQ015;MA FY24;Printed EBITDA differs from the sum of lines in some months (rounding level);2;Apr-23 -2, Feb-24 +2;;sum of lines used
+DQ016;MA FY25;Printed EBITDA differs from the sum of lines in some months (rounding level);1;Oct-24 -2;;sum of lines used
+DQ017;FX rates monthly (CB);EUR rate deviates over 10% from neighbouring months (typo);1;2023-11=1.7;;removed and interpolated
+DQ018;FX rates monthly (CB);EUR rate missing;2;2023-11, 2025-07;;interpolated or nearest month
+DQ019;FX rates monthly (CB);USD rate missing;3;2021-07, 2022-12, 2025-07;;interpolated or nearest month
+DQ020;FX rates monthly (CB);AUD rate missing;13;2021-01, 2021-02, 2021-03, 2021-04, 2021-05, 2021-06;;interpolated or nearest month
+DQ021;Amazon UK;Shipped order not yet in any settlement (most likely settled after July 2025);29;;;commission estimated at the average rate
+DQ022;Amazon DE;Shipped order not yet in any settlement (most likely settled after July 2025);3;;;commission estimated at the average rate
+DQ023;Amazon US;Shipped order not yet in any settlement (most likely settled after July 2025);7;;;commission estimated at the average rate
+DQ024;Wayfair UK;"POs with status Returned are still booked as revenue in BC; the return comes back separately as a chargeback";37;;;"kept in revenue; chargeback treated as a refund"
+DQ025;Wayfair US;"POs with status Returned are still booked as revenue in BC; the return comes back separately as a chargeback";29;;;"kept in revenue; chargeback treated as a refund"
+DQ026;Shopify exports;"Quarterly exports overlap; the same order appears in two files";511;#11837, #11839, #11840, #11842, #11843;;first copy kept per order number
+DQ027;Shopify;Non-product lines (fabric protection, swatch packs);1537;PROTECT, WGA, SWATCH;38,692.50;kept in revenue, no item
+DQ028;Shopify;"Klarna and PayPal fees are not in any source provided; only Shopify Payments invoices exist";14540;about half of payments are Klarna or PayPal;;"not estimated; flagged in the report"
+DQ029;Meridian jobs;"Same container reference billed under two job numbers; possible duplicate invoice";2;HF-US-25028, HF-US-25058;8,270.83;"kept; to be confirmed with the warehouse manager"
+DQ030;EuroLink invoices;Reference does not link to an order or customer (person name or free text);328;PO5232, 8668, 8178, EX-DISPLAY;203,620.56;allocated by the channel mix of matched lines for the same month and service
+DQ031;Panther invoices;Reference does not link to an order or customer (person name or free text);7910;Private customer names;846,321.60;allocated by the channel mix of matched lines for the same month and service
+DQ032;ClearPath;Duty paid because the origin statement was treated as missing, although our commercial invoices carry it;209;;38,759.47;reported as reclaimable
+DQ033;Staffline invoices;Agency invoice files and BC postings differ by month (files missing or posted late);26;;;BC used for cost, invoice files for hours
+DQ034;Pricing;"Trade/export lines invoiced off the 2023 price list after 1 April 2024; the 2024 increase was not applied until September";5163;2024-04 - 2024-10;349,683.81;line detail in an_price_delay
+DQ035;Stockist discount matrix;Invoiced customer missing from the discount matrix;10;S-ABBO001, S-CALL002, S-CANT001, S-DURH001, S-HOLL001, S-HOME001;;
+DQ036;Co-op marketing;"Quarterly retro rebates in one region are coded to marketing; no agreements on file";16;297,131 GBP, Q4-23..Q1-25;297,131.00;reclassified as a revenue deduction
+DQ037;Returns logs;"Column names and layout change every year; product given as code or description";3354;five files, 2021 to 2025;;harmonised to one layout
+DQ038;Returns logs;Customer name not matched (mostly private D2C customers);1004;Lumb Home and private customer names;;
+DQ039;Returns logs;Estimated cost blank;724;;;left blank
+DQ040;Returns logs;Cost field holds flat values such as GBP 25 (probably carriage only);302;;;
+DQ041;BC Production Order;HF Order Type blank;108;;;kept as UNSPECIFIED
+DQ042;Scrap and rework log;Mixed date formats (dd/mm/yyyy and dd/mm/yy);569;;;
+DQ043;Stocktakes;Raw material counts differ heavily from system quantities (some fabric lines by over 50%);52;absolute variance / system = 57%;;"stock records unreliable; no stock movement used in the cost model"
+DQ044;Stocktakes;Std cost column blank in every stocktake file;965;;;counts could not be valued
+DQ045;BC Production BOM;Item without a production BOM;8;HF-ASH-ARMC-WS-X, HF-BRO-BEDS-LG-X, HF-DAL-WRD3-PC-X, HF-ELM-DCHR-WC-X, HF-KEN-BEDK-PS-X, HF-NOR-BKCS-SO-X;;no cost computed
+DQ046;MA vs BC;"MA line 4900 is larger than the BC credit memos; the difference is posted by journal with no detail provided";4;FY23 -161,309, FY24 -82,869, FY25 -165,479, FY26 -123,197;-532,853.58;"shown as 'Credit-note journals not in ERP'; G/L detail requested"
+DQ047;MA vs platforms;June 2023 web and marketplace summary invoices are in neither the Sage export nor BC;2;"Amazon UK 17,159; Wayfair UK 4,141; web last week";21,300.00;"platform reports used; MA total unaffected"
+DQ048;MA FY23-FY26;"Materials (5000) equals purchase invoices posted that month; no stock movement adjustment";36;monthly GP% swings between 13% and 52%;;"annual view only; monthly stock adjustment recommended"
+DQ049;BC Item;Standard costs loaded from Sage at go-live (May 2023) and never rolled up;1032;average gap to rebuilt FY25 cost 23%;;"BC standard cost not used; cost rebuilt from BOM and purchases"
+DQ050;BC purchase invoices;Carrier invoices posted to 5390 Carriage suspense (not in the MA layout);11;;472,137.83;"carrier source files used; MA carriage lines already include these"

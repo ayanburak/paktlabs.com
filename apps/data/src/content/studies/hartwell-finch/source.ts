@@ -18,8 +18,8 @@ export const source: SourcePage = {
     en: 'Hartwell & Finch: code and data samples',
   },
   lede: {
-    tr: 'Kârlılık ve veri incelemesinden, paylaşılmasına izin verilen dört kod dosyası ve altı veri kesiti. Kod dosyaları teslim edildikleri gibi duruyor, yalnızca yorumlardaki kişi adları rollerle değiştirildi.',
-    en: 'Four code files and six data excerpts from the profitability and data review that were approved for sharing. The code files are as delivered, only the personal names in the comments were replaced with roles.',
+    tr: 'Kârlılık ve veri incelemesinden, paylaşılmasına izin verilen dört kod dosyası, altı veri kesiti ve üç tam dosya. Kod dosyaları teslim edildikleri gibi duruyor, yalnızca yorumlardaki kişi adları rollerle değiştirildi.',
+    en: 'Four code files, six data excerpts and three complete files from the profitability and data review that were approved for sharing. The code files are as delivered, only the personal names in the comments were replaced with roles.',
   },
   tags: ['Python', 'pandas', 'SQLite', 'openpyxl'],
   facts: [
@@ -37,7 +37,7 @@ export const source: SourcePage = {
     },
     {
       label: { tr: 'Paylaşılan', en: 'Shared' },
-      value: { tr: '4 kod dosyası, 6 veri dosyası', en: '4 code files, 6 data files' },
+      value: { tr: '4 kod dosyası, 9 veri dosyası', en: '4 code files, 9 data files' },
     },
   ],
   chapters: [
@@ -134,10 +134,37 @@ export const source: SourcePage = {
       label: { tr: 'Veri örnekleri', en: 'Data samples' },
       title: { tr: 'Paylaşılan veri kesitleri', en: 'Shared data excerpts' },
       lede: {
-        tr: 'Çalışma sayfasındaki tabloların ham halleri. Her dosya bir kaynağın ya da bir teslim tablosunun kesiti, kişisel bilgiler dışında kaynaktaki gibidir.',
-        en: 'The raw versions of the tables on the study page. Each file is an excerpt of a source or a delivered table and is as in the source apart from personal details.',
+        tr: 'Çalışma sayfasındaki tabloların ham halleri ve kesitlerin alındığı üç dosyanın tamamı. Her dosya kişisel bilgiler dışında kaynaktaki gibidir.',
+        en: 'The raw versions of the tables on the study page and the three complete files the excerpts were taken from. Each file is as in the source apart from personal details.',
       },
       blocks: [
+        {
+          type: 'datafile',
+          csv: 'panther-invoice-full',
+          name: { tr: 'panther_2024-11_tam.csv', en: 'panther_2024-11_full.csv' },
+          note: {
+            tr: 'Kasım 2024 taşıyıcı faturasının tamamı, 865 satır. Bir müşteri hesabına bağlanamayan kişi adları Özel müşteri, posta kodları ilk kısım olarak yazıldı, serbest metindeki bir çalışan adı rolüyle değiştirildi.',
+            en: 'The whole November 2024 carrier invoice, 865 lines. Person names that do not link to a customer account were written as Private customer, postcodes as their first part, and a staff name in free text was replaced with the role.',
+          },
+        },
+        {
+          type: 'datafile',
+          csv: 'clearpath-statement-full',
+          name: { tr: 'clearpath_2025-02_tam.csv', en: 'clearpath_2025-02_full.csv' },
+          note: {
+            tr: 'Şubat 2025 gümrük ekstresinin tamamı, 226 satır. Amazon Almanya siparişlerinin özel alıcıları Özel müşteri olarak yazıldı.',
+            en: 'The whole February 2025 customs statement, 226 lines. Private consignees of Amazon Germany orders were written as Private customer.',
+          },
+        },
+        {
+          type: 'datafile',
+          csv: 'data-quality-log',
+          name: { tr: 'veri_kalitesi_logu.csv', en: 'data_quality_log.csv' },
+          note: {
+            tr: 'Teslim edilen veri kalitesi logunun 50 kaydının tamamı. İki kaydın örnek alanındaki kişi adları ve bir kaydın bir kişiye işaret eden açıklaması değiştirildi.',
+            en: 'All 50 entries of the delivered data quality log. Person names in the example field of two entries and the wording of one entry that pointed to a person were changed.',
+          },
+        },
         {
           type: 'datafile',
           csv: 'panther-invoice',
