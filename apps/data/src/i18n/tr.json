@@ -148,5 +148,20 @@
     "label": "Svg alanı",
     "ratio": "beşe altı",
     "steps": "Ada ile Bit, yerdeki numaralı taşların üzerinden birlikte ilerliyor, Ada bir sonraki taşı gösteriyor."
+  },
+  "catalog": {
+    "title": "Blok kataloğu",
+    "lede": "Çalışma sayfalarında kullanılabilen bütün blokların örnek verilerle çizilmiş hali. Bloklar her çalışmada kullanılmak zorunda değildir, çalışmanın ihtiyacına göre buradan seçilir.",
+    "crumb": {
+      "back": "← Veri",
+      "current": "Katalog"
+    },
+    "facts": {
+      "count": "Blok türü",
+      "guide": "Rehber",
+      "access": "Erişim",
+      "accessValue": "Yalnızca ekip, şifreyle"
+    },
+    "tocNote": "Her blok türü kendi bölümünde, bir çalışma sayfasında duracağı gibi."
   }
 }

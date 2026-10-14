@@ -148,5 +148,20 @@
     "label": "Svg area",
     "ratio": "five by six",
     "steps": "Ada and Bit walk together across numbered stepping stones, Ada points at the next one."
+  },
+  "catalog": {
+    "title": "Block catalogue",
+    "lede": "Every block available on study pages, drawn with sample data. Blocks are not required in every study, they are picked from here as the study needs them.",
+    "crumb": {
+      "back": "← Data",
+      "current": "Catalogue"
+    },
+    "facts": {
+      "count": "Block types",
+      "guide": "Guide",
+      "access": "Access",
+      "accessValue": "Team only, password protected"
+    },
+    "tocNote": "Each block type in its own chapter, as it would appear on a study page."
   }
 }

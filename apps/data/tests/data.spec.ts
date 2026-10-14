@@ -10,8 +10,10 @@ yollarda ayni kod dosyalari bulunmali. Detay sayfasindaki ve kod sayfasindaki
 her parcanin cagirdigi dosya iki dilde var olmali, her kod dosyasinin dili
 kayitli olmali, bolum adresleri de sayfa icinde tekil olmali. Parcalarin
 icerigi de tutarli olmali: tablo satirlarinin hucre sayisi, sekil bolgeleri
-ve eksen sinirlari, hesap tablosu hucre adresi ve takvim araligi. Tarayiciya
-ihtiyac yok, dosyalar diskten okunur.
+ve eksen sinirlari, hesap tablosu hucre adresi ve takvim araligi. Blok
+katalogu da calismalarla ayni denetimlerden gecer, ayrica her katalog
+bolumunun kendi parca turunu gosterdigi olculur. Tarayiciya ihtiyac yok,
+dosyalar diskten okunur.
 
 description: data sitesindeki calisma dosyalarinin iki dilde eslestigini denetleyen testler.
 */
@@ -25,7 +27,8 @@ import { languages } from '@paktlabs/brand/i18n/language'
 import { codeLanguage } from '../src/components/study/blocks/file/languages'
 import { type Block, flattenBlocks } from '../src/content/studies/blocks'
 import { parseCsv } from '../src/content/studies/csv'
-import { studies } from '../src/content/studies'
+import { CATALOG_SLUG, studies } from '../src/content/studies'
+import { catalogChapters } from '../src/content/studies/catalog/page'
 import type { Chapter, Study } from '../src/content/studies/types'
 
 const root = join(import.meta.dirname, '../src/content/studies')
@@ -120,14 +123,30 @@ function blockProblems(block: Block): string[] {
 
 // Calismanin iki sayfasinin bolumleri: detay sayfasi her zaman, kod sayfasi
 // kod sitede paylasiliyorsa.
-async function pages(study: Study): Promise<[string, Chapter[]][]> {
+async function studyPages(study: Study): Promise<[string, Chapter[]][]> {
   const list: [string, Chapter[]][] = [['page', (await study.page()).chapters]]
   if (study.code.kind === 'page') list.push(['source', (await study.code.page()).chapters])
   return list
 }
 
-for (const study of studies) {
-  const { slug } = study
+// Dosyalari ve parcalari denetlenen her sey: calismalar ve blok katalogu.
+// Katalog bir calisma degil ama ayni klasor duzeninde dosya tasir ve ayni
+// parcalari kullanir, bu yuzden ayni denetimlerden gecer.
+const subjects: { slug: string; pages: () => Promise<[string, Chapter[]][]> }[] = [
+  ...studies.map((study) => ({ slug: study.slug, pages: () => studyPages(study) })),
+  { slug: CATALOG_SLUG, pages: async () => [['catalog', catalogChapters]] },
+]
+
+// Katalogda her bolumun id'si bir parca turudur ve bolum o turden en az bir
+// parca tasimalidir. Tur listesinin eksiksiz oldugunu TypeScript zaten
+// denetler, burada bolumun yanlis ture ornek vermedigi olculur.
+test('every catalog chapter shows its own block type', () => {
+  for (const chapter of catalogChapters) {
+    expect(flattenBlocks(chapter.blocks).map((block) => block.type), chapter.id).toContain(chapter.id)
+  }
+})
+
+for (const { slug, pages } of subjects) {
 
   test(`${slug}: both languages have the same data files`, () => {
     expect(csvIds(slug, 'en')).toEqual(csvIds(slug, 'tr'))
@@ -149,14 +168,14 @@ for (const study of studies) {
   // bolum olursa yanlis bolume gidilir. 00 veri dili bolumunun adresi de
   // bir icerik bolumuyle cakismamali.
   test(`${slug}: chapter addresses are unique on each page`, async () => {
-    for (const [name, chapters] of await pages(study)) {
+    for (const [name, chapters] of await pages()) {
       const ids = ['data-language', ...chapters.map((chapter) => chapter.id)]
       expect(new Set(ids).size, name).toBe(ids.length)
     }
   })
 
   test(`${slug}: every block points to a file in both languages`, async () => {
-    for (const [name, chapters] of await pages(study)) {
+    for (const [name, chapters] of await pages()) {
       for (const ref of chapters.flatMap((chapter) => fileRefs(chapter.blocks))) {
         for (const language of ['tr', 'en']) {
           if (ref.kind === 'data') expect(csvIds(slug, language), `${name}: ${ref.id}`).toContain(ref.id)
@@ -167,7 +186,7 @@ for (const study of studies) {
   })
 
   test(`${slug}: block contents are consistent`, async () => {
-    for (const [name, chapters] of await pages(study)) {
+    for (const [name, chapters] of await pages()) {
       for (const chapter of chapters) {
         for (const block of flattenBlocks(chapter.blocks)) {
           expect(blockProblems(block), `${name}/${chapter.id}/${block.type}`).toEqual([])
@@ -179,7 +198,7 @@ for (const study of studies) {
   // Terminal ciktisi renklenmez, onun disindaki her kod dosyasinin dili
   // kayitli olmali, yoksa sayfa o dosyada hata verir.
   test(`${slug}: every code file has a known language`, async () => {
-    for (const [, chapters] of await pages(study)) {
+    for (const [, chapters] of await pages()) {
       for (const block of flattenBlocks(chapters.flatMap((chapter) => chapter.blocks))) {
         if (block.type === 'code') expect(() => codeLanguage(block.path), block.path).not.toThrow()
       }

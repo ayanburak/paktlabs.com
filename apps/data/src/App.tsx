@@ -2,8 +2,9 @@
 file: App.tsx
 importable: App
 
-data.paktlabs.com uc sayfadan olusur: veri sayfasi, calisma detay sayfasi ve
-kod ve veri sayfasi. Rotalar sayfalar yazildikca buraya eklenir.
+data.paktlabs.com'un sayfalari: veri sayfasi, calisma detay sayfasi, kod ve
+veri sayfasi, hizmet sayfalari ve ekibe ozel blok katalogu. Rotalar sayfalar
+yazildikca buraya eklenir.
 
 description: Dil saglayicisini ve rotalari kuran en ust bilesen.
 */
@@ -24,6 +25,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { LanguageProvider } from '@paktlabs/brand/i18n/LanguageProvider'
 
+import { CATALOG_SLUG } from './content/studies'
 import { assetFiles } from './content/studies/assetFiles'
 import { Home } from './routes/Home/Home'
 import { NotFound } from './routes/NotFound/NotFound'
@@ -48,6 +50,9 @@ const router = createBrowserRouter([
       { path: '/work/:slug', element: <Study />, loader: loadStudy },
       { path: '/work/:slug/source', element: <StudySource />, loader: loadSource },
       { path: '/services/:slug', element: <Service /> },
+      // Ekibe ozel blok katalogu, sunucuda sifreyle korunur. Kodu ayri
+      // indirilir, ziyaretcinin acmadigi bir sayfa ana pakete yuk olmasin diye.
+      { path: '/blocks', loader: () => assetFiles.load(CATALOG_SLUG), lazy: () => import('./routes/Blocks/Blocks') },
       { path: '*', element: <NotFound /> },
     ],
   },

@@ -2,7 +2,7 @@
 file: a11y.spec.ts
 
 data'nin bes sayfa turunde, yani veri sayfasi, hizmet sayfasi, calisma detay
-sayfasi, kod sayfasi ve bulunamadi sayfasinda, ekran okuyucunun dayandigi yapiyi ve
+sayfasi, kod sayfasi ve bulunamadi sayfasinda, bir de ekibe ozel blok katalogunda, ekran okuyucunun dayandigi yapiyi ve
 baglantilari denetler. Tek bir h1, atlanmayan baslik seviyeleri, tek main,
 ust bar ve alt bilgi, ust bardaki adreslerin dogru yere gitmesi ve sayfada bos
 ya da yeni sekmede acilan baglanti kalmamasi. Adresler bilerek elle yazili, ortak expected.ts dosyasindan gelir.
@@ -16,9 +16,17 @@ description: data sitesinin baslik sirasi, sayfa bolgeleri, baglanti ve klavye t
 import { expect, test } from '@playwright/test'
 import { contactPage, disciplineUrls } from '@paktlabs/config/testing/expected'
 
-import { dict, languages, openPage } from './support'
+import { catalogReachable, dict, languages, openPage } from './support'
 
-const pages = ['/', '/work/demo-data', '/work/demo-data/source', '/services/preparation', '/yok']
+// Blok katalogu canlida sifreli, sifre verilmeden yalnizca yerelde olculur.
+const pages = [
+  '/',
+  '/work/demo-data',
+  '/work/demo-data/source',
+  '/services/preparation',
+  '/yok',
+  ...(catalogReachable ? ['/blocks'] : []),
+]
 
 const headerLinks = [disciplineUrls.data, disciplineUrls.automation, disciplineUrls.web, contactPage]
 

@@ -30,6 +30,11 @@ export const dict = {
   en: { ...brandEn, ...en },
 }
 
+// Blok katalogu canlida sifreyle korunur. Yerel derlemede her zaman acik,
+// canliya karsi test calisirken ancak sifre verilmisse acilir. Sifreyi ortak
+// test ayari istege ekler.
+export const catalogReachable = !process.env.LIVE_URL || !!process.env.BLOCKS_PASSWORD
+
 // lang verilirse tercih her sayfa yuklemesinden once localStorage'a yazilir.
 // Sayfa acildiktan sonra font ve gorseller de beklenir, olcumler satir
 // kirilimina ve gorsel yuksekligine gore degisebilir.

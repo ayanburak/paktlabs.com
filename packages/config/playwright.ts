@@ -41,6 +41,14 @@ export function siteTestConfig({ port }: TestOptions) {
       browserName: 'chromium',
       deviceScaleFactor: 1,
       trace: 'retain-on-failure',
+      // data'nin blok katalogu canlida nginx'in sifre korumasinin arkasinda.
+      // Ikisi de verilirse tarayici sifre soruldugunda bunlari gonderir,
+      // verilmezse katalog testleri kendiliginden atlanir. Sifre hicbir
+      // dosyaya yazilmaz, yalnizca komutu calistiran kisinin ortaminda durur.
+      httpCredentials:
+        process.env.BLOCKS_USER && process.env.BLOCKS_PASSWORD
+          ? { username: process.env.BLOCKS_USER, password: process.env.BLOCKS_PASSWORD }
+          : undefined,
     },
     expect: {
       toHaveScreenshot: { animations: 'disabled', maxDiffPixelRatio: 0 },

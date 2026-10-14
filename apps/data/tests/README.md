@@ -31,6 +31,8 @@ Playwright önce `vite build` ile derleme alır ve onu `vite preview` ile 4174 p
 
 `visual.spec.ts` beş sayfa türünün onaylı görünümünü Türkçe ve İngilizce tam sayfa referanslarla karşılaştırır. Veri sayfası ve bulunamadı sayfası landing'deki gibi 390×844, 1024×1366, 1366×1024 ve 1920×1080 ölçülerinde çekilir. Hizmet sayfası altı hizmette aynı kalıbı kullandığı için yalnızca Veri Hazırlama örneğiyle çekilir. Hizmet, detay ve kod sayfaları uzun olduğu için (detay ve kod sayfaları on iki ile on sekiz bin piksel boyundadır) yalnızca 390×844 ve 1366×1024'te çekilir. Bu iki ölçü iki sayfanın telefon ve masaüstü düzenini kapsar, öteki ölçüler aynı düzenleri tekrar edip repoyu büyütüyordu. Detay sayfasındaki açılır kutular kapalı çekilir, tabloların içeriğini davranış testleri denetler. Referanslar `visual.spec.ts-snapshots/` altında commit'lenir, CI bu testleri çalıştırmaz.
 
+`blocks.spec.ts` ekibe özel blok kataloğunu denetler: sayfa iki dilde hatasız açılmalı, katalogdaki her bölüm seçili dildeki adıyla çizilmeli. Her bölümün görsel referansı ayrı tutulur, 1440 ve 390 piksel genişlikte, yalnızca Türkçe. Bir parçanın görünüşü değişirse fark yalnızca o bölümün referansında görünür. Yeni bir parça henüz hiçbir çalışmada kullanılmıyorsa sitedeki tek görsel ölçümü bu referanslardır. Referanslar `blocks.spec.ts-snapshots/` altındadır. `a11y.spec.ts` kataloğun başlık sırasını ve sayfa bölgelerini de öteki sayfalar gibi ölçer.
+
 `support.ts` sayfayı istenen dil tercihiyle açan `openPage`'i ve data ile brand sözlüklerini birleştiren `dict`'i taşır. `openPage` sayfa açıldıktan sonra fontların ve görsellerin yüklenmesini de bekler, böylece ölçüm ve görüntü yedek fontla alınmaz.
 
 İki sitenin ortak yardımcıları `packages/config/testing/` altındadır. `expected.ts` beklenen adresleri ve hizmet listesini elle yazılı tek yerde tutar, uygulamanın kendi adres dosyasından okunmaz, böylece yanlış yazılmış bir adres testi de geçirmez. `support.ts` dil listesini, `waitForAssets`'i, `required`'ı (`null` dönebilen değeri `!` yerine açık hatayla alır) ve derlenmiş CSS denetimini taşır. Spec dosyaları bunları `@paktlabs/config/testing/expected` ve `@paktlabs/config/testing/support` yoluyla alır.
@@ -50,6 +52,8 @@ Fontlar Google Fonts üzerinden ağdan yüklenir, görsel testler fontların ve 
 ## Canlıya karşı çalıştırma
 
 `npm run test:live` aynı davranış testlerini build almadan, `LIVE_URL` ile verilen adrese karşı çalıştırır. Görsel testler dışarıda kalır. Yayından sonra canlının beklendiği gibi davrandığını görmek için kullanılır, canlı sunucuyu yormamak için bu kipte yeniden deneme bir, paralel çalışma iki olur. Yerel bir önizlemeye karşı da denenebilir: `LIVE_URL=http://localhost:4173 npx playwright test --grep-invert @visual`.
+
+Blok kataloğu canlıda şifreyle korunduğu için katalog testleri bu kipte varsayılan olarak atlanır. Şifre verilirse onlar da canlıya karşı çalışır: `BLOCKS_USER=<kullanıcı> BLOCKS_PASSWORD=<şifre> npm run test:live`. Şifre hiçbir dosyaya yazılmaz, yalnızca komutu çalıştıran kişinin terminalinde durur.
 
 ## Derlenmiş CSS denetimi
 

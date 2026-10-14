@@ -1,6 +1,6 @@
 /*
 file: index.ts
-importable: studies, findStudy
+importable: studies, findStudy, CATALOG_SLUG
 
 Sitedeki butun calismalarin tek listesi. Veri sayfasindaki kartlar ve detay
 sayfasindaki sonraki calisma baglantisi bu listeyi okur. Yeni bir calisma kendi
@@ -21,6 +21,11 @@ import type { Study } from './types'
 // gorunmuyor. Kartin tasarimi StudyCard'da duruyor, bir calismanin facts alanina
 // feature yazilinca yeniden gorunur.
 export const studies: Study[] = [demoData].sort((a, b) => a.number.localeCompare(b.number))
+
+// Blok katalogunun ornek dosyalari da bu klasorde, kendi alt klasorunde
+// durur ve calisma dosyalari gibi bu adla yuklenir. Katalog bir calisma
+// degildir, yukaridaki listeye girmez, /work adresinden acilmaz.
+export const CATALOG_SLUG = 'catalog'
 
 // Adresteki slug her zaman bir calismaya karsilik gelmeyebilir, eski ya da
 // yanlis yazilmis bir baglanti olabilir. O durumda undefined doner ve rota
