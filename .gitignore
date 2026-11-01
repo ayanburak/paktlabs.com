@@ -1,6 +1,21 @@
 # workspaces bagimliliklari kokte tek node_modules altinda toplanir
 node_modules/
 
+# sitelerin derleme ciktisi ve Vite'in lokal ortam dosyalari
+dist/
+*.local
+
+# Playwright calisma ciktilari, referans snapshot'lar tests/ altinda commit'lenir
+test-results/
+playwright-report/
+
+# npm ve araclarin kayit dosyalari
+*.log
+
+# editor klasorleri
+.vscode/
+.idea/
+
 # iletisim servisinin Python ortami ve lokal veritabani. Lokalde gelen
 # deneme mesajlari kisisel veri gibi davranilir, repoya girmez
 .venv/

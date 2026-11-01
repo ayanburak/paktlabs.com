@@ -12,6 +12,11 @@ on:
     branches: [main]
   pull_request:
 
+# Islerin hicbiri repoya yazmaz. Token yalnizca okuma yetkisi tasir, public
+# repoda disaridan gelen bir pull request de bundan fazlasini alamaz.
+permissions:
+  contents: read
+
 jobs:
   lint:
     runs-on: ubuntu-24.04
