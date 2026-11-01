@@ -11,6 +11,7 @@ icin SMTP ayari eksik bir servis acilirken hata verir.
     CONTACT_DB_PATH      veritabani dosyasi, varsayilan data/messages.sqlite3
     CONTACT_MAIL_TO      bildirimin gidecegi adres, varsayilan info@paktlabs.com
     CONTACT_KEEP_DAYS    mesajlarin kac gun saklanacagi, varsayilan 730
+    CONTACT_DAILY_LIMIT  son yirmi dort saatte kabul edilen en fazla mesaj, varsayilan 50
     CONTACT_MAILER       smtp ya da console, varsayilan smtp
     SMTP_HOST            smtp iken zorunlu
     SMTP_PORT            varsayilan 465, SSL ile baglanilir
@@ -30,6 +31,11 @@ from typing import Literal, get_args
 # metin de degismeli.
 DEFAULT_KEEP_DAYS = 730
 
+# Gercek bir ziyaretci akisi gunde birkac mesajdir. Elli, kampanya gibi bir
+# yogunlukta bile yeter, ama formu dolduran bir botun info@ hesabinin gunluk
+# gonderim kotasini tuketmesine ve veritabanini sisirmesine izin vermez.
+DEFAULT_DAILY_LIMIT = 50
+
 MailerKind = Literal["smtp", "console"]
 
 
@@ -47,6 +53,7 @@ class Settings:
     db_path: Path
     mail_to: str
     keep_days: int
+    daily_limit: int
     mailer: MailerKind
     smtp_host: str | None
     smtp_port: int
@@ -75,6 +82,7 @@ def load_settings(env: Mapping[str, str] = os.environ) -> Settings:
         db_path=Path(env.get("CONTACT_DB_PATH", "data/messages.sqlite3")),
         mail_to=env.get("CONTACT_MAIL_TO", "info@paktlabs.com"),
         keep_days=int(env.get("CONTACT_KEEP_DAYS", DEFAULT_KEEP_DAYS)),
+        daily_limit=int(env.get("CONTACT_DAILY_LIMIT", DEFAULT_DAILY_LIMIT)),
         mailer=mailer,
         smtp_host=env.get("SMTP_HOST") or None,
         smtp_port=int(env.get("SMTP_PORT", "465")),

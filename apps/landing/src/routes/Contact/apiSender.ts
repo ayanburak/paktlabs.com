@@ -12,7 +12,7 @@ description: Iletisim mesajini /api/contact adresine gonderen gonderici.
 import type { MessageSender } from './sender'
 
 // Servis basarida 204 doner. Denetimden gecmeyen mesajda 422, gonderim
-// sinirina takilan istekte nginx 429 dondurur. Basarisiz her durumda hata
+// sinirina takilan istekte nginx, gunluk sinir dolunca servis 429 dondurur. Basarisiz her durumda hata
 // firlatilir, form o zaman ziyaretciye dogrudan yazabilecegi adresi gosterir.
 // Formun denetimleri servisinkilerle ayni oldugu icin 422 normal bir
 // ziyaretcide beklenmez, metin uzunluklari limits.ts dosyasinda tek yerde durur.

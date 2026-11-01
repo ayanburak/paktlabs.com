@@ -59,6 +59,7 @@ def settings(tmp_path: Path) -> Settings:
         db_path=tmp_path / "messages.sqlite3",
         mail_to="info@paktlabs.com",
         keep_days=730,
+        daily_limit=50,
         mailer="console",
         smtp_host=None,
         smtp_port=465,
@@ -67,21 +68,21 @@ def settings(tmp_path: Path) -> Settings:
     )
 
 
-@pytest.fixture
 # settings ile ayni dosyayi acar, testler depoya dogrudan da bakabilir.
+@pytest.fixture
 def store(settings: Settings) -> MessageStore:
     return MessageStore(settings.db_path)
 
 
-@pytest.fixture
 # Basarili sahte gonderici. Hata isteyen testler FakeMailer'i fail ile kendisi
 # kurar.
+@pytest.fixture
 def mailer() -> FakeMailer:
     return FakeMailer()
 
 
-@pytest.fixture
 # Uygulama ayni depo ve gondericiyle kurulur, testler istegin sonucunu
 # ikisinden de okuyabilir.
+@pytest.fixture
 def client(settings: Settings, store: MessageStore, mailer: FakeMailer) -> TestClient:
     return TestClient(create_app(settings, store, mailer))

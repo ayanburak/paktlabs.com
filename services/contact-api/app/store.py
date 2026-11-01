@@ -112,6 +112,15 @@ class MessageStore:
             )
             return int(cursor.lastrowid)
 
+    # Gunluk sinir buna bakar. Tuzak alanla gelen mesajlar hic kaydedilmedigi
+    # icin sayiya girmez, botun tuzaga dusen istekleri gercek ziyaretcinin
+    # payini yemez.
+    def count_since(self, hours: int) -> int:
+        """Son verilen saat icinde kaydedilen mesaj sayisini dondurur."""
+        limit = (datetime.now(timezone.utc) - timedelta(hours=hours)).isoformat(timespec="seconds")
+        with closing(self._connect()) as db:
+            return db.execute("SELECT COUNT(*) FROM messages WHERE received_at >= ?", (limit,)).fetchone()[0]
+
     # Yalnizca bildirim gercekten iletildikten sonra cagrilir.
     def mark_mailed(self, message_id: int) -> None:
         """Mesajin bildiriminin gonderildigini isaretler."""

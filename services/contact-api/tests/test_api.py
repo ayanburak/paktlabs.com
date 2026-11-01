@@ -3,10 +3,15 @@ file: test_api.py
 
 Servisin iki adresini denetler: gecerli mesajin kaydedilip bildirildigini,
 denetimden gecmeyen mesajin reddedildigini, tuzak alanin mesaji sessizce
-dusurdugunu ve posta sunucusu cevap vermezse mesajin kayitta kaldigini.
+dusurdugunu, gunluk sinirin yeni mesajlari durdurdugunu ve posta sunucusu
+cevap vermezse mesajin kayitta kaldigini.
 
 description: Iletisim servisinin adreslerini ve mesaj denetimlerini sinayan testler.
 """
+
+import sqlite3
+from contextlib import closing
+from dataclasses import replace
 
 import pytest
 from fastapi.testclient import TestClient
@@ -20,13 +25,13 @@ from app.store import MessageStore
 from .conftest import FakeMailer, valid_payload
 
 
+# Yayin script'i yeni surumu bu adrese bakarak dogrular, cevabin sekli
+# degismemeli.
 def test_health(client: TestClient) -> None:
     response = client.get("/api/health")
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
 
-# Yayin script'i yeni surumu bu adrese bakarak dogrular, cevabin sekli
-# degismemeli.
 
 # TestClient arka plan islerini cevaptan hemen sonra calistirir, bildirim
 # bu yuzden test icinde gorunur.
@@ -42,21 +47,21 @@ def test_valid_message_is_stored_and_mailed(client: TestClient, store: MessageSt
     assert message_id == 1
 
 
+# Bastaki ve sondaki bosluklar silinir, kopyala yapistirla gelen bir bosluk
+# gecerli bir adresi reddettirmesin.
 def test_text_is_trimmed(client: TestClient, mailer: FakeMailer) -> None:
     payload = valid_payload() | {"name": "  Ayse  ", "email": " ayse@ornek.com "}
     assert client.post("/api/contact", json=payload).status_code == 204
     assert mailer.sent[0][1].name == "Ayse"
     assert mailer.sent[0][1].email == "ayse@ornek.com"
-# Bastaki ve sondaki bosluklar silinir, kopyala yapistirla gelen bir bosluk
-# gecerli bir adresi reddettirmesin.
 
 
+# Sirket alani formda bos birakilabilir, govdede hic olmamasi da gecerli.
 def test_company_is_optional(client: TestClient) -> None:
     payload = valid_payload()
     del payload["company"]
     assert client.post("/api/contact", json=payload).status_code == 204
 
-# Sirket alani formda bos birakilabilir, govdede hic olmamasi da gecerli.
 
 # Her satir gecerli govdenin tek bir alanini bozar. Hicbiri kaydedilmemeli.
 @pytest.mark.parametrize(
@@ -88,14 +93,46 @@ def test_invalid_message_is_rejected(client: TestClient, store: MessageStore, ma
     assert store.unmailed() == []
 
 
+# Tuzak alan doluysa bot yakalandigini anlamasin diye ayni 204 doner ama
+# hicbir sey kaydedilmez ve iletilmez.
 def test_honeypot_is_accepted_but_dropped(client: TestClient, store: MessageStore, mailer: FakeMailer) -> None:
     response = client.post("/api/contact", json=valid_payload() | {"website": "https://spam.example"})
 
     assert response.status_code == 204
     assert mailer.sent == []
-# Tuzak alan doluysa bot yakalandigini anlamasin diye ayni 204 doner ama
-# hicbir sey kaydedilmez ve iletilmez.
     assert store.unmailed() == []
+
+
+# Sinir dolunca yeni mesaj kaydedilmez ve iletilmez, form 429'u gorup
+# ziyaretciye dogrudan adresi gosterir.
+def test_daily_limit_stops_new_messages(settings: Settings, store: MessageStore, mailer: FakeMailer) -> None:
+    client = TestClient(create_app(replace(settings, daily_limit=2), store, mailer))
+
+    assert client.post("/api/contact", json=valid_payload()).status_code == 204
+    assert client.post("/api/contact", json=valid_payload()).status_code == 204
+    assert client.post("/api/contact", json=valid_payload()).status_code == 429
+    assert len(mailer.sent) == 2
+    assert store.count_since(24) == 2
+
+
+# Yirmi dort saatten eski mesajlar sayilmaz, sinir kayan bir pencere.
+def test_daily_limit_ignores_older_messages(settings: Settings, store: MessageStore, mailer: FakeMailer) -> None:
+    old = store.add(ContactIn(**valid_payload()))
+    with closing(sqlite3.connect(store.path)) as db, db:
+        db.execute("UPDATE messages SET received_at = '2020-01-01T00:00:00+00:00' WHERE id = ?", (old,))
+    client = TestClient(create_app(replace(settings, daily_limit=1), store, mailer))
+
+    assert client.post("/api/contact", json=valid_payload()).status_code == 204
+
+
+# Tuzaga dusen istekler kaydedilmedigi icin sinira sayilmaz, botun istekleri
+# gercek ziyaretcinin payini yemez.
+def test_honeypot_does_not_use_the_daily_limit(settings: Settings, store: MessageStore, mailer: FakeMailer) -> None:
+    client = TestClient(create_app(replace(settings, daily_limit=1), store, mailer))
+
+    for _ in range(3):
+        client.post("/api/contact", json=valid_payload() | {"website": "https://spam.example"})
+    assert client.post("/api/contact", json=valid_payload()).status_code == 204
 
 
 # Ziyaretci yine basari gorur, mesaj kayitta isaretsiz kalir ve gece
@@ -109,6 +146,8 @@ def test_failed_mail_keeps_the_message(settings: Settings, store: MessageStore) 
     assert waiting[0].contact.email == "ayse@ornek.com"
 
 
+# Iletisim adresine GET 405 alir. Belge sayfalari kapali oldugu icin docs ve
+# openapi 404 doner.
 def test_only_post_is_served(client: TestClient) -> None:
     assert client.get("/api/contact").status_code == 405
     assert client.get("/docs").status_code == 404
@@ -126,5 +165,3 @@ def test_notification_mail_shape() -> None:
     body = mail.get_content()
     assert "Zaman:    month" in body
     assert "Şirket:   Ornek Lojistik" in body
-# Iletisim adresine GET 405 alir. Belge sayfalari kapali oldugu icin docs ve
-# openapi 404 doner.

@@ -9,7 +9,7 @@ create_app'e kendi deposunu ve gondericisini verir.
 
     uvicorn app.main:create_app --factory --port 8001
 
-    POST /api/contact   204 alindi, 422 mesaj denetimden gecmedi
+    POST /api/contact   204 alindi, 422 mesaj denetimden gecmedi, 429 gunluk sinir doldu
     GET  /api/health    200 {"status": "ok"}
 
 description: Iletisim formunun mesajlarini alip kaydeden ve bildiren FastAPI uygulamasi.
@@ -21,6 +21,12 @@ description: Iletisim formunun mesajlarini alip kaydeden ve bildiren FastAPI uyg
 #
 # NOTE: Belge sayfalari, yani docs ve openapi, kapali. Disariya acik tek sey
 # bu iki adres.
+#
+# NOTE: Gonderim sinirinin iki katmani var. nginx ayni IP'den gelen sik
+# istekleri ve butun sitenin anlik yogunlugunu keser, servis de son yirmi dort
+# saatteki mesaj sayisini sinirlar. Ilki dakikalik, ikincisi gunluk koruma.
+# Birden cok IP'den yavas yavas gelen bir saldiriyi yalnizca gunluk sinir
+# durdurur.
 
 import logging
 
@@ -66,12 +72,18 @@ def create_app(settings: Settings | None = None, store: MessageStore | None = No
         store.mark_mailed(message_id)
 
     # Tuzak alan dolu gelirse bot oldugu varsayilir. Ayni 204 doner ki bot
-    # yakalandigini anlamasin, ama mesaj kaydedilmez.
+    # yakalandigini anlamasin, ama mesaj kaydedilmez. Gunluk sinir dolduysa
+    # mesaj kaydedilmez ve 429 doner, form o zaman ziyaretciye dogrudan
+    # yazabilecegi adresi gosterir. Sinir tuzaktan sonra denetlenir ki
+    # tuzaga dusen istek sinir hakkinda bir sey ogrenmesin.
     @app.post("/api/contact", status_code=204)
     def contact(message: ContactIn, tasks: BackgroundTasks) -> Response:
         if message.website:
             log.info("tuzak alan dolu, mesaj kaydedilmedi")
             return Response(status_code=204)
+        if store.count_since(24) >= settings.daily_limit:
+            log.warning("gunluk sinir dolu, mesaj kaydedilmedi")
+            return Response(status_code=429)
         message_id = store.add(message)
         tasks.add_task(notify, message_id, message)
         return Response(status_code=204)
