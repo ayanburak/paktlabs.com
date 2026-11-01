@@ -9,7 +9,7 @@
   },
   "overrides": [
     {
-      // useReveal (packages/brand/hooks/useReveal.ts) bir ref ve bir IntersectionObserver'dan
+      // packages/brand/hooks/useReveal.ts bir ref ve bir IntersectionObserver'dan
       // gelen state dondurur. Cagiran bilesenler ref'i bir JSX ozniteligine verir, kural bunu
       // render icinde ref.current okumak sanip isaretliyor, oysa .current'a yalnizca
       // useEffect icinde erisiliyor. Bu yedi dosya hook'un sonucunu kullanan bilesenlerdir.
@@ -26,8 +26,8 @@
     },
     {
       // useReveal gorunurlugu azaltilmis harekette efekt icinde acar, DataLanguageProvider
-      // site dili degisince veri dili secimini efektte sifirlar. Ikisi de dis bir
-      // degisikligi (tarayici tercihi, dil degistirici) state'e esler.
+      // site dili degisince veri dili secimini efektte sifirlar. Ikisi de tarayici tercihi
+      // ya da dil degistirici gibi dis bir degisikligi state'e esler.
       "files": ["packages/brand/hooks/useReveal.ts", "apps/data/src/components/study/DataLanguageProvider.tsx"],
       "rules": { "react/set-state-in-effect": "off" }
     }

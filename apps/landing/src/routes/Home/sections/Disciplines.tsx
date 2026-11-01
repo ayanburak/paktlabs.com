@@ -24,6 +24,8 @@ const illustrations = {
   en: { desktop: disciplinesSvg, mobile: disciplinesMobileSvg },
 } satisfies Record<Language, { desktop: string; mobile: string }>
 
+// Cizim aktif dile gore illustrations'tan secilir, dile ozel dosyalar
+// geldiginde yalnizca o tablo degisir.
 export function Disciplines() {
   const { disciplines } = useDict()
   const { language } = useLanguage()

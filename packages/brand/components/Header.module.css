@@ -85,7 +85,7 @@
 }
 
 /* panel her zaman DOM'da durur, acik degilken 768px ustunde de altinda da
-   gizli — boylece JS state'i acik/kapali arasinda gecerken gorunurluk
+   gizli. Boylece JS state'i acik ve kapali arasinda gecerken gorunurluk
    sadece CSS'e bagli kalir, extra bir kosullu render'a gerek kalmaz */
 .mobileNav {
   display: none;
@@ -93,7 +93,7 @@
 
 @media (max-width: 768px) {
   /* mobilde hero artik tam ekran degil, header'in seffaf uste binmesine
-     gerek yok — normal akista durup Hero'yu asagi itiyor */
+     gerek yok. Normal akista durup Hero'yu asagi itiyor */
   .top {
     position: static;
   }

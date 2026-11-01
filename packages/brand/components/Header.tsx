@@ -35,6 +35,8 @@ interface HeaderProps {
   homeHref?: string
 }
 
+// Mobil panelin acik ya da kapali oldugu yalnizca burada tutulur. Panel her
+// zaman DOM'da durur, gorunurlugunu CSS belirler.
 export function Header({ current, homeHref = '/' }: HeaderProps) {
   const { brand, nav, a11y } = useBrandDict()
   const [open, setOpen] = useState(false)

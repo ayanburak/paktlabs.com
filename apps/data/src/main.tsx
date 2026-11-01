@@ -1,7 +1,17 @@
+/*
+file: main.tsx
+
+index.html'in girisi. Diger sitelerden farkli olarak brand'deki mount
+kullanilmaz, cunku dil saglayicisini router'la birlikte App kurar. Bilinmeyen
+her adres de bu girise duser, sayfayi router secer.
+
+description: data sitesini acan giris dosyasi.
+*/
+
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { App } from './App.tsx'
+import { App } from './App'
 import '@paktlabs/brand/styles/global.css'
 import './styles/tokens.css'
 

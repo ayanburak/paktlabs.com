@@ -27,7 +27,7 @@ interface IntroProps {
 // gibi okunmasi icin yazilir, baglanti degildir. Disiplinler kisinin
 // listesinden ama sitelerdeki ortak sirayla gelir, kisinin dosyasinda sira
 // farkli yazilsa bile ust barla ayni dizilir.
-// Dugmelerin sirasi Burak'in verdigi siradir. Adresler kisinin dosyasindaki
+// Dugmelerin sirasi tasarimda belirlenen siradir. Adresler kisinin dosyasindaki
 // kullanici adlarindan kurulur.
 function linkUrls(id: ProfileId): Record<LinkKind, string> {
   const { linkedin, github, website } = profiles[id]
@@ -39,6 +39,9 @@ function linkUrls(id: ProfileId): Record<LinkKind, string> {
 }
 const linkKinds: readonly LinkKind[] = ['linkedin', 'github', 'website']
 
+// Unvan ve tanitim sozlukten, ad, baglantilar ve disiplinler brand'deki
+// profiles'tan gelir. Disiplin rozetleri kisinin dosyasindaki sirayla degil
+// sitelerin ortak sirasiyla dizilir.
 export function Intro({ id }: IntroProps) {
   const { profilePage: dict } = useDict()
   const { nav } = useBrandDict()

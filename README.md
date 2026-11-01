@@ -108,7 +108,7 @@ Test koşulları, toleranslar ve testlerin neyi kanıtlamadığı `apps/landing/
 
 GitHub Actions her push ve pull request'te üç iş çalıştırır: bütün repo için lint ile brand'in tip kontrolü, bir matrisle landing, data, web ve automation için ayrı ayrı tip kontrolü ile davranış testleri ve iletişim servisinin Python 3.10 ile pytest testleri. Yeni bir site eklemek matristeki `app` listesine bir ad eklemekten ibarettir. Görsel testler CI'da çalıştırılmaz, çünkü referans görüntüler yerel font çizimiyle alınmıştır ve farklı bir runner'da yanlış alarm üretir.
 
-`docs/visual-baseline/` klasörü, responsive düzeltmelerden önceki durumun `257ed79` commit'inden alınmış arşiv kaydıdır. Güncel referanslar `apps/landing/tests/visual.spec.ts-snapshots/` altında durur. Arşiv yeni görüntülerle değiştirilmez.
+Görsel testlerin onaylı referansları `apps/landing/tests/visual.spec.ts-snapshots/` altında durur.
 
 Dile özel illüstrasyon dosyalarının nasıl ekleneceği `docs/illustrations.md` içinde anlatılır.
 

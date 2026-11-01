@@ -54,6 +54,9 @@ interface LineProps {
   block: LineBlock
 }
 
+// Noktalar x ekseninde esit araliklarla dizilir, donemlerin uzunlugu
+// farkliysa bu cizimde gorunmez. Serilerin sonundaki etiketler labelPositions
+// ile birbirinin ustune binmeyecek sekilde kaydirilir.
 export function Line({ block }: LineProps) {
   const { language } = useLanguage()
   const value = (n: number, decimals = block.decimals) => formatValue(n, block.unit, decimals, language)

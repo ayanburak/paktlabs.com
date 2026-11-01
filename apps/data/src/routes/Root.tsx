@@ -25,6 +25,8 @@ import { Outlet, ScrollRestoration, type Location } from 'react-router-dom'
 // surumden oturumda kalmis default kayitlari hic okunmasin diye.
 const SCROLL_STORAGE_KEY = 'pl-scroll-positions'
 
+// Uygulama icindeki gecislerde kutuphanenin anahtari, bastan yuklenen sayfada
+// sayfanin kendi adresi kullanilir.
 function scrollKey(location: Location): string {
   return location.key === 'default' ? `page:${location.pathname}${location.search}` : location.key
 }
@@ -49,7 +51,7 @@ if (arrivedFresh) {
   }
 }
 
-// Bozuk yuzde kodlu bir adres (ornegin /#%) cozulemez, ham deger kullanilir.
+// Bozuk yuzde kodlu bir adres cozulemez, ornegin /#%. O zaman ham deger kullanilir.
 function readHashId() {
   const raw = window.location.hash.slice(1)
   try {

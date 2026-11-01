@@ -12,6 +12,8 @@ import { useDict } from '@/i18n'
 
 import styles from './About.module.css'
 
+// Alt baslik ayni h2'nin icinde daha soluk durur, ekran okuyucu ikisini tek
+// bir baslik olarak okur.
 export function About() {
   const { about } = useDict()
   const { ref, visible } = useReveal<HTMLDivElement>()

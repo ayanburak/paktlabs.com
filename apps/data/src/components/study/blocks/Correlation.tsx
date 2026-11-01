@@ -41,6 +41,9 @@ interface CorrelationProps {
   block: CorrelationBlock
 }
 
+// Tablo yalnizca alt ucgeni doldurur, ust ucgen ayni sayilarin tekrari
+// olurdu. Kosegen her zaman 1 oldugu icin icerikten okunmaz, dogrudan
+// yazilir.
 export function Correlation({ block }: CorrelationProps) {
   const { language } = useLanguage()
   const { study } = useDict()

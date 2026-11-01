@@ -13,6 +13,9 @@ description: Bir elemanin ekrana girdigi ani yakalayip geri donen kucuk bir goru
 
 import { useEffect, useRef, useState } from 'react'
 
+// Eleman bir kez gorunur olunca observer kapanir, ekrandan cikinca yeniden
+// gizlenmez. Hareket azaltma tercihi olan kullanicida eleman bastan gorunur
+// gelir.
 export function useReveal<T extends HTMLElement>() {
   const ref = useRef<T>(null)
   const [visible, setVisible] = useState(false)

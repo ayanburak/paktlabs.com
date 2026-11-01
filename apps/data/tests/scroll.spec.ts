@@ -63,6 +63,8 @@ async function slowFonts(page: Page) {
   })
 }
 
+// Bolumun ekranin ustune gore konumu, piksele yuvarlanmis. Bolum yoksa test
+// acik bir hatayla durur.
 function chapterTop(page: Page, id: string) {
   return page.evaluate((target) => {
     const chapter = document.getElementById(target)

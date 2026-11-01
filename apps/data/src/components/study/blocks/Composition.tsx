@@ -29,6 +29,9 @@ interface CompositionProps {
   block: CompositionBlock
 }
 
+// Her satir yuzde yuzluk tek bir cubuk, parcalar her satirda ayni sirayla
+// soldan saga dizilir. Cizilen kisim ekran okuyucudan gizli, onun yerine
+// Figure'e verilen aciklama okunur.
 export function Composition({ block }: CompositionProps) {
   const { language } = useLanguage()
   const percent = (n: number) => formatValue(n, 'percent', 0, language)

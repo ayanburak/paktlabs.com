@@ -1,5 +1,6 @@
 /* uc seridin ortak sekli. ton yalnizca aksan: zeminde ancak fark edilen bir
-   yikama, --tone her band'e kendi rengini (props uzerinden inline style ile) verir */
+   yikama. --tone her band'e kendi rengini verir, deger props uzerinden inline
+   style ile gelir */
 .band {
   position: relative;
   padding: clamp(60px, 7vw, 104px) var(--gutter);
@@ -174,7 +175,7 @@
   }
 
   .art {
-    /* static degil relative — layout ayni ama z-index static'te tamamen
+    /* static degil relative. Layout ayni ama z-index static'te tamamen
        yok sayiliyor, sonraki bandin opak arka plani tasan kismi ortuyordu */
     position: relative;
     bottom: auto;
@@ -186,7 +187,7 @@
        gelir, translate ise çizimin kendi zeminini bu sınıra taşır. */
     margin-bottom: calc(-1 * clamp(60px, 7vw, 104px));
   }
-  /* relative, static'in aksine left/right'a da uyuyor — masaustundeki
+  /* relative, static'in aksine left ve right'a da uyuyor. Masaustundeki
      kenar bosluk degerleri burada da uygulanip gorseli yana kaydirmasin
      diye sifirlanip yerine artSide'a gore kenara yaslama geliyor */
   .artLeft {

@@ -28,6 +28,9 @@ interface MatrixProps {
   block: MatrixBlock
 }
 
+// Satirlar gercek sinifi, sutunlar verilen karari gosterir. Satir ve sutun
+// toplamlari ile genel toplam hucrelerden hesaplanir, icerikte elle yazilmaz
+// ki birbirini tutmayan bir toplam yayinlanamasin.
 export function Matrix({ block }: MatrixProps) {
   const { language } = useLanguage()
   const { study } = useDict()

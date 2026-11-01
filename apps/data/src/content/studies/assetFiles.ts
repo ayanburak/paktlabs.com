@@ -49,6 +49,9 @@ async function fetchText(url: string): Promise<string> {
   return response.text()
 }
 
+// Glob butun calismalarin dosyalarini listeler, burada yalnizca istenen
+// calismanin dosyalari indirilir. Indirmeler paralel yapilir, biri bile
+// inmezse butun yukleme hata verir.
 async function loadStudy(slug: string): Promise<StudyFileSet> {
   const set: StudyFileSet = { tr: {}, en: {} }
   await Promise.all(

@@ -18,8 +18,8 @@ description: Dil saglayicisini ve rotalari kuran en ust bilesen.
 // dengeleniyor.
 //
 // XXX: Dosya indirilemezse yukleyici hata verir ve bulunamadi sayfasi
-// gorunur. Sunucu hatasi icin ayri bir sayfa yok, madde 25.5'te kapsam
-// disinda birakildi. Okur bu durumda yanlis bir mesaj gorur.
+// gorunur. Sunucu hatasi icin ayri bir sayfa yok, bilerek kapsam disinda
+// birakildi. Okur bu durumda yanlis bir mesaj gorur.
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
@@ -58,6 +58,8 @@ const router = createBrowserRouter([
   },
 ])
 
+// LanguageProvider router'in disinda durur, secilen dil sayfa gecislerinde
+// ve hata sayfasinda da ayni kalir.
 export function App() {
   return (
     <LanguageProvider>

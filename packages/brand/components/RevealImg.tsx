@@ -32,6 +32,7 @@ interface RevealImgProps {
   style?: CSSProperties
 }
 
+// alt bos verilirse img aria-hidden olur, ekran okuyucu gorseli hic gormez.
 export function RevealImg({ src, alt = '', className, style }: RevealImgProps) {
   const { ref, visible } = useReveal<HTMLImageElement>()
 

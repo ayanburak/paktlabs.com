@@ -49,6 +49,8 @@ test('the asset file patterns list exactly the supported languages', () => {
   expect(path?.[1]?.split('|')).toEqual([...languages])
 })
 
+// Bir calismanin bir dildeki CSV dosyalarinin uzantisiz adlari. Klasor yoksa
+// bos liste doner, test o zaman eksik dosya diye kirilir.
 function csvIds(slug: string, language: string): string[] {
   try {
     return readdirSync(join(root, slug, 'data', language))
@@ -60,6 +62,8 @@ function csvIds(slug: string, language: string): string[] {
   }
 }
 
+// CSV sitenin kendi ayristiricisiyla okunur, sayfanin gosterdigi tablo da bu
+// olur.
 function readCsv(slug: string, language: string, id: string): string[][] {
   return parseCsv(readFileSync(join(root, slug, 'data', language, `${id}.csv`), 'utf8'))
 }

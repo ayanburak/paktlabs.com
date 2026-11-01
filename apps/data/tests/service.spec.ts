@@ -17,6 +17,7 @@ import { required } from '@paktlabs/config/testing/support'
 
 import { dict, languages, openPage } from './support'
 
+// Hizmet kartlarindaki iki haneli sira numarasi, 01'den baslar.
 const number = (i: number) => String(i + 1).padStart(2, '0')
 
 for (const lang of languages) {

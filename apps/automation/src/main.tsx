@@ -9,7 +9,7 @@ description: automation sitesinin ana sayfasini acan giris dosyasi.
 
 import { mount } from '@paktlabs/brand/lib/mount'
 
-import { Home } from './routes/Home/Home.tsx'
+import { Home } from './routes/Home/Home'
 import '@paktlabs/brand/styles/global.css'
 
 // global.css bilesenlerden sonra import edilir, derlenen CSS'te global

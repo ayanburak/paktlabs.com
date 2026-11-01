@@ -25,6 +25,9 @@ interface CalcProps {
   block: CalcBlock
 }
 
+// Adimlar yukaridan asagi okunan bir hesap gibi dizilir, son adim sonuc
+// sayilir ve ayri bir stille vurgulanir. Islem isareti ekran okuyucudan
+// gizli, etiket ve deger ne yapildigini zaten soyler.
 export function Calc({ block }: CalcProps) {
   const { language } = useLanguage()
   const { ref, visible } = useReveal<HTMLElement>()

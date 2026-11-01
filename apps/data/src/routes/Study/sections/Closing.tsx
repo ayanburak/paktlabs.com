@@ -29,7 +29,7 @@ import { worksPath } from '@/routes/links'
 import styles from './Closing.module.css'
 
 // NOTE: Ortak cizim simdilik iletisim bolumundeki telefon, gercek kapanis
-// cizimi gelince yalnizca bu import degisir. Takip: .claude/tasks/acik.md 14.
+// cizimi gelince yalnizca bu import degisir.
 interface ClosingProps {
   study: Study
   closing: StudyPage['closing']
@@ -42,6 +42,9 @@ function nextStudy(current: Study): Study | undefined {
   return studies[(studies.indexOf(current) + 1) % studies.length]
 }
 
+// Solda listeye donus karti, varsa sonraki calismanin karti ve iletisim
+// adresi, sagda ortak cizim durur. Cizim dar ekranda bos svg ile yer tutar ve
+// indirilmez.
 export function Closing({ study, closing }: ClosingProps) {
   const { language } = useLanguage()
   const { study: dict } = useDict()

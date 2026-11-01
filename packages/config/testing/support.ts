@@ -2,8 +2,8 @@
 file: support.ts
 importable: Language, languages, required, waitForAssets, expectClassicMediaQueries
 
-Iki sitenin testlerinin ortak yardimcilari. Sozluk birlestirme (dict) ve sayfa
-acma yardimcilari sitelere ozel kalir, cunku sitelerin kendi sozlukleri ve
+Iki sitenin testlerinin ortak yardimcilari. dict gibi sozluk birlestirme ve
+sayfa acma yardimcilari sitelere ozel kalir, cunku sitelerin kendi sozlukleri ve
 rotalari var.
 
 description: Iki sitenin testlerinin ortak dil listesi, varlik bekleme ve eski tarayici CSS denetimi.

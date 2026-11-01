@@ -6,8 +6,7 @@ Chromium'da, DPR 1 ve hareket azaltma tercihiyle alindi. Fontlar Google Fonts
 uzerinden agdan gelir, font veya isletim sistemi degisirse cikan fark once
 gozle incelenir, dogrudan uygulama hatasi sayilmaz. CI bu dosyayi calistirmaz.
 
-docs/visual-baseline altindaki 257ed79 arsivi baslangic kaydidir, bu dosya onu
-degistirmez. Onayli bir tasarim degisikliginden sonra referanslar
+Onayli bir tasarim degisikliginden sonra referanslar
 npm run test:visual:update ile yenilenir.
 
 description: Onayli TR ve EN gorunumun dort ekran olcusunde piksel karsilastirmasi.

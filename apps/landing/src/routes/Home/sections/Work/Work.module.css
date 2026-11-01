@@ -2,7 +2,7 @@
   margin-top: var(--gap);
 }
 
-/* --gap (112px) sabit, vw'ye bagli degil — masaustunde cevredeki
+/* --gap 112px sabit, vw'ye bagli degil. Masaustunde cevredeki
    bosluklarla orantili ama mobilde aynen kaliyor, oransiz bir bosluk
    birakiyordu */
 @media (max-width: 768px) {

@@ -26,6 +26,9 @@ interface HeatProps {
   block: HeatBlock
 }
 
+// Koyuluk degerin max'a oraniyla hesaplanir, max'i asan deger en koyu
+// kademede kalir. Hucredeki sayi her zaman yazili oldugu icin renk tek basina
+// bilgi tasimaz.
 export function Heat({ block }: HeatProps) {
   const { language } = useLanguage()
   const value = (n: number) => formatValue(n, block.unit, block.decimals, language)

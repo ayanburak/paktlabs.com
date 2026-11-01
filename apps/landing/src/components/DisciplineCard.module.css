@@ -79,7 +79,7 @@
 }
 
 /* 260px'lik min-height uc-sutunlu masaustu grid'i icin ayarlanmisti, tek
-   sutuna inince aciklama ile "Incele" arasinda gereksiz bosluk birakiyordu */
+   sutuna inince aciklama ile Incele baglantisi arasinda gereksiz bosluk birakiyordu */
 @media (max-width: 768px) {
   .panel {
     min-height: 0;

@@ -24,7 +24,7 @@ import { readingMinutes } from './sections/readingMinutes'
 import { Summary } from './sections/Summary'
 
 // Sekme basligi calismanin basligi ve sitenin basligindan olusur, mockup'taki
-// "baslik · Veri · PaktLabs" bicimi. Sitenin basligi veri sayfasinin kendi
+// gibi once calisma, sonra Veri, en son PaktLabs gelir ve aralarinda orta nokta durur. Sitenin basligi veri sayfasinin kendi
 // basligidir, ayrica bir anahtar tutulmaz. Kapak, govde ve yazar kutusu kod
 // sayfasiyla ortak ve StudyLayout'ta, ozet bandi, Meraklisina karti ve kapanis bu sayfaya ozel.
 // Calismanin metni ve dosyalari rota yukleyicisinden hazir gelir, calisma

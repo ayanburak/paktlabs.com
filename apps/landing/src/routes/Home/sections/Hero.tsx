@@ -16,6 +16,9 @@ import { useDict } from '@/i18n'
 
 import styles from './Hero.module.css'
 
+// Masaustu yerlesimi brand'deki HeroLayout'tan, mobil kompozisyon bu bolumun
+// kendi stilinden gelir. Metin rise sinifiyla sayfa acilirken yukselir, cizim
+// ise ekrana girince belirir.
 export function Hero() {
   const { hero } = useDict()
   const art = useReveal<HTMLImageElement>()

@@ -25,6 +25,8 @@ def test_health(client: TestClient) -> None:
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
 
+# Yayin script'i yeni surumu bu adrese bakarak dogrular, cevabin sekli
+# degismemeli.
 
 # TestClient arka plan islerini cevaptan hemen sonra calistirir, bildirim
 # bu yuzden test icinde gorunur.
@@ -45,6 +47,8 @@ def test_text_is_trimmed(client: TestClient, mailer: FakeMailer) -> None:
     assert client.post("/api/contact", json=payload).status_code == 204
     assert mailer.sent[0][1].name == "Ayse"
     assert mailer.sent[0][1].email == "ayse@ornek.com"
+# Bastaki ve sondaki bosluklar silinir, kopyala yapistirla gelen bir bosluk
+# gecerli bir adresi reddettirmesin.
 
 
 def test_company_is_optional(client: TestClient) -> None:
@@ -52,6 +56,7 @@ def test_company_is_optional(client: TestClient) -> None:
     del payload["company"]
     assert client.post("/api/contact", json=payload).status_code == 204
 
+# Sirket alani formda bos birakilabilir, govdede hic olmamasi da gecerli.
 
 # Her satir gecerli govdenin tek bir alanini bozar. Hicbiri kaydedilmemeli.
 @pytest.mark.parametrize(
@@ -88,6 +93,8 @@ def test_honeypot_is_accepted_but_dropped(client: TestClient, store: MessageStor
 
     assert response.status_code == 204
     assert mailer.sent == []
+# Tuzak alan doluysa bot yakalandigini anlamasin diye ayni 204 doner ama
+# hicbir sey kaydedilmez ve iletilmez.
     assert store.unmailed() == []
 
 
@@ -119,3 +126,5 @@ def test_notification_mail_shape() -> None:
     body = mail.get_content()
     assert "Zaman:    month" in body
     assert "Şirket:   Ornek Lojistik" in body
+# Iletisim adresine GET 405 alir. Belge sayfalari kapali oldugu icin docs ve
+# openapi 404 doner.

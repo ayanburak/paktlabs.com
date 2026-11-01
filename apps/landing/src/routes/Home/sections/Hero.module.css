@@ -51,20 +51,20 @@
 }
 
 /* mobilde hero-mobile.svg masaustundeki gibi arkada duruyor: roket gorselin
-   ust kismi, tam da basligin yaninda/arkasinda kalsin diye .artFrame ust
-   kenara (header'in hemen altina) sabitlenip yatayda ortalaniyor, .inner
-   (z-index:2, her zaman gecerli) onun onunde kaliyor. Gorsel cok uzun
-   oldugu icin (koltuktaki kisiye kadar) .hero'nun min-height'i gorselin
-   kendi oranindan hesaplanip tasmasini/kirpilmasini onluyor. */
+   ust kismi, tam da basligin yaninda ve arkasinda kalsin diye .artFrame
+   header'in hemen altina, ust kenara sabitlenip yatayda ortalaniyor. .inner
+   her zaman gecerli olan z-index:2 ile onun onunde kaliyor. Gorsel koltuktaki
+   kisiye kadar uzandigi icin cok uzun, .hero'nun min-height'i bu yuzden
+   gorselin kendi oranindan hesaplanip tasmasini ve kirpilmasini onluyor. */
 @media (max-width: 768px) {
   .hero {
     display: block;
     padding: 0;
     position: relative;
     overflow: visible;
-    /* header payi + gorselin kendi orani (1536.6208/921.20239 ~ 1.668)
-       ile genislige (92vw) gore hesaplanan yukseklik + gorselle alt cizgi
-       arasinda hafif bir bosluk kalsin diye +20px. Bu pay yalnizca mobilde
+    /* header payi, gorselin kendi orani olan 1536.6208/921.20239 ~ 1.668
+       ile 92vw genislige gore hesaplanan yukseklik ve gorselle alt cizgi
+       arasinda hafif bir bosluk kalsin diye 20px. Bu pay yalnizca mobilde
        gerekir, masaustunde cizim dikeyde ortada havada durdugu icin alt
        cizgiye zaten yaklasmaz */
     min-height: calc(var(--header-height) + 153.7vw + 20px);

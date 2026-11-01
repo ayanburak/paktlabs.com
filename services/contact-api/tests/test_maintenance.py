@@ -24,10 +24,13 @@ from app.store import MessageStore
 from .conftest import FakeMailer, valid_payload
 
 
+# Her test ayni gecerli mesaji kullanir, bu testlerin konusu mesajin icerigi
+# degil.
 def contact() -> ContactIn:
     return ContactIn(**valid_payload())
 
 
+# Isaretli mesaj yeniden gonderilmez, yalnizca bekleyen gider.
 def test_retry_sends_waiting_messages(store: MessageStore) -> None:
     first = store.add(contact())
     store.add(contact())
@@ -38,6 +41,7 @@ def test_retry_sends_waiting_messages(store: MessageStore) -> None:
     assert store.unmailed() == []
 
 
+# Posta sunucusu yoksa mesaj isaretsiz kalir ve sonraki gece yine denenir.
 def test_retry_keeps_messages_when_mail_fails(store: MessageStore) -> None:
     store.add(contact())
     assert maintenance.retry(store, FakeMailer(fail=True)) == 0
@@ -56,6 +60,8 @@ def test_purge_removes_old_messages(store: MessageStore) -> None:
     assert [item.id for item in store.unmailed()] == [old + 1]
 
 
+# Yirmi gunluk yedekten en yeni on dordu kalir, en yeni yedek de veritabaninin
+# gercek bir kopyasidir.
 def test_backup_keeps_fourteen_days(settings: Settings, store: MessageStore) -> None:
     store.add(contact())
     folder: Path = settings.db_path.parent / "backups"
@@ -70,6 +76,7 @@ def test_backup_keeps_fourteen_days(settings: Settings, store: MessageStore) -> 
         assert db.execute("SELECT COUNT(*) FROM messages").fetchone()[0] == 1
 
 
+# Bakim bekleyen bildirimi gonderir ve gunun yedegini o gunun adiyla yazar.
 def test_run_does_all_three(settings: Settings, store: MessageStore) -> None:
     store.add(contact())
     mailer = FakeMailer()

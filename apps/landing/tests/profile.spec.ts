@@ -15,6 +15,8 @@ import { contactMailto, contactPage, hartwellFinchWork, personalMailto, profileL
 
 import { dict, languages, openProfile, profilePath } from './support'
 
+// Profil sayfasinin kisiye ozel metinleri, beklenen degerler her dilde
+// buradan okunur.
 const person = (lang: 'tr' | 'en') => dict[lang].profilePage.people.ayanburak
 
 for (const lang of languages) {

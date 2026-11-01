@@ -3,8 +3,8 @@ file: expected.ts
 importable: mainSite, disciplineUrls, contactPage, contactEmail, contactMailto, authorProfile, profileLinks, personalMailto, hartwellFinchWork, services
 
 Testlerin bekledigi adresler ve hizmet listesi. Bu degerler bilerek elle yazili,
-uygulamanin kendi dosyalarindan (disciplines.ts, contact.ts, dataTags.ts, profiles.ts, works.ts) okunmaz.
-Okunsaydi yanlis yazilmis bir adres testi de gecirirdi. Bir adres degisirse
+uygulamanin disciplines.ts, contact.ts, dataTags.ts, profiles.ts ve works.ts
+gibi kendi dosyalarindan okunmaz. Okunsaydi yanlis yazilmis bir adres testi de gecirirdi. Bir adres degisirse
 burasi tek yerdir, butun sitelerin testleri buradan okur.
 
 description: Iki sitenin testlerinin ortak kullandigi, elle yazili beklenen adresler ve hizmet listesi.
@@ -33,7 +33,7 @@ export const profileLinks = {
 export const personalMailto = 'mailto:contact@ayanburak.com'
 export const hartwellFinchWork = 'https://data.paktlabs.com/work/hartwell-finch'
 
-// Veri hizmetleri, ekrandaki sirayla. tag sozluk anahtaridir (dataTags),
+// Veri hizmetleri, ekrandaki sirayla. tag, dataTags'teki sozluk anahtaridir,
 // slug data sitesindeki /services/<slug> adresidir.
 export const services = [
   { tag: 'preparation', slug: 'preparation' },

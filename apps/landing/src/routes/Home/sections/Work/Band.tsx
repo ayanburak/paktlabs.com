@@ -43,6 +43,10 @@ interface BandProps {
   artWidth: string
 }
 
+// Uc disiplin seridini ayni bilesen cizer, farki proplar verir. tone rengi,
+// artSide cizimin hangi yanda duracagini, groundOffset ile artWidth cizimin
+// zemine nasil oturacagini belirler. Listede href'i olan satir baglantiya
+// donusur.
 export function Band({
   tone,
   tightTop,

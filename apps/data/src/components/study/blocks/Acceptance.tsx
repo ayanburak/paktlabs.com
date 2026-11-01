@@ -22,6 +22,9 @@ interface AcceptanceProps {
   block: AcceptanceBlock
 }
 
+// Olcutun Ingilizce metni satirin anahtari, ayni tabloda iki olcut ayni adi
+// tasimaz. Durum sutununun basligi gozden gizli, isaretin kendisi ne oldugunu
+// soyluyor ama ekran okuyucu sutunun adini yine duyar.
 export function Acceptance({ block }: AcceptanceProps) {
   const { language } = useLanguage()
   const { study } = useDict()

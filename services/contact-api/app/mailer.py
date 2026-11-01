@@ -71,6 +71,7 @@ def compose(contact: ContactIn, message_id: int, sender: str, recipient: str) ->
 class Mailer(ABC):
     """Yeni bir mesajin bildirimini ileten parcanin soyut hali."""
 
+    # Somut gondericiler hatayi yutmaz, yakalamak cagiran tarafin isidir.
     @abstractmethod
     def send(self, contact: ContactIn, message_id: int) -> None:
         """Mesajin bildirimini iletir.
@@ -85,6 +86,8 @@ class Mailer(ABC):
 class SmtpMailer(Mailer):
     """Bildirimi SMTP ile e-posta olarak gonderir."""
 
+    # Kurulurken aga cikilmaz, baglanti ilk gonderimde acilir. Ayarlarin eksik
+    # olup olmadigina build_mailer bakar.
     def __init__(self, host: str, port: int, user: str, password: str, recipient: str) -> None:
         self.host = host
         self.port = port
@@ -92,6 +95,8 @@ class SmtpMailer(Mailer):
         self.password = password
         self.recipient = recipient
 
+    # Her bildirim kendi baglantisini acip kapatir. Trafik dusuk, acik tutulan
+    # bir baglanti arada zaman asimina ugrayip bir sonraki gonderimi bozardi.
     def send(self, contact: ContactIn, message_id: int) -> None:
         mail = compose(contact, message_id, self.user, self.recipient)
         context = ssl.create_default_context()
@@ -106,9 +111,12 @@ class SmtpMailer(Mailer):
 class ConsoleMailer(Mailer):
     """Bildirimi gondermez, kayda yazar."""
 
+    # recipient yalnizca kayittaki To basliginda gorunsun diye tutulur.
     def __init__(self, recipient: str) -> None:
         self.recipient = recipient
 
+    # compose gercek gondericiyle ayni, lokalde gorulen e-posta canlida
+    # gidenin aynisidir.
     def send(self, contact: ContactIn, message_id: int) -> None:
         mail = compose(contact, message_id, "contact-api@localhost", self.recipient)
         headers = "\n".join(f"{key}: {mail[key]}" for key in ("To", "Reply-To", "Subject"))

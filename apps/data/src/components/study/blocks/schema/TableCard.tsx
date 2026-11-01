@@ -30,6 +30,11 @@ interface TableCardProps {
   main?: boolean
 }
 
+// full butun sutunlari, keys yalnizca anahtarlari, brief anahtarlara ek
+// olarak tablonun brief listesindeki sutunlari gosterir. Gosterilmeyen
+// sutunlarin sayisi kartin altinda yazar. data-table ve data-column
+// oznitelikleri sema ciziminin olcum yaparken aradigi yerlerdir, adlari
+// degisirse cizgiler kaybolur.
 export function TableCard({ table, view, main = false }: TableCardProps) {
   const { language } = useLanguage()
   const { study } = useDict()

@@ -45,6 +45,8 @@ async function blockCookies(page: Page) {
   })
 }
 
+// Masaustu ust bardaki dil dugmesine basar. Mobil paneldeki dugme ayni adi
+// tasidigi icin ilk nav secilir.
 async function switchTo(page: Page, lang: Language) {
   await page.locator('header nav').first().getByRole('button', { name: lang.toUpperCase() }).click()
 }

@@ -53,6 +53,7 @@ function cookieAttributes(): string {
     .join('; ')
 }
 
+// Deger burada dogrulanmaz, gecerli bir dil olup olmadigina isLanguage bakar.
 function readCookie(): string | undefined {
   return document.cookie
     .split('; ')
@@ -84,6 +85,9 @@ function storeLanguage(next: Language) {
   }
 }
 
+// Kayitli dil ilk render sirasinda okunur, effect beklenmez. Boylece kayitli
+// dili Ingilizce olan ziyaretci once Turkce sayfayi gorup sonra degisimini
+// izlemez.
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(readStoredLanguage)
 

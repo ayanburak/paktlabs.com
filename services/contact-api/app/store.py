@@ -71,6 +71,8 @@ class StoredMessage:
 class MessageStore:
     """Iletisim mesajlarini tek bir SQLite dosyasinda saklayan depo."""
 
+    # Tablo her acilista IF NOT EXISTS ile kurulur. Sema degisirse var olan
+    # dosyadaki tablo kendiliginden guncellenmez.
     def __init__(self, path: Path) -> None:
         self.path = path
         path.parent.mkdir(parents=True, exist_ok=True)

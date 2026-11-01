@@ -24,6 +24,9 @@ interface DetailsProps {
   block: DetailsBlock
 }
 
+// Tarayicinin kendi details etiketi kullanilir, acma kapama ve klavye
+// davranisi oradan gelir. Icerik yine BlockView ile cizilir, kutunun icine
+// her blok turu konabilir.
 export function Details({ block }: DetailsProps) {
   const { language } = useLanguage()
   const { ref, visible } = useReveal<HTMLDetailsElement>()

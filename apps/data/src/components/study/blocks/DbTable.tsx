@@ -28,6 +28,8 @@ import { formatValue } from './format'
 // Sayi turundeki sutunlar saga yaslanir, rakamlar alt alta hizalansin diye.
 const NUMERIC = /^(smallint|integer|bigint|numeric|decimal|real|double)/
 
+// Sutun yapisi gorunumu. Birincil anahtar PK, baska bir tabloya bakan sutun
+// FK rozetiyle isaretlenir, ikisi birden varsa PK gosterilir.
 function Columns({ table }: { table: DbTableContent }) {
   const { language } = useLanguage()
   const { study } = useDict()
@@ -102,6 +104,10 @@ interface DbTableProps {
   block: DbTableBlock
 }
 
+// Tablo blogun icinde degil calismanin ortak sema dosyasinda tanimli, blok
+// yalnizca adini verir. Boylece sema cizimi ile tablo gorunumu ayni kaynaktan
+// okur. Ad semada yoksa findTable hata verir ve sayfa cizilmez, yanlis
+// yazilmis bir ad sessizce bos bir tablo olarak yayinlanmaz.
 export function DbTable({ block }: DbTableProps) {
   const { language } = useLanguage()
   const { study } = useDict()

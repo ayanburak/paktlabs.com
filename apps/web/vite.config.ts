@@ -1,3 +1,13 @@
+/*
+file: vite.config.ts
+
+web sitesinin Vite ayari. Gercek site gelene kadar iki sayfasi var, ana
+sayfa ve bulunamadi sayfasi. Yapi landing'le ayni, gercek site geldiginde
+yalnizca girisler eklenir.
+
+description: web sitesini cok sayfali olarak derleyen Vite ayari.
+*/
+
 import path from 'node:path'
 
 import { siteConfig } from '@paktlabs/config/vite'

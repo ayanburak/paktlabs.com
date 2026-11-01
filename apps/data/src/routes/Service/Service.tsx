@@ -25,6 +25,8 @@ import { useDict } from '@/i18n'
 import { dataTagFromSlug, servicesPath, worksPath } from '@/routes/links'
 import { NotFound } from '@/routes/NotFound/NotFound'
 
+// Adresteki slug bir hizmete karsilik gelmiyorsa bulunamadi sayfasi cizilir
+// ve ServiceView'e hic girilmez.
 export function Service() {
   const { slug = '' } = useParams()
   const tag = dataTagFromSlug(slug)

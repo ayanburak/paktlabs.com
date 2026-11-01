@@ -22,6 +22,8 @@ interface OutputProps {
   block: OutputBlock
 }
 
+// Cikti, kod dosyalari gibi calismanin code klasorunden okunur. Satir sayisi
+// metinden hesaplanir, icerikte ayrica yazilmaz.
 export function Output({ block }: OutputProps) {
   const { study } = useDict()
   const text = fileText(useStudyFile('code', block.path).text)

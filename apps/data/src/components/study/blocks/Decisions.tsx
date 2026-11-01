@@ -3,8 +3,8 @@ file: Decisions.tsx
 importable: Decisions
 
 Verilen kararlarin listesi. Her karar ustte kucuk numarali bir etiket,
-sorusu ve cevabiyla, ustunde kalin bir cizgiyle durur. Teknik okurun ilk
-soracagi "neden boyle" sorularinin cevabi icin.
+sorusu ve cevabiyla, ustunde kalin bir cizgiyle durur. Teknik okurun bir
+isin neden boyle yapildigini sordugu ilk sorularin cevabi icin.
 
 description: Bir isteki kararlari soru ve cevap olarak alt alta gosteren parca.
 */
@@ -46,6 +46,9 @@ interface DecisionsProps {
   block: DecisionsBlock
 }
 
+// Numaralar listedeki siradan uretilir, icerik dosyasinda elle yazilmaz.
+// Karar basligi anahtar oldugu icin ayni blokta iki karar ayni basligi
+// tasimamali.
 export function Decisions({ block }: DecisionsProps) {
   const { language } = useLanguage()
 

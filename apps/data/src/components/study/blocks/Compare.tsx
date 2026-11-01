@@ -27,8 +27,9 @@ interface CompareProps {
 
 // Izgara uc sutunlu duz bir hucre dizisi, ekran okuyucuya tablo rolleriyle
 // tanitilir. Sutun basliklari sitenin sozlugunden gelir. Kalin bas ile
-// devami arasina bosluk konur, devam virgul ya da noktayla basliyorsa konmaz,
-// "Bir, kaynaklari altinda listeli" gibi.
+// devami arasina bosluk konur. Devam virgul ya da noktayla basliyorsa
+// bosluk konmaz, kalin Bir'in hemen ardindan virgulle devam eden bir satirda
+// oldugu gibi.
 export function Compare({ block }: CompareProps) {
   const { language } = useLanguage()
   const { study } = useDict()

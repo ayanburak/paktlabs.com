@@ -34,6 +34,8 @@ def read_questions() -> dict[str, list[str]]:
     return {qid: re.findall(r"'(\w+)'", options) for qid, options in found}
 
 
+# Formun secimleri ile servisin kabul ettikleri ayni sirada ve ayni
+# kimliklerle durmali.
 def test_choices_match_the_form() -> None:
     assert read_questions() == {
         "area": list(get_args(Area)),
@@ -49,6 +51,8 @@ def read_limits() -> dict[str, int]:
     return {name: int(value) for name, value in re.findall(r"^\s+(\w+): (\d+),$", text, re.MULTILINE)}
 
 
+# Formdaki uzunluk sinirlari servisinkilerle ayni olmali, yoksa formun
+# gecirdigi bir mesaj 422 alirdi.
 def test_limits_match_the_form() -> None:
     limits = read_limits()
     assert set(limits) == {"name", "email", "company", "message"}
@@ -67,6 +71,7 @@ def read_languages() -> list[str]:
     return re.findall(r"'(\w+)'", found.group(1))
 
 
+# Servisin kabul ettigi diller sitelerin dil listesiyle ayni olmali.
 def test_languages_match_the_sites() -> None:
     language = ContactIn.model_fields["language"].annotation
     assert read_languages() == list(get_args(language))

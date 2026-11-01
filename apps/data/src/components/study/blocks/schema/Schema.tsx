@@ -104,8 +104,13 @@ interface ViewProps {
   links: SchemaLink[]
 }
 
+// Yerlesim satirlari grid-template-areas'a cevrilir, her tablonun alaninin
+// adi tablonun kendi adidir.
 const areas = (layout: string[]) => ({ gridTemplateAreas: layout.map((row) => `"${row}"`).join(' ') }) as CSSProperties
 
+// Levha gorunusu: butun tablolar kisa halleriyle ve teknik cizim antetiyle.
+// Baglar sutunlarin ekrandaki gercek konumu olculerek cizilir, routePlate
+// cizgileri tablo sutunlari arasindaki bosluklardan gecirir.
 function Plate({ block, links }: ViewProps) {
   const { language } = useLanguage()
   const { study } = useDict()
@@ -163,6 +168,9 @@ function Plate({ block, links }: ViewProps) {
   )
 }
 
+// Merkez gorunusu: ana tablo butun sutunlariyla ortada, digerleri yalnizca
+// anahtarlariyla cevresinde. Baglar sutunlara degil kartlarin kenarlarina
+// cizilir.
 function Center({ block, links }: ViewProps) {
   const { ref, drawing } = useDrawing(
     (root) => routeCenter({ links, card: (table) => boxOf(root, root.querySelector(`[data-table="${table}"]`)) }),

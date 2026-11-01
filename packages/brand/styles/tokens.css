@@ -11,9 +11,10 @@ testleri her degisiklikte calistirilmali.
 description: PaktLabs sitelerinin paylastigi renk, bosluk ve golge degiskenlerini tanimlayan tek dosya.
 */
 
-/* renk degerleri dogrudan landing_mockup.html'deki :root'tan tasindi, hue'lara
-   dokunulmadi. yeni bir disiplin sayfasi acilirsa tone eslesmesi (--web/--auto/--data)
-   burada guncellenir, baska hicbir dosyada renk sabiti tekrar tanimlanmaz. */
+/* renk degerleri dogrudan landing mockup'indaki :root'tan tasindi, hue'lara
+   dokunulmadi. yeni bir disiplin sayfasi acilirsa --web, --auto ve --data gibi
+   tone eslesmeleri burada guncellenir, baska hicbir dosyada renk sabiti
+   tekrar tanimlanmaz. */
 :root {
   /* her hex degeri tek bir adda durur, ayni renge giden diger adlar var() ile
      buna baglanir. Bir renk degisirse yalnizca burada degisir */

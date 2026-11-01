@@ -39,6 +39,9 @@ interface PieProps {
   block: PieBlock
 }
 
+// Dilimler saat on ikiden baslayip saat yonunde dizilir. Yuzdelerin toplami
+// yuz degilse daire ya bos kalir ya da dilimler birbirine biner, toplamin
+// dogru olmasi icerigin isidir.
 export function Pie({ block }: PieProps) {
   const { language } = useLanguage()
   // Taramali dilimin deseni SVG icinde tanimlanir, ayni sayfadaki iki pasta

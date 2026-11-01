@@ -37,6 +37,7 @@ function fakeApi(page: Page, status: number) {
     .then(() => bodies)
 }
 
+// Iletisim sayfasinin sozlugu, beklenen metinler her dilde buradan okunur.
 const step = (lang: 'tr' | 'en') => dict[lang].contactPage
 
 for (const lang of languages) {

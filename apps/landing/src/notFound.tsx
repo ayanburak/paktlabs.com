@@ -9,7 +9,7 @@ description: Landing'in bulunamadi sayfasini dil saglayicisiyla birlikte acan gi
 
 import { mount } from '@paktlabs/brand/lib/mount'
 
-import { NotFound } from './routes/NotFound/NotFound.tsx'
+import { NotFound } from './routes/NotFound/NotFound'
 import '@paktlabs/brand/styles/global.css'
 
 // global.css main.tsx'teki gibi bilesenlerden sonra import edilir, derlenen

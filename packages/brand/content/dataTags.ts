@@ -19,7 +19,7 @@ description: Veri calismalarinin kategori kimliklerini, sitelerde goruldukleri s
 
 import { disciplineUrls } from './disciplines'
 
-// Sira Burak'in verdigi siradir, data'nin suzgecinde de landing'in Veri
+// Sira tasarimda belirlenen siradir, data'nin suzgecinde de landing'in Veri
 // bandinda da ayni kalir. Adlar sozlukte durdugu ve sozluk nesnesinin anahtar
 // sirasina guvenilmedigi icin sira burada tutuluyor. Kimlikler adreste de
 // gectigi icin degistirilirse eski baglantilar suzgecsiz, butun calismalarla

@@ -1,3 +1,13 @@
+/*
+file: vite.config.ts
+
+Landing'in Vite ayari. Ortak kisim packages/config altindaki siteConfig'ten
+gelir, burada cok sayfali derleme, sayfa girisleri ve iletisim servisine
+giden gelistirme proxy'si durur.
+
+description: Landing'i cok sayfali olarak derleyen ve lokalde /api isteklerini servise aktaran Vite ayari.
+*/
+
 import path from 'node:path'
 
 import { siteConfig } from '@paktlabs/config/vite'

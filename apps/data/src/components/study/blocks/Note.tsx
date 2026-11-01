@@ -21,6 +21,8 @@ interface NoteProps {
   block: NoteBlock
 }
 
+// Kutu aside olarak cizilir, ekran okuyucu onu ana metnin disinda duran bir
+// not olarak duyurur.
 export function Note({ block }: NoteProps) {
   const { language } = useLanguage()
   const { ref, visible } = useReveal<HTMLElement>()

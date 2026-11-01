@@ -58,6 +58,8 @@ interface StationsProps {
   block: StationsBlock
 }
 
+// Istasyonlar icerik dosyasindaki sirayla dizilir, basliklari anahtar oldugu
+// icin ayni blokta tekrar etmemeli.
 export function Stations({ block }: StationsProps) {
   const { language } = useLanguage()
 

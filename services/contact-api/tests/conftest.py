@@ -25,10 +25,12 @@ from app.store import MessageStore
 # gonderimde hata firlatir, posta sunucusunun cevap vermedigi durumu taklit
 # eder.
 class FakeMailer(Mailer):
+    # sent, testlerin gonderilen bildirimleri sirasiyla okudugu liste.
     def __init__(self, fail: bool = False) -> None:
         self.fail = fail
         self.sent: list[tuple[int, ContactIn]] = []
 
+    # ConnectionError, gercek SMTP'nin ag hatasina en yakin tur.
     def send(self, contact: ContactIn, message_id: int) -> None:
         if self.fail:
             raise ConnectionError("posta sunucusu yok")
@@ -49,6 +51,8 @@ def valid_payload() -> dict:
     }
 
 
+# console ayarli, testler SMTP ayarina hic dokunmaz. Veritabani her testin
+# kendi gecici klasorunde durur.
 @pytest.fixture
 def settings(tmp_path: Path) -> Settings:
     return Settings(
@@ -64,15 +68,20 @@ def settings(tmp_path: Path) -> Settings:
 
 
 @pytest.fixture
+# settings ile ayni dosyayi acar, testler depoya dogrudan da bakabilir.
 def store(settings: Settings) -> MessageStore:
     return MessageStore(settings.db_path)
 
 
 @pytest.fixture
+# Basarili sahte gonderici. Hata isteyen testler FakeMailer'i fail ile kendisi
+# kurar.
 def mailer() -> FakeMailer:
     return FakeMailer()
 
 
 @pytest.fixture
+# Uygulama ayni depo ve gondericiyle kurulur, testler istegin sonucunu
+# ikisinden de okuyabilir.
 def client(settings: Settings, store: MessageStore, mailer: FakeMailer) -> TestClient:
     return TestClient(create_app(settings, store, mailer))

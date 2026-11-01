@@ -22,6 +22,8 @@ const { web, automation, data } = disciplineUrls
 // gider, sira ve adresler iki sitenin ortak expected.ts dosyasindan gelir.
 const dataTagLinks = services.map(({ slug }) => `${data}/services/${slug}`)
 
+// href degerleri yazildiklari gibi alinir, tarayicinin cozdugu tam adres
+// degil.
 async function hrefs(links: Locator) {
   return links.evaluateAll((els) => els.map((el) => el.getAttribute('href')))
 }

@@ -16,7 +16,7 @@ import type { Study } from './types'
 // sirayi oldugu gibi kullanir.
 //
 // NOTE: 2026-10-11'e kadar listede mockup'tan tasinan lorem yer tutucular da
-// vardi, Burak'in karariyla kaldirildi. 00 numarasi one cikan calismaya
+// vardi, o tarihte kaldirildi. 00 numarasi one cikan calismaya
 // ayrildi, ilk gercek calisma Hartwell & Finch bu numarayla ve feature
 // alaniyla listenin en ustunde duruyor.
 export const studies: Study[] = [hartwellFinch]

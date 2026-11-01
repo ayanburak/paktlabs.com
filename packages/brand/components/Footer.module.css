@@ -3,9 +3,9 @@
   background: var(--surface);
 }
 
-/* .wrap ile ayni class'i tasidigi icin (bkz. Footer.tsx) tek basina .inner,
-   .wrap'in padding'iyle esit onem derecesinde kalir ve kim sonra yuklenirse o
-   kazanir. .foot .inner iki class'lik bir secici oldugu icin bu belirsizligi
+/* Footer.tsx'te .inner ile .wrap ayni elemanda durur. Tek basina .inner bu
+   yuzden .wrap'in padding'iyle esit onem derecesinde kalir ve kim sonra
+   yuklenirse o kazanir. .foot .inner iki class'lik bir secici oldugu icin bu belirsizligi
    ortadan kaldirip her zaman kazaniyor. */
 .foot .inner {
   display: flex;
@@ -24,8 +24,8 @@
   color: var(--ink);
 }
 
-/* telif metni + uc link tek satirda sigmiyordu, sayfa yatay taşıyordu
-   (scrollWidth > innerWidth) — mobilde alt alta diziliyor */
+/* telif metni ve uc link tek satira sigmiyordu, scrollWidth innerWidth'i
+   asiyor ve sayfa yatay tasiyordu. Mobilde alt alta diziliyor */
 @media (max-width: 768px) {
   .foot .inner {
     flex-direction: column;

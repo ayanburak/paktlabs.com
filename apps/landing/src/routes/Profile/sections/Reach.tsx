@@ -20,9 +20,9 @@ interface ReachProps {
   id: ProfileId
 }
 
-// Kisisel adres ile studyonun adresi bilerek ayri kutularda. Burak'in
-// karari: info@ studyonun adresidir, kisinin adresi gibi gosterilmez, kisiye
-// dogrudan yazmak isteyen musteri de kendi adresini bulur.
+// Kisisel adres ile studyonun adresi bilerek ayri kutularda. info@
+// studyonun adresidir, kisinin adresi gibi gosterilmez, kisiye dogrudan
+// yazmak isteyen musteri de kendi adresini bulur.
 export function Reach({ id }: ReachProps) {
   const { reach: dict } = useDict().profilePage
   const profile = profiles[id]

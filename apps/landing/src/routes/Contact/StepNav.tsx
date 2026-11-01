@@ -18,6 +18,8 @@ interface StepNavProps {
   onBack?: () => void
 }
 
+// Geri dugmesi type=button, basinca formu gondermesin diye. onBack verilmezse
+// dugme hic cizilmez.
 export function StepNav({ submitLabel, disabled, onBack }: StepNavProps) {
   const { contactPage: dict } = useDict()
 

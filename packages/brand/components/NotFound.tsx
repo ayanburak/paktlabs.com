@@ -50,6 +50,8 @@ function onBack(event: MouseEvent<HTMLAnchorElement>) {
   history.back()
 }
 
+// Geri don baglantisinin href'i ana sayfadir, JS calismasa da ziyaretciyi bir
+// yere goturur. Tiklama onBack'te gecmise donusturulur.
 export function NotFound() {
   const { notFound } = useBrandDict()
 

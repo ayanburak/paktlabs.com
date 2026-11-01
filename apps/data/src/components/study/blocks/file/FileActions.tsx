@@ -17,7 +17,7 @@ import { useDict } from '@/i18n'
 
 import styles from './FileActions.module.css'
 
-// Dugmenin "kopyalandi" yazisinda kalma suresi, milisaniye. Okurun gormesine
+// Kopyalandi yazisinin dugmede kalma suresi, milisaniye. Okurun gormesine
 // yetecek, ikinci bir kopyalamayi bekletmeyecek kadar.
 const COPIED_FOR = 1600
 

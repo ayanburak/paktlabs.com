@@ -10,7 +10,7 @@ derlenen CSS'te global kurallar bilesen kurallarindan sonra dursun.
 
     import { mount } from '@paktlabs/brand/lib/mount'
 
-    import { Home } from './routes/Home/Home.tsx'
+    import { Home } from './routes/Home/Home'
     import '@paktlabs/brand/styles/global.css'
 
     mount(<Home />)

@@ -66,6 +66,7 @@ export function useStudyRoute(): StudyRoute | null {
   return useLoaderData() as StudyRoute | null
 }
 
+// Kod sayfasi icin ayni is.
 export function useSourceRoute(): SourceRoute | null {
   return useLoaderData() as SourceRoute | null
 }
