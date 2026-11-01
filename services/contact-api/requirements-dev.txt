@@ -1,6 +1,6 @@
 # Testler icin ek paketler. Sunucuya kurulmaz.
 -r requirements.txt
-certifi==2026.7.22
+certifi==2026.10.18
 httpcore2==2.13.1
 httpx2==2.13.1
 iniconfig==2.3.1

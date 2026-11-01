@@ -76,7 +76,7 @@ Sektöre ya da alana özel kısaltma düz metinde kullanılmaz. Teknik bir okur 
 
 ### Başlıklar
 
-Başlıklar slogan olmaz. "Dört katalog, tek ürün listesi" ya da "Tek eşik yerine iki eşik" gibi ritmik, karşıtlık kuran ya da iki noktayla ikiye bölünmüş başlıklar şablon üretimi izlenimi verir ve teknik okurun ilgisini çekmez. Detay sayfasının başlığı firma adı ve yapılan işten oluşur. İlk çalışma bu kuralın tek istisnasıdır: mockup aşamasında sayfa tasarımını sınamak için yazılmış kurgusal bir iştir ve gerçek bir müşteri işi gibi görünmesin diye firma adı yerine "Demo Veri" adıyla yayınlanır. Sayıları birbirini tutar ama gerçek bir firmadan gelmez. Bölüm ve adım başlıkları da düzdür: Doğrulama, Normalizasyon, Kümeleme gibi.
+Başlıklar slogan olmaz. "Dört katalog, tek ürün listesi" ya da "Tek eşik yerine iki eşik" gibi ritmik, karşıtlık kuran ya da iki noktayla ikiye bölünmüş başlıklar şablon üretimi izlenimi verir ve teknik okurun ilgisini çekmez. Detay sayfasının başlığı firma adı ve yapılan işten oluşur. Bölüm ve adım başlıkları da düzdür: Doğrulama, Normalizasyon, Kümeleme gibi.
 
 ### Etkileşim
 
@@ -108,7 +108,7 @@ Bir işin yanıldığı yerler gizlenmez, kanıtıyla gösterilir. Modelin yanl�
 
 ## Yazım dili
 
-Veri sayfası ve hizmet sayfaları PaktLabs'ın marka sesiyle, "biz" diliyle yazılır. Çalışma sayfaları ve onların kod sayfaları ise 2026-10-14'ten beri edilgen dille yazılır: "karşılaştırdık" yerine "karşılaştırıldı", "bulduk" yerine "bulundu", İngilizcesinde de "we compared" yerine "were compared". Çalışma bir ekibin günlüğü gibi değil, yapılmış bir işin raporu gibi okunmalıdır. Dil sade ve Türkçedir. Cümleler kısa tutulur, pazarlama sıfatları kullanılmaz. Bir sonucun büyüklüğü sıfatla değil, bağlamıyla verilen bir sayıyla anlatılır.
+Veri sayfası ve hizmet sayfaları PaktLabs'ın marka sesiyle, "biz" diliyle yazılır. Çalışma sayfaları ve onların kod sayfaları ise edilgen dille yazılır: "karşılaştırdık" yerine "karşılaştırıldı", "bulduk" yerine "bulundu", İngilizcesinde de "we compared" yerine "were compared". Çalışma bir ekibin günlüğü gibi değil, yapılmış bir işin raporu gibi okunmalıdır. Dil sade ve Türkçedir. Cümleler kısa tutulur, pazarlama sıfatları kullanılmaz. Bir sonucun büyüklüğü sıfatla değil, bağlamıyla verilen bir sayıyla anlatılır.
 Yüzdeler simgeyle yazılır: Türkçede %41, İngilizcede 41%. Aynı ifadede sayılar karışık yazılmaz, "on bir klasörde 1.425 dosya" değil "11 klasörde 1.425 dosya" denir. FY25, EBITDA, KPI gibi finans ve yönetim kısaltmaları kullanılmaz, günlük dildeki karşılıkları yazılır: "Mart 2025'te kapanan mali yıl", "kâr", "aylık göstergeler". Bir terim gerçekten gerekiyorsa ilk geçtiği yerde düz bir cümleyle açıklanır. Yabancı bir şirketin vergileri Türkçe metinde KDV diye anılmaz, "vergi" denir: ithalat vergisi, satış vergisi, gümrük vergisi. İngilizce metinde ülkenin kendi adı, örneğin VAT, kalır.
 
 Geçmişe dönük bir iş öyle anlatılır. Hartwell & Finch çalışması 2026'da yapıldı, verisi 2021 ile Haziran 2025 arasına aittir ve şirket geçmişte yaşadığı bir sorunun kaynağını araştırttı. Böyle bir işte metin o anki bir krizi çözüyormuş gibi yazılmaz, "bu yıl" ve "ertesi yıl" yerine "Mart 2025'te kapanan yıl" gibi açık dönem adları kullanılır.
@@ -178,7 +178,7 @@ Metinler dil başına ayrı dosyalarda değil, aynı yerde iki dili yan yana yaz
 
 Kodun yeri iki seçenekten biridir. Firma kodun paylaşılmasına izin verdiyse künye dosyasına GitHub deposunun adresi yazılır, detay sayfasındaki Meraklısına kartı yalnızca depoya bağlanır ve sitede ayrıca kod sayfası bulunmaz. İzin vermediyse paylaşılan kısım sitedeki kod sayfasında gösterilir. İkisinden birinin yazılması zorunludur, ikisi birden yazılamaz. Kodu GitHub'da olan bir çalışmanın kod sayfası adresi bulunamadı sayfasına düşer.
 
-Veri sayfasındaki listede yalnızca gerçek çalışmalar durur. Mockup'tan taşınan lorem yer tutucular 2026-10-11'de kaldırıldı. İlk gerçek çalışma Hartwell & Finch kârlılık ve veri incelemesi 2026-10-14'te yayınlandı. Kurgusal Demo Veri 2026-10-15'te yayından kalktı, liste şu an tek çalışmadan oluşuyor. Yeni bir çalışma kendi klasöründe yazılır ve `src/content/studies/index.ts` içindeki listeye eklenir, liste numara sırasıyla dizilir.
+Veri sayfasındaki listede yalnızca gerçek çalışmalar durur, yer tutucu ya da kurgusal bir çalışma yayınlanmaz. Yeni bir çalışma kendi klasöründe yazılır ve `src/content/studies/index.ts` içindeki listeye eklenir, liste numara sırasıyla dizilir.
 
 Bir çalışma listede normal kart ya da tam satır kaplayan öne çıkan kart olarak görünür. Öne çıkan kart, künye dosyasına `feature` alanı yazılan çalışmadır: teknik detaylar ve kullanılan araçların logoları bu alandan gelir, numaranın yanında Öne çıkan yazar. Bugün öne çıkan çalışma Hartwell & Finch'tir, 00 numarasıyla listenin en üstünde durur. Bir çalışmayı öne çıkarmak için bileşen ya da CSS yazılmaz, yalnızca bu alan doldurulur, araçların logoları da `techNames.ts` listesinde olmalıdır.
 
@@ -230,7 +230,3 @@ scripts/rollback-release.sh data <sürüm>                       # o sürüme d�
 ```
 
 nginx bilinmeyen yollarda `index.html` döndürür, böylece bir çalışmanın adresi doğrudan açılabilir. Landing'deki gibi hazır sıkıştırılmış dosyalar sunulur, hash'li dosyalar bir yıl önbelleğe alınır, `index.html` her ziyarette yeniden doğrulanır. Sunucu tarafındaki kurulum ayrı bir altyapı belgesinde tutulur.
-
-## Tasarım referansları
-
-Sayfaların onaylı görünümü üç mockup dosyasında durur: veri sayfası için `data.html`, çalışma detay sayfası için `detail.html`, kod ve veri sayfası için `detail-source.html`. Bu dosyalar repoya girmez. Yeni bir sayfa ya da bileşen yazılırken önce bu mockup'lardaki karşılığına bakılır. Mockup ile canlıdaki landing sayfa düzeni ya da ölçüde ayrıştığında landing esas alınır. Bu belgedeki kurallar mockup'larla çelişirse önce hangisinin doğru olduğu netleştirilir.
